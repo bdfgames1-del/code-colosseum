@@ -1,0 +1,426 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Trang Chủ - CodeColosseum</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@500;700&family=Plus+Jakarta+Sans:wght@500;600;700;800&family=Teko:wght@700&display=swap" rel="stylesheet">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            background-color: #060913;
+            color: #f8fafc;
+            min-height: 100vh;
+            display: flex;
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            overflow-x: hidden;
+        }
+
+        /* SIDEBAR CHUẨN MENU */
+        .sidebar {
+            width: 250px;
+            background: #090e1a;
+            border-right: 1px solid #162035;
+            padding: 24px 16px;
+            display: flex;
+            flex-direction: column;
+            gap: 28px;
+            flex-shrink: 0;
+            min-height: 100vh;
+        }
+
+        .brand-logo {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 19px;
+            font-weight: 800;
+            color: #ffffff;
+            padding-left: 8px;
+        }
+
+        .menu-list {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .menu-item {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 12px 16px;
+            border-radius: 10px;
+            color: #94a3b8;
+            text-decoration: none;
+            font-size: 14.5px;
+            font-weight: 600;
+            transition: all 0.2s ease;
+        }
+        .menu-item:hover {
+            color: #38bdf8;
+            background: rgba(56, 189, 248, 0.08);
+        }
+
+        .menu-item.active {
+            background: rgba(14, 165, 233, 0.12);
+            color: #38bdf8;
+            font-weight: 700;
+            border: 1px solid rgba(56, 189, 248, 0.3);
+        }
+
+        .menu-item.arena-item {
+            color: #f43f5e;
+            font-weight: 700;
+        }
+        .menu-item.arena-item:hover {
+            background: rgba(244, 63, 94, 0.1);
+            color: #fb7185;
+        }
+
+        .badge-live {
+            font-size: 10px;
+            background: #ef4444;
+            color: #fff;
+            padding: 2px 7px;
+            border-radius: 9999px;
+            font-weight: 800;
+            margin-left: auto;
+            box-shadow: 0 0 8px rgba(239, 68, 68, 0.6);
+        }
+
+        /* MAIN CONTENT */
+        .main-content {
+            flex: 1;
+            padding: 28px 36px;
+            display: flex;
+            flex-direction: column;
+            gap: 24px;
+            overflow-y: auto;
+            max-height: 100vh;
+        }
+
+        .top-system-bar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .system-status {
+            font-size: 12px;
+            font-family: 'Fira Code', monospace;
+            color: #22c55e;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+        .auth-actions {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+        .btn-nav-login {
+            background: #111a2e;
+            border: 1px solid #1e2c44;
+            color: #e2e8f0;
+            padding: 6px 16px;
+            border-radius: 8px;
+            font-size: 13px;
+            font-weight: 700;
+            text-decoration: none;
+            transition: 0.2s;
+        }
+        .btn-nav-register {
+            background: #0284c7;
+            border: 1px solid #38bdf8;
+            color: #ffffff;
+            padding: 6px 18px;
+            border-radius: 8px;
+            font-size: 13px;
+            font-weight: 700;
+            text-decoration: none;
+            transition: 0.2s;
+        }
+
+        /* HERO CARD VS ĐẤU TRƯỜNG ĐỐI KHÁNG */
+        .colosseum-hero-card {
+            background: linear-gradient(180deg, #101728 0%, #090e1c 100%);
+            border: 1.5px solid #1e2c44;
+            border-radius: 24px;
+            padding: 36px 40px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 24px;
+            box-shadow: 0 16px 45px rgba(0, 0, 0, 0.6);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .arena-vs-scene {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            width: 100%;
+            gap: 20px;
+        }
+
+        .code-snippet-terminal {
+            background: #060913;
+            border: 1px solid #1a253c;
+            border-radius: 12px;
+            padding: 16px 20px;
+            font-family: 'Fira Code', monospace;
+            font-size: 12.5px;
+            line-height: 1.6;
+            width: 250px;
+        }
+        .terminal-left { color: #38bdf8; border-color: rgba(56, 189, 248, 0.4); }
+        .terminal-right { color: #f97316; border-color: rgba(249, 115, 22, 0.4); }
+
+        .vs-center-graphic {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 12px;
+            text-align: center;
+        }
+        .vs-emblem {
+            font-size: 44px;
+            font-weight: 900;
+            font-family: 'Teko', sans-serif;
+            color: #ffffff;
+            letter-spacing: 2px;
+            text-shadow: 0 0 25px rgba(255, 255, 255, 0.5);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        .hero-banner-title {
+            font-size: 24px;
+            font-weight: 800;
+            letter-spacing: 0.5px;
+            color: #ffffff;
+        }
+
+        .stats-pillars-row {
+            display: flex;
+            gap: 16px;
+            margin-top: 10px;
+        }
+        .stat-pillar-tag {
+            background: #060a14;
+            border: 1px solid #1e2c44;
+            padding: 8px 18px;
+            border-radius: 10px;
+            text-align: center;
+            font-family: 'Fira Code', monospace;
+        }
+        .pillar-val { font-size: 13.5px; font-weight: 800; color: #f8fafc; }
+        .pillar-lbl { font-size: 10.5px; color: #64748b; font-weight: 700; text-transform: uppercase; margin-top: 2px; }
+
+        /* BẢNG ĐIỀU KHIỂN NHANH BÊN DƯỚI */
+        .dash-heading {
+            font-size: 16px;
+            font-weight: 800;
+            color: #f8fafc;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .dash-grid-cards {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 20px;
+        }
+
+        .dash-card {
+            background: #0a0f1d;
+            border: 1px solid #162035;
+            border-radius: 16px;
+            padding: 22px;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            min-height: 180px;
+            text-decoration: none;
+            color: inherit;
+            transition: all 0.25s ease;
+        }
+        .dash-card:hover {
+            border-color: #0284c7;
+            transform: translateY(-4px);
+            box-shadow: 0 10px 25px rgba(2, 132, 199, 0.2);
+        }
+
+        .dash-card-icon {
+            font-size: 26px;
+            width: 44px;
+            height: 44px;
+            background: #111a2e;
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border: 1px solid #1e2c44;
+            margin-bottom: 12px;
+        }
+
+        .dash-card-title {
+            font-size: 17px;
+            font-weight: 800;
+            color: #ffffff;
+            margin-bottom: 6px;
+        }
+        .dash-card-desc {
+            font-size: 13px;
+            color: #94a3b8;
+            line-height: 1.5;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- SIDEBAR BÊN TRÁI -->
+    <aside class="sidebar">
+        <div class="brand-logo">
+            <span>⚔️</span> CodeColosseum
+        </div>
+
+        <nav class="menu-list">
+            <a href="/" class="menu-item active">
+                <span>🏠</span> Trang chủ
+            </a>
+            <a href="/courses" class="menu-item">
+                <span>📚</span> Bài học
+            </a>
+            
+            <!-- THỰC HÀNH BÀI TẬP (MAP 1 -> MAP 10) -->
+            <a href="/arena" class="menu-item">
+                <span>📝</span> Thực hành bài tập
+            </a>
+
+            <!-- ĐẤU TRƯỜNG (HIỆN TRỰC TIẾP RA NGOÀI DẪN TỚI SPEED DUEL) -->
+            <a href="/arena/speed-duel" class="menu-item arena-item">
+                <span>⚔️</span> Đấu trường
+                <span class="badge-live">LIVE</span>
+            </a>
+
+            <a href="/leaderboard" class="menu-item">
+                <span>🏆</span> Bảng xếp hạng
+            </a>
+            <a href="/profile" class="menu-item">
+                <span>👤</span> Hồ sơ
+            </a>
+        </nav>
+    </aside>
+
+    <!-- NỘI DUNG CHÍNH TRANG CHỦ -->
+    <main class="main-content">
+        <header class="top-system-bar">
+            <div class="system-status">
+                <span>●</span> SYSTEM READY
+            </div>
+            <div class="auth-actions">
+                {{if .Username}}
+                    <span style="font-family:'Fira Code'; font-size:13px; color:#38bdf8;">👤 {{.Username}}</span>
+                    <a href="/logout" class="btn-nav-login" style="color:#f87171;">Đăng xuất</a>
+                {{else}}
+                    <a href="/login" class="btn-nav-login">Đăng nhập</a>
+                    <a href="/register" class="btn-nav-register">Đăng ký</a>
+                {{end}}
+            </div>
+        </header>
+
+        <!-- BANNER TRUNG TÂM -->
+        <section class="colosseum-hero-card">
+            <div class="arena-vs-scene">
+                <div class="code-snippet-terminal terminal-left">
+                    <div>// Player_1.py</div>
+                    <div>def combat():</div>
+                    <div>&nbsp;&nbsp;power = 9999</div>
+                    <div>&nbsp;&nbsp;return solve()</div>
+                    <div style="color: #4ade80; margin-top: 4px;">&gt; READY_</div>
+                </div>
+
+                <div class="vs-center-graphic">
+                    <div class="vs-emblem">
+                        <span>🪽</span> VS <span>🪽</span>
+                    </div>
+                    <div class="hero-banner-title">
+                        ⚔️ ĐẤU TRƯỜNG LẬP TRÌNH ĐỐI KHÁNG ⚡
+                    </div>
+                </div>
+
+                <div class="code-snippet-terminal terminal-right">
+                    <div>// Opponent_AI.py</div>
+                    <div>const battle = () =&gt; {</div>
+                    <div>&nbsp;&nbsp;speed = 100;</div>
+                    <div>&nbsp;&nbsp;execute();</div>
+                    <div>};</div>
+                    <div style="color: #f43f5e; margin-top: 4px;">&gt; LOCKED_</div>
+                </div>
+            </div>
+
+            <div class="stats-pillars-row">
+                <div class="stat-pillar-tag">
+                    <div class="pillar-val">10 BẬC</div>
+                    <div class="pillar-lbl">Tháp Thi Đấu</div>
+                </div>
+                <div class="stat-pillar-tag">
+                    <div class="pillar-val">10 BẢN ĐỒ</div>
+                    <div class="pillar-lbl">Thực Hành</div>
+                </div>
+                <div class="stat-pillar-tag">
+                    <div class="pillar-val">4 THỂ THỨC</div>
+                    <div class="pillar-lbl">Đấu Trường 1v1</div>
+                </div>
+                <div class="stat-pillar-tag">
+                    <div class="pillar-val">PVP REALTIME</div>
+                    <div class="pillar-lbl">Matchmaking</div>
+                </div>
+            </div>
+        </section>
+
+        <!-- BẢNG ĐIỀU KHIỂN NHANH -->
+        <h2 class="dash-heading">
+            <span>⚡</span> Bảng điều khiển nhanh
+        </h2>
+
+        <div class="dash-grid-cards">
+            <!-- Ô 1: Kho Bài Học -->
+            <a href="/courses" class="dash-card">
+                <div>
+                    <div class="dash-card-icon">📁</div>
+                    <div class="dash-card-title">Kho Bài Học Python</div>
+                    <div class="dash-card-desc">Lộ trình 10 bài học chuẩn từ Cơ bản đến Chuyên sâu, OOP, Generator và Regex.</div>
+                </div>
+                <div style="font-size:12px; font-weight:700; color:#38bdf8; margin-top:12px;">Bắt đầu học →</div>
+            </a>
+
+            <!-- Ô 2: Thực Hành Bài Tập (Các Map 1->10) -->
+            <a href="/arena" class="dash-card">
+                <div>
+                    <div class="dash-card-icon">📝</div>
+                    <div class="dash-card-title">Thực Hành Bài Tập</div>
+                    <div class="dash-card-desc">Vượt qua các ải thực hành tương tác: Map 1 Diệt Quái Cú Pháp, Map 2 Memory Match, Map 3 Gỡ Bom.</div>
+                </div>
+                <div style="font-size:12px; font-weight:700; color:#38bdf8; margin-top:12px;">Luyện tập ngay →</div>
+            </a>
+
+            <!-- Ô 3: Đấu Trường (Speed Coding Duel) -->
+            <a href="/arena/speed-duel" class="dash-card" style="border-color: rgba(244, 63, 94, 0.35);">
+                <div>
+                    <div class="dash-card-icon" style="background:#27121e; border-color:#e11d48;">⚔️</div>
+                    <div class="dash-card-title" style="color:#fb7185;">Đấu Trường Trực Tiếp</div>
+                    <div class="dash-card-desc">Đối kháng 1v1 trực diện: Race to Green, Blind Coding, Code Golf và Đua hiệu năng Benchmark.</div>
+                </div>
+                <div style="font-size:12px; font-weight:700; color:#fb7185; margin-top:12px;">Vào đấu trường →</div>
+            </a>
+        </div>
+    </main>
+
+</body>
+</html>

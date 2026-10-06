@@ -1,0 +1,1192 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Thực Hành Bài Tập - CodeColosseum</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@500;700&family=Plus+Jakarta+Sans:wght@600;700;800&family=Teko:wght@700&display=swap" rel="stylesheet">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            background-color: #04060d;
+            color: #f8fafc;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            overflow-x: hidden;
+            user-select: none;
+        }
+
+        .topbar {
+            background-color: #080c16;
+            border-bottom: 2px solid #162035;
+            padding: 12px 28px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            z-index: 50;
+        }
+        .back-link {
+            color: #94a3b8;
+            text-decoration: none;
+            font-size: 13px;
+            font-weight: 700;
+            padding: 6px 14px;
+            background: #0d1424;
+            border: 1px solid #1e2c44;
+            border-radius: 8px;
+            transition: 0.2s;
+        }
+        .back-link:hover { color: #38bdf8; border-color: #38bdf8; }
+
+        .arena-container {
+            max-width: 1120px;
+            width: 100%;
+            margin: 14px auto;
+            padding: 0 16px;
+            display: flex;
+            flex-direction: column;
+            gap: 14px;
+            flex: 1;
+        }
+
+        /* ==================== MAP 1: DIỆT QUÁI PVE ==================== */
+        .stage-viewport-map1 {
+            position: relative;
+            width: 100%;
+            height: 390px;
+            background: radial-gradient(circle at 50% 25%, #181a30 0%, #0c0d1b 60%, #05060b 100%);
+            border: 3px solid #1a2238;
+            border-radius: 20px;
+            overflow: hidden;
+            box-shadow: 0 18px 45px rgba(0, 0, 0, 0.8), inset 0 0 40px rgba(0,0,0,0.5);
+            transition: background 1s ease-in-out;
+        }
+
+        .night-sky {
+            position: absolute; inset: 0;
+            background-image: 
+                radial-gradient(1.5px 1.5px at 20% 30%, #ffffff, transparent),
+                radial-gradient(2px 2px at 45% 15%, #ffffff, transparent),
+                radial-gradient(1.5px 1.5px at 70% 35%, #ffffff, transparent),
+                radial-gradient(2px 2px at 85% 20%, #ffffff, transparent);
+            opacity: 0.7;
+        }
+
+        .castle-wall-bg {
+            position: absolute; bottom: 120px; left: 0; right: 0; height: 150px;
+            opacity: 0.55; pointer-events: none;
+        }
+        .lake-fog {
+            position: absolute; bottom: 100px; left: 0; right: 0; height: 70px;
+            background: linear-gradient(180deg, transparent 0%, rgba(56, 75, 112, 0.25) 50%, transparent 100%);
+            filter: blur(10px); pointer-events: none;
+        }
+
+        .wooden-pier {
+            position: absolute; bottom: 0; left: 0; right: 0; height: 135px; z-index: 10;
+        }
+        .pier-deck {
+            position: absolute; top: 25px; left: 0; right: 0; bottom: 0;
+            background: linear-gradient(180deg, #5c3f2c 0%, #3e271a 45%, #23140c 100%);
+            border-top: 6px solid #7d573d; box-shadow: 0 -4px 15px rgba(0, 0, 0, 0.6);
+        }
+        .deck-plank-lines {
+            position: absolute; inset: 0;
+            background-image: repeating-linear-gradient(90deg, transparent, transparent 28px, rgba(0, 0, 0, 0.45) 28px, rgba(0, 0, 0, 0.45) 32px);
+            opacity: 0.7;
+        }
+        .pier-rope-line {
+            position: absolute; top: -5px; left: 20px; right: 20px; height: 30px;
+            border-bottom: 3.5px solid #2e1a10; border-radius: 0 0 50% 50% / 0 0 100% 100%;
+            opacity: 0.85; z-index: 11;
+        }
+        .pier-posts-row {
+            position: absolute; top: -20px; left: 0; right: 0;
+            display: flex; justify-content: space-between; padding: 0 24px; z-index: 12;
+        }
+        .pier-post-item { display: flex; flex-direction: column; align-items: center; }
+        .lantern-lamp {
+            width: 24px; height: 30px;
+            background: linear-gradient(180deg, #fef08a 0%, #f59e0b 60%, #b45309 100%);
+            border: 2px solid #29180e; border-radius: 4px 4px 6px 6px;
+            box-shadow: 0 0 16px rgba(251, 191, 36, 0.8);
+        }
+        .wood-pillar {
+            width: 14px; height: 90px;
+            background: linear-gradient(180deg, #5c3e29 0%, #301e12 100%);
+            border: 1.5px solid #1a0f08; margin-top: -2px;
+        }
+        .lake-water {
+            position: absolute; bottom: 0; left: 0; right: 0; height: 25px;
+            background: #091322; border-top: 2px solid #1d4ed8; z-index: 15;
+        }
+
+        .wizard-chibi-box {
+            position: absolute; bottom: 78px; left: 120px; z-index: 25;
+            display: flex; flex-direction: column; align-items: center;
+        }
+        .chibi-svg {
+            width: 95px; height: 120px;
+            filter: drop-shadow(0 8px 12px rgba(0, 0, 0, 0.7));
+            animation: idleHover 2s ease-in-out infinite alternate;
+        }
+        @keyframes idleHover { 0% { transform: translateY(0); } 100% { transform: translateY(-5px); } }
+
+        .magic-runes-left {
+            position: absolute; top: -20px; right: -15px; font-size: 15px; color: #7dd3fc;
+            filter: drop-shadow(0 0 8px #38bdf8); animation: runesPulse 1.8s infinite alternate;
+        }
+        @keyframes runesPulse {
+            0% { opacity: 0.4; transform: translateY(2px); }
+            100% { opacity: 1; transform: translateY(-4px); }
+        }
+
+        .chibi-name-badge {
+            font-size: 11.5px; font-weight: 800; padding: 3px 14px; border-radius: 9999px;
+            background: linear-gradient(180deg, #fef3c7 0%, #fde68a 100%); color: #78350f;
+            border: 1.5px solid #b45309; margin-top: 4px;
+        }
+
+        .monster-actor-box {
+            position: absolute; bottom: 82px; right: 120px; z-index: 25;
+            display: flex; flex-direction: column; align-items: center;
+            transition: all 0.35s cubic-bezier(0.34, 1.56, 0.64, 1);
+        }
+        .monster-sprite {
+            font-size: 80px;
+            filter: drop-shadow(0 8px 16px rgba(239, 68, 68, 0.6));
+            animation: monsterHover 2s ease-in-out infinite alternate;
+            transition: all 0.3s ease;
+        }
+        @keyframes monsterHover { 0% { transform: translateY(0) scale(1); } 100% { transform: translateY(-6px) scale(1.05); } }
+
+        .monster-hp-bar-wrap {
+            width: 90px; height: 8px; background: #1e293b; border: 1.5px solid #000;
+            border-radius: 4px; overflow: hidden; margin-top: 4px;
+        }
+        .monster-hp-fill {
+            width: 100%; height: 100%; background: #ef4444; transition: width 0.3s ease;
+        }
+        .monster-name-badge {
+            font-size: 11px; font-weight: 800; padding: 2px 10px; border-radius: 6px;
+            background: rgba(225, 29, 72, 0.25); color: #fca5a5; border: 1px solid #f43f5e; margin-top: 3px;
+        }
+
+        .magic-missile {
+            position: absolute;
+            bottom: 125px;
+            left: 190px;
+            width: 44px;
+            height: 44px;
+            background: radial-gradient(circle at 40% 40%, #ffffff 0%, #67e8f9 35%, #0284c7 70%, #0369a1 100%);
+            border-radius: 50%;
+            box-shadow: 0 0 25px #38bdf8, 0 0 50px #0284c7, 0 0 80px rgba(56, 189, 248, 0.8);
+            display: none;
+            z-index: 45;
+            pointer-events: none;
+            animation: missileRotate 0.3s infinite linear;
+        }
+        .magic-missile::after {
+            content: '';
+            position: absolute;
+            top: 6px;
+            left: -30px;
+            width: 40px;
+            height: 32px;
+            background: linear-gradient(90deg, transparent, #38bdf8);
+            border-radius: 50%;
+            filter: blur(4px);
+        }
+        @keyframes missileRotate {
+            0% { transform: rotate(0deg) scale(1); }
+            50% { transform: rotate(180deg) scale(1.15); }
+            100% { transform: rotate(360deg) scale(1); }
+        }
+
+        .spell-explosion {
+            position: absolute;
+            bottom: 95px;
+            right: 120px;
+            font-size: 80px;
+            display: none;
+            z-index: 50;
+            pointer-events: none;
+            animation: boomBurst 0.5s ease-out forwards;
+        }
+        @keyframes boomBurst {
+            0% { transform: scale(0.2); opacity: 0; }
+            50% { transform: scale(1.6); opacity: 1; filter: drop-shadow(0 0 30px #38bdf8); }
+            100% { transform: scale(2.2); opacity: 0; }
+        }
+
+        .quiz-card-panel {
+            background: #0d1424; border: 1.5px solid #1e2c44; border-radius: 16px;
+            padding: 22px 24px; display: flex; flex-direction: column; gap: 14px;
+        }
+        .quiz-top-info {
+            display: flex; justify-content: space-between; align-items: center;
+            font-family: 'Fira Code', monospace; font-size: 13px; font-weight: 700;
+        }
+        .round-counter-badge {
+            background: rgba(56, 189, 248, 0.15); border: 1px solid #38bdf8;
+            color: #38bdf8; padding: 4px 12px; border-radius: 8px;
+        }
+        .hp-lives-box { color: #f43f5e; font-size: 14px; }
+        .question-title-text { font-size: 16.5px; font-weight: 700; color: #f8fafc; line-height: 1.55; }
+        .code-snippet-box {
+            background: #050811; border: 1px solid #1e2c44; padding: 12px 16px;
+            border-radius: 8px; font-family: 'Fira Code', monospace; font-size: 13.5px;
+            color: #a5f3fc; line-height: 1.6; display: none;
+        }
+        .answers-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+        .answer-choice-btn {
+            background: #111a2e; border: 1.5px solid #1e2c44; color: #e2e8f0;
+            padding: 13px 18px; border-radius: 10px; font-size: 14px; font-weight: 600;
+            cursor: pointer; text-align: left; transition: 0.2s;
+        }
+        .answer-choice-btn:hover:not(:disabled) { border-color: #38bdf8; background: #16243f; }
+        .answer-choice-btn:disabled { opacity: 0.5; cursor: not-allowed; }
+        .status-notify { text-align: center; font-size: 14px; font-weight: 700; min-height: 22px; }
+        .notify-correct { color: #34d399; }
+        .notify-wrong { color: #f87171; }
+
+        /* ==================== MAP 2: MEMORY MATCH ARCADE 20 LÁ BÀI ==================== */
+        .arcade-cabinet {
+            background: linear-gradient(180deg, #1b355a 0%, #0c182c 100%);
+            border: 6px solid #2563eb;
+            border-radius: 24px;
+            padding: 20px 24px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.9), inset 0 0 30px rgba(37, 99, 235, 0.4);
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+            position: relative;
+        }
+
+        .arcade-marquee {
+            text-align: center;
+            background: #050d1a;
+            border: 3px solid #38bdf8;
+            border-radius: 12px;
+            padding: 10px;
+            box-shadow: 0 0 18px rgba(56, 189, 248, 0.5), inset 0 0 14px rgba(56, 189, 248, 0.2);
+        }
+        .arcade-title-text {
+            font-size: 22px;
+            font-weight: 800;
+            letter-spacing: 1px;
+            color: #ffffff;
+            text-shadow: 0 0 10px #38bdf8, 0 0 20px #0284c7;
+        }
+
+        .arcade-scoreboard {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: rgba(5, 13, 26, 0.8);
+            border: 1.5px solid #1e3a8a;
+            padding: 10px 24px;
+            border-radius: 12px;
+            font-family: 'Fira Code', monospace;
+            font-size: 14px;
+        }
+        .score-item { display: flex; align-items: center; gap: 8px; }
+
+        .cards-grid {
+            display: grid;
+            grid-template-columns: repeat(5, 1fr);
+            gap: 12px;
+            perspective: 1000px;
+        }
+
+        .match-card {
+            height: 96px;
+            position: relative;
+            transform-style: preserve-3d;
+            transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            cursor: pointer;
+        }
+        .match-card.flipped { transform: rotateY(180deg); }
+        .match-card.matched {
+            transform: rotateY(180deg);
+            pointer-events: none;
+        }
+        .match-card.matched .card-front {
+            border-color: #22c55e !important;
+            box-shadow: 0 0 20px rgba(34, 197, 94, 0.8), inset 0 0 15px rgba(34, 197, 94, 0.4);
+        }
+
+        .card-back, .card-front {
+            position: absolute;
+            inset: 0;
+            backface-visibility: hidden;
+            border-radius: 12px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .card-back {
+            background: linear-gradient(135deg, #0e223f 0%, #061122 100%);
+            border: 2.5px solid #38bdf8;
+            box-shadow: inset 0 0 12px rgba(56, 189, 248, 0.3), 0 4px 10px rgba(0, 0, 0, 0.5);
+            transition: border-color 0.2s;
+        }
+        .match-card:hover .card-back {
+            border-color: #67e8f9;
+            box-shadow: 0 0 15px rgba(56, 189, 248, 0.6);
+        }
+        .card-back-mark {
+            font-size: 34px;
+            font-weight: 800;
+            color: #38bdf8;
+            text-shadow: 0 0 12px #38bdf8, 0 0 24px #0284c7;
+        }
+
+        .card-front {
+            background: linear-gradient(135deg, #11294d 0%, #07172e 100%);
+            border: 2.5px solid #60a5fa;
+            transform: rotateY(180deg);
+            padding: 6px;
+            text-align: center;
+            box-shadow: inset 0 0 14px rgba(96, 165, 250, 0.4);
+        }
+        .card-title {
+            font-family: 'Fira Code', monospace;
+            font-size: 11px;
+            font-weight: 700;
+            color: #93c5fd;
+            text-transform: uppercase;
+        }
+        .card-icon {
+            font-size: 26px;
+            margin: 4px 0;
+            filter: drop-shadow(0 0 8px rgba(255, 255, 255, 0.6));
+        }
+
+        .arcade-control-panel {
+            background: linear-gradient(180deg, #162a45 0%, #081322 100%);
+            border-top: 4px solid #1e3a8a;
+            border-radius: 0 0 18px 18px;
+            padding: 14px 28px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .joystick-group { display: flex; align-items: center; gap: 12px; }
+        .joystick-base {
+            width: 28px; height: 10px; background: #020617; border-radius: 5px; position: relative;
+        }
+        .joystick-stick {
+            position: absolute; bottom: 6px; left: 11px; width: 6px; height: 26px; background: #94a3b8;
+        }
+        .joystick-ball {
+            position: absolute; top: -14px; left: -8px; width: 22px; height: 22px;
+            background: radial-gradient(circle at 35% 35%, #ef4444 0%, #991b1b 100%);
+            border-radius: 50%; box-shadow: 0 0 10px #ef4444;
+        }
+        .buttons-row { display: flex; gap: 12px; }
+        .arcade-btn {
+            width: 26px; height: 26px; border-radius: 50%; border: 2px solid #000;
+            box-shadow: inset 0 2px 4px rgba(255, 255, 255, 0.6), 0 4px 8px rgba(0,0,0,0.6);
+        }
+        .btn-green { background: #22c55e; box-shadow: 0 0 10px #22c55e; }
+        .btn-teal { background: #14b8a6; box-shadow: 0 0 10px #14b8a6; }
+        .btn-pink { background: #f43f5e; box-shadow: 0 0 10px #f43f5e; }
+        .btn-yellow { background: #eab308; box-shadow: 0 0 10px #eab308; }
+
+        /* ==================== MAP 3: BOMB DEFUSAL NÂNG CẤP HIỆU ỨNG BOOM ==================== */
+        .bomb-cabinet-wrap {
+            position: relative;
+            width: 100%;
+            background: linear-gradient(180deg, #1b2838 0%, #0d1520 100%);
+            border: 4px solid #2a3f5a;
+            border-radius: 24px;
+            padding: 22px 28px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.8), inset 0 0 30px rgba(0, 0, 0, 0.5);
+            display: flex;
+            flex-direction: column;
+            gap: 18px;
+            transition: all 0.2s;
+        }
+
+        .alarm-flash-layer {
+            position: absolute;
+            inset: 0;
+            background: rgba(239, 68, 68, 0.45);
+            border-radius: 20px;
+            display: none;
+            z-index: 40;
+            pointer-events: none;
+            animation: alarmPulse 0.3s infinite alternate;
+        }
+        @keyframes alarmPulse { 0% { opacity: 0.2; } 100% { opacity: 0.8; } }
+
+        .bomb-top-bar { display: flex; justify-content: space-between; align-items: center; }
+        .bomb-title-text { font-size: 24px; font-weight: 800; color: #ffffff; letter-spacing: 1px; }
+        .bomb-stats-group { display: flex; gap: 14px; }
+        .bomb-stat-pill {
+            background: #090e17; border: 1.5px solid #2a3f5a; padding: 6px 14px;
+            border-radius: 8px; font-family: 'Fira Code', monospace; font-size: 13px;
+        }
+
+        /* KHAY 20 SỢI DÂY CỦA QUẢ BOM */
+        .wire-selector-panel {
+            background: #090e17;
+            border: 1.5px solid #1a283a;
+            border-radius: 14px;
+            padding: 14px 18px;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+        .wires-chips-grid {
+            display: grid;
+            grid-template-columns: repeat(10, 1fr);
+            gap: 8px;
+        }
+        .wire-chip-btn {
+            background: #111a28;
+            border: 1.5px solid #2a3f5a;
+            border-radius: 8px;
+            padding: 8px 4px;
+            color: #e2e8f0;
+            font-family: 'Fira Code', monospace;
+            font-size: 12px;
+            font-weight: 700;
+            cursor: pointer;
+            text-align: center;
+            transition: 0.2s;
+        }
+        .wire-chip-btn:hover:not(.cleared) {
+            transform: translateY(-2px);
+            border-color: #38bdf8;
+            box-shadow: 0 0 10px rgba(56, 189, 248, 0.4);
+        }
+        .wire-chip-btn.active {
+            border-color: #f59e0b !important;
+            box-shadow: 0 0 14px rgba(245, 158, 11, 0.6);
+            background: #1e2838;
+        }
+        .wire-chip-btn.cleared {
+            background: rgba(34, 197, 94, 0.15) !important;
+            border-color: #22c55e !important;
+            color: #86efac !important;
+            cursor: default;
+        }
+
+        .bomb-stage-layout {
+            display: grid;
+            grid-template-columns: 280px 1fr;
+            gap: 24px;
+            align-items: center;
+            background: #090e17;
+            border: 2px solid #1a283a;
+            border-radius: 18px;
+            padding: 22px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .bomb-sphere-box { position: relative; width: 220px; height: 220px; margin: 0 auto; display: flex; align-items: center; justify-content: center; }
+        .bomb-wick {
+            position: absolute; top: -22px; width: 14px; height: 24px; border-left: 4px solid #d97706; border-top: 4px solid #d97706; border-radius: 12px 0 0 0;
+        }
+        .fuse-spark-particle {
+            position: absolute; top: -36px; left: 98px; font-size: 22px; animation: sparkJitter 0.2s infinite alternate; filter: drop-shadow(0 0 10px #f59e0b);
+        }
+        @keyframes sparkJitter { 0% { transform: scale(0.9) rotate(0deg); } 100% { transform: scale(1.3) rotate(35deg); } }
+        .bomb-cap {
+            position: absolute; top: -10px; width: 50px; height: 16px; background: linear-gradient(180deg, #64748b 0%, #334155 100%); border-radius: 4px; border: 2px solid #0f172a;
+        }
+
+        .bomb-body {
+            width: 200px; height: 200px;
+            background: radial-gradient(circle at 35% 30%, #475569 0%, #1e293b 45%, #0f172a 85%, #020617 100%);
+            border-radius: 50%; border: 4px solid #020617;
+            box-shadow: 0 12px 30px rgba(0, 0, 0, 0.9), inset 0 0 25px rgba(0, 0, 0, 0.9);
+            display: flex; align-items: center; justify-content: center; position: relative; transition: all 0.2s;
+        }
+        .bomb-clock-dial {
+            width: 110px; height: 110px; background: radial-gradient(circle, #090d16 0%, #020617 100%);
+            border-radius: 50%; border: 3.5px solid #334155; display: flex; flex-direction: column; align-items: center; justify-content: center;
+            box-shadow: inset 0 0 18px rgba(239, 68, 68, 0.5);
+        }
+        .dial-number { font-family: 'Fira Code', monospace; font-size: 32px; font-weight: 800; color: #ef4444; text-shadow: 0 0 14px #ef4444; }
+        .dial-label { font-size: 10px; font-weight: 700; color: #94a3b8; text-transform: uppercase; }
+
+        .wire-connector-socket { position: absolute; right: -7px; width: 14px; height: 14px; background: #475569; border-radius: 50%; border: 2px solid #000; }
+        .sock-1 { top: 40px; } .sock-2 { top: 80px; } .sock-3 { top: 120px; } .sock-4 { top: 160px; }
+
+        /* HIỆU ỨNG NỔ BOOM CỰC ĐẠI */
+        .big-explosion-overlay {
+            position: absolute; inset: 0; display: none; align-items: center; justify-content: center;
+            background: radial-gradient(circle, #f59e0b 0%, #ef4444 40%, rgba(0,0,0,0.95) 80%); z-index: 100;
+            animation: explosionFlash 1s ease-out forwards;
+        }
+        .boom-text-graphic {
+            font-size: 110px; font-weight: 900; font-family: 'Teko', sans-serif; color: #ffffff;
+            text-shadow: 0 0 20px #ef4444, 0 0 60px #f59e0b; animation: boomScale 0.6s cubic-bezier(0.17, 0.89, 0.32, 1.49) forwards;
+        }
+        @keyframes explosionFlash { 0% { opacity: 0; } 20% { opacity: 1; } 100% { opacity: 0.95; } }
+        @keyframes boomScale { 0% { transform: scale(0.1) rotate(-15deg); } 60% { transform: scale(1.4) rotate(5deg); } 100% { transform: scale(1.2) rotate(0deg); } }
+
+        .bomb-right-panel { display: flex; flex-direction: column; gap: 14px; }
+        .bomb-code-terminal {
+            background: #020617; border: 1.5px solid #1e293b; border-radius: 12px;
+            padding: 12px 16px; font-family: 'Fira Code', monospace;
+        }
+        .code-q-top-row { display: flex; justify-content: space-between; align-items: center; margin-bottom: 6px; }
+        .code-q-desc { font-size: 14.5px; font-weight: 700; color: #f8fafc; line-height: 1.5; }
+        .wire-attempt-badge {
+            font-size: 12px; color: #f43f5e; background: rgba(244, 63, 94, 0.15);
+            padding: 2px 8px; border-radius: 6px; border: 1px solid #f43f5e;
+        }
+        .code-q-content { font-size: 13.5px; color: #38bdf8; line-height: 1.6; white-space: pre-wrap; }
+
+        .wires-interactive-list { display: flex; flex-direction: column; gap: 11px; }
+        .wire-row-item { display: flex; align-items: center; gap: 14px; cursor: pointer; transition: transform 0.2s; }
+        .wire-row-item:hover { transform: translateX(6px); }
+
+        .wire-cable-line { height: 8px; border-radius: 4px; flex: 1; transition: 0.25s; position: relative; }
+        .wire-red { background: linear-gradient(90deg, #b91c1c, #ef4444, #f87171); }
+        .wire-yellow { background: linear-gradient(90deg, #b45309, #eab308, #fde047); }
+        .wire-green { background: linear-gradient(90deg, #15803d, #22c55e, #86efac); }
+        .wire-purple { background: linear-gradient(90deg, #7e22ce, #a855f7, #d8b4fe); }
+        .wire-cable-line.snapped { background: #334155 !important; opacity: 0.3; pointer-events: none; }
+
+        .wire-choice-label {
+            background: #020617; border: 2px solid #334155; color: #ffffff;
+            font-family: 'Fira Code', monospace; font-size: 13.5px; font-weight: 700;
+            padding: 9px 18px; border-radius: 8px; min-width: 240px;
+            display: flex; align-items: center; justify-content: space-between; transition: all 0.2s;
+        }
+        .wire-row-item:hover .wire-choice-label { border-color: #38bdf8; box-shadow: 0 0 16px rgba(56, 189, 248, 0.5); background: #0b1526; }
+        .wire-tag-id { background: #1e293b; padding: 2px 8px; border-radius: 4px; font-size: 11px; color: #94a3b8; }
+
+        /* MODAL CHUNG */
+        .quiz-modal-overlay {
+            position: fixed; inset: 0; background: rgba(3, 7, 18, 0.88); display: none;
+            align-items: center; justify-content: center; z-index: 250; backdrop-filter: blur(8px);
+        }
+        .quiz-card-pop {
+            background: #0f1c30; border: 2px solid #38bdf8; border-radius: 20px;
+            padding: 28px; max-width: 480px; width: 90%; text-align: center;
+        }
+        .quiz-tag {
+            font-family: 'Fira Code', monospace; font-size: 12px; color: #38bdf8;
+            background: rgba(56, 189, 248, 0.15); padding: 4px 12px; border-radius: 9999px; display: inline-block; margin-bottom: 12px;
+        }
+        .quiz-q-text { font-size: 16px; font-weight: 700; color: #ffffff; margin-bottom: 20px; line-height: 1.5; }
+        .quiz-options-list { display: flex; flex-direction: column; gap: 10px; }
+        .quiz-opt-btn {
+            background: #152742; border: 1px solid #1e3a8a; color: #e2e8f0; padding: 12px 16px;
+            border-radius: 10px; font-size: 13.5px; font-weight: 600; cursor: pointer; text-align: left;
+        }
+        .quiz-opt-btn:hover { background: #1e3a8a; border-color: #38bdf8; color: #fff; }
+
+        .game-modal {
+            position: fixed; inset: 0; background: rgba(0,0,0,0.85); display: none;
+            align-items: center; justify-content: center; z-index: 300; padding: 20px;
+        }
+        .modal-box {
+            background: #0d1424; border: 1.5px solid #1e2c44; border-radius: 18px;
+            padding: 32px; text-align: center; max-width: 440px; width: 100%;
+        }
+        .btn-restart {
+            background: #0284c7; color: #fff; border: none; padding: 12px 24px;
+            border-radius: 8px; font-weight: 700; cursor: pointer; margin-top: 16px;
+        }
+    </style>
+</head>
+<body>
+
+    <header class="topbar">
+        <div style="display:flex; align-items:center; gap:12px;">
+            <a href="/arena" class="back-link">← Đổi Map Khác</a>
+            <a href="/courses" class="back-link">📚 Bài Học</a>
+        </div>
+        <div style="font-weight:800; font-size:15px; color:#38bdf8;" id="arena-header-title">
+            ⚔️ Thực Hành Bài Tập
+        </div>
+    </header>
+
+    <div class="arena-container">
+
+        <!-- ==================== MAP 1: DIỆT QUÁI (HỒI 3 MẠNG MỖI QUÁI) ==================== -->
+        <div id="map1-wrapper" style="display: none; flex-direction: column; gap: 14px;">
+            <div class="stage-viewport-map1" id="stage-bg">
+                <div class="night-sky"></div>
+                <svg class="castle-wall-bg" viewBox="0 0 1000 150" preserveAspectRatio="none">
+                    <rect x="0" y="80" width="1000" height="70" fill="#131726" />
+                    <path d="M 0,80 L 1000,80" stroke="#252f4a" stroke-width="3" />
+                    <rect x="25" y="40" width="45" height="110" fill="#181d2f" />
+                    <polygon points="20,40 47,10 75,40" fill="#2d3752" />
+                    <rect x="75" y="20" width="55" height="130" fill="#121624" />
+                    <polygon points="70,20 102,-10 135,20" fill="#242c42" />
+                    <rect x="850" y="45" width="45" height="105" fill="#181d2f" />
+                    <polygon points="845,45 872,15 900,45" fill="#2d3752" />
+                    <rect x="910" y="15" width="60" height="135" fill="#121624" />
+                    <polygon points="905,15 940,-15 975,15" fill="#242c42" />
+                </svg>
+
+                <div class="lake-fog"></div>
+
+                <div class="wizard-chibi-box">
+                    <div class="magic-runes-left">ᚱ ᛟ ᛉ</div>
+                    <svg class="chibi-svg" viewBox="0 0 100 120">
+                        <path d="M 50,8 Q 38,20 18,52 L 82,52 Q 62,20 50,8 Z" fill="#1d4ed8" />
+                        <ellipse cx="50" cy="52" rx="38" ry="8" fill="#2563eb" />
+                        <circle cx="50" cy="62" r="16" fill="#fde68a" />
+                        <path d="M 38,56 L 46,60" stroke="#1e293b" stroke-width="2.5" stroke-linecap="round" />
+                        <path d="M 62,56 L 54,60" stroke="#1e293b" stroke-width="2.5" stroke-linecap="round" />
+                        <ellipse cx="43" cy="63" rx="2.5" ry="3.5" fill="#0f172a" />
+                        <ellipse cx="57" cy="63" rx="2.5" ry="3.5" fill="#0f172a" />
+                        <path d="M 28,74 L 72,74 L 84,115 L 16,115 Z" fill="#1e40af" />
+                        <path d="M 43,74 L 57,74 L 57,115 L 43,115 Z" fill="#3b82f6" />
+                        <ellipse cx="68" cy="85" rx="6" ry="6" fill="#fde68a" />
+                        <path d="M 70,85 Q 85,60 92,50 Q 82,68 76,82 Z" fill="#38bdf8" filter="drop-shadow(0 0 8px #38bdf8)" />
+                        <polygon points="69,84 73,82 72,88" fill="#fed7aa" />
+                    </svg>
+                    <div class="chibi-name-badge">{{if .Username}}{{.Username}}{{else}}Bạn{{end}}</div>
+                </div>
+
+                <div class="magic-missile" id="magic-ball"></div>
+                <div class="spell-explosion" id="spell-hit-fx">💥</div>
+
+                <div class="monster-actor-box" id="monster-box">
+                    <div class="monster-sprite" id="monster-emoji">👾</div>
+                    <div class="monster-hp-bar-wrap"><div class="monster-hp-fill" id="monster-hp"></div></div>
+                    <div class="monster-name-badge" id="monster-name">Quái Vật Cú Pháp</div>
+                </div>
+
+                <div class="wooden-pier">
+                    <div class="pier-rope-line"></div>
+                    <div class="pier-posts-row">
+                        <div class="pier-post-item"><div class="lantern-lamp"></div><div class="wood-pillar"></div></div>
+                        <div class="pier-post-item"><div class="lantern-lamp"></div><div class="wood-pillar"></div></div>
+                        <div class="pier-post-item"><div class="lantern-lamp"></div><div class="wood-pillar"></div></div>
+                        <div class="pier-post-item"><div class="lantern-lamp"></div><div class="wood-pillar"></div></div>
+                        <div class="pier-post-item"><div class="lantern-lamp"></div><div class="wood-pillar"></div></div>
+                        <div class="pier-post-item"><div class="lantern-lamp"></div><div class="wood-pillar"></div></div>
+                        <div class="pier-post-item"><div class="lantern-lamp"></div><div class="wood-pillar"></div></div>
+                    </div>
+                    <div class="pier-deck"><div class="deck-plank-lines"></div></div>
+                </div>
+                <div class="lake-water"></div>
+            </div>
+
+            <div class="status-notify" id="notify-msg"></div>
+
+            <div class="quiz-card-panel">
+                <div class="quiz-top-info">
+                    <div class="round-counter-badge" id="round-indicator">QUÁI VẬT 1 / 20</div>
+                    <div class="hp-lives-box" id="lives-display">❤️❤️❤️ (3 Mạng)</div>
+                </div>
+                <div class="question-title-text" id="question-text">Đang triệu hồi quái vật...</div>
+                <div class="code-snippet-box" id="code-snippet"></div>
+                <div class="answers-grid" id="answers-container"></div>
+            </div>
+        </div>
+
+        <!-- ==================== MAP 2: MEMORY MATCH SOLO (ĐỦ 20 LÁ BÀI) ==================== -->
+        <div id="map2-wrapper" style="display: none; flex-direction: column; gap: 14px;">
+            <div class="arcade-cabinet">
+                <div class="arcade-marquee">
+                    <div class="arcade-title-text">🕹️ Memory Match Python Concepts 🕹️</div>
+                </div>
+                <div class="arcade-scoreboard">
+                    <div class="score-item"><span style="color:#38bdf8;">👤 Điểm Số:</span> <strong id="solo-score" style="color:#fff; font-size:16px;">0 Điểm</strong></div>
+                    <div class="score-item"><span style="color:#22c55e;">🎯 Cặp Đã Giải:</span> <strong id="pairs-cleared" style="color:#22c55e; font-size:16px;">0 / 10</strong></div>
+                    <div class="score-item"><span style="color:#fbbf24;">🔄 Số Lượt Lật:</span> <strong id="turns-count" style="color:#fbbf24; font-size:16px;">0</strong></div>
+                </div>
+
+                <!-- LƯỚI ĐỦ 20 LÁ BÀI (4 HÀNG X 5 CỘT) -->
+                <div class="cards-grid" id="cards-grid"></div>
+
+                <div class="arcade-control-panel">
+                    <div class="joystick-group">
+                        <div class="joystick-base"><div class="joystick-stick"><div class="joystick-ball"></div></div></div>
+                        <span style="font-size:11.5px; font-weight:800; color:#38bdf8;">SOLO PLAYER</span>
+                    </div>
+                    <div class="buttons-row">
+                        <div class="arcade-btn btn-green"></div><div class="arcade-btn btn-teal"></div><div class="arcade-btn btn-pink"></div><div class="arcade-btn btn-yellow"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- ==================== MAP 3: DEFUSE THE BOMB ==================== -->
+        <div id="map3-wrapper" style="display: none; flex-direction: column; gap: 14px;">
+            <div class="bomb-cabinet-wrap" id="bomb-cabinet-main">
+                <div class="alarm-flash-layer" id="alarm-flash"></div>
+                <div class="bomb-top-bar">
+                    <div class="bomb-title-text">💣 DEFUSE THE BOMB (CẤU TRÚC DỮ LIỆU)</div>
+                    <div class="bomb-stats-group">
+                        <div class="bomb-stat-pill"><span style="color:#94a3b8;">Dây Đã Cắt:</span> <strong id="wires-cleared-count" style="color:#38bdf8;">0 / 20</strong></div>
+                        <div class="bomb-stat-pill"><span style="color:#94a3b8;">Lỗi Cho Phép:</span> <strong id="bomb-lives-left" style="color:#ef4444;">10 lần</strong></div>
+                    </div>
+                </div>
+                <div class="wire-selector-panel">
+                    <div style="font-size:12.5px; font-weight:700; color:#94a3b8;">✂️ CHỌN 1 TRONG 20 SỢI DÂY ĐỂ BẮT ĐẦU THÁO GỠ:</div>
+                    <div class="wires-chips-grid" id="wire-chips-container"></div>
+                </div>
+                <div class="bomb-stage-layout" id="bomb-stage-box">
+                    <div class="big-explosion-overlay" id="boom-screen"><div class="boom-text-graphic">💥 BOOM! 💥</div></div>
+                    <div class="bomb-sphere-box">
+                        <div class="bomb-wick"></div>
+                        <div class="fuse-spark-particle">✨</div>
+                        <div class="bomb-cap"></div>
+                        <div class="bomb-body" id="bomb-body-element">
+                            <div class="bomb-clock-dial">
+                                <span class="dial-number" id="bomb-fails-counter">10</span>
+                                <span class="dial-label">FAILS LEFT</span>
+                            </div>
+                            <div class="wire-connector-socket sock-1"></div>
+                            <div class="wire-connector-socket sock-2"></div>
+                            <div class="wire-connector-socket sock-3"></div>
+                            <div class="wire-connector-socket sock-4"></div>
+                        </div>
+                    </div>
+                    <div class="bomb-right-panel">
+                        <div class="bomb-code-terminal">
+                            <div class="code-q-top-row">
+                                <div class="code-q-desc" id="wire-q-title">Đang chọn sợi dây...</div>
+                                <div class="wire-attempt-badge" id="wire-attempt-display">❤️❤️❤️ (3 lần thử)</div>
+                            </div>
+                            <div class="code-q-content" id="wire-q-code">...</div>
+                        </div>
+                        <div class="wires-interactive-list" id="wires-list-box"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <!-- MODAL TRẮC NGHIỆM MAP 2 -->
+    <div class="quiz-modal-overlay" id="quiz-modal">
+        <div class="quiz-card-pop">
+            <span class="quiz-tag" id="quiz-concept-tag">KHÁI NIỆM PYTHON</span>
+            <div class="quiz-q-text" id="quiz-question-text">...</div>
+            <div class="quiz-options-list" id="quiz-options-box"></div>
+        </div>
+    </div>
+
+    <!-- MODAL KẾT THÚC CHUNG -->
+    <div class="game-modal" id="end-modal">
+        <div class="modal-box">
+            <h2 id="modal-title" style="font-size:22px; margin-bottom:8px;"></h2>
+            <p id="modal-desc" style="color:#94a3b8; font-size:14px; line-height: 1.6;"></p>
+            <button class="btn-restart" onclick="location.reload()">Chơi Lại</button>
+        </div>
+    </div>
+
+    <script>
+        const urlParams = new URLSearchParams(window.location.search);
+        let currentMap = parseInt(urlParams.get('map')) || 1;
+
+        if (currentMap === 1) {
+            document.getElementById("arena-header-title").innerText = "⚔️ Map 1: Tiêu Diệt Quái Cú Pháp (Bài 1: Biến & Kiểu Dữ Liệu)";
+            document.getElementById("map1-wrapper").style.display = "flex";
+            initMap1PvE();
+        } else if (currentMap === 2) {
+            document.getElementById("arena-header-title").innerText = "⚔️ Map 2: Memory Match Python Concepts";
+            document.getElementById("map2-wrapper").style.display = "flex";
+            initMap2SoloArcade();
+        } else if (currentMap === 3) {
+            document.getElementById("arena-header-title").innerText = "💣 Map 3: Defuse The Bomb (Bài 3: Cấu Trúc Dữ Liệu List, Tuple, Dict, Set)";
+            document.getElementById("map3-wrapper").style.display = "flex";
+            initMap3BombDefusal();
+        }
+
+        // ==================== LOGIC MAP 1 (HỒI ĐẦY ĐỦ 3 MẠNG MỖI QUÁI) ====================
+        function initMap1PvE() {
+            const MONSTERS = [
+                { name: "Slime Cú Pháp", emoji: "🧪", bg: "radial-gradient(circle at 50% 25%, #181a30 0%, #0c0d1b 60%, #05060b 100%)" },
+                { name: "Ma Trơi Kiểu Dữ Liệu", emoji: "👻", bg: "radial-gradient(circle at 50% 25%, #2a0845 0%, #15002a 60%, #050010 100%)" },
+                { name: "Dơi Quỷ Biến Số", emoji: "🦇", bg: "radial-gradient(circle at 50% 25%, #093028 0%, #051914 60%, #020c0a 100%)" },
+                { name: "Bọ Cạp Số Nguyên", emoji: "🦂", bg: "radial-gradient(circle at 50% 25%, #422006 0%, #200f03 60%, #0c0501 100%)" },
+                { name: "Xà Tinh Số Thực", emoji: "🐍", bg: "radial-gradient(circle at 50% 25%, #1e1b4b 0%, #0f0d2b 60%, #050414 100%)" }
+            ];
+
+            const QUESTIONS = [
+                { q: "Kết quả của hàm type(10 / 2) trong Python là gì?", code: "print(type(10 / 2))", options: ["<class 'int'>", "<class 'float'>", "<class 'double'>", "<class 'number'>"], ans: 1 },
+                { q: "Tên biến nào sau đây là HỢP LỆ trong Python?", code: "", options: ["2player", "my-var", "_score_2026", "class"], ans: 2 },
+                { q: "Toán tử nào dùng để tính lũy thừa (số mũ) trong Python?", code: "", options: ["^", "**", "//", "pow^"], ans: 1 },
+                { q: "Kết quả của phép chia lấy phần nguyên 17 // 5 là bao nhiêu?", code: "print(17 // 5)", options: ["3.4", "3", "2", "3.0"], ans: 1 },
+                { q: "Kết quả của phép chia lấy phần dư 14 % 4 là gì?", code: "print(14 % 4)", options: ["3", "3.5", "2", "0"], ans: 2 }
+            ];
+
+            let currentIndex = 0;
+            let lives = 3;
+            let isAnswering = false;
+
+            const stageBg = document.getElementById("stage-bg");
+            const monsterEmoji = document.getElementById("monster-emoji");
+            const monsterName = document.getElementById("monster-name");
+            const monsterHp = document.getElementById("monster-hp");
+            const magicBall = document.getElementById("magic-ball");
+            const spellHitFx = document.getElementById("spell-hit-fx");
+            const roundIndicator = document.getElementById("round-indicator");
+            const livesDisplay = document.getElementById("lives-display");
+            const questionText = document.getElementById("question-text");
+            const codeSnippet = document.getElementById("code-snippet");
+            const answersContainer = document.getElementById("answers-container");
+            const notifyMsg = document.getElementById("notify-msg");
+
+            function loadQuestion() {
+                isAnswering = false;
+                notifyMsg.innerText = "";
+                monsterHp.style.width = "100%";
+                spellHitFx.style.display = "none";
+
+                // HỒI ĐẦY 3 MẠNG CHO QUÁI VẬT TIẾP THEO
+                lives = 3;
+
+                const mon = MONSTERS[currentIndex % MONSTERS.length];
+                const q = QUESTIONS[currentIndex % QUESTIONS.length];
+
+                stageBg.style.background = mon.bg;
+                monsterEmoji.innerText = mon.emoji;
+                monsterName.innerText = mon.name;
+                roundIndicator.innerText = `QUÁI VẬT ${currentIndex + 1} / 20`;
+                livesDisplay.innerText = "❤️❤️❤️ (3 Mạng)";
+
+                questionText.innerText = q.q;
+                if (q.code) {
+                    codeSnippet.innerText = q.code;
+                    codeSnippet.style.display = "block";
+                } else {
+                    codeSnippet.style.display = "none";
+                }
+
+                answersContainer.innerHTML = "";
+                q.options.forEach((opt, idx) => {
+                    const btn = document.createElement("button");
+                    btn.className = "answer-choice-btn";
+                    btn.innerText = `${String.fromCharCode(65 + idx)}. ${opt}`;
+                    btn.onclick = () => handleChoice(idx === q.ans);
+                    answersContainer.appendChild(btn);
+                });
+            }
+
+            function handleChoice(isCorrect) {
+                if (isAnswering) return;
+                isAnswering = true;
+                document.querySelectorAll(".answer-choice-btn").forEach(b => b.disabled = true);
+
+                if (isCorrect) {
+                    notifyMsg.className = "status-notify notify-correct";
+                    notifyMsg.innerText = "✓ Chính xác! Phóng cầu năng lượng tiêu diệt quái vật!";
+
+                    fireMagicBall(() => {
+                        spellHitFx.style.display = "block";
+                        monsterHp.style.width = "0%";
+                        monsterEmoji.style.transform = "scale(0) rotate(180deg)";
+
+                        setTimeout(() => {
+                            monsterEmoji.style.transform = "scale(1) rotate(0deg)";
+                            currentIndex++;
+                            if (currentIndex >= 20) {
+                                showModal(true, "CHIẾN CÔNG HIỂN HÁCH! 🏆", "Tuyệt đỉnh! Bạn đã tiêu diệt toàn bộ 20 quái vật!");
+                            } else {
+                                loadQuestion();
+                            }
+                        }, 800);
+                    });
+                } else {
+                    lives--;
+                    notifyMsg.className = "status-notify notify-wrong";
+                    notifyMsg.innerText = "✗ Sai rồi! Bạn bị quái vật phản đòn trừ 1 mạng!";
+                    livesDisplay.innerText = "❤️".repeat(Math.max(0, lives)) + ` (${lives} Mạng)`;
+
+                    const mBox = document.getElementById("monster-box");
+                    mBox.style.transform = "translateX(-30px)";
+                    setTimeout(() => { mBox.style.transform = "translateX(0)"; }, 200);
+
+                    if (lives <= 0) {
+                        setTimeout(() => showModal(false, "BẠN ĐÃ BỊ ĐÁNH BẠI! 💀", `Bạn đã cạn kiệt 3 mạng sống trước Quái vật thứ ${currentIndex + 1}. Hãy ôn tập lại nhé!`), 800);
+                    } else {
+                        setTimeout(() => {
+                            isAnswering = false;
+                            document.querySelectorAll(".answer-choice-btn").forEach(b => b.disabled = false);
+                        }, 1000);
+                    }
+                }
+            }
+
+            function fireMagicBall(onHit) {
+                magicBall.style.display = "block";
+                let x = 190;
+                const targetX = 840;
+
+                const anim = setInterval(() => {
+                    x += 42;
+                    magicBall.style.left = x + "px";
+                    if (x >= targetX) {
+                        clearInterval(anim);
+                        magicBall.style.display = "none";
+                        if (onHit) onHit();
+                    }
+                }, 16);
+            }
+
+            loadQuestion();
+        }
+
+        // ==================== LOGIC MAP 2 (ĐỦ ĐÚNG 20 LÁ BÀI - 10 CẶP) ====================
+        function initMap2SoloArcade() {
+            const CONCEPTS = [
+                { id: 1, name: "Immutable", icon: "🔒", question: "Cấu trúc dữ liệu nào sau đây là Immutable (Bất biến) trong Python?", options: ["List", "Tuple", "Dictionary", "Set"], ans: 1 },
+                { id: 2, name: "Tuple", icon: "🧬", question: "Cú pháp nào sau đây định nghĩa một Tuple gồm đúng 1 phần tử?", options: ["t = (1)", "t = (1,)", "t = [1]", "t = {1}"], ans: 1 },
+                { id: 3, name: "While Loop", icon: "🔁", question: "Câu lệnh nào lập tức dừng và thoát hẳn ra khỏi vòng lặp While?", options: ["continue", "pass", "break", "return"], ans: 2 },
+                { id: 4, name: "Continue", icon: "⚡", question: "Từ khóa continue có tác dụng gì trong vòng lặp?", options: ["Dừng chương trình", "Bỏ qua lần lặp hiện tại", "Khởi động lại vòng lặp", "Xóa biến đếm"], ans: 1 },
+                { id: 5, name: "Dictionary", icon: "📦", question: "Phương thức nào dùng để lấy giá trị theo Key an toàn không gây lỗi KeyError?", options: ["dict.fetch()", "dict.find()", "dict.get()", "dict.lookup()"], ans: 2 },
+                { id: 6, name: "List", icon: "📋", question: "Phương thức nào thêm phần tử vào cuối một List?", options: ["add()", "push()", "insert_last()", "append()"], ans: 3 },
+                { id: 7, name: "Boolean", icon: "🎯", question: "Giá trị nào sau đây được Python coi là False (Falsy value)?", options: ["[] (List rỗng)", "[0]", "'False'", "1"], ans: 0 },
+                { id: 8, name: "Pythonic", icon: "🐍", question: "Kỹ thuật nào sau đây tạo ra danh sách số chẵn theo phong cách Pythonic?", options: ["Dùng vòng lặp lồng nhau", "List Comprehension", "Đệ quy", "Con trỏ bộ nhớ"], ans: 1 },
+                { id: 9, name: "Try/Except", icon: "🛡️", question: "Khối lệnh nào luôn luôn được thực thi dù có xảy ra lỗi ngoại lệ hay không?", options: ["else", "finally", "catch", "defer"], ans: 1 },
+                { id: 10, name: "Function", icon: "⚙️", question: "Từ khóa nào dùng để tạo một hàm vô danh (Anonymous Function)?", options: ["def", "func", "lambda", "inline"], ans: 2 }
+            ];
+
+            let deck = [];
+            CONCEPTS.forEach(c => {
+                deck.push({ ...c, cardUid: Math.random() });
+                deck.push({ ...c, cardUid: Math.random() });
+            });
+            deck.sort(() => Math.random() - 0.5);
+
+            let score = 0;
+            let turnsCount = 0;
+            let matchedPairsCount = 0;
+            let flippedCards = [];
+            let canClick = true;
+
+            const grid = document.getElementById("cards-grid");
+            grid.innerHTML = "";
+
+            deck.forEach((card, index) => {
+                const cardEl = document.createElement("div");
+                cardEl.className = "match-card";
+                cardEl.innerHTML = `
+                    <div class="card-back"><span class="card-back-mark">?</span></div>
+                    <div class="card-front">
+                        <span class="card-title">${card.name}</span>
+                        <span class="card-icon">${card.icon}</span>
+                        <span class="card-title">${card.name}</span>
+                    </div>
+                `;
+                cardEl.onclick = () => handleCardClick(index, card, cardEl);
+                grid.appendChild(cardEl);
+            });
+
+            function handleCardClick(index, card, cardEl) {
+                if (!canClick || cardEl.classList.contains("flipped") || cardEl.classList.contains("matched")) return;
+                cardEl.classList.add("flipped");
+                flippedCards.push({ index, card, el: cardEl });
+
+                if (flippedCards.length === 2) {
+                    canClick = false;
+                    turnsCount++;
+                    document.getElementById("turns-count").innerText = turnsCount;
+                    const [first, second] = flippedCards;
+
+                    if (first.card.id === second.card.id) {
+                        setTimeout(() => { showQuizModal(first.card, first.el, second.el); }, 400);
+                    } else {
+                        setTimeout(() => {
+                            first.el.classList.remove("flipped");
+                            second.el.classList.remove("flipped");
+                            flippedCards = [];
+                            canClick = true;
+                        }, 900);
+                    }
+                }
+            }
+
+            function showQuizModal(concept, el1, el2) {
+                const modal = document.getElementById("quiz-modal");
+                document.getElementById("quiz-concept-tag").innerText = `⚡ KHÁI NIỆM: ${concept.name.toUpperCase()}`;
+                document.getElementById("quiz-question-text").innerText = concept.question;
+
+                const optBox = document.getElementById("quiz-options-box");
+                optBox.innerHTML = "";
+
+                concept.options.forEach((opt, idx) => {
+                    const btn = document.createElement("button");
+                    btn.className = "quiz-opt-btn";
+                    btn.innerText = `${String.fromCharCode(65 + idx)}. ${opt}`;
+                    btn.onclick = () => {
+                        modal.style.display = "none";
+                        if (idx === concept.ans) {
+                            el1.classList.add("matched");
+                            el2.classList.add("matched");
+                            score += 10;
+                            matchedPairsCount++;
+                            document.getElementById("solo-score").innerText = `${score} Điểm`;
+                            document.getElementById("pairs-cleared").innerText = `${matchedPairsCount} / 10`;
+
+                            if (matchedPairsCount >= 10) {
+                                setTimeout(() => {
+                                    showModal(true, "HOÀN THÀNH TOÀN BỘ 20 LÁ BÀI! 🏆", `Xuất sắc! Bạn đã giải mã thành công 10/10 cặp câu hỏi và đạt ${score} điểm sau ${turnsCount} lượt!`);
+                                }, 500);
+                            }
+                        } else {
+                            el1.classList.remove("flipped");
+                            el2.classList.remove("flipped");
+                        }
+                        flippedCards = [];
+                        canClick = true;
+                    };
+                    optBox.appendChild(btn);
+                });
+                modal.style.display = "flex";
+            }
+        }
+
+        // ==================== LOGIC MAP 3 (BOMB DEFUSAL) ====================
+        function initMap3BombDefusal() {
+            const BOMB_TASKS = [
+                { q: "Phương thức nào thêm phần tử vào cuối danh sách (List)?", code: "nums = [1, 2, 3]\nnums.____(4)", options: ["push(4)", "append(4)", "add(4)", "insert(4)"], ans: 1 },
+                { q: "Kết quả của cú pháp cắt lát (List Slicing) sau là gì?", code: "arr = [10, 20, 30, 40, 50]\nprint(arr[1:4])", options: ["[20, 30, 40]", "[10, 20, 30]", "[20, 30, 40, 50]", "[30, 40]"], ans: 0 },
+                { q: "Cấu trúc dữ liệu nào sau đây là BẤT BIẾN (Immutable)?", code: "a = [1, 2]     # A\nb = (1, 2)     # B\nc = {'x': 1}   # C\nd = {1, 2}     # D", options: ["List (A)", "Tuple (B)", "Dictionary (C)", "Set (D)"], ans: 1 }
+            ];
+
+            let selectedWireIndex = 0;
+            let wiresStatus = new Array(20).fill(false);
+            let currentWireAttempts = 3;
+            let totalFailsAllowed = 10;
+            let isActionLocked = false;
+
+            const chipsContainer = document.getElementById("wire-chips-container");
+            const wiresClearedCount = document.getElementById("wires-cleared-count");
+            const bombLivesLeft = document.getElementById("bomb-lives-left");
+            const bombFailsCounter = document.getElementById("bomb-fails-counter");
+            const wireQTitle = document.getElementById("wire-q-title");
+            const wireQCode = document.getElementById("wire-q-code");
+            const wireAttemptDisplay = document.getElementById("wire-attempt-display");
+            const wiresListBox = document.getElementById("wires-list-box");
+            const bombBody = document.getElementById("bomb-body-element");
+            const alarmFlash = document.getElementById("alarm-flash");
+            const boomScreen = document.getElementById("boom-screen");
+
+            function renderWireChips() {
+                chipsContainer.innerHTML = "";
+                for (let i = 0; i < 20; i++) {
+                    const btn = document.createElement("button");
+                    btn.className = "wire-chip-btn";
+                    if (wiresStatus[i]) btn.classList.add("cleared");
+                    if (i === selectedWireIndex && !wiresStatus[i]) btn.classList.add("active");
+                    btn.innerText = `DÂY ${i + 1}`;
+                    btn.onclick = () => {
+                        if (wiresStatus[i]) return;
+                        selectedWireIndex = i;
+                        currentWireAttempts = 3;
+                        renderWireChips();
+                        loadSelectedWireQuestion();
+                    };
+                    chipsContainer.appendChild(btn);
+                }
+                wiresClearedCount.innerText = `${wiresStatus.filter(Boolean).length} / 20`;
+            }
+
+            function loadSelectedWireQuestion() {
+                isActionLocked = false;
+                const task = BOMB_TASKS[selectedWireIndex % BOMB_TASKS.length];
+
+                bombLivesLeft.innerText = `${totalFailsAllowed} lần`;
+                bombFailsCounter.innerText = totalFailsAllowed;
+                wireAttemptDisplay.innerText = "❤️".repeat(currentWireAttempts) + ` (${currentWireAttempts} lần thử)`;
+
+                wireQTitle.innerText = `SỢI DÂY SỐ ${selectedWireIndex + 1}: ${task.q}`;
+                wireQCode.innerText = task.code || "# Không có đoạn mã kèm theo";
+
+                const colors = ["wire-red", "wire-yellow", "wire-green", "wire-purple"];
+                wiresListBox.innerHTML = "";
+
+                task.options.forEach((optText, optIdx) => {
+                    const row = document.createElement("div");
+                    row.className = "wire-row-item";
+                    row.innerHTML = `
+                        <div class="wire-cable-line ${colors[optIdx]}" id="wire-cable-${optIdx}"></div>
+                        <div class="wire-choice-label"><span>${optText}</span><span class="wire-tag-id">DÂY ${String.fromCharCode(65 + optIdx)}</span></div>
+                    `;
+                    row.onclick = () => handleChoiceCut(optIdx === task.ans, optIdx);
+                    wiresListBox.appendChild(row);
+                });
+            }
+
+            function handleChoiceCut(isCorrect, optIdx) {
+                if (isActionLocked) return;
+                isActionLocked = true;
+
+                const cable = document.getElementById(`wire-cable-${optIdx}`);
+
+                if (isCorrect) {
+                    cable.classList.add("snapped");
+                    wiresStatus[selectedWireIndex] = true;
+                    setTimeout(() => {
+                        let nextWire = wiresStatus.findIndex(status => !status);
+                        if (nextWire !== -1) {
+                            selectedWireIndex = nextWire;
+                            currentWireAttempts = 3;
+                            renderWireChips();
+                            loadSelectedWireQuestion();
+                        } else {
+                            showModal(true, "VÔ HIỆU HÓA HOÀN TOÀN! 🏆", "Bạn đã gỡ thành công toàn bộ 20 sợi dây!");
+                        }
+                    }, 500);
+                } else {
+                    currentWireAttempts--;
+                    totalFailsAllowed--;
+                    bombLivesLeft.innerText = `${totalFailsAllowed} lần`;
+                    bombFailsCounter.innerText = totalFailsAllowed;
+                    wireAttemptDisplay.innerText = "❤️".repeat(Math.max(0, currentWireAttempts)) + ` (${currentWireAttempts} lần thử)`;
+
+                    alarmFlash.style.display = "block";
+                    setTimeout(() => { alarmFlash.style.display = "none"; }, 300);
+
+                    bombBody.style.transform = "translateX(-15px) rotate(-6deg)";
+                    setTimeout(() => { bombBody.style.transform = "translateX(15px) rotate(6deg)"; }, 100);
+                    setTimeout(() => { bombBody.style.transform = "translateX(0) rotate(0deg)"; }, 200);
+
+                    if (totalFailsAllowed <= 0) {
+                        boomScreen.style.display = "flex";
+                        alarmFlash.style.display = "block";
+                        setTimeout(() => {
+                            showModal(false, "BOOM! QUẢ BOM ĐÃ PHÁT NỔ! 💀", "Bạn đã tích lũy 10 lần cắt sai!");
+                        }, 1200);
+                    } else {
+                        if (currentWireAttempts <= 0) {
+                            selectedWireIndex = (selectedWireIndex + 1) % 20;
+                            currentWireAttempts = 3;
+                            renderWireChips();
+                            loadSelectedWireQuestion();
+                        } else {
+                            isActionLocked = false;
+                        }
+                    }
+                }
+            }
+
+            renderWireChips();
+            loadSelectedWireQuestion();
+        }
+
+        function showModal(won, title, desc) {
+            const modal = document.getElementById('end-modal');
+            const t = document.getElementById('modal-title');
+            t.innerText = title;
+            t.style.color = won ? "#38bdf8" : "#f43f5e";
+            document.getElementById('modal-desc').innerText = desc;
+            modal.style.display = 'flex';
+        }
+    </script>
+</body>
+</html>

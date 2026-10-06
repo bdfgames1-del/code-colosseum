@@ -1,0 +1,423 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Thực Hành Bài Tập - CodeColosseum</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@500;700&family=Plus+Jakarta+Sans:wght@500;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            background-color: #070a13;
+            color: #f8fafc;
+            min-height: 100vh;
+            display: flex;
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            overflow-x: hidden;
+        }
+
+        .sidebar {
+            width: 250px;
+            background: #090e1a;
+            border-right: 1px solid #162035;
+            padding: 24px 16px;
+            display: flex;
+            flex-direction: column;
+            gap: 28px;
+            flex-shrink: 0;
+            min-height: 100vh;
+        }
+
+        .brand-logo {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 19px;
+            font-weight: 800;
+            color: #ffffff;
+            padding-left: 8px;
+        }
+
+        .menu-list {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .menu-item {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 12px 16px;
+            border-radius: 10px;
+            color: #94a3b8;
+            text-decoration: none;
+            font-size: 14.5px;
+            font-weight: 600;
+            transition: all 0.2s ease;
+        }
+        .menu-item:hover {
+            color: #38bdf8;
+            background: rgba(56, 189, 248, 0.08);
+        }
+
+        .menu-item.active {
+            background: rgba(14, 165, 233, 0.12);
+            color: #38bdf8;
+            font-weight: 700;
+            border: 1px solid rgba(56, 189, 248, 0.3);
+        }
+
+        .menu-item.arena-item {
+            color: #f43f5e;
+            font-weight: 700;
+        }
+        .menu-item.arena-item:hover {
+            background: rgba(244, 63, 94, 0.1);
+            color: #fb7185;
+        }
+
+        .badge-live {
+            font-size: 10px;
+            background: #ef4444;
+            color: #fff;
+            padding: 2px 7px;
+            border-radius: 9999px;
+            font-weight: 800;
+            margin-left: auto;
+        }
+
+        .main-content {
+            flex: 1;
+            padding: 32px 40px;
+            display: flex;
+            flex-direction: column;
+            gap: 28px;
+            overflow-y: auto;
+            max-height: 100vh;
+        }
+
+        .header-title-box {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .section-heading {
+            font-size: 24px;
+            font-weight: 800;
+            color: #f8fafc;
+        }
+        .section-desc {
+            font-size: 14px;
+            color: #94a3b8;
+            margin-top: 4px;
+        }
+
+        .maps-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 20px;
+        }
+
+        .map-card {
+            background: #0d1322;
+            border: 1px solid #1a253c;
+            border-radius: 16px;
+            padding: 22px;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            min-height: 250px;
+            transition: 0.25s;
+        }
+        .map-card:hover {
+            border-color: #0284c7;
+            transform: translateY(-4px);
+            box-shadow: 0 10px 25px rgba(2, 132, 199, 0.2);
+        }
+
+        .card-top {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 14px;
+        }
+        .card-icon {
+            font-size: 28px;
+            width: 44px;
+            height: 44px;
+            background: #141d33;
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border: 1px solid #1e2c4a;
+        }
+        .level-badge {
+            font-size: 11px;
+            font-weight: 800;
+            padding: 3px 10px;
+            border-radius: 6px;
+            text-transform: uppercase;
+            font-family: 'Fira Code', monospace;
+        }
+        .level-basic { background: rgba(56, 189, 248, 0.12); color: #38bdf8; border: 1px solid rgba(56, 189, 248, 0.3); }
+        .level-adv { background: rgba(168, 85, 247, 0.15); color: #c084fc; border: 1px solid rgba(168, 85, 247, 0.3); }
+        .level-expert { background: rgba(239, 68, 68, 0.15); color: #f87171; border: 1px solid rgba(239, 68, 68, 0.3); }
+
+        .map-name {
+            font-size: 17.5px;
+            font-weight: 800;
+            color: #ffffff;
+            margin-bottom: 6px;
+        }
+        .map-intro {
+            font-size: 13px;
+            color: #94a3b8;
+            line-height: 1.5;
+            margin-bottom: 14px;
+        }
+        .map-topic {
+            font-size: 12px;
+            color: #64748b;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            margin-bottom: 16px;
+        }
+
+        .btn-fight {
+            display: block;
+            text-align: center;
+            text-decoration: none;
+            background: linear-gradient(135deg, #0284c7 0%, #0369a1 100%);
+            color: #ffffff;
+            font-weight: 700;
+            font-size: 14px;
+            padding: 11px;
+            border-radius: 10px;
+            box-shadow: 0 4px 14px rgba(2, 132, 199, 0.3);
+            transition: 0.2s;
+        }
+        .btn-fight:hover {
+            box-shadow: 0 0 20px rgba(56, 189, 248, 0.6);
+            transform: translateY(-1px);
+        }
+    </style>
+</head>
+<body>
+
+    <!-- THANH MENU BÊN TRÁI -->
+    <aside class="sidebar">
+        <div class="brand-logo">
+            <span>⚔️</span> CodeColosseum
+        </div>
+
+        <nav class="menu-list">
+            <a href="/" class="menu-item">
+                <span>🏠</span> Trang chủ
+            </a>
+            <a href="/courses" class="menu-item">
+                <span>📚</span> Bài học
+            </a>
+            
+            <!-- THỰC HÀNH BÀI TẬP (ĐANG ACTIVE) -->
+            <a href="/arena" class="menu-item active">
+                <span>📝</span> Thực hành bài tập
+            </a>
+
+            <!-- ĐẤU TRƯỜNG DẪN TỚI SPEED DUEL -->
+            <a href="/arena/speed-duel" class="menu-item arena-item">
+                <span>⚔️</span> Đấu trường
+                <span class="badge-live">LIVE</span>
+            </a>
+
+            <a href="/leaderboard" class="menu-item">
+                <span>🏆</span> Bảng xếp hạng
+            </a>
+            <a href="/profile" class="menu-item">
+                <span>👤</span> Hồ sơ
+            </a>
+        </nav>
+    </aside>
+
+    <!-- NỘI DUNG CHÍNH -->
+    <main class="main-content">
+        <div class="header-title-box">
+            <div>
+                <h1 class="section-heading">Thực Hành Bài Tập: Các Bản Đồ Thử Thách</h1>
+                <p class="section-desc">Vượt qua các ải lập trình từ Cơ Bản đến Chuyên Sâu để tích lũy kiến thức và rèn luyện tư duy.</p>
+            </div>
+            <div style="font-family:'Fira Code'; font-size:13px; color:#38bdf8; background:#0f172a; padding:6px 14px; border-radius:8px; border:1px solid #1e293b;">
+                👤 {{if .Username}}{{.Username}}{{else}}Chiến Binh{{end}}
+            </div>
+        </div>
+
+        <!-- LƯỚI 10 MAP THỰC HÀNH -->
+        <div class="maps-grid">
+            <!-- Map 1 -->
+            <div class="map-card">
+                <div>
+                    <div class="card-top">
+                        <div class="card-icon">🧙‍♂️</div>
+                        <span class="level-badge level-basic">CƠ BẢN</span>
+                    </div>
+                    <div class="map-name">Map 1: Diệt Quái Cú Pháp</div>
+                    <div class="map-intro">Một mình trấn giữ cây cầu, trả lời 20 câu hỏi về biến và kiểu dữ liệu để phóng cầu phép thuật tiêu diệt 20 quái vật. Hồi đủ 3 mạng mỗi quái.</div>
+                </div>
+                <div>
+                    <div class="map-topic">⚔️ Chủ đề: Biến & Kiểu dữ liệu</div>
+                    <a href="/arena/battle?map=1" class="btn-fight">Vào Thực Hành Map 1 →</a>
+                </div>
+            </div>
+
+            <!-- Map 2 -->
+            <div class="map-card">
+                <div>
+                    <div class="card-top">
+                        <div class="card-icon">🕹️</div>
+                        <span class="level-badge level-basic">CƠ BẢN</span>
+                    </div>
+                    <div class="map-name">Map 2: Memory Match Arcade</div>
+                    <div class="map-intro">Máy chơi game thùng Arcade lật 20 thẻ bài (10 cặp). Lật trúng cặp sẽ mở khóa câu hỏi trắc nghiệm kiểm tra trí nhớ các khái niệm cốt lõi.</div>
+                </div>
+                <div>
+                    <div class="map-topic">⚔️ Chủ đề: Khái niệm Python Core</div>
+                    <a href="/arena/battle?map=2" class="btn-fight">Vào Thực Hành Map 2 →</a>
+                </div>
+            </div>
+
+            <!-- Map 3 -->
+            <div class="map-card">
+                <div>
+                    <div class="card-top">
+                        <div class="card-icon">💣</div>
+                        <span class="level-badge level-basic">CƠ BẢN</span>
+                    </div>
+                    <div class="map-name">Map 3: Defuse The Bomb</div>
+                    <div class="map-intro">Quả bom hẹn giờ với 20 sợi dây kíp nổ. Tự do lựa chọn sợi dây muốn tháo gỡ trước, có 3 lần thử mỗi dây và tối đa 10 lỗi cho phép.</div>
+                </div>
+                <div>
+                    <div class="map-topic">⚔️ Chủ đề: List, Tuple, Dict, Set</div>
+                    <a href="/arena/battle?map=3" class="btn-fight">Vào Thực Hành Map 3 →</a>
+                </div>
+            </div>
+
+            <!-- Map 4 -->
+            <div class="map-card">
+                <div>
+                    <div class="card-top">
+                        <div class="card-icon">📜</div>
+                        <span class="level-badge level-basic">CƠ BẢN</span>
+                    </div>
+                    <div class="map-name">Map 4: Pháo Đài Hàm & Scope</div>
+                    <div class="map-intro">Giải quyết quy tắc tầm vực biến LEGB, lambda function và các đối số *args, **kwargs.</div>
+                </div>
+                <div>
+                    <div class="map-topic">⚔️ Chủ đề: Hàm & Tổ chức mã</div>
+                    <a href="/arena/battle?map=4" class="btn-fight">Vào Thực Hành Map 4 →</a>
+                </div>
+            </div>
+
+            <!-- Map 5 -->
+            <div class="map-card">
+                <div>
+                    <div class="card-top">
+                        <div class="card-icon">🏰</div>
+                        <span class="level-badge level-adv">NÂNG CAO</span>
+                    </div>
+                    <div class="map-name">Map 5: Lâu Đài Hướng Đối Tượng</div>
+                    <div class="map-intro">Đóng gói và kế thừa các phương thức ma thuật dunder methods (__init__, __str__, __repr__).</div>
+                </div>
+                <div>
+                    <div class="map-topic">⚔️ Chủ đề: Hướng đối tượng (OOP)</div>
+                    <a href="/arena/battle?map=5" class="btn-fight">Vào Thực Hành Map 5 →</a>
+                </div>
+            </div>
+
+            <!-- Map 6 -->
+            <div class="map-card">
+                <div>
+                    <div class="card-top">
+                        <div class="card-icon">📁</div>
+                        <span class="level-badge level-adv">NÂNG CAO</span>
+                    </div>
+                    <div class="map-name">Map 6: Mê Cung Tệp & Regex</div>
+                    <div class="map-intro">Trích xuất dữ liệu chuỗi phức tạp với Regular Expressions và xử lý đọc ghi file JSON an toàn.</div>
+                </div>
+                <div>
+                    <div class="map-topic">⚔️ Chủ đề: File, JSON & Regex</div>
+                    <a href="/arena/battle?map=6" class="btn-fight">Vào Thực Hành Map 6 →</a>
+                </div>
+            </div>
+
+            <!-- Map 7 -->
+            <div class="map-card">
+                <div>
+                    <div class="card-top">
+                        <div class="card-icon">⚡</div>
+                        <span class="level-badge level-adv">NÂNG CAO</span>
+                    </div>
+                    <div class="map-name">Map 7: Vực Thẳm Pythonic</div>
+                    <div class="map-intro">Chinh phục các tính năng độc đáo: List comprehension, Generator yield và Decorator lồng nhau.</div>
+                </div>
+                <div>
+                    <div class="map-topic">⚔️ Chủ đề: Pythonic & Generator[cite: 9]</div>
+                    <a href="/arena/battle?map=7" class="btn-fight">Vào Thực Hành Map 7 →</a>
+                </div>
+            </div>
+
+            <!-- Map 8 -->
+            <div class="map-card">
+                <div>
+                    <div class="card-top">
+                        <div class="card-icon">🌌</div>
+                        <span class="level-badge level-adv">NÂNG CAO</span>
+                    </div>
+                    <div class="map-name">Map 8: Đấu Trường Vô Tận</div>
+                    <div class="map-intro">Tăng tốc IO với lập trình bất đồng bộ Asyncio, async/await, cơ chế GIL và Multiprocessing[cite: 9].</div>
+                </div>
+                <div>
+                    <div class="map-topic">⚔️ Chủ đề: Bất đồng bộ & Đa luồng[cite: 9]</div>
+                    <a href="/arena/battle?map=8" class="btn-fight">Vào Thực Hành Map 8 →</a>
+                </div>
+            </div>
+
+            <!-- Map 9 -->
+            <div class="map-card">
+                <div>
+                    <div class="card-top">
+                        <div class="card-icon">🌋</div>
+                        <span class="level-badge level-expert">CHUYÊN SÂU</span>
+                    </div>
+                    <div class="map-name">Map 9: Núi Lửa Thuật Toán</div>
+                    <div class="map-intro">Độ phức tạp thuật toán Big-O, cấu trúc dữ liệu cây (Tree), Heap, Graph và tối ưu bộ nhớ[cite: 9].</div>
+                </div>
+                <div>
+                    <div class="map-topic">⚔️ Chủ đề: Thuật toán & Tối ưu[cite: 9]</div>
+                    <a href="/arena/battle?map=9" class="btn-fight">Vào Thực Hành Map 9 →</a>
+                </div>
+            </div>
+
+            <!-- Map 10 -->
+            <div class="map-card">
+                <div>
+                    <div class="card-top">
+                        <div class="card-icon">👑</div>
+                        <span class="level-badge level-expert">CHUYÊN SÂU</span>
+                    </div>
+                    <div class="map-name">Map 10: Đỉnh Danh Vọng</div>
+                    <div class="map-intro">Kiến trúc dự án quy mô lớn: Tự động hóa kiểm thử pytest, kiểm tra kiểu tĩnh mypy và Docker[cite: 9].</div>
+                </div>
+                <div>
+                    <div class="map-topic">⚔️ Chủ đề: Kiến trúc & Kiểm thử[cite: 9]</div>
+                    <a href="/arena/battle?map=10" class="btn-fight">Vào Thực Hành Map 10 →</a>
+                </div>
+            </div>
+        </div>
+    </main>
+
+</body>
+</html>
