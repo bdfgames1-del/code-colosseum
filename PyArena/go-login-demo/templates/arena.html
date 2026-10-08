@@ -254,7 +254,7 @@
         .notify-correct { color: #34d399; }
         .notify-wrong { color: #f87171; }
 
-        /* ==================== MAP 2: MEMORY MATCH ARCADE 20 LÁ BÀI ==================== */
+        /* ==================== MAP 2: MEMORY MATCH ARCADE ==================== */
         .arcade-cabinet {
             background: linear-gradient(180deg, #1b355a 0%, #0c182c 100%);
             border: 6px solid #2563eb;
@@ -400,7 +400,7 @@
         .btn-pink { background: #f43f5e; box-shadow: 0 0 10px #f43f5e; }
         .btn-yellow { background: #eab308; box-shadow: 0 0 10px #eab308; }
 
-        /* ==================== MAP 3: BOMB DEFUSAL NÂNG CẤP HIỆU ỨNG BOOM ==================== */
+        /* ==================== MAP 3: BOMB DEFUSAL ==================== */
         .bomb-cabinet-wrap {
             position: relative;
             width: 100%;
@@ -435,7 +435,6 @@
             border-radius: 8px; font-family: 'Fira Code', monospace; font-size: 13px;
         }
 
-        /* KHAY 20 SỢI DÂY CỦA QUẢ BOM */
         .wire-selector-panel {
             background: #090e17;
             border: 1.5px solid #1a283a;
@@ -523,7 +522,6 @@
         .wire-connector-socket { position: absolute; right: -7px; width: 14px; height: 14px; background: #475569; border-radius: 50%; border: 2px solid #000; }
         .sock-1 { top: 40px; } .sock-2 { top: 80px; } .sock-3 { top: 120px; } .sock-4 { top: 160px; }
 
-        /* HIỆU ỨNG NỔ BOOM CỰC ĐẠI */
         .big-explosion-overlay {
             position: absolute; inset: 0; display: none; align-items: center; justify-content: center;
             background: radial-gradient(circle, #f59e0b 0%, #ef4444 40%, rgba(0,0,0,0.95) 80%); z-index: 100;
@@ -596,11 +594,11 @@
         }
         .modal-box {
             background: #0d1424; border: 1.5px solid #1e2c44; border-radius: 18px;
-            padding: 32px; text-align: center; max-width: 440px; width: 100%;
+            padding: 28px; text-align: center; max-width: 600px; width: 100%;
         }
         .btn-restart {
-            background: #0284c7; color: #fff; border: none; padding: 12px 24px;
-            border-radius: 8px; font-weight: 700; cursor: pointer; margin-top: 16px;
+            background: #0284c7; color: #fff; border: none; padding: 10px 22px;
+            border-radius: 8px; font-weight: 700; cursor: pointer;
         }
     </style>
 </head>
@@ -694,7 +692,7 @@
             </div>
         </div>
 
-        <!-- ==================== MAP 2: MEMORY MATCH SOLO (ĐỦ 20 LÁ BÀI) ==================== -->
+        <!-- ==================== MAP 2: MEMORY MATCH SOLO (20 LÁ BÀI) ==================== -->
         <div id="map2-wrapper" style="display: none; flex-direction: column; gap: 14px;">
             <div class="arcade-cabinet">
                 <div class="arcade-marquee">
@@ -706,7 +704,6 @@
                     <div class="score-item"><span style="color:#fbbf24;">🔄 Số Lượt Lật:</span> <strong id="turns-count" style="color:#fbbf24; font-size:16px;">0</strong></div>
                 </div>
 
-                <!-- LƯỚI ĐỦ 20 LÁ BÀI (4 HÀNG X 5 CỘT) -->
                 <div class="cards-grid" id="cards-grid"></div>
 
                 <div class="arcade-control-panel">
@@ -778,16 +775,47 @@
         </div>
     </div>
 
-    <!-- MODAL KẾT THÚC CHUNG -->
+    <!-- MODAL KẾT THÚC VÁN (HIỆN KẾT QUẢ VÀ LỊCH SỬ TỪNG CÂU) -->
     <div class="game-modal" id="end-modal">
         <div class="modal-box">
             <h2 id="modal-title" style="font-size:22px; margin-bottom:8px;"></h2>
-            <p id="modal-desc" style="color:#94a3b8; font-size:14px; line-height: 1.6;"></p>
-            <button class="btn-restart" onclick="location.reload()">Chơi Lại</button>
+            <p id="modal-desc" style="color:#94a3b8; font-size:14px; line-height: 1.6; margin-bottom: 12px;"></p>
+            
+            <div style="font-weight: 800; font-size: 13.5px; color: #fbbf24; border-bottom: 1px solid #1e293b; padding-bottom: 6px; margin-bottom: 10px; text-align: left;">
+                📋 LỊCH SỬ CÂU HỎI & RÚT KINH NGHIỆM VÁN NÀY:
+            </div>
+            
+            <div id="match-round-history-box" style="max-height: 42vh; overflow-y: auto; display: flex; flex-direction: column; gap: 10px; padding-right: 6px; text-align: left;"></div>
+
+            <div style="display:flex; justify-content:center; gap:12px; margin-top:20px;">
+                <button class="btn-restart" onclick="location.reload()">Chơi Lại Map Này</button>
+                <a href="/arena" class="btn-restart" style="background:#1e293b; color:#38bdf8; border:1px solid #38bdf8; text-decoration:none;">Về Trang Map</a>
+            </div>
         </div>
     </div>
 
     <script>
+        // MẢNG LƯU TRỮ LỊCH SỬ TOÀN BỘ CÂU TRONG VÁN HIỆN TẠI
+        let currentMatchHistory = [];
+
+        function recordMistake(mapName, question, code, userChoice, correctChoice, explanation) {
+            const history = JSON.parse(localStorage.getItem("colosseum_wrong_history") || "[]");
+            const now = new Date();
+            const timeStr = now.toLocaleTimeString('vi-VN', { hour: '2-digit', minute: '2-digit' }) + ' ' + now.toLocaleDateString('vi-VN');
+            
+            history.push({
+                mapName: mapName,
+                question: question,
+                code: code || "",
+                userChoice: userChoice,
+                correctChoice: correctChoice,
+                explanation: explanation,
+                timestamp: timeStr
+            });
+            if (history.length > 50) history.shift();
+            localStorage.setItem("colosseum_wrong_history", JSON.stringify(history));
+        }
+
         const urlParams = new URLSearchParams(window.location.search);
         let currentMap = parseInt(urlParams.get('map')) || 1;
 
@@ -805,7 +833,7 @@
             initMap3BombDefusal();
         }
 
-        // ==================== LOGIC MAP 1 (HỒI ĐẦY ĐỦ 3 MẠNG MỖI QUÁI) ====================
+        // ==================== LOGIC MAP 1: 20 QUÁI ====================
         function initMap1PvE() {
             const MONSTERS = [
                 { name: "Slime Cú Pháp", emoji: "🧪", bg: "radial-gradient(circle at 50% 25%, #181a30 0%, #0c0d1b 60%, #05060b 100%)" },
@@ -816,11 +844,11 @@
             ];
 
             const QUESTIONS = [
-                { q: "Kết quả của hàm type(10 / 2) trong Python là gì?", code: "print(type(10 / 2))", options: ["<class 'int'>", "<class 'float'>", "<class 'double'>", "<class 'number'>"], ans: 1 },
-                { q: "Tên biến nào sau đây là HỢP LỆ trong Python?", code: "", options: ["2player", "my-var", "_score_2026", "class"], ans: 2 },
-                { q: "Toán tử nào dùng để tính lũy thừa (số mũ) trong Python?", code: "", options: ["^", "**", "//", "pow^"], ans: 1 },
-                { q: "Kết quả của phép chia lấy phần nguyên 17 // 5 là bao nhiêu?", code: "print(17 // 5)", options: ["3.4", "3", "2", "3.0"], ans: 1 },
-                { q: "Kết quả của phép chia lấy phần dư 14 % 4 là gì?", code: "print(14 % 4)", options: ["3", "3.5", "2", "0"], ans: 2 }
+                { q: "Kết quả của hàm type(10 / 2) trong Python là gì?", code: "print(type(10 / 2))", options: ["<class 'int'>", "<class 'float'>", "<class 'double'>", "<class 'number'>"], ans: 1, exp: "Toán tử '/' trong Python luôn trả về số thực kiểu float (10 / 2 = 5.0)." },
+                { q: "Tên biến nào sau đây là HỢP LỆ trong Python?", code: "", options: ["2player", "my-var", "_score_2026", "class"], ans: 2, exp: "Tên biến không bắt đầu bằng số, không chứa dấu '-' và không trùng từ khóa Python. Dấu '_' ở đầu là hợp lệ." },
+                { q: "Toán tử nào dùng để tính lũy thừa (số mũ) trong Python?", code: "", options: ["^", "**", "//", "pow^"], ans: 1, exp: "Python sử dụng toán tử '**' để tính lũy thừa (ví dụ 2 ** 3 = 8). Dấu '^' là phép XOR bitwise." },
+                { q: "Kết quả của phép chia lấy phần nguyên 17 // 5 là bao nhiêu?", code: "print(17 // 5)", options: ["3.4", "3", "2", "3.0"], ans: 1, exp: "Toán tử '//' là phép chia lấy phần nguyên làm tròn xuống (17 // 5 = 3)." },
+                { q: "Kết quả của phép chia lấy phần dư 14 % 4 là gì?", code: "print(14 % 4)", options: ["3", "3.5", "2", "0"], ans: 2, exp: "14 chia cho 4 được 3 dư 2. Do đó 14 % 4 = 2." }
             ];
 
             let currentIndex = 0;
@@ -845,8 +873,6 @@
                 notifyMsg.innerText = "";
                 monsterHp.style.width = "100%";
                 spellHitFx.style.display = "none";
-
-                // HỒI ĐẦY 3 MẠNG CHO QUÁI VẬT TIẾP THEO
                 lives = 3;
 
                 const mon = MONSTERS[currentIndex % MONSTERS.length];
@@ -871,15 +897,24 @@
                     const btn = document.createElement("button");
                     btn.className = "answer-choice-btn";
                     btn.innerText = `${String.fromCharCode(65 + idx)}. ${opt}`;
-                    btn.onclick = () => handleChoice(idx === q.ans);
+                    btn.onclick = () => handleChoice(idx === q.ans, q, idx);
                     answersContainer.appendChild(btn);
                 });
             }
 
-            function handleChoice(isCorrect) {
+            function handleChoice(isCorrect, currentQ, chosenIdx) {
                 if (isAnswering) return;
                 isAnswering = true;
                 document.querySelectorAll(".answer-choice-btn").forEach(b => b.disabled = true);
+
+                currentMatchHistory.push({
+                    title: `Quái vật ${currentIndex + 1}: ${currentQ.q}`,
+                    code: currentQ.code,
+                    chosen: currentQ.options[chosenIdx],
+                    correct: currentQ.options[currentQ.ans],
+                    isCorrect: isCorrect,
+                    exp: currentQ.exp
+                });
 
                 if (isCorrect) {
                     notifyMsg.className = "status-notify notify-correct";
@@ -902,6 +937,15 @@
                     });
                 } else {
                     lives--;
+                    recordMistake(
+                        "Map 1: Diệt Quái Cú Pháp",
+                        currentQ.q,
+                        currentQ.code,
+                        currentQ.options[chosenIdx],
+                        currentQ.options[currentQ.ans],
+                        currentQ.exp
+                    );
+
                     notifyMsg.className = "status-notify notify-wrong";
                     notifyMsg.innerText = "✗ Sai rồi! Bạn bị quái vật phản đòn trừ 1 mạng!";
                     livesDisplay.innerText = "❤️".repeat(Math.max(0, lives)) + ` (${lives} Mạng)`;
@@ -911,7 +955,7 @@
                     setTimeout(() => { mBox.style.transform = "translateX(0)"; }, 200);
 
                     if (lives <= 0) {
-                        setTimeout(() => showModal(false, "BẠN ĐÃ BỊ ĐÁNH BẠI! 💀", `Bạn đã cạn kiệt 3 mạng sống trước Quái vật thứ ${currentIndex + 1}. Hãy ôn tập lại nhé!`), 800);
+                        setTimeout(() => showModal(false, "BẠN ĐÃ BỊ ĐÁNH BẠI! 💀", `Bạn đã cạn kiệt 3 mạng sống trước Quái vật thứ ${currentIndex + 1}.`), 800);
                     } else {
                         setTimeout(() => {
                             isAnswering = false;
@@ -940,19 +984,19 @@
             loadQuestion();
         }
 
-        // ==================== LOGIC MAP 2 (ĐỦ ĐÚNG 20 LÁ BÀI - 10 CẶP) ====================
+        // ==================== LOGIC MAP 2: 20 THẺ BÀI ARCADE ====================
         function initMap2SoloArcade() {
             const CONCEPTS = [
-                { id: 1, name: "Immutable", icon: "🔒", question: "Cấu trúc dữ liệu nào sau đây là Immutable (Bất biến) trong Python?", options: ["List", "Tuple", "Dictionary", "Set"], ans: 1 },
-                { id: 2, name: "Tuple", icon: "🧬", question: "Cú pháp nào sau đây định nghĩa một Tuple gồm đúng 1 phần tử?", options: ["t = (1)", "t = (1,)", "t = [1]", "t = {1}"], ans: 1 },
-                { id: 3, name: "While Loop", icon: "🔁", question: "Câu lệnh nào lập tức dừng và thoát hẳn ra khỏi vòng lặp While?", options: ["continue", "pass", "break", "return"], ans: 2 },
-                { id: 4, name: "Continue", icon: "⚡", question: "Từ khóa continue có tác dụng gì trong vòng lặp?", options: ["Dừng chương trình", "Bỏ qua lần lặp hiện tại", "Khởi động lại vòng lặp", "Xóa biến đếm"], ans: 1 },
-                { id: 5, name: "Dictionary", icon: "📦", question: "Phương thức nào dùng để lấy giá trị theo Key an toàn không gây lỗi KeyError?", options: ["dict.fetch()", "dict.find()", "dict.get()", "dict.lookup()"], ans: 2 },
-                { id: 6, name: "List", icon: "📋", question: "Phương thức nào thêm phần tử vào cuối một List?", options: ["add()", "push()", "insert_last()", "append()"], ans: 3 },
-                { id: 7, name: "Boolean", icon: "🎯", question: "Giá trị nào sau đây được Python coi là False (Falsy value)?", options: ["[] (List rỗng)", "[0]", "'False'", "1"], ans: 0 },
-                { id: 8, name: "Pythonic", icon: "🐍", question: "Kỹ thuật nào sau đây tạo ra danh sách số chẵn theo phong cách Pythonic?", options: ["Dùng vòng lặp lồng nhau", "List Comprehension", "Đệ quy", "Con trỏ bộ nhớ"], ans: 1 },
-                { id: 9, name: "Try/Except", icon: "🛡️", question: "Khối lệnh nào luôn luôn được thực thi dù có xảy ra lỗi ngoại lệ hay không?", options: ["else", "finally", "catch", "defer"], ans: 1 },
-                { id: 10, name: "Function", icon: "⚙️", question: "Từ khóa nào dùng để tạo một hàm vô danh (Anonymous Function)?", options: ["def", "func", "lambda", "inline"], ans: 2 }
+                { id: 1, name: "Immutable", icon: "🔒", question: "Cấu trúc dữ liệu nào sau đây là Immutable (Bất biến) trong Python?", options: ["List", "Tuple", "Dictionary", "Set"], ans: 1, exp: "Tuple là kiểu dữ liệu bất biến (immutable), không thể sửa hay xóa sau khi tạo." },
+                { id: 2, name: "Tuple", icon: "🧬", question: "Cú pháp nào sau đây định nghĩa một Tuple gồm đúng 1 phần tử?", options: ["t = (1)", "t = (1,)", "t = [1]", "t = {1}"], ans: 1, exp: "Tuple có 1 phần tử bắt buộc phải có dấu phẩy đi kèm: (1,)." },
+                { id: 3, name: "While Loop", icon: "🔁", question: "Câu lệnh nào lập tức dừng và thoát hẳn ra khỏi vòng lặp While?", options: ["continue", "pass", "break", "return"], ans: 2, exp: "Câu lệnh 'break' dùng để thoát khỏi vòng lặp ngay lập tức." },
+                { id: 4, name: "Continue", icon: "⚡", question: "Từ khóa continue có tác dụng gì trong vòng lặp?", options: ["Dừng chương trình", "Bỏ qua lần lặp hiện tại", "Khởi động lại vòng lặp", "Xóa biến đếm"], ans: 1, exp: "'continue' bỏ qua toàn bộ câu lệnh phía sau của lần lặp hiện tại và nhảy tới lần kế." },
+                { id: 5, name: "Dictionary", icon: "📦", question: "Phương thức nào dùng để lấy giá trị theo Key an toàn không gây lỗi KeyError?", options: ["dict.fetch()", "dict.find()", "dict.get()", "dict.lookup()"], ans: 2, exp: "Phương thức dict.get('key') trả về None thay vì báo lỗi KeyError." },
+                { id: 6, name: "List", icon: "📋", question: "Phương thức nào thêm phần tử vào cuối một List?", options: ["add()", "push()", "insert_last()", "append()"], ans: 3, exp: "Trong Python, list sử dụng .append() để thêm vào cuối danh sách." },
+                { id: 7, name: "Boolean", icon: "🎯", question: "Giá trị nào sau đây được Python coi là False (Falsy value)?", options: ["[] (List rỗng)", "[0]", "'False'", "1"], ans: 0, exp: "Tập hợp rỗng [], {}, chuỗi rỗng '', số 0 và None đều là Falsy." },
+                { id: 8, name: "Pythonic", icon: "🐍", question: "Kỹ thuật nào sau đây tạo ra danh sách số chẵn theo phong cách Pythonic?", options: ["Dùng vòng lặp lồng nhau", "List Comprehension", "Đệ quy", "Con trỏ bộ nhớ"], ans: 1, exp: "List Comprehension [x for x in range(n) if x % 2 == 0] là cú pháp Pythonic chuẩn." },
+                { id: 9, name: "Try/Except", icon: "🛡️", question: "Khối lệnh nào luôn luôn được thực thi dù có xảy ra lỗi ngoại lệ hay không?", options: ["else", "finally", "catch", "defer"], ans: 1, exp: "Khối 'finally:' luôn luôn được thực hiện ở bước cuối cùng." },
+                { id: 10, name: "Function", icon: "⚙️", question: "Từ khóa nào dùng để tạo một hàm vô danh (Anonymous Function)?", options: ["def", "func", "lambda", "inline"], ans: 2, exp: "Từ khóa 'lambda' dùng để tạo hàm ẩn danh ngắn gọn trên 1 dòng." }
             ];
 
             let deck = [];
@@ -1024,7 +1068,18 @@
                     btn.innerText = `${String.fromCharCode(65 + idx)}. ${opt}`;
                     btn.onclick = () => {
                         modal.style.display = "none";
-                        if (idx === concept.ans) {
+                        const isCorrect = (idx === concept.ans);
+
+                        currentMatchHistory.push({
+                            title: `Khái niệm ${concept.name}: ${concept.question}`,
+                            code: "",
+                            chosen: opt,
+                            correct: concept.options[concept.ans],
+                            isCorrect: isCorrect,
+                            exp: concept.exp
+                        });
+
+                        if (isCorrect) {
                             el1.classList.add("matched");
                             el2.classList.add("matched");
                             score += 10;
@@ -1034,10 +1089,18 @@
 
                             if (matchedPairsCount >= 10) {
                                 setTimeout(() => {
-                                    showModal(true, "HOÀN THÀNH TOÀN BỘ 20 LÁ BÀI! 🏆", `Xuất sắc! Bạn đã giải mã thành công 10/10 cặp câu hỏi và đạt ${score} điểm sau ${turnsCount} lượt!`);
+                                    showModal(true, "HOÀN THÀNH TOÀN BỘ 20 LÁ BÀI! 🏆", `Xuất sắc! Bạn đã vượt qua 10/10 cặp câu hỏi và đạt ${score} điểm sau ${turnsCount} lượt!`);
                                 }, 500);
                             }
                         } else {
+                            recordMistake(
+                                "Map 2: Memory Match Arcade",
+                                concept.question,
+                                "",
+                                concept.options[idx],
+                                concept.options[concept.ans],
+                                concept.exp
+                            );
                             el1.classList.remove("flipped");
                             el2.classList.remove("flipped");
                         }
@@ -1050,12 +1113,12 @@
             }
         }
 
-        // ==================== LOGIC MAP 3 (BOMB DEFUSAL) ====================
+        // ==================== LOGIC MAP 3: 20 SỢI DÂY DEFUSE BOMB ====================
         function initMap3BombDefusal() {
             const BOMB_TASKS = [
-                { q: "Phương thức nào thêm phần tử vào cuối danh sách (List)?", code: "nums = [1, 2, 3]\nnums.____(4)", options: ["push(4)", "append(4)", "add(4)", "insert(4)"], ans: 1 },
-                { q: "Kết quả của cú pháp cắt lát (List Slicing) sau là gì?", code: "arr = [10, 20, 30, 40, 50]\nprint(arr[1:4])", options: ["[20, 30, 40]", "[10, 20, 30]", "[20, 30, 40, 50]", "[30, 40]"], ans: 0 },
-                { q: "Cấu trúc dữ liệu nào sau đây là BẤT BIẾN (Immutable)?", code: "a = [1, 2]     # A\nb = (1, 2)     # B\nc = {'x': 1}   # C\nd = {1, 2}     # D", options: ["List (A)", "Tuple (B)", "Dictionary (C)", "Set (D)"], ans: 1 }
+                { q: "Phương thức nào thêm phần tử vào cuối danh sách (List)?", code: "nums = [1, 2, 3]\nnums.____(4)", options: ["push(4)", "append(4)", "add(4)", "insert(4)"], ans: 1, exp: "List trong Python sử dụng .append() để chèn phần tử mới vào cuối danh sách." },
+                { q: "Kết quả của cú pháp cắt lát (List Slicing) sau là gì?", code: "arr = [10, 20, 30, 40, 50]\nprint(arr[1:4])", options: ["[20, 30, 40]", "[10, 20, 30]", "[20, 30, 40, 50]", "[30, 40]"], ans: 0, exp: "Cắt lát arr[start:stop] lấy từ chỉ số 1 đến trước chỉ số 4, tức [20, 30, 40]." },
+                { q: "Cấu trúc dữ liệu nào sau đây là BẤT BIẾN (Immutable)?", code: "a = [1, 2]     # A\nb = (1, 2)     # B\nc = {'x': 1}   # C\nd = {1, 2}     # D", options: ["List (A)", "Tuple (B)", "Dictionary (C)", "Set (D)"], ans: 1, exp: "Tuple b = (1, 2) là cấu trúc bất biến, các kiểu còn lại đều có thể sửa đổi (mutable)." }
             ];
 
             let selectedWireIndex = 0;
@@ -1117,16 +1180,25 @@
                         <div class="wire-cable-line ${colors[optIdx]}" id="wire-cable-${optIdx}"></div>
                         <div class="wire-choice-label"><span>${optText}</span><span class="wire-tag-id">DÂY ${String.fromCharCode(65 + optIdx)}</span></div>
                     `;
-                    row.onclick = () => handleChoiceCut(optIdx === task.ans, optIdx);
+                    row.onclick = () => handleChoiceCut(optIdx === task.ans, optIdx, task);
                     wiresListBox.appendChild(row);
                 });
             }
 
-            function handleChoiceCut(isCorrect, optIdx) {
+            function handleChoiceCut(isCorrect, optIdx, task) {
                 if (isActionLocked) return;
                 isActionLocked = true;
 
                 const cable = document.getElementById(`wire-cable-${optIdx}`);
+
+                currentMatchHistory.push({
+                    title: `Dây số ${selectedWireIndex + 1}: ${task.q}`,
+                    code: task.code,
+                    chosen: task.options[optIdx],
+                    correct: task.options[task.ans],
+                    isCorrect: isCorrect,
+                    exp: task.exp
+                });
 
                 if (isCorrect) {
                     cable.classList.add("snapped");
@@ -1145,6 +1217,16 @@
                 } else {
                     currentWireAttempts--;
                     totalFailsAllowed--;
+
+                    recordMistake(
+                        `Map 3: Defuse Bomb (Dây ${selectedWireIndex + 1})`,
+                        task.q,
+                        task.code,
+                        task.options[optIdx],
+                        task.options[task.ans],
+                        task.exp
+                    );
+
                     bombLivesLeft.innerText = `${totalFailsAllowed} lần`;
                     bombFailsCounter.innerText = totalFailsAllowed;
                     wireAttemptDisplay.innerText = "❤️".repeat(Math.max(0, currentWireAttempts)) + ` (${currentWireAttempts} lần thử)`;
@@ -1160,7 +1242,7 @@
                         boomScreen.style.display = "flex";
                         alarmFlash.style.display = "block";
                         setTimeout(() => {
-                            showModal(false, "BOOM! QUẢ BOM ĐÃ PHÁT NỔ! 💀", "Bạn đã tích lũy 10 lần cắt sai!");
+                            showModal(false, "BOOM! QUẢ BOM ĐÃ PHÁT NỔ! 💀", "Bạn đã tích lũy 10 lần cắt sai.");
                         }, 1200);
                     } else {
                         if (currentWireAttempts <= 0) {
@@ -1179,12 +1261,46 @@
             loadSelectedWireQuestion();
         }
 
+        // ==================== BẢNG TỔNG KẾT & LỊCH SỬ VÁN ĐẤU ====================
         function showModal(won, title, desc) {
             const modal = document.getElementById('end-modal');
             const t = document.getElementById('modal-title');
             t.innerText = title;
             t.style.color = won ? "#38bdf8" : "#f43f5e";
             document.getElementById('modal-desc').innerText = desc;
+
+            const listEl = document.getElementById("match-round-history-box");
+            listEl.innerHTML = "";
+
+            if (currentMatchHistory.length === 0) {
+                listEl.innerHTML = `<div style="text-align:center; color:#94a3b8; font-size:13px;">Chưa có câu trả lời nào được ghi nhận.</div>`;
+            } else {
+                currentMatchHistory.forEach((item, idx) => {
+                    const row = document.createElement("div");
+                    row.style.background = "#050811";
+                    row.style.border = "1px solid #1e293b";
+                    row.style.borderRadius = "8px";
+                    row.style.padding = "10px 12px";
+                    row.style.display = "flex";
+                    row.style.flexDirection = "column";
+                    row.style.gap = "4px";
+
+                    row.innerHTML = `
+                        <div style="display:flex; justify-content:space-between; font-size:12px; font-weight:700;">
+                            <span style="color:#f8fafc;">#${idx + 1}. ${item.title}</span>
+                            <span style="color:${item.isCorrect ? '#4ade80' : '#f87171'};">${item.isCorrect ? '✓ ĐÚNG' : '✗ SAI'}</span>
+                        </div>
+                        ${item.code ? `<div style="font-family:'Fira Code'; font-size:11.5px; color:#38bdf8; background:#090d16; padding:4px 8px; border-radius:4px;">${item.code}</div>` : ''}
+                        <div style="font-size:12px; color:#94a3b8;">
+                            Bạn chọn: <strong style="color:${item.isCorrect ? '#4ade80' : '#f87171'};">${item.chosen}</strong> 
+                            ${!item.isCorrect ? `| Đúng là: <strong style="color:#4ade80;">${item.correct}</strong>` : ''}
+                        </div>
+                        ${!item.isCorrect ? `<div style="font-size:11.5px; color:#86efac; background:rgba(34,197,94,0.1); padding:4px 8px; border-radius:4px;">💡 <strong>Rút kinh nghiệm:</strong> ${item.exp}</div>` : ''}
+                    `;
+                    listEl.appendChild(row);
+                });
+            }
+
             modal.style.display = 'flex';
         }
     </script>
