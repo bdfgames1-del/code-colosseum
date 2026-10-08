@@ -3,7 +3,6 @@ package main
 import (
 	"encoding/json"
 	"log"
-	"math/rand"
 	"net/http"
 	"sync"
 	"time"
@@ -13,7 +12,7 @@ import (
 
 var upgrader = websocket.Upgrader{
 	CheckOrigin: func(r *http.Request) bool {
-		return true // Cho phép mọi kết nối an toàn từ Render
+		return true
 	},
 }
 
@@ -55,7 +54,7 @@ var GlobalArenaHub = &ArenaHub{
 	Broadcast:  make(chan []byte),
 }
 
-// BỘ ĐỀ TRẮC NGHIỆM ĐẤU TRƯỜNG 1V1
+// Bộ câu hỏi cho đấu trường 1v1
 var ArenaQuestions = []QuestionItem{
 	{
 		Question: "Kết quả của cú pháp cắt lát (List Slicing) sau là gì?",
@@ -113,7 +112,6 @@ func (h *ArenaHub) Run() {
 			log.Printf("[Arena] Đấu thủ tham gia: %s (Tổng: %d)\n", p.Username, total)
 			h.broadcastLobbyState()
 
-			// Khi đủ từ 2 người trở lên và chưa bắt đầu trận
 			if total >= 2 && !h.GameRunning {
 				h.GameRunning = true
 				go h.startMatchCountdown()
@@ -190,7 +188,6 @@ func (h *ArenaHub) startMatchCountdown() {
 		time.Sleep(1 * time.Second)
 	}
 
-	// Đặt lại điểm số và máu cho các đấu thủ khi bắt đầu
 	h.Mutex.Lock()
 	h.Round = 0
 	for p := range h.Players {
@@ -206,7 +203,6 @@ func (h *ArenaHub) startMatchCountdown() {
 
 func (h *ArenaHub) nextQuestionRound() {
 	h.Mutex.Lock()
-	// Kiểm tra số lượng người còn sống
 	aliveCount := 0
 	for p := range h.Players {
 		if p.IsAlive {
@@ -232,10 +228,7 @@ func (h *ArenaHub) nextQuestionRound() {
 	h.CurrentQuestion = &ArenaQuestions[qIndex]
 	h.RoundStartTime = time.Now()
 
-	// ============================================================
-	// CHỈNH THỜI GIAN ĐẤU TRƯỜNG TẠI ĐÂY:
-	// Nâng thời gian mỗi câu lên 20 GIÂY để người chơi kịp tính toán!
-	// ============================================================
+	// THỜI GIAN TRẢ LỜI MỖI CÂU: 20 GIÂY
 	timeLimitSeconds := 20
 	h.Mutex.Unlock()
 
@@ -249,10 +242,8 @@ func (h *ArenaHub) nextQuestionRound() {
 		},
 	})
 
-	// Đợi hết 20 giây suy nghĩ
 	time.Sleep(time.Duration(timeLimitSeconds) * time.Second)
 
-	// Xử lý những ai không kịp trả lời trong 20s
 	h.Mutex.Lock()
 	for p := range h.Players {
 		if p.IsAlive && !p.Answered {
@@ -272,7 +263,6 @@ func (h *ArenaHub) nextQuestionRound() {
 
 	h.broadcastLobbyState()
 
-	// Nghỉ 3 giây trước khi sang câu hỏi tiếp theo
 	time.Sleep(3 * time.Second)
 	h.nextQuestionRound()
 }
@@ -332,7 +322,6 @@ func (p *Player) handleIncomingMessages() {
 				scoreGain := 0
 
 				if isCorrect {
-					// Thưởng điểm theo tốc độ trả lời
 					bonus := 500 - (req.SubmitMs / 50)
 					if bonus < 100 {
 						bonus = 100
@@ -374,7 +363,7 @@ func (p *Player) writePump() {
 				return
 			}
 			p.Conn.WriteMessage(websocket.TextMessage, message)
-		case <-ticker.Ping():
+		case <-ticker.C:
 			if err := p.Conn.WriteMessage(websocket.PingMessage, nil); err != nil {
 				return
 			}
