@@ -53,7 +53,7 @@
             flex: 1;
         }
 
-        /* ==================== MAP 1: DIỆT QUÁI PVE ==================== */
+        /* ==================== MAP 1: ĐỒ HỌA GỐC ĐẦY ĐỦ ==================== */
         .stage-viewport-map1 {
             position: relative;
             width: 100%;
@@ -125,6 +125,7 @@
             background: #091322; border-top: 2px solid #1d4ed8; z-index: 15;
         }
 
+        /* PHÙ THỦY CHIBI CHI TIẾT ĐẦY ĐỦ */
         .wizard-chibi-box {
             position: absolute; bottom: 78px; left: 120px; z-index: 25;
             display: flex; flex-direction: column; align-items: center;
@@ -190,17 +191,6 @@
             pointer-events: none;
             animation: missileRotate 0.3s infinite linear;
         }
-        .magic-missile::after {
-            content: '';
-            position: absolute;
-            top: 6px;
-            left: -30px;
-            width: 40px;
-            height: 32px;
-            background: linear-gradient(90deg, transparent, #38bdf8);
-            border-radius: 50%;
-            filter: blur(4px);
-        }
         @keyframes missileRotate {
             0% { transform: rotate(0deg) scale(1); }
             50% { transform: rotate(180deg) scale(1.15); }
@@ -254,7 +244,7 @@
         .notify-correct { color: #34d399; }
         .notify-wrong { color: #f87171; }
 
-        /* ==================== MAP 2: MEMORY MATCH ARCADE ==================== */
+        /* ==================== MAP 2: MEMORY MATCH ARCADE 20 LÁ BÀI ==================== */
         .arcade-cabinet {
             background: linear-gradient(180deg, #1b355a 0%, #0c182c 100%);
             border: 6px solid #2563eb;
@@ -266,14 +256,13 @@
             gap: 16px;
             position: relative;
         }
-
         .arcade-marquee {
             text-align: center;
             background: #050d1a;
             border: 3px solid #38bdf8;
             border-radius: 12px;
             padding: 10px;
-            box-shadow: 0 0 18px rgba(56, 189, 248, 0.5), inset 0 0 14px rgba(56, 189, 248, 0.2);
+            box-shadow: 0 0 18px rgba(56, 189, 248, 0.5);
         }
         .arcade-title-text {
             font-size: 22px;
@@ -282,7 +271,6 @@
             color: #ffffff;
             text-shadow: 0 0 10px #38bdf8, 0 0 20px #0284c7;
         }
-
         .arcade-scoreboard {
             display: flex;
             justify-content: space-between;
@@ -295,14 +283,12 @@
             font-size: 14px;
         }
         .score-item { display: flex; align-items: center; gap: 8px; }
-
         .cards-grid {
             display: grid;
             grid-template-columns: repeat(5, 1fr);
             gap: 12px;
             perspective: 1000px;
         }
-
         .match-card {
             height: 96px;
             position: relative;
@@ -319,7 +305,6 @@
             border-color: #22c55e !important;
             box-shadow: 0 0 20px rgba(34, 197, 94, 0.8), inset 0 0 15px rgba(34, 197, 94, 0.4);
         }
-
         .card-back, .card-front {
             position: absolute;
             inset: 0;
@@ -330,31 +315,17 @@
             align-items: center;
             justify-content: center;
         }
-
         .card-back {
             background: linear-gradient(135deg, #0e223f 0%, #061122 100%);
             border: 2.5px solid #38bdf8;
-            box-shadow: inset 0 0 12px rgba(56, 189, 248, 0.3), 0 4px 10px rgba(0, 0, 0, 0.5);
-            transition: border-color 0.2s;
+            box-shadow: inset 0 0 12px rgba(56, 189, 248, 0.3);
         }
-        .match-card:hover .card-back {
-            border-color: #67e8f9;
-            box-shadow: 0 0 15px rgba(56, 189, 248, 0.6);
-        }
-        .card-back-mark {
-            font-size: 34px;
-            font-weight: 800;
-            color: #38bdf8;
-            text-shadow: 0 0 12px #38bdf8, 0 0 24px #0284c7;
-        }
-
         .card-front {
             background: linear-gradient(135deg, #11294d 0%, #07172e 100%);
             border: 2.5px solid #60a5fa;
             transform: rotateY(180deg);
             padding: 6px;
             text-align: center;
-            box-shadow: inset 0 0 14px rgba(96, 165, 250, 0.4);
         }
         .card-title {
             font-family: 'Fira Code', monospace;
@@ -366,39 +337,7 @@
         .card-icon {
             font-size: 26px;
             margin: 4px 0;
-            filter: drop-shadow(0 0 8px rgba(255, 255, 255, 0.6));
         }
-
-        .arcade-control-panel {
-            background: linear-gradient(180deg, #162a45 0%, #081322 100%);
-            border-top: 4px solid #1e3a8a;
-            border-radius: 0 0 18px 18px;
-            padding: 14px 28px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-        .joystick-group { display: flex; align-items: center; gap: 12px; }
-        .joystick-base {
-            width: 28px; height: 10px; background: #020617; border-radius: 5px; position: relative;
-        }
-        .joystick-stick {
-            position: absolute; bottom: 6px; left: 11px; width: 6px; height: 26px; background: #94a3b8;
-        }
-        .joystick-ball {
-            position: absolute; top: -14px; left: -8px; width: 22px; height: 22px;
-            background: radial-gradient(circle at 35% 35%, #ef4444 0%, #991b1b 100%);
-            border-radius: 50%; box-shadow: 0 0 10px #ef4444;
-        }
-        .buttons-row { display: flex; gap: 12px; }
-        .arcade-btn {
-            width: 26px; height: 26px; border-radius: 50%; border: 2px solid #000;
-            box-shadow: inset 0 2px 4px rgba(255, 255, 255, 0.6), 0 4px 8px rgba(0,0,0,0.6);
-        }
-        .btn-green { background: #22c55e; box-shadow: 0 0 10px #22c55e; }
-        .btn-teal { background: #14b8a6; box-shadow: 0 0 10px #14b8a6; }
-        .btn-pink { background: #f43f5e; box-shadow: 0 0 10px #f43f5e; }
-        .btn-yellow { background: #eab308; box-shadow: 0 0 10px #eab308; }
 
         /* ==================== MAP 3: BOMB DEFUSAL ==================== */
         .bomb-cabinet-wrap {
@@ -408,13 +347,10 @@
             border: 4px solid #2a3f5a;
             border-radius: 24px;
             padding: 22px 28px;
-            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.8), inset 0 0 30px rgba(0, 0, 0, 0.5);
             display: flex;
             flex-direction: column;
             gap: 18px;
-            transition: all 0.2s;
         }
-
         .alarm-flash-layer {
             position: absolute;
             inset: 0;
@@ -426,15 +362,13 @@
             animation: alarmPulse 0.3s infinite alternate;
         }
         @keyframes alarmPulse { 0% { opacity: 0.2; } 100% { opacity: 0.8; } }
-
         .bomb-top-bar { display: flex; justify-content: space-between; align-items: center; }
-        .bomb-title-text { font-size: 24px; font-weight: 800; color: #ffffff; letter-spacing: 1px; }
+        .bomb-title-text { font-size: 24px; font-weight: 800; color: #ffffff; }
         .bomb-stats-group { display: flex; gap: 14px; }
         .bomb-stat-pill {
             background: #090e17; border: 1.5px solid #2a3f5a; padding: 6px 14px;
             border-radius: 8px; font-family: 'Fira Code', monospace; font-size: 13px;
         }
-
         .wire-selector-panel {
             background: #090e17;
             border: 1.5px solid #1a283a;
@@ -460,25 +394,16 @@
             font-weight: 700;
             cursor: pointer;
             text-align: center;
-            transition: 0.2s;
-        }
-        .wire-chip-btn:hover:not(.cleared) {
-            transform: translateY(-2px);
-            border-color: #38bdf8;
-            box-shadow: 0 0 10px rgba(56, 189, 248, 0.4);
         }
         .wire-chip-btn.active {
             border-color: #f59e0b !important;
-            box-shadow: 0 0 14px rgba(245, 158, 11, 0.6);
             background: #1e2838;
         }
         .wire-chip-btn.cleared {
             background: rgba(34, 197, 94, 0.15) !important;
             border-color: #22c55e !important;
             color: #86efac !important;
-            cursor: default;
         }
-
         .bomb-stage-layout {
             display: grid;
             grid-template-columns: 280px 1fr;
@@ -489,83 +414,54 @@
             border-radius: 18px;
             padding: 22px;
             position: relative;
-            overflow: hidden;
         }
-
         .bomb-sphere-box { position: relative; width: 220px; height: 220px; margin: 0 auto; display: flex; align-items: center; justify-content: center; }
-        .bomb-wick {
-            position: absolute; top: -22px; width: 14px; height: 24px; border-left: 4px solid #d97706; border-top: 4px solid #d97706; border-radius: 12px 0 0 0;
-        }
-        .fuse-spark-particle {
-            position: absolute; top: -36px; left: 98px; font-size: 22px; animation: sparkJitter 0.2s infinite alternate; filter: drop-shadow(0 0 10px #f59e0b);
-        }
-        @keyframes sparkJitter { 0% { transform: scale(0.9) rotate(0deg); } 100% { transform: scale(1.3) rotate(35deg); } }
-        .bomb-cap {
-            position: absolute; top: -10px; width: 50px; height: 16px; background: linear-gradient(180deg, #64748b 0%, #334155 100%); border-radius: 4px; border: 2px solid #0f172a;
-        }
-
         .bomb-body {
             width: 200px; height: 200px;
             background: radial-gradient(circle at 35% 30%, #475569 0%, #1e293b 45%, #0f172a 85%, #020617 100%);
             border-radius: 50%; border: 4px solid #020617;
-            box-shadow: 0 12px 30px rgba(0, 0, 0, 0.9), inset 0 0 25px rgba(0, 0, 0, 0.9);
-            display: flex; align-items: center; justify-content: center; position: relative; transition: all 0.2s;
+            box-shadow: 0 12px 30px rgba(0, 0, 0, 0.9);
+            display: flex; align-items: center; justify-content: center; position: relative;
         }
         .bomb-clock-dial {
             width: 110px; height: 110px; background: radial-gradient(circle, #090d16 0%, #020617 100%);
             border-radius: 50%; border: 3.5px solid #334155; display: flex; flex-direction: column; align-items: center; justify-content: center;
-            box-shadow: inset 0 0 18px rgba(239, 68, 68, 0.5);
         }
-        .dial-number { font-family: 'Fira Code', monospace; font-size: 32px; font-weight: 800; color: #ef4444; text-shadow: 0 0 14px #ef4444; }
-        .dial-label { font-size: 10px; font-weight: 700; color: #94a3b8; text-transform: uppercase; }
-
-        .wire-connector-socket { position: absolute; right: -7px; width: 14px; height: 14px; background: #475569; border-radius: 50%; border: 2px solid #000; }
-        .sock-1 { top: 40px; } .sock-2 { top: 80px; } .sock-3 { top: 120px; } .sock-4 { top: 160px; }
-
+        .dial-number { font-family: 'Fira Code', monospace; font-size: 32px; font-weight: 800; color: #ef4444; }
+        .dial-label { font-size: 10px; font-weight: 700; color: #94a3b8; }
         .big-explosion-overlay {
             position: absolute; inset: 0; display: none; align-items: center; justify-content: center;
-            background: radial-gradient(circle, #f59e0b 0%, #ef4444 40%, rgba(0,0,0,0.95) 80%); z-index: 100;
-            animation: explosionFlash 1s ease-out forwards;
+            background: rgba(239, 68, 68, 0.95); z-index: 100;
         }
         .boom-text-graphic {
             font-size: 110px; font-weight: 900; font-family: 'Teko', sans-serif; color: #ffffff;
-            text-shadow: 0 0 20px #ef4444, 0 0 60px #f59e0b; animation: boomScale 0.6s cubic-bezier(0.17, 0.89, 0.32, 1.49) forwards;
         }
-        @keyframes explosionFlash { 0% { opacity: 0; } 20% { opacity: 1; } 100% { opacity: 0.95; } }
-        @keyframes boomScale { 0% { transform: scale(0.1) rotate(-15deg); } 60% { transform: scale(1.4) rotate(5deg); } 100% { transform: scale(1.2) rotate(0deg); } }
-
         .bomb-right-panel { display: flex; flex-direction: column; gap: 14px; }
         .bomb-code-terminal {
             background: #020617; border: 1.5px solid #1e293b; border-radius: 12px;
             padding: 12px 16px; font-family: 'Fira Code', monospace;
         }
         .code-q-top-row { display: flex; justify-content: space-between; align-items: center; margin-bottom: 6px; }
-        .code-q-desc { font-size: 14.5px; font-weight: 700; color: #f8fafc; line-height: 1.5; }
+        .code-q-desc { font-size: 14.5px; font-weight: 700; color: #f8fafc; }
         .wire-attempt-badge {
             font-size: 12px; color: #f43f5e; background: rgba(244, 63, 94, 0.15);
             padding: 2px 8px; border-radius: 6px; border: 1px solid #f43f5e;
         }
         .code-q-content { font-size: 13.5px; color: #38bdf8; line-height: 1.6; white-space: pre-wrap; }
-
         .wires-interactive-list { display: flex; flex-direction: column; gap: 11px; }
-        .wire-row-item { display: flex; align-items: center; gap: 14px; cursor: pointer; transition: transform 0.2s; }
-        .wire-row-item:hover { transform: translateX(6px); }
-
-        .wire-cable-line { height: 8px; border-radius: 4px; flex: 1; transition: 0.25s; position: relative; }
-        .wire-red { background: linear-gradient(90deg, #b91c1c, #ef4444, #f87171); }
-        .wire-yellow { background: linear-gradient(90deg, #b45309, #eab308, #fde047); }
-        .wire-green { background: linear-gradient(90deg, #15803d, #22c55e, #86efac); }
-        .wire-purple { background: linear-gradient(90deg, #7e22ce, #a855f7, #d8b4fe); }
+        .wire-row-item { display: flex; align-items: center; gap: 14px; cursor: pointer; }
+        .wire-cable-line { height: 8px; border-radius: 4px; flex: 1; }
+        .wire-red { background: linear-gradient(90deg, #b91c1c, #ef4444); }
+        .wire-yellow { background: linear-gradient(90deg, #b45309, #eab308); }
+        .wire-green { background: linear-gradient(90deg, #15803d, #22c55e); }
+        .wire-purple { background: linear-gradient(90deg, #7e22ce, #a855f7); }
         .wire-cable-line.snapped { background: #334155 !important; opacity: 0.3; pointer-events: none; }
-
         .wire-choice-label {
             background: #020617; border: 2px solid #334155; color: #ffffff;
             font-family: 'Fira Code', monospace; font-size: 13.5px; font-weight: 700;
             padding: 9px 18px; border-radius: 8px; min-width: 240px;
-            display: flex; align-items: center; justify-content: space-between; transition: all 0.2s;
+            display: flex; align-items: center; justify-content: space-between;
         }
-        .wire-row-item:hover .wire-choice-label { border-color: #38bdf8; box-shadow: 0 0 16px rgba(56, 189, 248, 0.5); background: #0b1526; }
-        .wire-tag-id { background: #1e293b; padding: 2px 8px; border-radius: 4px; font-size: 11px; color: #94a3b8; }
 
         /* MODAL CHUNG */
         .quiz-modal-overlay {
@@ -580,7 +476,7 @@
             font-family: 'Fira Code', monospace; font-size: 12px; color: #38bdf8;
             background: rgba(56, 189, 248, 0.15); padding: 4px 12px; border-radius: 9999px; display: inline-block; margin-bottom: 12px;
         }
-        .quiz-q-text { font-size: 16px; font-weight: 700; color: #ffffff; margin-bottom: 20px; line-height: 1.5; }
+        .quiz-q-text { font-size: 16px; font-weight: 700; color: #ffffff; margin-bottom: 20px; }
         .quiz-options-list { display: flex; flex-direction: column; gap: 10px; }
         .quiz-opt-btn {
             background: #152742; border: 1px solid #1e3a8a; color: #e2e8f0; padding: 12px 16px;
@@ -594,10 +490,11 @@
         }
         .modal-box {
             background: #0d1424; border: 1.5px solid #1e2c44; border-radius: 18px;
-            padding: 28px; text-align: center; max-width: 600px; width: 100%;
+            padding: 24px; text-align: center; max-width: 620px; width: 100%; max-height: 85vh;
+            display: flex; flex-direction: column; gap: 12px;
         }
         .btn-restart {
-            background: #0284c7; color: #fff; border: none; padding: 10px 22px;
+            background: #0284c7; color: #fff; border: none; padding: 10px 20px;
             border-radius: 8px; font-weight: 700; cursor: pointer;
         }
     </style>
@@ -616,7 +513,7 @@
 
     <div class="arena-container">
 
-        <!-- ==================== MAP 1: DIỆT QUÁI (HỒI 3 MẠNG MỖI QUÁI) ==================== -->
+        <!-- ==================== MAP 1 ==================== -->
         <div id="map1-wrapper" style="display: none; flex-direction: column; gap: 14px;">
             <div class="stage-viewport-map1" id="stage-bg">
                 <div class="night-sky"></div>
@@ -635,6 +532,7 @@
 
                 <div class="lake-fog"></div>
 
+                <!-- PHÙ THỦY CHIBI GỐC ĐẦY ĐỦ CHI TIẾT -->
                 <div class="wizard-chibi-box">
                     <div class="magic-runes-left">ᚱ ᛟ ᛉ</div>
                     <svg class="chibi-svg" viewBox="0 0 100 120">
@@ -672,7 +570,6 @@
                         <div class="pier-post-item"><div class="lantern-lamp"></div><div class="wood-pillar"></div></div>
                         <div class="pier-post-item"><div class="lantern-lamp"></div><div class="wood-pillar"></div></div>
                         <div class="pier-post-item"><div class="lantern-lamp"></div><div class="wood-pillar"></div></div>
-                        <div class="pier-post-item"><div class="lantern-lamp"></div><div class="wood-pillar"></div></div>
                     </div>
                     <div class="pier-deck"><div class="deck-plank-lines"></div></div>
                 </div>
@@ -692,7 +589,7 @@
             </div>
         </div>
 
-        <!-- ==================== MAP 2: MEMORY MATCH SOLO (20 LÁ BÀI) ==================== -->
+        <!-- ==================== MAP 2 ==================== -->
         <div id="map2-wrapper" style="display: none; flex-direction: column; gap: 14px;">
             <div class="arcade-cabinet">
                 <div class="arcade-marquee">
@@ -703,22 +600,11 @@
                     <div class="score-item"><span style="color:#22c55e;">🎯 Cặp Đã Giải:</span> <strong id="pairs-cleared" style="color:#22c55e; font-size:16px;">0 / 10</strong></div>
                     <div class="score-item"><span style="color:#fbbf24;">🔄 Số Lượt Lật:</span> <strong id="turns-count" style="color:#fbbf24; font-size:16px;">0</strong></div>
                 </div>
-
                 <div class="cards-grid" id="cards-grid"></div>
-
-                <div class="arcade-control-panel">
-                    <div class="joystick-group">
-                        <div class="joystick-base"><div class="joystick-stick"><div class="joystick-ball"></div></div></div>
-                        <span style="font-size:11.5px; font-weight:800; color:#38bdf8;">SOLO PLAYER</span>
-                    </div>
-                    <div class="buttons-row">
-                        <div class="arcade-btn btn-green"></div><div class="arcade-btn btn-teal"></div><div class="arcade-btn btn-pink"></div><div class="arcade-btn btn-yellow"></div>
-                    </div>
-                </div>
             </div>
         </div>
 
-        <!-- ==================== MAP 3: DEFUSE THE BOMB ==================== -->
+        <!-- ==================== MAP 3 ==================== -->
         <div id="map3-wrapper" style="display: none; flex-direction: column; gap: 14px;">
             <div class="bomb-cabinet-wrap" id="bomb-cabinet-main">
                 <div class="alarm-flash-layer" id="alarm-flash"></div>
@@ -736,18 +622,11 @@
                 <div class="bomb-stage-layout" id="bomb-stage-box">
                     <div class="big-explosion-overlay" id="boom-screen"><div class="boom-text-graphic">💥 BOOM! 💥</div></div>
                     <div class="bomb-sphere-box">
-                        <div class="bomb-wick"></div>
-                        <div class="fuse-spark-particle">✨</div>
-                        <div class="bomb-cap"></div>
                         <div class="bomb-body" id="bomb-body-element">
                             <div class="bomb-clock-dial">
                                 <span class="dial-number" id="bomb-fails-counter">10</span>
                                 <span class="dial-label">FAILS LEFT</span>
                             </div>
-                            <div class="wire-connector-socket sock-1"></div>
-                            <div class="wire-connector-socket sock-2"></div>
-                            <div class="wire-connector-socket sock-3"></div>
-                            <div class="wire-connector-socket sock-4"></div>
                         </div>
                     </div>
                     <div class="bomb-right-panel">
@@ -775,52 +654,56 @@
         </div>
     </div>
 
-    <!-- MODAL KẾT THÚC VÁN (HIỆN KẾT QUẢ VÀ LỊCH SỬ TỪNG CÂU) -->
+    <!-- MODAL KẾT THÚC VÁN (HIỆN LỊCH SỬ RIÊNG CỦA MAP NÀY) -->
     <div class="game-modal" id="end-modal">
         <div class="modal-box">
-            <h2 id="modal-title" style="font-size:22px; margin-bottom:8px;"></h2>
-            <p id="modal-desc" style="color:#94a3b8; font-size:14px; line-height: 1.6; margin-bottom: 12px;"></p>
+            <h2 id="modal-title" style="font-size:22px;"></h2>
+            <p id="modal-desc" style="color:#94a3b8; font-size:14px; line-height: 1.5;"></p>
             
-            <div style="font-weight: 800; font-size: 13.5px; color: #fbbf24; border-bottom: 1px solid #1e293b; padding-bottom: 6px; margin-bottom: 10px; text-align: left;">
-                📋 LỊCH SỬ CÂU HỎI & RÚT KINH NGHIỆM VÁN NÀY:
+            <div style="font-weight: 800; font-size: 13.5px; color: #fbbf24; border-bottom: 1px solid #1e293b; padding-bottom: 6px; text-align: left;" id="modal-history-heading">
+                📋 CHI TIẾT CÁC CÂU HỎI VÁN NÀY:
             </div>
             
-            <div id="match-round-history-box" style="max-height: 42vh; overflow-y: auto; display: flex; flex-direction: column; gap: 10px; padding-right: 6px; text-align: left;"></div>
+            <div id="match-round-history-box" style="max-height: 42vh; overflow-y: auto; display: flex; flex-direction: column; gap: 8px; text-align: left;"></div>
 
-            <div style="display:flex; justify-content:center; gap:12px; margin-top:20px;">
+            <div style="display:flex; justify-content:center; gap:12px; margin-top:14px;">
                 <button class="btn-restart" onclick="location.reload()">Chơi Lại Map Này</button>
-                <a href="/arena" class="btn-restart" style="background:#1e293b; color:#38bdf8; border:1px solid #38bdf8; text-decoration:none;">Về Trang Map</a>
+                <a href="/arena" class="btn-restart" style="background:#1e293b; color:#38bdf8; border:1px solid #38bdf8; text-decoration:none;">Về Chọn Map</a>
             </div>
         </div>
     </div>
 
     <script>
-        // MẢNG LƯU TRỮ LỊCH SỬ TOÀN BỘ CÂU TRONG VÁN HIỆN TẠI
-        let currentMatchHistory = [];
-
-        function recordMistake(mapName, question, code, userChoice, correctChoice, explanation) {
-            const history = JSON.parse(localStorage.getItem("colosseum_wrong_history") || "[]");
+        // HÀM LƯU ĐỘC BẢN: MỖI CÂU CHỈ LƯU ĐÚNG 1 LẦN VÀO BỘ NHỚ LỊCH SỬ CHUNG
+        function saveUniqueQuestionRecord(mapName, question, code, userChoice, correctChoice, isCorrect, explanation) {
+            const historyMap = JSON.parse(localStorage.getItem("colosseum_unique_history") || "{}");
             const now = new Date();
             const timeStr = now.toLocaleTimeString('vi-VN', { hour: '2-digit', minute: '2-digit' }) + ' ' + now.toLocaleDateString('vi-VN');
-            
-            history.push({
+
+            const key = question.trim().toLowerCase();
+
+            historyMap[key] = {
                 mapName: mapName,
                 question: question,
                 code: code || "",
                 userChoice: userChoice,
                 correctChoice: correctChoice,
+                isCorrect: isCorrect,
                 explanation: explanation,
-                timestamp: timeStr
-            });
-            if (history.length > 50) history.shift();
-            localStorage.setItem("colosseum_wrong_history", JSON.stringify(history));
+                timestamp: timeStr,
+                timestampRaw: Date.now()
+            };
+
+            localStorage.setItem("colosseum_unique_history", JSON.stringify(historyMap));
         }
+
+        let thisMatchAnswers = [];
 
         const urlParams = new URLSearchParams(window.location.search);
         let currentMap = parseInt(urlParams.get('map')) || 1;
 
         if (currentMap === 1) {
-            document.getElementById("arena-header-title").innerText = "⚔️ Map 1: Tiêu Diệt Quái Cú Pháp (Bài 1: Biến & Kiểu Dữ Liệu)";
+            document.getElementById("arena-header-title").innerText = "⚔️ Map 1: Tiêu Diệt Quái Cú Pháp";
             document.getElementById("map1-wrapper").style.display = "flex";
             initMap1PvE();
         } else if (currentMap === 2) {
@@ -828,12 +711,12 @@
             document.getElementById("map2-wrapper").style.display = "flex";
             initMap2SoloArcade();
         } else if (currentMap === 3) {
-            document.getElementById("arena-header-title").innerText = "💣 Map 3: Defuse The Bomb (Bài 3: Cấu Trúc Dữ Liệu List, Tuple, Dict, Set)";
+            document.getElementById("arena-header-title").innerText = "💣 Map 3: Defuse The Bomb (Cấu Trúc Dữ Liệu)";
             document.getElementById("map3-wrapper").style.display = "flex";
             initMap3BombDefusal();
         }
 
-        // ==================== LOGIC MAP 1: 20 QUÁI ====================
+        // ==================== MAP 1 LOGIC ====================
         function initMap1PvE() {
             const MONSTERS = [
                 { name: "Slime Cú Pháp", emoji: "🧪", bg: "radial-gradient(circle at 50% 25%, #181a30 0%, #0c0d1b 60%, #05060b 100%)" },
@@ -845,10 +728,10 @@
 
             const QUESTIONS = [
                 { q: "Kết quả của hàm type(10 / 2) trong Python là gì?", code: "print(type(10 / 2))", options: ["<class 'int'>", "<class 'float'>", "<class 'double'>", "<class 'number'>"], ans: 1, exp: "Toán tử '/' trong Python luôn trả về số thực kiểu float (10 / 2 = 5.0)." },
-                { q: "Tên biến nào sau đây là HỢP LỆ trong Python?", code: "", options: ["2player", "my-var", "_score_2026", "class"], ans: 2, exp: "Tên biến không bắt đầu bằng số, không chứa dấu '-' và không trùng từ khóa Python. Dấu '_' ở đầu là hợp lệ." },
-                { q: "Toán tử nào dùng để tính lũy thừa (số mũ) trong Python?", code: "", options: ["^", "**", "//", "pow^"], ans: 1, exp: "Python sử dụng toán tử '**' để tính lũy thừa (ví dụ 2 ** 3 = 8). Dấu '^' là phép XOR bitwise." },
+                { q: "Tên biến nào sau đây là HỢP LỆ trong Python?", code: "", options: ["2player", "my-var", "_score_2026", "class"], ans: 2, exp: "Tên biến bắt đầu bằng dấu '_' là hợp lệ. Không được bắt đầu bằng số hoặc chứa dấu '-'." },
+                { q: "Toán tử nào dùng để tính lũy thừa (số mũ) trong Python?", code: "", options: ["^", "**", "//", "pow^"], ans: 1, exp: "Python sử dụng toán tử '**' để tính lũy thừa (ví dụ 2 ** 3 = 8)." },
                 { q: "Kết quả của phép chia lấy phần nguyên 17 // 5 là bao nhiêu?", code: "print(17 // 5)", options: ["3.4", "3", "2", "3.0"], ans: 1, exp: "Toán tử '//' là phép chia lấy phần nguyên làm tròn xuống (17 // 5 = 3)." },
-                { q: "Kết quả của phép chia lấy phần dư 14 % 4 là gì?", code: "print(14 % 4)", options: ["3", "3.5", "2", "0"], ans: 2, exp: "14 chia cho 4 được 3 dư 2. Do đó 14 % 4 = 2." }
+                { q: "Kết quả của phép chia lấy phần dư 14 % 4 là gì?", code: "print(14 % 4)", options: ["3", "3.5", "2", "0"], ans: 2, exp: "14 chia cho 4 được 3, dư 2. Do đó 14 % 4 = 2." }
             ];
 
             let currentIndex = 0;
@@ -907,12 +790,21 @@
                 isAnswering = true;
                 document.querySelectorAll(".answer-choice-btn").forEach(b => b.disabled = true);
 
-                currentMatchHistory.push({
+                saveUniqueQuestionRecord(
+                    "Map 1: Diệt Quái Cú Pháp",
+                    currentQ.q,
+                    currentQ.code,
+                    currentQ.options[chosenIdx],
+                    currentQ.options[currentQ.ans],
+                    isCorrect,
+                    currentQ.exp
+                );
+
+                thisMatchAnswers.push({
                     title: `Quái vật ${currentIndex + 1}: ${currentQ.q}`,
-                    code: currentQ.code,
+                    isCorrect: isCorrect,
                     chosen: currentQ.options[chosenIdx],
                     correct: currentQ.options[currentQ.ans],
-                    isCorrect: isCorrect,
                     exp: currentQ.exp
                 });
 
@@ -920,32 +812,31 @@
                     notifyMsg.className = "status-notify notify-correct";
                     notifyMsg.innerText = "✓ Chính xác! Phóng cầu năng lượng tiêu diệt quái vật!";
 
-                    fireMagicBall(() => {
-                        spellHitFx.style.display = "block";
-                        monsterHp.style.width = "0%";
-                        monsterEmoji.style.transform = "scale(0) rotate(180deg)";
+                    magicBall.style.display = "block";
+                    let x = 190;
+                    const anim = setInterval(() => {
+                        x += 42;
+                        magicBall.style.left = x + "px";
+                        if (x >= 840) {
+                            clearInterval(anim);
+                            magicBall.style.display = "none";
+                            spellHitFx.style.display = "block";
+                            monsterHp.style.width = "0%";
+                            monsterEmoji.style.transform = "scale(0) rotate(180deg)";
 
-                        setTimeout(() => {
-                            monsterEmoji.style.transform = "scale(1) rotate(0deg)";
-                            currentIndex++;
-                            if (currentIndex >= 20) {
-                                showModal(true, "CHIẾN CÔNG HIỂN HÁCH! 🏆", "Tuyệt đỉnh! Bạn đã tiêu diệt toàn bộ 20 quái vật!");
-                            } else {
-                                loadQuestion();
-                            }
-                        }, 800);
-                    });
+                            setTimeout(() => {
+                                monsterEmoji.style.transform = "scale(1) rotate(0deg)";
+                                currentIndex++;
+                                if (currentIndex >= 20) {
+                                    showModal(true, "CHIẾN CÔNG HIỂN HÁCH! 🏆", "Tuyệt đỉnh! Bạn đã tiêu diệt toàn bộ 20 quái vật!");
+                                } else {
+                                    loadQuestion();
+                                }
+                            }, 700);
+                        }
+                    }, 16);
                 } else {
                     lives--;
-                    recordMistake(
-                        "Map 1: Diệt Quái Cú Pháp",
-                        currentQ.q,
-                        currentQ.code,
-                        currentQ.options[chosenIdx],
-                        currentQ.options[currentQ.ans],
-                        currentQ.exp
-                    );
-
                     notifyMsg.className = "status-notify notify-wrong";
                     notifyMsg.innerText = "✗ Sai rồi! Bạn bị quái vật phản đòn trừ 1 mạng!";
                     livesDisplay.innerText = "❤️".repeat(Math.max(0, lives)) + ` (${lives} Mạng)`;
@@ -955,48 +846,32 @@
                     setTimeout(() => { mBox.style.transform = "translateX(0)"; }, 200);
 
                     if (lives <= 0) {
-                        setTimeout(() => showModal(false, "BẠN ĐÃ BỊ ĐÁNH BẠI! 💀", `Bạn đã cạn kiệt 3 mạng sống trước Quái vật thứ ${currentIndex + 1}.`), 800);
+                        setTimeout(() => showModal(false, "BẠN ĐÃ BỊ ĐÁNH BẠI! 💀", `Bạn đã hết mạng ở Quái vật thứ ${currentIndex + 1}.`), 600);
                     } else {
                         setTimeout(() => {
                             isAnswering = false;
                             document.querySelectorAll(".answer-choice-btn").forEach(b => b.disabled = false);
-                        }, 1000);
+                        }, 900);
                     }
                 }
-            }
-
-            function fireMagicBall(onHit) {
-                magicBall.style.display = "block";
-                let x = 190;
-                const targetX = 840;
-
-                const anim = setInterval(() => {
-                    x += 42;
-                    magicBall.style.left = x + "px";
-                    if (x >= targetX) {
-                        clearInterval(anim);
-                        magicBall.style.display = "none";
-                        if (onHit) onHit();
-                    }
-                }, 16);
             }
 
             loadQuestion();
         }
 
-        // ==================== LOGIC MAP 2: 20 THẺ BÀI ARCADE ====================
+        // ==================== MAP 2 LOGIC ====================
         function initMap2SoloArcade() {
             const CONCEPTS = [
-                { id: 1, name: "Immutable", icon: "🔒", question: "Cấu trúc dữ liệu nào sau đây là Immutable (Bất biến) trong Python?", options: ["List", "Tuple", "Dictionary", "Set"], ans: 1, exp: "Tuple là kiểu dữ liệu bất biến (immutable), không thể sửa hay xóa sau khi tạo." },
+                { id: 1, name: "Immutable", icon: "🔒", question: "Cấu trúc dữ liệu nào sau đây là Immutable (Bất biến) trong Python?", options: ["List", "Tuple", "Dictionary", "Set"], ans: 1, exp: "Tuple là kiểu dữ liệu bất biến (immutable), sau khi tạo không thể sửa, xóa hay thêm phần tử." },
                 { id: 2, name: "Tuple", icon: "🧬", question: "Cú pháp nào sau đây định nghĩa một Tuple gồm đúng 1 phần tử?", options: ["t = (1)", "t = (1,)", "t = [1]", "t = {1}"], ans: 1, exp: "Tuple có 1 phần tử bắt buộc phải có dấu phẩy đi kèm: (1,)." },
-                { id: 3, name: "While Loop", icon: "🔁", question: "Câu lệnh nào lập tức dừng và thoát hẳn ra khỏi vòng lặp While?", options: ["continue", "pass", "break", "return"], ans: 2, exp: "Câu lệnh 'break' dùng để thoát khỏi vòng lặp ngay lập tức." },
-                { id: 4, name: "Continue", icon: "⚡", question: "Từ khóa continue có tác dụng gì trong vòng lặp?", options: ["Dừng chương trình", "Bỏ qua lần lặp hiện tại", "Khởi động lại vòng lặp", "Xóa biến đếm"], ans: 1, exp: "'continue' bỏ qua toàn bộ câu lệnh phía sau của lần lặp hiện tại và nhảy tới lần kế." },
-                { id: 5, name: "Dictionary", icon: "📦", question: "Phương thức nào dùng để lấy giá trị theo Key an toàn không gây lỗi KeyError?", options: ["dict.fetch()", "dict.find()", "dict.get()", "dict.lookup()"], ans: 2, exp: "Phương thức dict.get('key') trả về None thay vì báo lỗi KeyError." },
-                { id: 6, name: "List", icon: "📋", question: "Phương thức nào thêm phần tử vào cuối một List?", options: ["add()", "push()", "insert_last()", "append()"], ans: 3, exp: "Trong Python, list sử dụng .append() để thêm vào cuối danh sách." },
-                { id: 7, name: "Boolean", icon: "🎯", question: "Giá trị nào sau đây được Python coi là False (Falsy value)?", options: ["[] (List rỗng)", "[0]", "'False'", "1"], ans: 0, exp: "Tập hợp rỗng [], {}, chuỗi rỗng '', số 0 và None đều là Falsy." },
-                { id: 8, name: "Pythonic", icon: "🐍", question: "Kỹ thuật nào sau đây tạo ra danh sách số chẵn theo phong cách Pythonic?", options: ["Dùng vòng lặp lồng nhau", "List Comprehension", "Đệ quy", "Con trỏ bộ nhớ"], ans: 1, exp: "List Comprehension [x for x in range(n) if x % 2 == 0] là cú pháp Pythonic chuẩn." },
-                { id: 9, name: "Try/Except", icon: "🛡️", question: "Khối lệnh nào luôn luôn được thực thi dù có xảy ra lỗi ngoại lệ hay không?", options: ["else", "finally", "catch", "defer"], ans: 1, exp: "Khối 'finally:' luôn luôn được thực hiện ở bước cuối cùng." },
-                { id: 10, name: "Function", icon: "⚙️", question: "Từ khóa nào dùng để tạo một hàm vô danh (Anonymous Function)?", options: ["def", "func", "lambda", "inline"], ans: 2, exp: "Từ khóa 'lambda' dùng để tạo hàm ẩn danh ngắn gọn trên 1 dòng." }
+                { id: 3, name: "While Loop", icon: "🔁", question: "Câu lệnh nào lập tức dừng và thoát hẳn ra khỏi vòng lặp While?", options: ["continue", "pass", "break", "return"], ans: 2, exp: "Câu lệnh 'break' dùng để thoát ra khỏi vòng lặp ngay lập tức." },
+                { id: 4, name: "Continue", icon: "⚡", question: "Từ khóa continue có tác dụng gì trong vòng lặp?", options: ["Dừng chương trình", "Bỏ qua lần lặp hiện tại", "Khởi động lại vòng lặp", "Xóa biến đếm"], ans: 1, exp: "'continue' bỏ qua toàn bộ câu lệnh phía sau của lần lặp hiện tại và nhảy tới lần lặp tiếp theo." },
+                { id: 5, name: "Dictionary", icon: "📦", question: "Phương thức nào dùng để lấy giá trị theo Key an toàn không gây lỗi KeyError?", options: ["dict.fetch()", "dict.find()", "dict.get()", "dict.lookup()"], ans: 2, exp: "Phương thức dict.get('key') nếu không tìm thấy key sẽ trả về None thay vì quăng lỗi KeyError." },
+                { id: 6, name: "List", icon: "📋", question: "Phương thức nào thêm phần tử vào cuối một List?", options: ["add()", "push()", "insert_last()", "append()"], ans: 3, exp: "Trong Python, list sử dụng phương thức .append(x) để thêm một phần tử vào cuối danh sách." },
+                { id: 7, name: "Boolean", icon: "🎯", question: "Giá trị nào sau đây được Python coi là False (Falsy value)?", options: ["[] (List rỗng)", "[0]", "'False'", "1"], ans: 0, exp: "Trong Python, các tập hợp rỗng như [], {}, (), '', số 0 và None đều được đánh giá là False." },
+                { id: 8, name: "Pythonic", icon: "🐍", question: "Kỹ thuật nào sau đây tạo ra danh sách số chẵn theo phong cách Pythonic?", options: ["Dùng vòng lặp lồng nhau", "List Comprehension", "Đệ quy", "Con trỏ bộ nhớ"], ans: 1, exp: "List Comprehension [x for x in range(n) if x % 2 == 0] là cú pháp viết ngắn gọn mang đậm phong cách Pythonic." },
+                { id: 9, name: "Try/Except", icon: "🛡️", question: "Khối lệnh nào luôn luôn được thực thi dù có xảy ra lỗi ngoại lệ hay không?", options: ["else", "finally", "catch", "defer"], ans: 1, exp: "Khối lệnh 'finally:' luôn luôn được thực hiện ở bước cuối cùng." },
+                { id: 10, name: "Function", icon: "⚙️", question: "Từ khóa nào dùng để tạo một hàm vô danh (Anonymous Function)?", options: ["def", "func", "lambda", "inline"], ans: 2, exp: "Từ khóa 'lambda' trong Python dùng để định nghĩa một hàm vô danh viết trên 1 dòng." }
             ];
 
             let deck = [];
@@ -1006,119 +881,92 @@
             });
             deck.sort(() => Math.random() - 0.5);
 
-            let score = 0;
-            let turnsCount = 0;
-            let matchedPairsCount = 0;
-            let flippedCards = [];
-            let canClick = true;
-
+            let score = 0, turnsCount = 0, matchedPairsCount = 0, flippedCards = [], canClick = true;
             const grid = document.getElementById("cards-grid");
-            grid.innerHTML = "";
 
             deck.forEach((card, index) => {
                 const cardEl = document.createElement("div");
                 cardEl.className = "match-card";
                 cardEl.innerHTML = `
-                    <div class="card-back"><span class="card-back-mark">?</span></div>
+                    <div class="card-back"><span style="font-size:32px; color:#38bdf8; font-weight:800;">?</span></div>
                     <div class="card-front">
                         <span class="card-title">${card.name}</span>
                         <span class="card-icon">${card.icon}</span>
                         <span class="card-title">${card.name}</span>
                     </div>
                 `;
-                cardEl.onclick = () => handleCardClick(index, card, cardEl);
+                cardEl.onclick = () => {
+                    if (!canClick || cardEl.classList.contains("flipped") || cardEl.classList.contains("matched")) return;
+                    cardEl.classList.add("flipped");
+                    flippedCards.push({ index, card, el: cardEl });
+
+                    if (flippedCards.length === 2) {
+                        canClick = false;
+                        turnsCount++;
+                        document.getElementById("turns-count").innerText = turnsCount;
+                        const [c1, c2] = flippedCards;
+
+                        if (c1.card.id === c2.card.id) {
+                            setTimeout(() => {
+                                const modal = document.getElementById("quiz-modal");
+                                document.getElementById("quiz-concept-tag").innerText = `⚡ KHÁI NIỆM: ${c1.card.name.toUpperCase()}`;
+                                document.getElementById("quiz-question-text").innerText = c1.card.question;
+                                const optBox = document.getElementById("quiz-options-box");
+                                optBox.innerHTML = "";
+
+                                c1.card.options.forEach((opt, idx) => {
+                                    const btn = document.createElement("button");
+                                    btn.className = "quiz-opt-btn";
+                                    btn.innerText = `${String.fromCharCode(65 + idx)}. ${opt}`;
+                                    btn.onclick = () => {
+                                        modal.style.display = "none";
+                                        const isCorrect = (idx === c1.card.ans);
+
+                                        saveUniqueQuestionRecord("Map 2: Memory Match", c1.card.question, "", opt, c1.card.options[c1.card.ans], isCorrect, c1.card.exp);
+                                        thisMatchAnswers.push({ title: c1.card.question, isCorrect, chosen: opt, correct: c1.card.options[c1.card.ans], exp: c1.card.exp });
+
+                                        if (isCorrect) {
+                                            c1.el.classList.add("matched");
+                                            c2.el.classList.add("matched");
+                                            score += 10;
+                                            matchedPairsCount++;
+                                            document.getElementById("solo-score").innerText = `${score} Điểm`;
+                                            document.getElementById("pairs-cleared").innerText = `${matchedPairsCount} / 10`;
+
+                                            if (matchedPairsCount >= 10) {
+                                                showModal(true, "HOÀN THÀNH TOÀN BỘ 20 LÁ BÀI! 🏆", `Bạn đạt ${score} điểm sau ${turnsCount} lượt lật.`);
+                                            }
+                                        } else {
+                                            c1.el.classList.remove("flipped");
+                                            c2.el.classList.remove("flipped");
+                                        }
+                                        flippedCards = [];
+                                        canClick = true;
+                                    };
+                                    optBox.appendChild(btn);
+                                });
+                                modal.style.display = "flex";
+                            }, 300);
+                        } else {
+                            setTimeout(() => {
+                                c1.el.classList.remove("flipped");
+                                c2.el.classList.remove("flipped");
+                                flippedCards = [];
+                                canClick = true;
+                            }, 800);
+                        }
+                    }
+                };
                 grid.appendChild(cardEl);
             });
-
-            function handleCardClick(index, card, cardEl) {
-                if (!canClick || cardEl.classList.contains("flipped") || cardEl.classList.contains("matched")) return;
-                cardEl.classList.add("flipped");
-                flippedCards.push({ index, card, el: cardEl });
-
-                if (flippedCards.length === 2) {
-                    canClick = false;
-                    turnsCount++;
-                    document.getElementById("turns-count").innerText = turnsCount;
-                    const [first, second] = flippedCards;
-
-                    if (first.card.id === second.card.id) {
-                        setTimeout(() => { showQuizModal(first.card, first.el, second.el); }, 400);
-                    } else {
-                        setTimeout(() => {
-                            first.el.classList.remove("flipped");
-                            second.el.classList.remove("flipped");
-                            flippedCards = [];
-                            canClick = true;
-                        }, 900);
-                    }
-                }
-            }
-
-            function showQuizModal(concept, el1, el2) {
-                const modal = document.getElementById("quiz-modal");
-                document.getElementById("quiz-concept-tag").innerText = `⚡ KHÁI NIỆM: ${concept.name.toUpperCase()}`;
-                document.getElementById("quiz-question-text").innerText = concept.question;
-
-                const optBox = document.getElementById("quiz-options-box");
-                optBox.innerHTML = "";
-
-                concept.options.forEach((opt, idx) => {
-                    const btn = document.createElement("button");
-                    btn.className = "quiz-opt-btn";
-                    btn.innerText = `${String.fromCharCode(65 + idx)}. ${opt}`;
-                    btn.onclick = () => {
-                        modal.style.display = "none";
-                        const isCorrect = (idx === concept.ans);
-
-                        currentMatchHistory.push({
-                            title: `Khái niệm ${concept.name}: ${concept.question}`,
-                            code: "",
-                            chosen: opt,
-                            correct: concept.options[concept.ans],
-                            isCorrect: isCorrect,
-                            exp: concept.exp
-                        });
-
-                        if (isCorrect) {
-                            el1.classList.add("matched");
-                            el2.classList.add("matched");
-                            score += 10;
-                            matchedPairsCount++;
-                            document.getElementById("solo-score").innerText = `${score} Điểm`;
-                            document.getElementById("pairs-cleared").innerText = `${matchedPairsCount} / 10`;
-
-                            if (matchedPairsCount >= 10) {
-                                setTimeout(() => {
-                                    showModal(true, "HOÀN THÀNH TOÀN BỘ 20 LÁ BÀI! 🏆", `Xuất sắc! Bạn đã vượt qua 10/10 cặp câu hỏi và đạt ${score} điểm sau ${turnsCount} lượt!`);
-                                }, 500);
-                            }
-                        } else {
-                            recordMistake(
-                                "Map 2: Memory Match Arcade",
-                                concept.question,
-                                "",
-                                concept.options[idx],
-                                concept.options[concept.ans],
-                                concept.exp
-                            );
-                            el1.classList.remove("flipped");
-                            el2.classList.remove("flipped");
-                        }
-                        flippedCards = [];
-                        canClick = true;
-                    };
-                    optBox.appendChild(btn);
-                });
-                modal.style.display = "flex";
-            }
         }
 
-        // ==================== LOGIC MAP 3: 20 SỢI DÂY DEFUSE BOMB ====================
+        // ==================== MAP 3 LOGIC ====================
         function initMap3BombDefusal() {
             const BOMB_TASKS = [
                 { q: "Phương thức nào thêm phần tử vào cuối danh sách (List)?", code: "nums = [1, 2, 3]\nnums.____(4)", options: ["push(4)", "append(4)", "add(4)", "insert(4)"], ans: 1, exp: "List trong Python sử dụng .append() để chèn phần tử mới vào cuối danh sách." },
-                { q: "Kết quả của cú pháp cắt lát (List Slicing) sau là gì?", code: "arr = [10, 20, 30, 40, 50]\nprint(arr[1:4])", options: ["[20, 30, 40]", "[10, 20, 30]", "[20, 30, 40, 50]", "[30, 40]"], ans: 0, exp: "Cắt lát arr[start:stop] lấy từ chỉ số 1 đến trước chỉ số 4, tức [20, 30, 40]." },
-                { q: "Cấu trúc dữ liệu nào sau đây là BẤT BIẾN (Immutable)?", code: "a = [1, 2]     # A\nb = (1, 2)     # B\nc = {'x': 1}   # C\nd = {1, 2}     # D", options: ["List (A)", "Tuple (B)", "Dictionary (C)", "Set (D)"], ans: 1, exp: "Tuple b = (1, 2) là cấu trúc bất biến, các kiểu còn lại đều có thể sửa đổi (mutable)." }
+                { q: "Kết quả của cú pháp cắt lát (List Slicing) sau là gì?", code: "arr = [10, 20, 30, 40, 50]\nprint(arr[1:4])", options: ["[20, 30, 40]", "[10, 20, 30]", "[20, 30, 40, 50]", "[30, 40]"], ans: 0, exp: "Cắt lát arr[start:stop] lấy từ chỉ số 1 (giá trị 20) đến trước chỉ số 4 (giá trị 40), tức [20, 30, 40]." },
+                { q: "Cấu trúc dữ liệu nào sau đây là BẤT BIẾN (Immutable)?", code: "a = [1, 2]     # A\nb = (1, 2)     # B\nc = {'x': 1}   # C\nd = {1, 2}     # D", options: ["List (A)", "Tuple (B)", "Dictionary (C)", "Set (D)"], ans: 1, exp: "Tuple b = (1, 2) là cấu trúc bất biến, các kiểu còn lại (List, Dict, Set) đều có thể thay đổi nội dung (mutable)." }
             ];
 
             let selectedWireIndex = 0;
@@ -1135,8 +983,6 @@
             const wireQCode = document.getElementById("wire-q-code");
             const wireAttemptDisplay = document.getElementById("wire-attempt-display");
             const wiresListBox = document.getElementById("wires-list-box");
-            const bombBody = document.getElementById("bomb-body-element");
-            const alarmFlash = document.getElementById("alarm-flash");
             const boomScreen = document.getElementById("boom-screen");
 
             function renderWireChips() {
@@ -1178,7 +1024,7 @@
                     row.className = "wire-row-item";
                     row.innerHTML = `
                         <div class="wire-cable-line ${colors[optIdx]}" id="wire-cable-${optIdx}"></div>
-                        <div class="wire-choice-label"><span>${optText}</span><span class="wire-tag-id">DÂY ${String.fromCharCode(65 + optIdx)}</span></div>
+                        <div class="wire-choice-label"><span>${optText}</span><span style="color:#94a3b8; font-size:11px;">DÂY ${String.fromCharCode(65 + optIdx)}</span></div>
                     `;
                     row.onclick = () => handleChoiceCut(optIdx === task.ans, optIdx, task);
                     wiresListBox.appendChild(row);
@@ -1191,12 +1037,21 @@
 
                 const cable = document.getElementById(`wire-cable-${optIdx}`);
 
-                currentMatchHistory.push({
+                saveUniqueQuestionRecord(
+                    `Map 3: Defuse Bomb (Dây ${selectedWireIndex + 1})`,
+                    task.q,
+                    task.code,
+                    task.options[optIdx],
+                    task.options[task.ans],
+                    isCorrect,
+                    task.exp
+                );
+
+                thisMatchAnswers.push({
                     title: `Dây số ${selectedWireIndex + 1}: ${task.q}`,
-                    code: task.code,
+                    isCorrect: isCorrect,
                     chosen: task.options[optIdx],
                     correct: task.options[task.ans],
-                    isCorrect: isCorrect,
                     exp: task.exp
                 });
 
@@ -1218,32 +1073,15 @@
                     currentWireAttempts--;
                     totalFailsAllowed--;
 
-                    recordMistake(
-                        `Map 3: Defuse Bomb (Dây ${selectedWireIndex + 1})`,
-                        task.q,
-                        task.code,
-                        task.options[optIdx],
-                        task.options[task.ans],
-                        task.exp
-                    );
-
                     bombLivesLeft.innerText = `${totalFailsAllowed} lần`;
                     bombFailsCounter.innerText = totalFailsAllowed;
                     wireAttemptDisplay.innerText = "❤️".repeat(Math.max(0, currentWireAttempts)) + ` (${currentWireAttempts} lần thử)`;
 
-                    alarmFlash.style.display = "block";
-                    setTimeout(() => { alarmFlash.style.display = "none"; }, 300);
-
-                    bombBody.style.transform = "translateX(-15px) rotate(-6deg)";
-                    setTimeout(() => { bombBody.style.transform = "translateX(15px) rotate(6deg)"; }, 100);
-                    setTimeout(() => { bombBody.style.transform = "translateX(0) rotate(0deg)"; }, 200);
-
                     if (totalFailsAllowed <= 0) {
                         boomScreen.style.display = "flex";
-                        alarmFlash.style.display = "block";
                         setTimeout(() => {
-                            showModal(false, "BOOM! QUẢ BOM ĐÃ PHÁT NỔ! 💀", "Bạn đã tích lũy 10 lần cắt sai.");
-                        }, 1200);
+                            showModal(false, "BOOM! QUẢ BOM ĐÃ PHÁT NỔ! 💀", "Bạn đã dùng hết 10 lần lỗi cho phép.");
+                        }, 1000);
                     } else {
                         if (currentWireAttempts <= 0) {
                             selectedWireIndex = (selectedWireIndex + 1) % 20;
@@ -1261,7 +1099,7 @@
             loadSelectedWireQuestion();
         }
 
-        // ==================== BẢNG TỔNG KẾT & LỊCH SỬ VÁN ĐẤU ====================
+        // ==================== BẢNG TỔNG KẾT RIÊNG CỦA MAP NÀY ====================
         function showModal(won, title, desc) {
             const modal = document.getElementById('end-modal');
             const t = document.getElementById('modal-title');
@@ -1269,37 +1107,30 @@
             t.style.color = won ? "#38bdf8" : "#f43f5e";
             document.getElementById('modal-desc').innerText = desc;
 
-            const listEl = document.getElementById("match-round-history-box");
-            listEl.innerHTML = "";
+            const mapNames = { 1: "Map 1", 2: "Map 2", 3: "Map 3" };
+            document.getElementById("modal-history-heading").innerText = `📋 LỊCH SỬ CÂU HỎI & RÚT KINH NGHIỆM CỦA ${mapNames[currentMap] || "MAP"}:`;
 
-            if (currentMatchHistory.length === 0) {
-                listEl.innerHTML = `<div style="text-align:center; color:#94a3b8; font-size:13px;">Chưa có câu trả lời nào được ghi nhận.</div>`;
-            } else {
-                currentMatchHistory.forEach((item, idx) => {
-                    const row = document.createElement("div");
-                    row.style.background = "#050811";
-                    row.style.border = "1px solid #1e293b";
-                    row.style.borderRadius = "8px";
-                    row.style.padding = "10px 12px";
-                    row.style.display = "flex";
-                    row.style.flexDirection = "column";
-                    row.style.gap = "4px";
+            const box = document.getElementById("match-round-history-box");
+            box.innerHTML = "";
 
-                    row.innerHTML = `
-                        <div style="display:flex; justify-content:space-between; font-size:12px; font-weight:700;">
-                            <span style="color:#f8fafc;">#${idx + 1}. ${item.title}</span>
-                            <span style="color:${item.isCorrect ? '#4ade80' : '#f87171'};">${item.isCorrect ? '✓ ĐÚNG' : '✗ SAI'}</span>
-                        </div>
-                        ${item.code ? `<div style="font-family:'Fira Code'; font-size:11.5px; color:#38bdf8; background:#090d16; padding:4px 8px; border-radius:4px;">${item.code}</div>` : ''}
-                        <div style="font-size:12px; color:#94a3b8;">
-                            Bạn chọn: <strong style="color:${item.isCorrect ? '#4ade80' : '#f87171'};">${item.chosen}</strong> 
-                            ${!item.isCorrect ? `| Đúng là: <strong style="color:#4ade80;">${item.correct}</strong>` : ''}
-                        </div>
-                        ${!item.isCorrect ? `<div style="font-size:11.5px; color:#86efac; background:rgba(34,197,94,0.1); padding:4px 8px; border-radius:4px;">💡 <strong>Rút kinh nghiệm:</strong> ${item.exp}</div>` : ''}
-                    `;
-                    listEl.appendChild(row);
-                });
-            }
+            thisMatchAnswers.forEach((item, idx) => {
+                const el = document.createElement("div");
+                el.style.background = "#050811";
+                el.style.border = "1px solid #1e293b";
+                el.style.borderRadius = "8px";
+                el.style.padding = "10px 12px";
+                el.innerHTML = `
+                    <div style="display:flex; justify-content:space-between; font-size:12px; font-weight:700;">
+                        <span style="color:#f8fafc;">#${idx + 1}. ${item.title}</span>
+                        <span style="color:${item.isCorrect ? '#4ade80' : '#f87171'}">${item.isCorrect ? '✓ ĐÚNG' : '✗ SAI'}</span>
+                    </div>
+                    <div style="font-size:11.5px; color:#94a3b8; margin-top:4px;">
+                        Bạn chọn: <strong style="color:${item.isCorrect ? '#4ade80' : '#f87171'}">${item.chosen}</strong> | Đúng là: <strong style="color:#4ade80">${item.correct}</strong>
+                    </div>
+                    ${item.exp ? `<div style="font-size:11.5px; color:#86efac; background:rgba(34,197,94,0.1); padding:4px 8px; border-radius:4px; margin-top:4px;">💡 <strong>Rút kinh nghiệm:</strong> ${item.exp}</div>` : ''}
+                `;
+                box.appendChild(el);
+            });
 
             modal.style.display = 'flex';
         }
