@@ -18,7 +18,6 @@
             overflow-x: hidden;
         }
 
-        /* SIDEBAR */
         .sidebar {
             width: 250px;
             background: #090e1a;
@@ -46,7 +45,6 @@
             border-radius: 9999px; font-weight: 800; margin-left: auto;
         }
 
-        /* MAIN ARENA */
         .arena-main {
             flex: 1;
             padding: 24px 32px;
@@ -66,12 +64,11 @@
 
         .battle-grid-layout {
             display: grid;
-            grid-template-columns: 1fr 340px;
+            grid-template-columns: 1fr 350px;
             gap: 24px;
             flex: 1;
         }
 
-        /* CỘT TRÁI: KHU VỰC THI ĐẤU CHỚP NHOÁNG (3-5S) */
         .question-arena-card {
             background: #090e1c;
             border: 2px solid #1e293b;
@@ -91,27 +88,34 @@
             background: #1e293b;
             border-radius: 5px;
             overflow: hidden;
-            margin-bottom: 20px;
+            margin-bottom: 16px;
         }
         .timer-progress-bar {
             height: 100%;
             width: 100%;
             background: linear-gradient(90deg, #22c55e, #eab308, #ef4444);
-            transition: width 0.1s linear;
+            transition: width 0.08s linear;
         }
 
         .round-info-bar {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            margin-bottom: 12px;
+            margin-bottom: 14px;
         }
         .round-badge {
             background: rgba(56, 189, 248, 0.15); border: 1px solid #38bdf8;
-            color: #38bdf8; font-family: 'Fira Code', monospace; padding: 4px 12px; border-radius: 8px; font-weight: 700;
+            color: #38bdf8; font-family: 'Fira Code', monospace; padding: 5px 14px; border-radius: 8px; font-weight: 700;
         }
-        .your-lives-wrap {
-            font-size: 18px; display: flex; align-items: center; gap: 4px;
+        .your-score-pill {
+            background: rgba(250, 204, 21, 0.15);
+            border: 1px solid #facc15;
+            color: #facc15;
+            font-family: 'Fira Code', monospace;
+            font-size: 14px;
+            font-weight: 800;
+            padding: 5px 14px;
+            border-radius: 8px;
         }
 
         .question-prompt-text {
@@ -130,9 +134,22 @@
             font-family: 'Fira Code', monospace;
             font-size: 15px;
             color: #38bdf8;
-            margin-bottom: 24px;
+            margin-bottom: 16px;
             white-space: pre-wrap;
             box-shadow: inset 0 0 15px rgba(0, 0, 0, 0.8);
+        }
+
+        .wait-others-banner {
+            font-size: 13.5px;
+            font-weight: 700;
+            color: #38bdf8;
+            background: rgba(56, 189, 248, 0.1);
+            border: 1px dashed rgba(56, 189, 248, 0.4);
+            padding: 8px 14px;
+            border-radius: 8px;
+            text-align: center;
+            margin-bottom: 14px;
+            display: none;
         }
 
         .options-fast-grid {
@@ -161,22 +178,30 @@
             background: #132038;
             transform: translateY(-2px);
         }
-        .btn-fast-option:disabled { opacity: 0.5; cursor: not-allowed; }
+        .btn-fast-option.selected-choice {
+            border-color: #facc15 !important;
+            background: rgba(250, 204, 21, 0.15) !important;
+        }
+        .btn-fast-option:disabled { opacity: 0.6; cursor: not-allowed; }
 
         .feedback-pop {
             position: absolute;
-            top: 50%;
+            top: 48%;
             left: 50%;
             transform: translate(-50%, -50%);
-            font-size: 34px;
+            font-size: 30px;
             font-weight: 900;
             font-family: 'Teko', sans-serif;
+            background: rgba(5, 8, 17, 0.95);
+            border: 2px solid #38bdf8;
+            padding: 12px 28px;
+            border-radius: 14px;
             display: none;
             z-index: 50;
             pointer-events: none;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.8);
         }
 
-        /* CỘT PHẢI: BẢNG ĐỐI ĐẦU 1V1 */
         .leaderboard-column {
             background: #090e1c;
             border: 2px solid #1e293b;
@@ -196,11 +221,11 @@
             border-bottom: 1px solid #1e293b;
             padding-bottom: 12px;
         }
-        .alive-badge {
+        .players-count-badge {
             font-size: 11px;
-            background: rgba(34, 197, 94, 0.15);
-            color: #4ade80;
-            border: 1px solid #22c55e;
+            background: rgba(56, 189, 248, 0.15);
+            color: #38bdf8;
+            border: 1px solid #38bdf8;
             padding: 2px 8px;
             border-radius: 6px;
         }
@@ -222,19 +247,16 @@
             align-items: center;
             font-size: 13.5px;
         }
-        .player-row-item.dead {
-            opacity: 0.35;
-            filter: grayscale(1);
-            background: #070a13;
-        }
-        .player-name-text { font-weight: 700; color: #f8fafc; display: flex; align-items: center; gap: 6px; }
-        .player-score-text { font-family: 'Fira Code', monospace; color: #facc15; font-weight: 700; }
+        .player-name-text { font-weight: 700; color: #f8fafc; display: flex; flex-direction: column; gap: 3px; }
+        .player-status-sub { font-size: 11px; font-weight: 600; }
+        .status-done { color: #4ade80; }
+        .status-waiting { color: #94a3b8; }
+        .player-score-text { font-family: 'Fira Code', monospace; color: #facc15; font-weight: 800; font-size: 14px; }
 
-        /* SẢNH CHỜ GHÉP ĐỐI THỦ 1V1 */
         .waiting-room-layer {
             position: absolute;
             inset: 0;
-            background: rgba(5, 8, 17, 0.95);
+            background: rgba(5, 8, 17, 0.96);
             display: flex;
             flex-direction: column;
             align-items: center;
@@ -248,104 +270,86 @@
         .wait-icon-spin { font-size: 48px; animation: spinIcon 3s infinite linear; }
         @keyframes spinIcon { 100% { transform: rotate(360deg); } }
 
-        /* MODAL KẾT THÚC */
         .modal-end-wrap {
             position: fixed; inset: 0; background: rgba(0,0,0,0.88); display: none;
             align-items: center; justify-content: center; z-index: 200; padding: 20px;
         }
         .modal-end-card {
             background: #090e1c; border: 2px solid #fb7185; border-radius: 20px;
-            padding: 36px; text-align: center; max-width: 440px; width: 100%;
+            padding: 28px; width: 100%; max-width: 680px; max-height: 90vh;
+            display: flex; flex-direction: column; gap: 16px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.8);
+        }
+        .history-list-box {
+            overflow-y: auto; display: flex; flex-direction: column; gap: 12px; max-height: 48vh; padding-right: 6px;
+        }
+        .history-item {
+            background: #0f172a; border: 1.5px solid #1e293b; border-radius: 12px;
+            padding: 14px; text-align: left; display: flex; flex-direction: column; gap: 6px;
+        }
+        .btn-action-row {
+            display: flex; justify-content: center; gap: 12px; margin-top: 8px;
         }
         .btn-replay-duel {
-            background: #e11d48; color: #fff; border: none; padding: 12px 28px;
-            border-radius: 10px; font-weight: 800; cursor: pointer; margin-top: 16px;
+            background: #e11d48; color: #fff; border: none; padding: 10px 24px;
+            border-radius: 8px; font-weight: 800; cursor: pointer;
+        }
+        .btn-back-arena {
+            background: #1e293b; color: #38bdf8; border: 1px solid #38bdf8; padding: 10px 20px;
+            border-radius: 8px; font-weight: 700; cursor: pointer; text-decoration: none;
         }
     </style>
 </head>
 <body>
 
-    <!-- SIDEBAR BÊN TRÁI -->
     <aside class="sidebar">
-        <div class="brand-logo">
-            <span>⚔️</span> CodeColosseum
-        </div>
-
+        <div class="brand-logo"><span>⚔️</span> CodeColosseum</div>
         <nav class="menu-list">
-            <a href="/" class="menu-item">
-                <span>🏠</span> Trang chủ
-            </a>
-            <a href="/courses" class="menu-item">
-                <span>📚</span> Bài học
-            </a>
-            <a href="/arena" class="menu-item">
-                <span>📝</span> Thực hành bài tập
-            </a>
-
-            <!-- MỤC ĐẤU TRƯỜNG ĐANG ACTIVE -->
-            <a href="/arena/speed-duel" class="menu-item active">
-                <span>⚔️</span> Đấu trường
-                <span class="badge-live">LIVE</span>
-            </a>
-
-            <a href="/leaderboard" class="menu-item">
-                <span>🏆</span> Bảng xếp hạng
-            </a>
-            <a href="/profile" class="menu-item">
-                <span>👤</span> Hồ sơ
-            </a>
+            <a href="/" class="menu-item"><span>🏠</span> Trang chủ</a>
+            <a href="/courses" class="menu-item"><span>📚</span> Bài học</a>
+            <a href="/arena" class="menu-item"><span>📝</span> Thực hành bài tập</a>
+            <a href="/arena/speed-duel" class="menu-item active"><span>⚔️</span> Đấu trường <span class="badge-live">LIVE</span></a>
+            <a href="/leaderboard" class="menu-item"><span>🏆</span> Bảng xếp hạng</a>
+            <a href="/profile" class="menu-item"><span>👤</span> Hồ sơ</a>
         </nav>
     </aside>
 
-    <!-- KHU VỰC THI ĐẤU SIÊU TRÍ TUỆ -->
     <main class="arena-main">
         <div class="top-strip">
-            <div class="arena-title-text">
-                <span>⚡</span> ĐẤU TRƯỜNG SIÊU TRÍ TUỆ PYTHON (ĐỐI KHÁNG 1V1)
-            </div>
-            <div class="user-tag">
-                👤 {{if .Username}}{{.Username}}{{else}}Chiến Binh{{end}}
-            </div>
+            <div class="arena-title-text"><span>⚡</span> ĐẤU TRƯỜNG ĐUA ĐIỂM TỐC ĐỘ (10 CÂU HỎI)</div>
+            <div class="user-tag" id="current-user-tag">👤 {{if .Username}}{{.Username}}{{else}}Chiến Binh{{end}}</div>
         </div>
 
         <div class="battle-grid-layout">
-            <!-- CỘT TRÁI: KHU VỰC THI ĐẤU CHỚP NHOÁNG -->
             <div class="question-arena-card">
-                <!-- SẢNH CHỜ GHÉP ĐỐI THỦ 1V1 -->
                 <div class="waiting-room-layer" id="wait-layer">
                     <div class="wait-icon-spin">⏳</div>
-                    <h2 style="font-size: 24px; color: #ffffff;" id="wait-title">Đang Ghép Phòng Đấu 1v1...</h2>
-                    <p style="color: #94a3b8; font-size: 14px; max-width: 440px;" id="wait-desc">
-                        Hệ thống đang kết nối 2 đấu thủ vào cùng phòng thi đấu sinh tồn. Vui lòng chờ đối thủ vào phòng!
+                    <h2 style="font-size: 24px; color: #ffffff;" id="wait-title">Đang Ghép Trận Đấu (10 Câu)...</h2>
+                    <p style="color: #94a3b8; font-size: 14px; max-width: 460px;">
+                        Chạy xuyên suốt 10 câu hỏi dù trả lời Đúng hay Sai. Khi tất cả người chơi đã chọn đáp án, hệ thống sẽ lập tức chuyển sang câu tiếp theo!
                     </p>
                     <div style="font-family:'Fira Code'; font-size: 16px; color:#38bdf8; font-weight:700;" id="wait-players-count">
-                        1 / 2 Đấu Thủ
+                        1 / 2 Đấu Thủ Sẵn Sàng
                     </div>
                 </div>
 
-                <div class="feedback-pop" id="feedback-txt">CHÍNH XÁC! +145 PTS</div>
+                <div class="feedback-pop" id="feedback-txt">CHÍNH XÁC!</div>
 
                 <div>
-                    <!-- Thanh thời gian đếm ngược 3-5 giây -->
                     <div class="timer-progress-wrap">
                         <div class="timer-progress-bar" id="time-bar"></div>
                     </div>
 
                     <div class="round-info-bar">
-                        <span class="round-badge" id="round-num-badge">VÒNG 1</span>
-                        <div class="your-lives-wrap" id="your-lives-box">❤️❤️❤️</div>
+                        <span class="round-badge" id="round-num-badge">CÂU 1 / 10</span>
+                        <div class="your-score-pill" id="your-score-box">⚡ Điểm: 0 PTS</div>
                     </div>
 
-                    <div class="question-prompt-text" id="q-title-text">
-                        Đang chuẩn bị đề bài...
-                    </div>
-
-                    <div class="code-display-block" id="q-code-text">
-                        # Code Python sẽ xuất hiện tại đây
-                    </div>
+                    <div class="question-prompt-text" id="q-title-text">Đang chuẩn bị đề bài...</div>
+                    <div class="code-display-block" id="q-code-text"># Code Python sẽ xuất hiện tại đây</div>
+                    <div class="wait-others-banner" id="wait-others-msg">⏳ Đã ghi nhận đáp án! Đang chờ đối thủ chọn (nếu tất cả chọn xong sẽ qua câu ngay)...</div>
                 </div>
 
-                <!-- 4 Lựa chọn trả lời nhanh -->
                 <div class="options-fast-grid" id="options-container">
                     <button class="btn-fast-option" disabled>A. ...</button>
                     <button class="btn-fast-option" disabled>B. ...</button>
@@ -354,24 +358,32 @@
                 </div>
             </div>
 
-            <!-- CỘT PHẢI: BẢNG SO KÈ 1V1 -->
             <div class="leaderboard-column">
                 <div class="lb-header">
-                    <span>🏆 ĐỐI ĐẦU 1V1</span>
-                    <span class="alive-badge" id="alive-badge-txt">Còn sống: 2</span>
+                    <span>🏆 BẢNG ĐIỂM & TRẠNG THÁI</span>
+                    <span class="players-count-badge" id="players-badge-txt">Đấu thủ: 1</span>
                 </div>
-
                 <div class="players-scroll-list" id="players-list-box"></div>
             </div>
         </div>
     </main>
 
-    <!-- MODAL KẾT THÚC -->
+    <!-- MODAL KẾT THÚC ĐỦ 10 CÂU -->
     <div class="modal-end-wrap" id="end-modal">
         <div class="modal-end-card">
-            <h2 id="modal-title" style="font-size: 24px; color: #ffffff; margin-bottom: 8px;">TRẬN ĐẤU KẾT THÚC</h2>
-            <p id="modal-msg" style="color: #94a3b8; font-size: 14.5px; line-height: 1.6;"></p>
-            <button class="btn-replay-duel" onclick="location.reload()">Tham Gia Trận Mới</button>
+            <h2 id="modal-title" style="font-size: 24px; color: #fb7185; text-align: center;">HOÀN THÀNH 10 CÂU HỎI!</h2>
+            <p id="modal-msg" style="color: #facc15; font-size: 16px; font-weight: 800; text-align: center;"></p>
+
+            <div style="font-weight: 800; font-size: 14px; color: #38bdf8; border-bottom: 1px solid #1e293b; padding-bottom: 6px;">
+                📋 LỊCH SỬ 10 CÂU HỎI & BÀI HỌC RÚT KINH NGHIỆM:
+            </div>
+
+            <div class="history-list-box" id="duel-history-list"></div>
+
+            <div class="btn-action-row">
+                <button class="btn-replay-duel" onclick="location.reload()">Ghép Trận Mới</button>
+                <a href="/arena" class="btn-back-arena">Về Danh Sách Map</a>
+            </div>
         </div>
     </div>
 
@@ -380,12 +392,15 @@
         let questionStartTime = 0;
         let timerInterval = null;
         let answeredThisRound = false;
+        let myRunningScore = 0;
+        let duelRoundRecords = [];
 
         const timeBar = document.getElementById("time-bar");
         const roundNumBadge = document.getElementById("round-num-badge");
-        const yourLivesBox = document.getElementById("your-lives-box");
+        const yourScoreBox = document.getElementById("your-score-box");
         const qTitleText = document.getElementById("q-title-text");
         const qCodeText = document.getElementById("q-code-text");
+        const waitOthersMsg = document.getElementById("wait-others-msg");
         const optionsContainer = document.getElementById("options-container");
         const playersListBox = document.getElementById("players-list-box");
         const waitLayer = document.getElementById("wait-layer");
@@ -399,67 +414,96 @@
             const action = res.action;
             const data = res.data;
 
-            if (action === "waiting_players") {
-                document.getElementById("wait-title").innerText = "Đang Tìm Đối Thủ 1v1...";
-                document.getElementById("wait-players-count").innerText = `${data.currentCount} / 2 Đấu Thủ`;
-            }
-            else if (action === "lobby_state") {
-                document.getElementById("wait-players-count").innerText = `${data.totalPlayers} / 2 Đấu Thủ`;
+            if (action === "lobby_state") {
+                document.getElementById("wait-players-count").innerText = `${data.totalPlayers} / 2 Đấu Thủ Sẵn Sàng`;
                 renderLeaderboard(data.players);
             }
             else if (action === "countdown_start") {
-                document.getElementById("wait-title").innerText = `TRẬN ĐẤU BẮT ĐẦU TRONG: ${data.seconds}S!`;
+                myRunningScore = 0;
+                duelRoundRecords = [];
+                yourScoreBox.innerText = `⚡ Điểm: 0 PTS`;
+                document.getElementById("wait-title").innerText = `TRẬN ĐẤU 10 CÂU BẮT ĐẦU TRONG: ${data.seconds}S!`;
             }
             else if (action === "new_round_question") {
                 waitLayer.style.display = "none";
                 startRoundQuestion(data);
             }
+            else if (action === "round_finished") {
+                clearInterval(timerInterval);
+                waitOthersMsg.style.display = "none";
+            }
             else if (action === "answer_feedback") {
+                const last = duelRoundRecords[duelRoundRecords.length - 1];
+                const gained = data.scoreGained || 0;
+                myRunningScore = (data.totalScore !== undefined) ? data.totalScore : (myRunningScore + gained);
+                yourScoreBox.innerText = `⚡ Điểm: ${myRunningScore} PTS`;
+
                 if (data.correct) {
-                    feedbackTxt.innerText = `✓ CHÍNH XÁC! (+${data.scoreGained} PTS - ${data.speedMs}ms)`;
+                    feedbackTxt.innerText = `✓ CHÍNH XÁC! +${gained} PTS (${((data.speedMs || 0) / 1000).toFixed(2)}s)`;
                     feedbackTxt.style.color = "#4ade80";
+                    feedbackTxt.style.borderColor = "#22c55e";
+                    if (last) {
+                        last.isCorrect = true;
+                        last.speedMs = data.speedMs || 0;
+                        last.scoreGained = gained;
+                    }
                 } else {
-                    feedbackTxt.innerText = "✗ SAI RỒI! BỊ TRỪ 1 MÁU!";
+                    feedbackTxt.innerText = data.timeout ? "⏰ HẾT GIỜ! (+0 PTS)" : "✗ SAI RỒI! (+0 PTS)";
                     feedbackTxt.style.color = "#f43f5e";
-                    yourLivesBox.innerText = "❤️".repeat(Math.max(0, data.lives));
+                    feedbackTxt.style.borderColor = "#ef4444";
+                    if (last) {
+                        last.isCorrect = false;
+                        last.scoreGained = 0;
+                    }
                 }
                 feedbackTxt.style.display = "block";
-                setTimeout(() => { feedbackTxt.style.display = "none"; }, 1500);
-            }
-            else if (action === "player_eliminated") {
-                yourLivesBox.innerText = "💀 BỊ LOẠI";
-                alert(`Bạn đã bị loại: ${data.reason}`);
-            }
-            else if (action === "round_ended") {
-                clearInterval(timerInterval);
-                renderLeaderboard(data.leaderboard);
-                document.getElementById("alive-badge-txt").innerText = `Còn sống: ${data.aliveCount}`;
+                setTimeout(() => { feedbackTxt.style.display = "none"; }, 1000);
             }
             else if (action === "battle_royale_game_over") {
                 clearInterval(timerInterval);
-                document.getElementById("modal-msg").innerText = data.msg;
-                document.getElementById("end-modal").style.display = "flex";
+                waitOthersMsg.style.display = "none";
+                showDuelEndModal(data.msg);
             }
         };
 
         function startRoundQuestion(data) {
             answeredThisRound = false;
+            waitOthersMsg.style.display = "none";
             currentQuestion = data.question;
-            roundNumBadge.innerText = `VÒNG ${data.round}`;
-            qTitleText.innerText = currentQuestion.question;
+
+            const totalR = data.totalRounds || 10;
+            roundNumBadge.innerText = `CÂU ${data.round} / ${totalR}`;
+            qTitleText.innerText = `Câu ${data.round}: ${currentQuestion.question}`;
             qCodeText.innerText = currentQuestion.code || "# Không có đoạn mã kèm theo";
+
+            const correctText = (currentQuestion.options && currentQuestion.ans !== undefined)
+                ? currentQuestion.options[currentQuestion.ans]
+                : "Xem lại lý thuyết câu hỏi";
+
+            duelRoundRecords.push({
+                round: data.round,
+                question: currentQuestion.question,
+                code: currentQuestion.code,
+                options: currentQuestion.options,
+                chosen: "Không kịp trả lời (Quá giờ)",
+                correctAns: correctText,
+                exp: currentQuestion.exp || "Hãy ôn lại kiến thức câu này nhé.",
+                isCorrect: false,
+                speedMs: 0,
+                scoreGained: 0
+            });
 
             optionsContainer.innerHTML = "";
             currentQuestion.options.forEach((opt, idx) => {
                 const btn = document.createElement("button");
                 btn.className = "btn-fast-option";
                 btn.innerText = `${String.fromCharCode(65 + idx)}. ${opt}`;
-                btn.onclick = () => chooseAnswer(idx);
+                btn.onclick = () => chooseAnswer(idx, btn);
                 optionsContainer.appendChild(btn);
             });
 
             clearInterval(timerInterval);
-            const totalMs = data.timeLimit * 1000;
+            const totalMs = (data.timeLimit || 20) * 1000;
             questionStartTime = Date.now();
             timeBar.style.width = "100%";
 
@@ -475,12 +519,19 @@
             }, 50);
         }
 
-        function chooseAnswer(idx) {
+        function chooseAnswer(idx, clickedBtn) {
             if (answeredThisRound) return;
             answeredThisRound = true;
 
             const submitMs = Date.now() - questionStartTime;
+            if (clickedBtn) clickedBtn.classList.add("selected-choice");
             document.querySelectorAll(".btn-fast-option").forEach(b => b.disabled = true);
+            waitOthersMsg.style.display = "block";
+
+            const last = duelRoundRecords[duelRoundRecords.length - 1];
+            if (last) {
+                last.chosen = currentQuestion.options[idx];
+            }
 
             ws.send(JSON.stringify({
                 action: "submit_answer",
@@ -494,25 +545,86 @@
             players.sort((a, b) => b.score - a.score);
 
             playersListBox.innerHTML = "";
-            let aliveTotal = 0;
 
             players.forEach((p, rank) => {
-                if (p.isAlive) aliveTotal++;
                 const row = document.createElement("div");
-                row.className = `player-row-item ${p.isAlive ? '' : 'dead'}`;
+                row.className = "player-row-item";
+                const medal = rank === 0 ? "🥇" : (rank === 1 ? "🥈" : `#${rank + 1}`);
+                const statusHtml = p.answered
+                    ? `<span class="player-status-sub status-done">✅ Đã chọn đáp án</span>`
+                    : `<span class="player-status-sub status-waiting">⏳ Đang suy nghĩ...</span>`;
 
                 row.innerHTML = `
                     <div class="player-name-text">
-                        <span>#${rank + 1}</span>
-                        <span>${p.username}</span>
-                        <span style="font-size:11px;">${p.isAlive ? '❤️'.repeat(p.lives) : '💀'}</span>
+                        <div><span>${medal}</span> <span>${p.username}</span></div>
+                        ${statusHtml}
                     </div>
                     <div class="player-score-text">${p.score} pts</div>
                 `;
                 playersListBox.appendChild(row);
             });
 
-            document.getElementById("alive-badge-txt").innerText = `Còn sống: ${aliveTotal}`;
+            document.getElementById("players-badge-txt").innerText = `Đấu thủ: ${players.length}`;
+        }
+
+        function showDuelEndModal(msg) {
+            document.getElementById("modal-msg").innerText = msg;
+            const listEl = document.getElementById("duel-history-list");
+            listEl.innerHTML = "";
+
+            duelRoundRecords.forEach((item) => {
+                const box = document.createElement("div");
+                box.className = "history-item";
+                box.innerHTML = `
+                    <div style="display:flex; justify-content:space-between; font-size:12px; font-family:'Fira Code';">
+                        <span style="color:#38bdf8; font-weight:700;">Câu ${item.round} / 10</span>
+                        <span style="color:${item.isCorrect ? '#4ade80' : '#f43f5e'}; font-weight:700;">
+                            ${item.isCorrect ? `✓ +${item.scoreGained} PTS (${(item.speedMs / 1000).toFixed(2)}s)` : '✗ +0 PTS'}
+                        </span>
+                    </div>
+                    <div style="font-size:13.5px; font-weight:700; color:#fff;">❓ ${item.question}</div>
+                    ${item.code ? `<div style="font-family:'Fira Code'; font-size:12px; color:#38bdf8; background:#050811; padding:6px 10px; border-radius:6px;">${item.code}</div>` : ''}
+                    <div style="font-size:12px; color:#94a3b8;">
+                        Bạn chọn: <strong style="color:${item.isCorrect ? '#4ade80' : '#f87171'};">${item.chosen}</strong>
+                        ${!item.isCorrect ? ` | Đáp án đúng: <strong style="color:#4ade80;">${item.correctAns}</strong>` : ''}
+                    </div>
+                    <div style="font-size:11.5px; color:#86efac; background:rgba(34,197,94,0.1); padding:4px 8px; border-radius:4px;">💡 <strong>Giải thích:</strong> ${item.exp}</div>
+                `;
+                listEl.appendChild(box);
+
+                saveUniqueQuestionRecord(
+                    "Đấu Trường 1v1",
+                    item.question,
+                    item.code,
+                    item.chosen,
+                    item.correctAns,
+                    item.isCorrect,
+                    item.exp
+                );
+            });
+
+            document.getElementById("end-modal").style.display = "flex";
+        }
+
+        function saveUniqueQuestionRecord(mapName, question, code, userChoice, correctChoice, isCorrect, explanation) {
+            const historyMap = JSON.parse(localStorage.getItem("colosseum_unique_history") || "{}");
+            const now = new Date();
+            const timeStr = now.toLocaleTimeString('vi-VN', { hour: '2-digit', minute: '2-digit' }) + ' ' + now.toLocaleDateString('vi-VN');
+            const key = question.trim().toLowerCase();
+
+            historyMap[key] = {
+                mapName: mapName,
+                question: question,
+                code: code || "",
+                userChoice: userChoice,
+                correctChoice: correctChoice,
+                isCorrect: isCorrect,
+                explanation: explanation,
+                timestamp: timeStr,
+                timestampRaw: Date.now()
+            };
+
+            localStorage.setItem("colosseum_unique_history", JSON.stringify(historyMap));
         }
     </script>
 </body>

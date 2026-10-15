@@ -244,209 +244,71 @@
         .notify-correct { color: #34d399; }
         .notify-wrong { color: #f87171; }
 
-        /* ==================== MAP 2: MEMORY MATCH ARCADE 20 LÁ BÀI ==================== */
+        /* ==================== MAP 2 ==================== */
         .arcade-cabinet {
             background: linear-gradient(180deg, #1b355a 0%, #0c182c 100%);
-            border: 6px solid #2563eb;
-            border-radius: 24px;
-            padding: 20px 24px;
-            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.9), inset 0 0 30px rgba(37, 99, 235, 0.4);
-            display: flex;
-            flex-direction: column;
-            gap: 16px;
-            position: relative;
+            border: 6px solid #2563eb; border-radius: 24px; padding: 20px 24px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.9); display: flex; flex-direction: column; gap: 16px;
         }
         .arcade-marquee {
-            text-align: center;
-            background: #050d1a;
-            border: 3px solid #38bdf8;
-            border-radius: 12px;
-            padding: 10px;
-            box-shadow: 0 0 18px rgba(56, 189, 248, 0.5);
+            text-align: center; background: #050d1a; border: 3px solid #38bdf8;
+            border-radius: 12px; padding: 10px; box-shadow: 0 0 18px rgba(56, 189, 248, 0.5);
         }
-        .arcade-title-text {
-            font-size: 22px;
-            font-weight: 800;
-            letter-spacing: 1px;
-            color: #ffffff;
-            text-shadow: 0 0 10px #38bdf8, 0 0 20px #0284c7;
-        }
+        .arcade-title-text { font-size: 22px; font-weight: 800; color: #ffffff; text-shadow: 0 0 10px #38bdf8; }
         .arcade-scoreboard {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            background: rgba(5, 13, 26, 0.8);
-            border: 1.5px solid #1e3a8a;
-            padding: 10px 24px;
-            border-radius: 12px;
-            font-family: 'Fira Code', monospace;
-            font-size: 14px;
+            display: flex; justify-content: space-between; align-items: center;
+            background: rgba(5, 13, 26, 0.8); border: 1.5px solid #1e3a8a;
+            padding: 10px 24px; border-radius: 12px; font-family: 'Fira Code', monospace; font-size: 14px;
         }
         .score-item { display: flex; align-items: center; gap: 8px; }
-        .cards-grid {
-            display: grid;
-            grid-template-columns: repeat(5, 1fr);
-            gap: 12px;
-            perspective: 1000px;
-        }
-        .match-card {
-            height: 96px;
-            position: relative;
-            transform-style: preserve-3d;
-            transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-            cursor: pointer;
-        }
+        .cards-grid { display: grid; grid-template-columns: repeat(5, 1fr); gap: 12px; perspective: 1000px; }
+        .match-card { height: 96px; position: relative; transform-style: preserve-3d; transition: transform 0.4s; cursor: pointer; }
         .match-card.flipped { transform: rotateY(180deg); }
-        .match-card.matched {
-            transform: rotateY(180deg);
-            pointer-events: none;
-        }
-        .match-card.matched .card-front {
-            border-color: #22c55e !important;
-            box-shadow: 0 0 20px rgba(34, 197, 94, 0.8), inset 0 0 15px rgba(34, 197, 94, 0.4);
-        }
-        .card-back, .card-front {
-            position: absolute;
-            inset: 0;
-            backface-visibility: hidden;
-            border-radius: 12px;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-        }
-        .card-back {
-            background: linear-gradient(135deg, #0e223f 0%, #061122 100%);
-            border: 2.5px solid #38bdf8;
-            box-shadow: inset 0 0 12px rgba(56, 189, 248, 0.3);
-        }
-        .card-front {
-            background: linear-gradient(135deg, #11294d 0%, #07172e 100%);
-            border: 2.5px solid #60a5fa;
-            transform: rotateY(180deg);
-            padding: 6px;
-            text-align: center;
-        }
-        .card-title {
-            font-family: 'Fira Code', monospace;
-            font-size: 11px;
-            font-weight: 700;
-            color: #93c5fd;
-            text-transform: uppercase;
-        }
-        .card-icon {
-            font-size: 26px;
-            margin: 4px 0;
-        }
+        .match-card.matched { transform: rotateY(180deg); pointer-events: none; }
+        .match-card.matched .card-front { border-color: #22c55e !important; box-shadow: 0 0 20px rgba(34, 197, 94, 0.8); }
+        .card-back, .card-front { position: absolute; inset: 0; backface-visibility: hidden; border-radius: 12px; display: flex; flex-direction: column; align-items: center; justify-content: center; }
+        .card-back { background: linear-gradient(135deg, #0e223f 0%, #061122 100%); border: 2.5px solid #38bdf8; }
+        .card-front { background: linear-gradient(135deg, #11294d 0%, #07172e 100%); border: 2.5px solid #60a5fa; transform: rotateY(180deg); padding: 6px; text-align: center; }
+        .card-title { font-family: 'Fira Code', monospace; font-size: 11px; font-weight: 700; color: #93c5fd; }
+        .card-icon { font-size: 26px; margin: 4px 0; }
 
-        /* ==================== MAP 3: BOMB DEFUSAL ==================== */
+        /* ==================== MAP 3 ==================== */
         .bomb-cabinet-wrap {
-            position: relative;
-            width: 100%;
-            background: linear-gradient(180deg, #1b2838 0%, #0d1520 100%);
-            border: 4px solid #2a3f5a;
-            border-radius: 24px;
-            padding: 22px 28px;
-            display: flex;
-            flex-direction: column;
-            gap: 18px;
+            position: relative; width: 100%; background: linear-gradient(180deg, #1b2838 0%, #0d1520 100%);
+            border: 4px solid #2a3f5a; border-radius: 24px; padding: 22px 28px;
+            display: flex; flex-direction: column; gap: 18px;
         }
-        .alarm-flash-layer {
-            position: absolute;
-            inset: 0;
-            background: rgba(239, 68, 68, 0.45);
-            border-radius: 20px;
-            display: none;
-            z-index: 40;
-            pointer-events: none;
-            animation: alarmPulse 0.3s infinite alternate;
-        }
-        @keyframes alarmPulse { 0% { opacity: 0.2; } 100% { opacity: 0.8; } }
+        .alarm-flash-layer { position: absolute; inset: 0; background: rgba(239, 68, 68, 0.45); border-radius: 20px; display: none; z-index: 40; pointer-events: none; }
         .bomb-top-bar { display: flex; justify-content: space-between; align-items: center; }
         .bomb-title-text { font-size: 24px; font-weight: 800; color: #ffffff; }
         .bomb-stats-group { display: flex; gap: 14px; }
-        .bomb-stat-pill {
-            background: #090e17; border: 1.5px solid #2a3f5a; padding: 6px 14px;
-            border-radius: 8px; font-family: 'Fira Code', monospace; font-size: 13px;
-        }
-        .wire-selector-panel {
-            background: #090e17;
-            border: 1.5px solid #1a283a;
-            border-radius: 14px;
-            padding: 14px 18px;
-            display: flex;
-            flex-direction: column;
-            gap: 10px;
-        }
-        .wires-chips-grid {
-            display: grid;
-            grid-template-columns: repeat(10, 1fr);
-            gap: 8px;
-        }
-        .wire-chip-btn {
-            background: #111a28;
-            border: 1.5px solid #2a3f5a;
-            border-radius: 8px;
-            padding: 8px 4px;
-            color: #e2e8f0;
-            font-family: 'Fira Code', monospace;
-            font-size: 12px;
-            font-weight: 700;
-            cursor: pointer;
-            text-align: center;
-        }
-        .wire-chip-btn.active {
-            border-color: #f59e0b !important;
-            background: #1e2838;
-        }
-        .wire-chip-btn.cleared {
-            background: rgba(34, 197, 94, 0.15) !important;
-            border-color: #22c55e !important;
-            color: #86efac !important;
-        }
+        .bomb-stat-pill { background: #090e17; border: 1.5px solid #2a3f5a; padding: 6px 14px; border-radius: 8px; font-family: 'Fira Code', monospace; font-size: 13px; }
+        .wire-selector-panel { background: #090e17; border: 1.5px solid #1a283a; border-radius: 14px; padding: 14px 18px; display: flex; flex-direction: column; gap: 10px; }
+        .wires-chips-grid { display: grid; grid-template-columns: repeat(10, 1fr); gap: 8px; }
+        .wire-chip-btn { background: #111a28; border: 1.5px solid #2a3f5a; border-radius: 8px; padding: 8px 4px; color: #e2e8f0; font-family: 'Fira Code', monospace; font-size: 12px; font-weight: 700; cursor: pointer; text-align: center; }
+        .wire-chip-btn.active { border-color: #f59e0b !important; background: #1e2838; }
+        .wire-chip-btn.cleared { background: rgba(34, 197, 94, 0.15) !important; border-color: #22c55e !important; color: #86efac !important; }
+
         .bomb-stage-layout {
-            display: grid;
-            grid-template-columns: 280px 1fr;
-            gap: 24px;
-            align-items: center;
-            background: #090e17;
-            border: 2px solid #1a283a;
-            border-radius: 18px;
-            padding: 22px;
-            position: relative;
+            display: grid; grid-template-columns: 280px 1fr; gap: 24px; align-items: center;
+            background: #090e17; border: 2px solid #1a283a; border-radius: 18px; padding: 22px; position: relative;
         }
         .bomb-sphere-box { position: relative; width: 220px; height: 220px; margin: 0 auto; display: flex; align-items: center; justify-content: center; }
         .bomb-body {
-            width: 200px; height: 200px;
-            background: radial-gradient(circle at 35% 30%, #475569 0%, #1e293b 45%, #0f172a 85%, #020617 100%);
-            border-radius: 50%; border: 4px solid #020617;
-            box-shadow: 0 12px 30px rgba(0, 0, 0, 0.9);
-            display: flex; align-items: center; justify-content: center; position: relative;
+            width: 200px; height: 200px; background: radial-gradient(circle at 35% 30%, #475569 0%, #1e293b 45%, #0f172a 85%, #020617 100%);
+            border-radius: 50%; border: 4px solid #020617; display: flex; align-items: center; justify-content: center; position: relative;
         }
-        .bomb-clock-dial {
-            width: 110px; height: 110px; background: radial-gradient(circle, #090d16 0%, #020617 100%);
-            border-radius: 50%; border: 3.5px solid #334155; display: flex; flex-direction: column; align-items: center; justify-content: center;
-        }
+        .bomb-clock-dial { width: 110px; height: 110px; background: #020617; border-radius: 50%; border: 3.5px solid #334155; display: flex; flex-direction: column; align-items: center; justify-content: center; }
         .dial-number { font-family: 'Fira Code', monospace; font-size: 32px; font-weight: 800; color: #ef4444; }
         .dial-label { font-size: 10px; font-weight: 700; color: #94a3b8; }
-        .big-explosion-overlay {
-            position: absolute; inset: 0; display: none; align-items: center; justify-content: center;
-            background: rgba(239, 68, 68, 0.95); z-index: 100;
-        }
-        .boom-text-graphic {
-            font-size: 110px; font-weight: 900; font-family: 'Teko', sans-serif; color: #ffffff;
-        }
+        .big-explosion-overlay { position: absolute; inset: 0; display: none; align-items: center; justify-content: center; background: rgba(239, 68, 68, 0.95); z-index: 100; }
+        .boom-text-graphic { font-size: 110px; font-weight: 900; font-family: 'Teko', sans-serif; color: #ffffff; }
+
         .bomb-right-panel { display: flex; flex-direction: column; gap: 14px; }
-        .bomb-code-terminal {
-            background: #020617; border: 1.5px solid #1e293b; border-radius: 12px;
-            padding: 12px 16px; font-family: 'Fira Code', monospace;
-        }
+        .bomb-code-terminal { background: #020617; border: 1.5px solid #1e293b; border-radius: 12px; padding: 12px 16px; font-family: 'Fira Code', monospace; }
         .code-q-top-row { display: flex; justify-content: space-between; align-items: center; margin-bottom: 6px; }
         .code-q-desc { font-size: 14.5px; font-weight: 700; color: #f8fafc; }
-        .wire-attempt-badge {
-            font-size: 12px; color: #f43f5e; background: rgba(244, 63, 94, 0.15);
-            padding: 2px 8px; border-radius: 6px; border: 1px solid #f43f5e;
-        }
+        .wire-attempt-badge { font-size: 12px; color: #f43f5e; background: rgba(244, 63, 94, 0.15); padding: 2px 8px; border-radius: 6px; border: 1px solid #f43f5e; }
         .code-q-content { font-size: 13.5px; color: #38bdf8; line-height: 1.6; white-space: pre-wrap; }
         .wires-interactive-list { display: flex; flex-direction: column; gap: 11px; }
         .wire-row-item { display: flex; align-items: center; gap: 14px; cursor: pointer; }
@@ -456,47 +318,20 @@
         .wire-green { background: linear-gradient(90deg, #15803d, #22c55e); }
         .wire-purple { background: linear-gradient(90deg, #7e22ce, #a855f7); }
         .wire-cable-line.snapped { background: #334155 !important; opacity: 0.3; pointer-events: none; }
-        .wire-choice-label {
-            background: #020617; border: 2px solid #334155; color: #ffffff;
-            font-family: 'Fira Code', monospace; font-size: 13.5px; font-weight: 700;
-            padding: 9px 18px; border-radius: 8px; min-width: 240px;
-            display: flex; align-items: center; justify-content: space-between;
-        }
+        .wire-choice-label { background: #020617; border: 2px solid #334155; color: #ffffff; font-family: 'Fira Code', monospace; font-size: 13.5px; font-weight: 700; padding: 9px 18px; border-radius: 8px; min-width: 240px; display: flex; justify-content: space-between; }
 
         /* MODAL CHUNG */
-        .quiz-modal-overlay {
-            position: fixed; inset: 0; background: rgba(3, 7, 18, 0.88); display: none;
-            align-items: center; justify-content: center; z-index: 250; backdrop-filter: blur(8px);
-        }
-        .quiz-card-pop {
-            background: #0f1c30; border: 2px solid #38bdf8; border-radius: 20px;
-            padding: 28px; max-width: 480px; width: 90%; text-align: center;
-        }
-        .quiz-tag {
-            font-family: 'Fira Code', monospace; font-size: 12px; color: #38bdf8;
-            background: rgba(56, 189, 248, 0.15); padding: 4px 12px; border-radius: 9999px; display: inline-block; margin-bottom: 12px;
-        }
+        .quiz-modal-overlay { position: fixed; inset: 0; background: rgba(3, 7, 18, 0.88); display: none; align-items: center; justify-content: center; z-index: 250; backdrop-filter: blur(8px); }
+        .quiz-card-pop { background: #0f1c30; border: 2px solid #38bdf8; border-radius: 20px; padding: 28px; max-width: 480px; width: 90%; text-align: center; }
+        .quiz-tag { font-family: 'Fira Code', monospace; font-size: 12px; color: #38bdf8; background: rgba(56, 189, 248, 0.15); padding: 4px 12px; border-radius: 9999px; display: inline-block; margin-bottom: 12px; }
         .quiz-q-text { font-size: 16px; font-weight: 700; color: #ffffff; margin-bottom: 20px; }
         .quiz-options-list { display: flex; flex-direction: column; gap: 10px; }
-        .quiz-opt-btn {
-            background: #152742; border: 1px solid #1e3a8a; color: #e2e8f0; padding: 12px 16px;
-            border-radius: 10px; font-size: 13.5px; font-weight: 600; cursor: pointer; text-align: left;
-        }
-        .quiz-opt-btn:hover { background: #1e3a8a; border-color: #38bdf8; color: #fff; }
+        .quiz-opt-btn { background: #152742; border: 1px solid #1e3a8a; color: #e2e8f0; padding: 12px 16px; border-radius: 10px; font-size: 13.5px; font-weight: 600; cursor: pointer; text-align: left; }
+        .quiz-opt-btn:hover { background: #1e3a8a; border-color: #38bdf8; }
 
-        .game-modal {
-            position: fixed; inset: 0; background: rgba(0,0,0,0.85); display: none;
-            align-items: center; justify-content: center; z-index: 300; padding: 20px;
-        }
-        .modal-box {
-            background: #0d1424; border: 1.5px solid #1e2c44; border-radius: 18px;
-            padding: 24px; text-align: center; max-width: 620px; width: 100%; max-height: 85vh;
-            display: flex; flex-direction: column; gap: 12px;
-        }
-        .btn-restart {
-            background: #0284c7; color: #fff; border: none; padding: 10px 20px;
-            border-radius: 8px; font-weight: 700; cursor: pointer;
-        }
+        .game-modal { position: fixed; inset: 0; background: rgba(0,0,0,0.85); display: none; align-items: center; justify-content: center; z-index: 300; padding: 20px; }
+        .modal-box { background: #0d1424; border: 1.5px solid #1e2c44; border-radius: 18px; padding: 24px; text-align: center; max-width: 620px; width: 100%; max-height: 85vh; display: flex; flex-direction: column; gap: 12px; }
+        .btn-restart { background: #0284c7; color: #fff; border: none; padding: 10px 20px; border-radius: 8px; font-weight: 700; cursor: pointer; }
     </style>
 </head>
 <body>
@@ -674,6 +509,15 @@
     </div>
 
     <script>
+        // HÀM GỬI TÍN HIỆU HOẠT ĐỘNG VỀ CHO ADMIN (BƯỚC 3)
+        function notifyAdmin(action, status) {
+            fetch('/api/track-activity', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ action: action, status: status })
+            }).catch(() => {});
+        }
+
         // HÀM LƯU ĐỘC BẢN: MỖI CÂU CHỈ LƯU ĐÚNG 1 LẦN VÀO BỘ NHỚ LỊCH SỬ CHUNG
         function saveUniqueQuestionRecord(mapName, question, code, userChoice, correctChoice, isCorrect, explanation) {
             const historyMap = JSON.parse(localStorage.getItem("colosseum_unique_history") || "{}");
@@ -705,14 +549,17 @@
         if (currentMap === 1) {
             document.getElementById("arena-header-title").innerText = "⚔️ Map 1: Tiêu Diệt Quái Cú Pháp";
             document.getElementById("map1-wrapper").style.display = "flex";
+            notifyAdmin("Vừa vào Map 1 (Diệt Quái)", "Bắt đầu làm bài");
             initMap1PvE();
         } else if (currentMap === 2) {
             document.getElementById("arena-header-title").innerText = "⚔️ Map 2: Memory Match Python Concepts";
             document.getElementById("map2-wrapper").style.display = "flex";
+            notifyAdmin("Vừa vào Map 2 (Memory Arcade)", "Bắt đầu lật thẻ");
             initMap2SoloArcade();
         } else if (currentMap === 3) {
             document.getElementById("arena-header-title").innerText = "💣 Map 3: Defuse The Bomb (Cấu Trúc Dữ Liệu)";
             document.getElementById("map3-wrapper").style.display = "flex";
+            notifyAdmin("Vừa vào Map 3 (Defuse The Bomb)", "Đang tháo gỡ bom");
             initMap3BombDefusal();
         }
 
@@ -790,6 +637,12 @@
                 isAnswering = true;
                 document.querySelectorAll(".answer-choice-btn").forEach(b => b.disabled = true);
 
+                // Gửi thông báo đến Admin
+                notifyAdmin(
+                    `Map 1: Quái ${currentIndex + 1} - Chọn "${currentQ.options[chosenIdx]}"`,
+                    isCorrect ? "Trả lời Đúng ✓" : "Trả lời Sai ✗"
+                );
+
                 saveUniqueQuestionRecord(
                     "Map 1: Diệt Quái Cú Pháp",
                     currentQ.q,
@@ -828,6 +681,7 @@
                                 monsterEmoji.style.transform = "scale(1) rotate(0deg)";
                                 currentIndex++;
                                 if (currentIndex >= 20) {
+                                    notifyAdmin("Vừa hoàn thành Map 1", "Chiến thắng Map 1 🏆");
                                     showModal(true, "CHIẾN CÔNG HIỂN HÁCH! 🏆", "Tuyệt đỉnh! Bạn đã tiêu diệt toàn bộ 20 quái vật!");
                                 } else {
                                     loadQuestion();
@@ -846,6 +700,7 @@
                     setTimeout(() => { mBox.style.transform = "translateX(0)"; }, 200);
 
                     if (lives <= 0) {
+                        notifyAdmin(`Thất bại Map 1 ở quái ${currentIndex + 1}`, "Bị hạ gục 💀");
                         setTimeout(() => showModal(false, "BẠN ĐÃ BỊ ĐÁNH BẠI! 💀", `Bạn đã hết mạng ở Quái vật thứ ${currentIndex + 1}.`), 600);
                     } else {
                         setTimeout(() => {
@@ -922,6 +777,11 @@
                                         modal.style.display = "none";
                                         const isCorrect = (idx === c1.card.ans);
 
+                                        notifyAdmin(
+                                            `Map 2: Trả lời thẻ "${c1.card.name}"`,
+                                            isCorrect ? "Đúng ✓" : "Sai ✗"
+                                        );
+
                                         saveUniqueQuestionRecord("Map 2: Memory Match", c1.card.question, "", opt, c1.card.options[c1.card.ans], isCorrect, c1.card.exp);
                                         thisMatchAnswers.push({ title: c1.card.question, isCorrect, chosen: opt, correct: c1.card.options[c1.card.ans], exp: c1.card.exp });
 
@@ -934,6 +794,7 @@
                                             document.getElementById("pairs-cleared").innerText = `${matchedPairsCount} / 10`;
 
                                             if (matchedPairsCount >= 10) {
+                                                notifyAdmin("Hoàn thành Map 2", `Đạt ${score} điểm 🏆`);
                                                 showModal(true, "HOÀN THÀNH TOÀN BỘ 20 LÁ BÀI! 🏆", `Bạn đạt ${score} điểm sau ${turnsCount} lượt lật.`);
                                             }
                                         } else {
@@ -1037,6 +898,11 @@
 
                 const cable = document.getElementById(`wire-cable-${optIdx}`);
 
+                notifyAdmin(
+                    `Map 3: Cắt dây số ${selectedWireIndex + 1}`,
+                    isCorrect ? "Cắt đúng ✓" : "Cắt sai ✗ (Cảnh báo)"
+                );
+
                 saveUniqueQuestionRecord(
                     `Map 3: Defuse Bomb (Dây ${selectedWireIndex + 1})`,
                     task.q,
@@ -1066,6 +932,7 @@
                             renderWireChips();
                             loadSelectedWireQuestion();
                         } else {
+                            notifyAdmin("Map 3: Đã gỡ thành công quả bom", "Chiến thắng 🏆");
                             showModal(true, "VÔ HIỆU HÓA HOÀN TOÀN! 🏆", "Bạn đã gỡ thành công toàn bộ 20 sợi dây!");
                         }
                     }, 500);
@@ -1079,6 +946,7 @@
 
                     if (totalFailsAllowed <= 0) {
                         boomScreen.style.display = "flex";
+                        notifyAdmin("Map 3: Bom đã phát nổ", "Thất bại 💀");
                         setTimeout(() => {
                             showModal(false, "BOOM! QUẢ BOM ĐÃ PHÁT NỔ! 💀", "Bạn đã dùng hết 10 lần lỗi cho phép.");
                         }, 1000);
