@@ -1,0 +1,554 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Học Python Dễ Hiểu - CodeColosseum</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-dark: #060913;
+            --bg-sidebar: #0a0f1d;
+            --bg-card: #0d1424;
+            --border: #1e2c44;
+            --cyan: #38bdf8;
+            --yellow: #fbbf24;
+            --green: #34d399;
+            --red: #f87171;
+            --text-main: #f8fafc;
+            --text-muted: #94a3b8;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Plus Jakarta Sans', sans-serif; }
+        body { background-color: var(--bg-dark); color: var(--text-main); min-height: 100vh; display: flex; flex-direction: column; }
+
+        /* Topbar */
+        .topbar {
+            background-color: var(--bg-sidebar); border-bottom: 1px solid var(--border);
+            padding: 14px 28px; display: flex; justify-content: space-between; align-items: center;
+            position: sticky; top: 0; z-index: 50;
+        }
+        .topbar-left { display: flex; align-items: center; gap: 14px; }
+        .back-link {
+            color: var(--text-muted); text-decoration: none; font-size: 13px; font-weight: 600;
+            padding: 6px 14px; background: #101726; border: 1px solid var(--border); border-radius: 8px; transition: 0.2s;
+        }
+        .back-link:hover { color: var(--cyan); border-color: var(--cyan); }
+        .brand-title { font-weight: 800; font-size: 16px; color: #fff; display: flex; align-items: center; gap: 8px; }
+
+        /* Bố cục chia 2 cột */
+        .lesson-layout { display: flex; flex: 1; max-width: 1400px; width: 100%; margin: 0 auto; }
+
+        /* Mục lục bên trái */
+        .lesson-sidebar {
+            width: 320px; background: var(--bg-sidebar); border-right: 1px solid var(--border);
+            padding: 24px 16px; display: flex; flex-direction: column; gap: 8px;
+            height: calc(100vh - 61px); overflow-y: auto; position: sticky; top: 61px;
+        }
+        .sidebar-title {
+            font-size: 12px; font-weight: 800; text-transform: uppercase; color: #64748b;
+            letter-spacing: 0.5px; padding-left: 8px; margin-bottom: 6px;
+        }
+        .lesson-nav-btn {
+            display: flex; align-items: center; justify-content: space-between;
+            padding: 12px 14px; border-radius: 10px; background: transparent; border: 1px solid transparent;
+            color: var(--text-muted); text-align: left; cursor: pointer; transition: 0.2s; font-size: 13px; font-weight: 600;
+        }
+        .lesson-nav-btn:hover { background: rgba(255,255,255,0.03); color: #fff; }
+        .lesson-nav-btn.active {
+            background: rgba(2, 132, 199, 0.15); border-color: rgba(56, 189, 248, 0.35); color: var(--cyan);
+        }
+        .lesson-nav-btn .tag-step { font-family: 'Fira Code', monospace; font-size: 11px; color: #64748b; }
+
+        /* Vùng nội dung bài giảng chính */
+        .lesson-main { flex: 1; padding: 36px 48px; max-width: 960px; }
+
+        .lesson-header-badge {
+            display: inline-flex; align-items: center; gap: 6px; font-family: 'Fira Code', monospace;
+            font-size: 12px; color: var(--cyan); background: rgba(2, 132, 199, 0.12);
+            border: 1px solid rgba(56, 189, 248, 0.3); padding: 4px 12px; border-radius: 9999px; margin-bottom: 12px;
+        }
+        .lesson-h1 { font-size: 28px; font-weight: 800; margin-bottom: 12px; color: #fff; letter-spacing: -0.3px; }
+        .lesson-lead { font-size: 15px; color: var(--text-muted); line-height: 1.7; margin-bottom: 28px; }
+
+        /* Khối bài học */
+        .content-box {
+            background: var(--bg-card); border: 1.5px solid var(--border); border-radius: 16px;
+            padding: 24px; margin-bottom: 24px;
+        }
+        .box-title { font-size: 17px; font-weight: 700; color: #fff; margin-bottom: 12px; display: flex; align-items: center; gap: 8px; }
+        .box-text { font-size: 14px; color: #cbd5e1; line-height: 1.75; margin-bottom: 14px; }
+
+        /* Khung Code Syntax */
+        .code-container {
+            background: #04060c; border: 1px solid #1a263d; border-radius: 10px;
+            padding: 16px 20px; font-family: 'Fira Code', monospace; font-size: 13.5px;
+            line-height: 1.65; color: #e2e8f0; overflow-x: auto; margin-bottom: 14px;
+        }
+        .c-kw { color: #f43f5e; font-weight: 600; }    /* def, for, if, class */
+        .c-str { color: #34d399; }                   /* "string" */
+        .c-num { color: #fbbf24; }                   /* 123 */
+        .c-com { color: #64748b; font-style: italic; }/* # comment */
+        .c-fn { color: #38bdf8; }                    /* print, range */
+
+        /* Hộp chú ý lỗi thường gặp */
+        .alert-warning {
+            background: rgba(245, 158, 11, 0.08); border-left: 4px solid var(--yellow);
+            padding: 14px 18px; border-radius: 0 10px 10px 0; margin-top: 14px;
+        }
+        .alert-warning strong { color: var(--yellow); display: block; margin-bottom: 4px; font-size: 13.5px; }
+        .alert-warning p { font-size: 13px; color: #cbd5e1; line-height: 1.6; margin: 0; }
+
+        /* Nút Kêu Gọi Chiến Đấu & Điều Hướng */
+        .lesson-footer-actions {
+            display: flex; justify-content: space-between; align-items: center;
+            padding-top: 24px; border-top: 1px solid var(--border); margin-top: 36px;
+        }
+        .btn-battle-now {
+            background: linear-gradient(135deg, #ea580c 0%, #c2410c 100%); color: #fff;
+            padding: 12px 24px; border-radius: 10px; font-weight: 700; font-size: 14px; text-decoration: none;
+            box-shadow: 0 0 18px rgba(234, 88, 12, 0.4); transition: 0.2s; display: inline-flex; align-items: center; gap: 8px;
+        }
+        .btn-battle-now:hover { transform: translateY(-2px); box-shadow: 0 0 24px rgba(234, 88, 12, 0.6); }
+
+        .btn-nav-step {
+            background: #1e293b; color: #fff; border: 1px solid #334155; padding: 10px 18px;
+            border-radius: 8px; font-size: 13px; font-weight: 600; cursor: pointer; transition: 0.2s;
+        }
+        .btn-nav-step:hover { background: #334155; }
+    </style>
+</head>
+<body>
+
+    <header class="topbar">
+        <div class="topbar-left">
+            <a href="/courses" class="back-link">← Danh Sách Lộ Trình</a>
+            <div class="brand-title"><span>🐍</span> Học Python Thực Chiến</div>
+        </div>
+        <div>
+            {{if .IsLoggedIn}}
+                <span style="font-family:'Fira Code'; font-size:13px; color:var(--cyan);">Học viên: <strong>@{{.Username}}</strong></span>
+            {{else}}
+                <a href="/login" class="back-link">Đăng nhập để lưu tiến độ</a>
+            {{end}}
+        </div>
+    </header>
+
+    <div class="lesson-layout">
+        <!-- Sidebar Mục lục 10 Bài -->
+        <aside class="lesson-sidebar">
+            <div class="sidebar-title">Danh Sách 10 Bài Học</div>
+            <button class="lesson-nav-btn active" onclick="switchLesson(1)">
+                <span>1. Cú pháp & Biến</span>
+                <span class="tag-step">Bài 1</span>
+            </button>
+            <button class="lesson-nav-btn" onclick="switchLesson(2)">
+                <span>2. Luồng điều khiển</span>
+                <span class="tag-step">Bài 2</span>
+            </button>
+            <button class="lesson-nav-btn" onclick="switchLesson(3)">
+                <span>3. Cấu trúc dữ liệu</span>
+                <span class="tag-step">Bài 3</span>
+            </button>
+            <button class="lesson-nav-btn" onclick="switchLesson(4)">
+                <span>4. Hàm & Tổ chức mã</span>
+                <span class="tag-step">Bài 4</span>
+            </button>
+            <button class="lesson-nav-btn" onclick="switchLesson(5)">
+                <span>5. Hướng đối tượng OOP</span>
+                <span class="tag-step">Bài 5</span>
+            </button>
+            <button class="lesson-nav-btn" onclick="switchLesson(6)">
+                <span>6. Xử lý Tệp tin</span>
+                <span class="tag-step">Bài 6</span>
+            </button>
+            <button class="lesson-nav-btn" onclick="switchLesson(7)">
+                <span>7. Pythonic & Generator</span>
+                <span class="tag-step">Bài 7</span>
+            </button>
+            <button class="lesson-nav-btn" onclick="switchLesson(8)">
+                <span>8. Bất đồng bộ Asyncio</span>
+                <span class="tag-step">Bài 8</span>
+            </button>
+            <button class="lesson-nav-btn" onclick="switchLesson(9)">
+                <span>9. Thuật toán & Tối ưu</span>
+                <span class="tag-step">Bài 9</span>
+            </button>
+            <button class="lesson-nav-btn" onclick="switchLesson(10)">
+                <span>10. Kiến trúc Chuyên nghiệp</span>
+                <span class="tag-step">Bài 10</span>
+            </button>
+        </aside>
+
+        <!-- Khung hiển thị nội dung chi tiết bài giảng -->
+        <main class="lesson-main">
+            <div id="lesson-content-area"></div>
+
+            <!-- Nút Khiêu Chiến & Chuyển Bài -->
+            <div class="lesson-footer-actions">
+                <button class="btn-nav-step" id="btn-prev" onclick="prevLesson()">← Bài trước</button>
+                <a href="#" id="btn-battle-link" class="btn-battle-now">⚔️ Khiêu Chiến Map Này Ngay</a>
+                <button class="btn-nav-step" id="btn-next" onclick="nextLesson()">Bài tiếp theo →</button>
+            </div>
+        </main>
+    </div>
+
+    <script>
+        // CƠ SỞ DỮ LIỆU ĐẦY ĐỦ 10 BÀI HỌC DỄ HIỂU
+        const LESSON_DATABASE = {
+            1: {
+                id: 1,
+                tag: "BÀI 01 • NỀN TẢNG CƠ BẢN",
+                title: "Cú Pháp Cơ Bản, Khai Báo Biến & Kiểu Dữ Liệu",
+                lead: "Python là ngôn ngữ lập trình có cú pháp trong sáng như tiếng Anh. Bạn không cần khai báo kiểu dữ liệu phức tạp, Python sẽ tự hiểu giá trị bạn gán.",
+                sections: [
+                    {
+                        title: "1. Biến (Variable) là gì?",
+                        text: "Hãy tưởng tượng biến như một <strong>chiếc hộp dán nhãn</strong> để chứa đồ. Bạn đặt tên cho chiếc hộp và gán giá trị vào bằng dấu <code>=</code>.",
+                        code: `<span class="c-com"># Khai báo các biến cơ bản</span>
+ten = <span class="c-str">"CodeColosseum"</span>    <span class="c-com"># Kiểu chuỗi (str)</span>
+tuoi = <span class="c-num">20</span>                    <span class="c-com"># Kiểu số nguyên (int)</span>
+diem = <span class="c-num">9.5</span>                   <span class="c-com"># Kiểu số thực (float)</span>
+dang_hoc = <span class="c-kw">True</span>              <span class="c-com"># Kiểu đúng/sai (bool)</span>
+
+<span class="c-fn">print</span>(f<span class="c-str">"Chào {ten}, tuổi: {tuoi}"</span>)`
+                    },
+                    {
+                        title: "2. Phép toán số học cần nhớ",
+                        text: "Toán tử chia <code>/</code> luôn trả về số thực (float). Để lấy phần nguyên, dùng <code>//</code>. Để lấy phần dư, dùng <code>%</code>. Lũy thừa (mũ) dùng <code>**</code>.",
+                        code: `<span class="c-fn">print</span>(<span class="c-num">10</span> / <span class="c-num">3</span>)    <span class="c-com"># Kết quả: 3.3333333333333335</span>
+<span class="c-fn">print</span>(<span class="c-num">10</span> // <span class="c-num">3</span>)   <span class="c-com"># Kết quả: 3 (Chia lấy phần nguyên)</span>
+<span class="c-fn">print</span>(<span class="c-num">10</span> % <span class="c-num">3</span>)    <span class="c-com"># Kết quả: 1 (Chia lấy phần dư)</span>
+<span class="c-fn">print</span>(<span class="c-num">2</span> ** <span class="c-num">3</span>)     <span class="c-com"># Kết quả: 8 (2 mũ 3)</span>`
+                    }
+                ],
+                pitfall: {
+                    title: "Bẫy lỗi phổ biến:",
+                    text: "Tên biến <strong>không được bắt đầu bằng chữ số</strong> (ví dụ: <code>2name = 'A'</code> là lỗi cú pháp). Tên biến chỉ được bắt đầu bằng chữ cái hoặc dấu gạch dưới <code>_</code>."
+                }
+            },
+            2: {
+                id: 2,
+                tag: "BÀI 02 • ĐIỀU KHIỂN CHƯƠNG TRÌNH",
+                title: "Câu Lệnh Rẽ Nhánh If-Else & Vòng Lặp For/While",
+                lead: "Lập trình thông minh là khả năng ra quyết định dựa trên điều kiện và tự động lặp lại công việc hàng ngàn lần mà không cần viết lại mã.",
+                sections: [
+                    {
+                        title: "1. Rẽ nhánh If - Elif - Else & Quy tắc Thụt dòng",
+                        text: "Python không dùng dấu ngoặc nhọn <code>{}</code> như C/Java mà dùng <strong>thụt đầu dòng (4 dấu cách)</strong> để phân định khối lệnh.",
+                        code: `diem = <span class="c-num">8.5</span>
+
+<span class="c-kw">if</span> diem &gt;= <span class="c-num">9.0</span>:
+    <span class="c-fn">print</span>(<span class="c-str">"Chiến binh xuất sắc!"</span>)
+<span class="c-kw">elif</span> diem &gt;= <span class="c-num">7.0</span>:
+    <span class="c-fn">print</span>(<span class="c-str">"Đạt loại Khá!"</span>)
+<span class="c-kw">else</span>:
+    <span class="c-fn">print</span>(<span class="c-str">"Cần rèn luyện thêm!"</span>)`
+                    },
+                    {
+                        title: "2. Vòng lặp For với hàm range()",
+                        text: "<code>range(start, stop)</code> chạy từ giá trị bắt đầu đến trước giá trị kết thúc (không bao gồm stop).",
+                        code: `<span class="c-com"># In từ 1 đến 4 (không in số 5)</span>
+<span class="c-kw">for</span> i <span class="c-kw">in</span> <span class="c-fn">range</span>(<span class="c-num">1</span>, <span class="c-num">5</span>):
+    <span class="c-fn">print</span>(f<span class="c-str">"Lần lặp thứ {i}"</span>)
+
+<span class="c-com"># break: Dừng hẳn vòng lặp | continue: Bỏ qua lần này</span>`
+                    }
+                ],
+                pitfall: {
+                    title: "Bẫy lỗi phổ biến:",
+                    text: "Quên dấu hai chấm <code>:</code> ở cuối dòng <code>if</code> hoặc <code>for</code>, hoặc thụt đầu dòng không đều nhau (IndentationError)."
+                }
+            },
+            3: {
+                id: 3,
+                tag: "BÀI 03 • CẤU TRÚC DỮ LIỆU",
+                title: "Bộ Tứ Cốt Lõi: List, Tuple, Dictionary & Set",
+                lead: "Lập trình viên giỏi là người biết chọn đúng cấu trúc dữ liệu để lưu trữ thông tin nhanh nhất và tiết kiệm bộ nhớ nhất.",
+                sections: [
+                    {
+                        title: "1. So sánh nhanh 4 cấu trúc",
+                        text: "• <strong>List <code>[]</code></strong>: Danh sách có thứ tự, sửa đổi được.<br>• <strong>Tuple <code>()</code></strong>: Danh sách bất biến (không thể sửa sau khi tạo).<br>• <strong>Dictionary <code>{}</code></strong>: Lưu cặp Khóa: Giá trị (Key: Value) tra cứu siêu tốc.<br>• <strong>Set <code>{}</code></strong>: Tập hợp các phần tử duy nhất, không trùng lặp.",
+                        code: `<span class="c-com"># 1. List (Danh sách)</span>
+mon_hoc = [<span class="c-str">"Python"</span>, <span class="c-str">"Golang"</span>]
+mon_hoc.<span class="c-fn">append</span>(<span class="c-str">"AI"</span>)  <span class="c-com"># Thêm vào cuối</span>
+
+<span class="c-com"># 2. Dictionary (Từ điển)</span>
+player = {<span class="c-str">"name"</span>: <span class="c-str">"Quang"</span>, <span class="c-str">"elo"</span>: <span class="c-num">1250</span>}
+<span class="c-fn">print</span>(player[<span class="c-str">"elo"</span>])  <span class="c-com"># Kết quả: 1250</span>
+
+<span class="c-com"># 3. Set (Loại bỏ phần tử trùng lặp)</span>
+tap_hop = {<span class="c-num">1</span>, <span class="c-num">2</span>, <span class="c-num">2</span>, <span class="c-num">3</span>}  <span class="c-com"># Tự động còn {1, 2, 3}</span>`
+                    }
+                ],
+                pitfall: {
+                    title: "Bẫy lỗi phổ biến:",
+                    text: "Cố tình sửa giá trị của một Tuple (ví dụ: <code>t = (1, 2); t[0] = 5</code>) sẽ gây ra lỗi <code>TypeError: 'tuple' object does not support item assignment</code>."
+                }
+            },
+            4: {
+                id: 4,
+                tag: "BÀI 04 • HÀM & TÁI SỬ DỤNG MÃ",
+                title: "Định Nghĩa Hàm, Tham Số *args, **kwargs & Lambda",
+                lead: "Hàm (Function) giúp bạn gói gọn một khối mã logic lại để gọi dùng nhiều lần, tránh việc phải copy paste mã nguồn lặp đi lặp lại.",
+                sections: [
+                    {
+                        title: "1. Khai báo hàm với từ khóa def",
+                        text: "Hàm nhận dữ liệu đầu vào qua tham số và trả kết quả về qua từ khóa <code>return</code>.",
+                        code: `<span class="c-kw">def</span> <span class="c-fn">tinh_tong</span>(a, b=<span class="c-num">10</span>):  <span class="c-com"># b có giá trị mặc định là 10</span>
+    <span class="c-kw">return</span> a + b
+
+kq = <span class="c-fn">tinh_tong</span>(<span class="c-num">5</span>)  <span class="c-com"># 5 + 10 = 15</span>`
+                    },
+                    {
+                        title: "2. Tham số không giới hạn (*args, **kwargs)",
+                        text: "<code>*args</code> gom các tham số vị trí thành một <strong>Tuple</strong>. <code>**kwargs</code> gom các tham số có tên thành một <strong>Dictionary</strong>.",
+                        code: `<span class="c-kw">def</span> <span class="c-fn">dem_qua</span>(*args):
+    <span class="c-fn">print</span>(args)  <span class="c-com"># Nhận dạng tuple</span>
+
+<span class="c-fn">dem_qua</span>(<span class="c-str">"Táo"</span>, <span class="c-str">"Cam"</span>, <span class="c-str">"Xoài"</span>)`
+                    }
+                ],
+                pitfall: {
+                    title: "Bẫy lỗi phổ biến:",
+                    text: "Không phân biệt được giữa việc in ra màn hình <code>print()</code> và trả về kết quả <code>return</code>. Nếu hàm không có <code>return</code>, giá trị mặc định nó trả về sẽ là <code>None</code>."
+                }
+            },
+            5: {
+                id: 5,
+                tag: "BÀI 05 • HƯỚNG ĐỐI TƯỢNG (OOP)",
+                title: "Lập Trình Hướng Đối Tượng: Class, Kế Thừa & Đa Hình",
+                lead: "OOP mô phỏng các thực thể thực tế trong đời sống (như Chiến binh, Xe cộ, Tài khoản) thành các đối tượng có thuộc tính và hành vi.",
+                sections: [
+                    {
+                        title: "1. Class & Hàm khởi tạo __init__",
+                        text: "<code>__init__</code> chạy ngay khi một đối tượng mới được tạo ra. Tham số <code>self</code> đại diện cho chính đối tượng đó.",
+                        code: `<span class="c-kw">class</span> <span class="c-fn">Fighter</span>:
+    <span class="c-kw">def</span> <span class="c-fn">__init__</span>(<span class="c-kw">self</span>, name, hp):
+        <span class="c-kw">self</span>.name = name
+        <span class="c-kw">self</span>.hp = hp
+
+    <span class="c-kw">def</span> <span class="c-fn">take_damage</span>(<span class="c-kw">self</span>, dmg):
+        <span class="c-kw">self</span>.hp -= dmg
+        <span class="c-fn">print</span>(f<span class="c-str">"{self.name} bị trừ {dmg} HP! Còn lại {self.hp}"</span>)
+
+p1 = <span class="c-fn">Fighter</span>(<span class="c-str">"Warrior"</span>, <span class="c-num">100</span>)
+p1.<span class="c-fn">take_damage</span>(<span class="c-num">20</span>)`
+                    }
+                ],
+                pitfall: {
+                    title: "Bẫy lỗi phổ biến:",
+                    text: "Quên truyền tham số <code>self</code> ở phương thức trong Class sẽ báo lỗi: <code>TypeError: takes 0 positional arguments but 1 was given</code>."
+                }
+            },
+            6: {
+                id: 6,
+                tag: "BÀI 06 • XỬ LÝ DỮ LIỆU NGOÀI",
+                title: "Đọc Ghi Tệp Với With Open, Xử Lý JSON & CSV",
+                lead: "Làm việc với file dữ liệu là kỹ năng sống còn của mọi ứng dụng backend và phân tích dữ liệu.",
+                sections: [
+                    {
+                        title: "1. Mở file an toàn với Context Manager (with open)",
+                        text: "Dùng <code>with open()</code> giúp Python tự động đóng file giải phóng tài nguyên hệ thống, ngay cả khi xảy ra lỗi đột ngột.",
+                        code: `<span class="c-com"># Ghi dữ liệu vào file</span>
+<span class="c-kw">with</span> <span class="c-fn">open</span>(<span class="c-str">"scores.txt"</span>, <span class="c-str">"w"</span>, encoding=<span class="c-str">"utf-8"</span>) <span class="c-kw">as</span> f:
+    f.<span class="c-fn">write</span>(<span class="c-str">"Quang: 1250 Elo\\n"</span>)
+
+<span class="c-com"># Đọc dữ liệu ra</span>
+<span class="c-kw">with</span> <span class="c-fn">open</span>(<span class="c-str">"scores.txt"</span>, <span class="c-str">"r"</span>) <span class="c-kw">as</span> f:
+    data = f.<span class="c-fn">read</span>()
+    <span class="c-fn">print</span>(data)`
+                    }
+                ],
+                pitfall: {
+                    title: "Bẫy lỗi phổ biến:",
+                    text: "Mở file với chế độ <code>'w'</code> (write) sẽ xóa sạch toàn bộ nội dung cũ trong file đó. Nếu muốn ghi nối tiếp vào đuôi file, hãy dùng chế độ <code>'a'</code> (append)."
+                }
+            },
+            7: {
+                id: 7,
+                tag: "BÀI 07 • TỐI ƯU HÓA PYTHONIC",
+                title: "List Comprehension, Generator Hàm Yield & Decorator",
+                lead: "Viết code kiểu 'Pythonic' là cách biến 10 dòng code phức tạp thành 2 dòng thanh lịch, chạy mượt mà và tiết kiệm RAM tối đa.",
+                sections: [
+                    {
+                        title: "1. List Comprehension (Tạo mảng 1 dòng)",
+                        text: "Thay vì dùng vòng lặp for và append 4 dòng, ta viết gộp biểu thức trực tiếp vào trong cặp ngoặc vuông.",
+                        code: `<span class="c-com"># Tạo danh sách bình phương các số chẵn từ 0 đến 9</span>
+squares = [x**<span class="c-num">2</span> <span class="c-kw">for</span> x <span class="c-kw">in</span> <span class="c-fn">range</span>(<span class="c-num">10</span>) <span class="c-kw">if</span> x % <span class="c-num">2</span> == <span class="c-num">0</span>]
+<span class="c-fn">print</span>(squares)  <span class="c-com"># [0, 4, 16, 36, 64]</span>`
+                    },
+                    {
+                        title: "2. Generator với từ khóa yield (Tiết kiệm RAM)",
+                        text: "Hàm dùng <code>yield</code> không tạo ra cả triệu phần tử chiếm đầy RAM cùng lúc, mà chỉ sinh ra giá trị khi được yêu cầu (lazy evaluation).",
+                        code: `<span class="c-kw">def</span> <span class="c-fn">sinh_so</span>():
+    <span class="c-kw">yield</span> <span class="c-num">1</span>
+    <span class="c-kw">yield</span> <span class="c-num">2</span>
+    <span class="c-kw">yield</span> <span class="c-num">3</span>
+
+gen = <span class="c-fn">sinh_so</span>()
+<span class="c-fn">print</span>(<span class="c-fn">next</span>(gen))  <span class="c-com"># 1</span>
+<span class="c-fn">print</span>(<span class="c-fn">next</span>(gen))  <span class="c-com"># 2</span>`
+                    }
+                ],
+                pitfall: {
+                    title: "Bẫy lỗi phổ biến:",
+                    text: "Lạm dụng Comprehension lồng nhau quá nhiều tầng sẽ làm code trở nên khó đọc, đi ngược lại triết lý 'Đơn giản tốt hơn phức tạp' của Python."
+                }
+            },
+            8: {
+                id: 8,
+                tag: "BÀI 08 • BẤT ĐỒNG BỘ NÂNG CAO",
+                title: "Lập Trình Bất Đồng Bộ Với Asyncio, Async & Await",
+                lead: "Khi ứng dụng cần tải nhiều trang web cùng lúc hoặc chờ truy vấn cơ sở dữ liệu, Asyncio giúp máy tính không bị 'đơ' trong lúc chờ đợi.",
+                sections: [
+                    {
+                        title: "1. Khái niệm Non-blocking I/O",
+                        text: "Thay vì chờ việc A xong mới làm việc B, <code>await</code> cho phép CPU tạm thời chuyển sang xử lý việc khác trong thời gian việc A đang chờ mạng.",
+                        code: `<span class="c-kw">import</span> asyncio
+
+<span class="c-kw">async def</span> <span class="c-fn">tai_du_lieu</span>():
+    <span class="c-fn">print</span>(<span class="c-str">"Bắt đầu tải..."</span>)
+    <span class="c-kw">await</span> asyncio.<span class="c-fn">sleep</span>(<span class="c-num">2</span>)  <span class="c-com"># Giả lập chờ mạng 2s</span>
+    <span class="c-fn">print</span>(<span class="c-str">"Tải hoàn tất!"</span>)
+
+asyncio.<span class="c-fn">run</span>(<span class="c-fn">tai_du_lieu</span>())`
+                    }
+                ],
+                pitfall: {
+                    title: "Bẫy lỗi phổ biến:",
+                    text: "Sử dụng các hàm đồng bộ nặng tính toán (như <code>time.sleep()</code> thay vì <code>asyncio.sleep()</code>) bên trong hàm async sẽ làm nghẽn toàn bộ Event Loop của hệ thống."
+                }
+            },
+            9: {
+                id: 9,
+                tag: "BÀI 09 • THUẬT TOÁN & BIG-O",
+                title: "Độ Phức Tạp Thuật Toán Big-O & Cấu Trúc Nâng Cao",
+                lead: "Code chạy được là chưa đủ, code cần phải chạy nhanh ngay cả khi tập dữ liệu mở rộng từ 1.000 lên 10.000.000 người dùng.",
+                sections: [
+                    {
+                        title: "1. Thước đo độ phức tạp Big-O",
+                        text: "• <strong>O(1)</strong>: Tốc độ tức thời (tra cứu Key trong Dictionary).<br>• <strong>O(n)</strong>: Tốc độ tỉ lệ thuận với số phần tử (tìm kiếm tuần tự trong List).<br>• <strong>O(n²)</strong>: Hai vòng lặp lồng nhau (thuật toán cần hạn chế khi dữ liệu lớn).",
+                        code: `<span class="c-com"># O(1) - Siêu nhanh</span>
+scores = {<span class="c-str">"A"</span>: <span class="c-num">100</span>, <span class="c-str">"B"</span>: <span class="c-num">90</span>}
+val = scores[<span class="c-str">"A"</span>]
+
+<span class="c-com"># O(n) - Phải duyệt qua từng phần tử</span>
+items = [<span class="c-num">1</span>, <span class="c-num">2</span>, <span class="c-num">3</span>, <span class="c-num">4</span>, <span class="c-num">5</span>]
+<span class="c-kw">if</span> <span class="c-num">5</span> <span class="c-kw">in</span> items:
+    <span class="c-fn">print</span>(<span class="c-str">"Tìm thấy"</span>)`
+                    }
+                ],
+                pitfall: {
+                    title: "Bẫy lỗi phổ biến:",
+                    text: "Dùng toán tử <code>in</code> trên một <code>List</code> dài hàng triệu phần tử sẽ chạy rất chậm O(n). Hãy ép kiểu sang <code>Set</code> hoặc <code>Dict</code> để tra cứu O(1) ngay lập tức."
+                }
+            },
+            10: {
+                id: 10,
+                tag: "BÀI 10 • CHUẨN DỰ ÁN TỔ CHỨC LỚN",
+                title: "Kiểm Thử Tự Động Pytest, Type Hints & Chuẩn Đóng Gói",
+                lead: "Biến bản thân thành một kỹ sư phần mềm thực thụ thông qua việc viết code có kiểm thử tự động, bắt lỗi kiểu dữ liệu trước khi chạy mã.",
+                sections: [
+                    {
+                        title: "1. Type Hints (Gợi ý kiểu dữ liệu)",
+                        text: "Từ Python 3.5+, bạn có thể ghi rõ kiểu dữ liệu mong muốn của tham số và giá trị trả về để công cụ như MyPy hoặc VS Code hỗ trợ bắt lỗi sớm.",
+                        code: `<span class="c-kw">def</span> <span class="c-fn">chao_hoi</span>(name: <span class="c-fn">str</span>, age: <span class="c-fn">int</span>) -&gt; <span class="c-fn">str</span>:
+    <span class="c-kw">return</span> f<span class="c-str">"Xin chào {name}, bạn {age} tuổi."</span>`
+                    },
+                    {
+                        title: "2. Viết kiểm thử tự động với Pytest",
+                        text: "Dùng từ khóa <code>assert</code> để kiểm tra tính đúng đắn của logic mà không cần phải chạy file và kiểm tra bằng mắt.",
+                        code: `<span class="c-kw">def</span> <span class="c-fn">cong</span>(a, b):
+    <span class="c-kw">return</span> a + b
+
+<span class="c-kw">def</span> <span class="c-fn">test_cong</span>():
+    <span class="c-kw">assert</span> <span class="c-fn">cong</span>(<span class="c-num">2</span>, <span class="c-num">3</span>) == <span class="c-num">5</span>
+    <span class="c-kw">assert</span> <span class="c-fn">cong</span>(-<span class="c-num">1</span>, <span class="c-num">1</span>) == <span class="c-num">0</span>`
+                    }
+                ],
+                pitfall: {
+                    title: "Bẫy lỗi phổ biến:",
+                    text: "Type Hints trong Python không ép buộc chặt chẽ lúc runtime như Java hay C++. Do đó bạn cần công cụ linting tĩnh (như MyPy) để quét lỗi trước khi đẩy code lên production."
+                }
+            }
+        };
+
+        // Lấy bài học theo tham số URL (?id=X)
+        const urlParams = new URLSearchParams(window.location.search);
+        let currentLessonId = parseInt(urlParams.get('id')) || 1;
+        if (!LESSON_DATABASE[currentLessonId]) currentLessonId = 1;
+
+        function renderLesson(lessonId) {
+            const data = LESSON_DATABASE[lessonId];
+            if (!data) return;
+
+            currentLessonId = lessonId;
+
+            // Highlight menu bên trái
+            document.querySelectorAll(".lesson-nav-btn").forEach((btn, idx) => {
+                if (idx + 1 === lessonId) btn.classList.add("active");
+                else btn.classList.remove("active");
+            });
+
+            // Tạo nội dung HTML
+            let html = `
+                <div class="lesson-header-badge">${data.tag}</div>
+                <h1 class="lesson-h1">${data.title}</h1>
+                <p class="lesson-lead">${data.lead}</p>
+            `;
+
+            data.sections.forEach(sec => {
+                html += `
+                    <div class="content-box">
+                        <h3 class="box-title">💡 ${sec.title}</h3>
+                        <p class="box-text">${sec.text}</p>
+                        ${sec.code ? `<div class="code-container">${sec.code}</div>` : ''}
+                    </div>
+                `;
+            });
+
+            if (data.pitfall) {
+                html += `
+                    <div class="alert-warning">
+                        <strong>⚠️ ${data.pitfall.title}</strong>
+                        <p>${data.pitfall.text}</p>
+                    </div>
+                `;
+            }
+
+            document.getElementById("lesson-content-area").innerHTML = html;
+
+            // Cập nhật nút đấu Map tương ứng
+            const battleBtn = document.getElementById("btn-battle-link");
+            battleBtn.href = `/arena/battle?map=${lessonId}`;
+            battleBtn.innerHTML = `⚔️ Khiêu Chiến Map ${lessonId} Ngay`;
+
+            // Cập nhật trạng thái nút Trước / Sau
+            document.getElementById("btn-prev").style.visibility = lessonId > 1 ? "visible" : "hidden";
+            document.getElementById("btn-next").style.visibility = lessonId < 10 ? "visible" : "hidden";
+
+            // Cuộn mượt lên đầu trang
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        function switchLesson(id) {
+            history.pushState(null, '', `/lesson?id=${id}`);
+            renderLesson(id);
+        }
+
+        function prevLesson() {
+            if (currentLessonId > 1) switchLesson(currentLessonId - 1);
+        }
+
+        function nextLesson() {
+            if (currentLessonId < 10) switchLesson(currentLessonId + 1);
+        }
+
+        // Tải bài học ban đầu
+        renderLesson(currentLessonId);
+    </script>
+</body>
+</html>

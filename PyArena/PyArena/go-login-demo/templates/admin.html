@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bảng Điều Khiển Admin - CodeColosseum</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@600;700;800&family=Fira+Code:wght@600&display=swap" rel="stylesheet">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            background-color: #040814;
+            color: #f8fafc;
+            min-height: 100vh;
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            padding: 28px 36px;
+        }
+
+        .admin-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 2px solid #1e293b;
+            padding-bottom: 18px;
+            margin-bottom: 24px;
+        }
+        .admin-title {
+            font-size: 24px;
+            font-weight: 800;
+            color: #ef4444;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        .badge-live-pulse {
+            width: 10px;
+            height: 10px;
+            background: #22c55e;
+            border-radius: 50%;
+            box-shadow: 0 0 12px #22c55e;
+            animation: pulse 1.5s infinite;
+        }
+        @keyframes pulse { 0% { opacity: 0.4; } 50% { opacity: 1; } 100% { opacity: 0.4; } }
+
+        .btn-link {
+            background: #0f172a;
+            border: 1px solid #1e293b;
+            color: #38bdf8;
+            padding: 8px 16px;
+            border-radius: 8px;
+            text-decoration: none;
+            font-size: 13.5px;
+            font-weight: 700;
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 18px;
+            margin-bottom: 28px;
+        }
+        .stat-card {
+            background: #090e1c;
+            border: 1.5px solid #1e293b;
+            border-radius: 14px;
+            padding: 20px;
+        }
+        .stat-num {
+            font-size: 28px;
+            font-weight: 800;
+            color: #38bdf8;
+            font-family: 'Fira Code', monospace;
+            margin-top: 6px;
+        }
+
+        .table-wrap {
+            background: #090e1c;
+            border: 1.5px solid #1e293b;
+            border-radius: 16px;
+            overflow: hidden;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            text-align: left;
+        }
+        th, td {
+            padding: 14px 18px;
+            border-bottom: 1px solid #162035;
+            font-size: 14px;
+        }
+        th {
+            background: #0f172a;
+            color: #94a3b8;
+            font-size: 12.5px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+        tr:hover { background: #0c1426; }
+        .player-badge {
+            font-weight: 700;
+            color: #f8fafc;
+            font-family: 'Fira Code', monospace;
+        }
+        .action-tag {
+            background: rgba(56, 189, 248, 0.15);
+            color: #38bdf8;
+            border: 1px solid rgba(56, 189, 248, 0.3);
+            padding: 3px 10px;
+            border-radius: 6px;
+            font-size: 12.5px;
+            font-weight: 600;
+        }
+        .status-pill {
+            color: #4ade80;
+            font-weight: 700;
+            font-size: 13px;
+        }
+        .time-text {
+            color: #64748b;
+            font-size: 12.5px;
+            font-family: 'Fira Code', monospace;
+        }
+    </style>
+</head>
+<body>
+
+    <header class="admin-header">
+        <div class="admin-title">
+            <div class="badge-live-pulse"></div>
+            <span>HỆ THỐNG GIÁM SÁT NGƯỜI CHƠI (ADMIN CONSOLE)</span>
+        </div>
+        <div style="display:flex; gap:10px;">
+            <a href="/arena" class="btn-link">Vào Sảnh Game</a>
+            <a href="/" class="btn-link">Trang Chủ</a>
+        </div>
+    </header>
+
+    <div class="stats-grid">
+        <div class="stat-card">
+            <div style="color:#94a3b8; font-size:13px; font-weight:700;">NGƯỜI DÙNG ĐANG HOẠT ĐỘNG</div>
+            <div class="stat-num" id="active-count">0</div>
+        </div>
+        <div class="stat-card">
+            <div style="color:#94a3b8; font-size:13px; font-weight:700;">CHẾ ĐỘ THEO DÕI</div>
+            <div class="stat-num" style="color:#22c55e; font-size:22px;">Thời gian thực (1.5s)</div>
+        </div>
+        <div class="stat-card">
+            <div style="color:#94a3b8; font-size:13px; font-weight:700;">QUYỀN HẠN TÀI KHOẢN</div>
+            <div class="stat-num" style="color:#ef4444; font-size:22px;">QUẢN TRỊ VIÊN CẤP CAO</div>
+        </div>
+    </div>
+
+    <div class="table-wrap">
+        <table>
+            <thead>
+                <tr>
+                    <th>Tên người chơi</th>
+                    <th>Vị trí / Hoạt động đang làm</th>
+                    <th>Trạng thái</th>
+                    <th>Cập nhật gần nhất</th>
+                </tr>
+            </thead>
+            <tbody id="players-table-body">
+                <tr>
+                    <td colspan="4" style="text-align:center; color:#94a3b8; padding:30px;">Đang tải danh sách người chơi...</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <script>
+        function fetchLivePlayers() {
+            fetch('/api/admin/active-players')
+                .then(res => {
+                    if (!res.ok) throw new Error("Chưa đăng nhập quyền Admin");
+                    return res.json();
+                })
+                .then(data => {
+                    const tbody = document.getElementById("players-table-body");
+                    const countEl = document.getElementById("active-count");
+                    tbody.innerHTML = "";
+
+                    if (!data || data.length === 0) {
+                        tbody.innerHTML = `<tr><td colspan="4" style="text-align:center; color:#94a3b8; padding:30px;">Hiện chưa có người chơi nào hoạt động.</td></tr>`;
+                        countEl.innerText = "0";
+                        return;
+                    }
+
+                    countEl.innerText = data.length;
+
+                    data.forEach(p => {
+                        const row = document.createElement("tr");
+                        row.innerHTML = `
+                            <td><span class="player-badge">👤 ${p.username}</span></td>
+                            <td><span class="action-tag">${p.currentAction}</span></td>
+                            <td><span class="status-pill">● ${p.status}</span></td>
+                            <td><span class="time-text">${p.lastActive}</span></td>
+                        `;
+                        tbody.appendChild(row);
+                    });
+                })
+                .catch(err => {
+                    console.error(err);
+                });
+        }
+
+        // Tự động quét cập nhật mỗi 1.5 giây một lần
+        fetchLivePlayers();
+        setInterval(fetchLivePlayers, 1500);
+    </script>
+</body>
+</html>
