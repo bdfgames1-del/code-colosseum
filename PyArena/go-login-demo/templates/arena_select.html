@@ -3,14 +3,14 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Thực Hành Bài Tập - CodeColosseum</title>
+    <title>Thực Hành 3 Bản Đồ - CodeColosseum</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@600;700;800&family=Fira+Code:wght@600&display=swap" rel="stylesheet">
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; }
         body {
-            background-color: #040814;
+            background-color: #040711;
             color: #f8fafc;
             min-height: 100vh;
             display: flex;
@@ -28,7 +28,7 @@
             flex-shrink: 0;
             min-height: 100vh;
         }
-        .brand-logo { font-size: 19px; font-weight: 800; color: #fff; padding-left: 8px; }
+        .brand-logo { font-size: 19px; font-weight: 800; color: #fff; padding-left: 8px; display: flex; align-items: center; gap: 10px; }
         .menu-list { display: flex; flex-direction: column; gap: 8px; }
         .menu-item {
             display: flex; align-items: center; gap: 12px; padding: 12px 16px; border-radius: 10px;
@@ -36,7 +36,7 @@
         }
         .menu-item:hover { color: #38bdf8; background: rgba(56, 189, 248, 0.08); }
         .menu-item.active {
-            background: linear-gradient(90deg, rgba(2, 132, 199, 0.15) 0%, rgba(56, 189, 248, 0.15) 100%);
+            background: linear-gradient(90deg, rgba(2, 132, 199, 0.18) 0%, rgba(56, 189, 248, 0.08) 100%);
             border: 1px solid rgba(56, 189, 248, 0.4); color: #38bdf8; font-weight: 700;
         }
         .badge-live {
@@ -46,245 +46,125 @@
 
         .main-content {
             flex: 1;
-            padding: 28px 36px;
+            padding: 28px 38px;
             display: flex;
             flex-direction: column;
-            gap: 24px;
-            overflow-y: auto;
+            gap: 26px;
+            max-width: 1360px;
+            margin: 0 auto;
         }
 
         .header-row {
-            display: flex;
-            justify-content: space-between;
-            align-items: flex-start;
+            display: flex; justify-content: space-between; align-items: center;
+            background: radial-gradient(circle at 80% 20%, #15254a 0%, #091020 65%);
+            border: 1.5px solid #1e2d4a; border-radius: 20px; padding: 26px 32px;
         }
-        .header-title { font-size: 26px; font-weight: 800; color: #ffffff; letter-spacing: -0.5px; }
-        .header-desc { color: #94a3b8; font-size: 14.5px; margin-top: 6px; }
+        .header-title { font-size: 25px; font-weight: 800; color: #ffffff; }
+        .header-desc { color: #94a3b8; font-size: 14px; margin-top: 6px; }
         
-        .top-actions {
-            display: flex;
-            align-items: center;
-            gap: 12px;
-        }
+        .top-actions { display: flex; align-items: center; gap: 12px; }
         .btn-history {
-            background: rgba(245, 158, 11, 0.15);
-            border: 1.5px solid #f59e0b;
-            color: #fbbf24;
-            padding: 8px 16px;
-            border-radius: 10px;
-            font-size: 13.5px;
-            font-weight: 700;
-            cursor: pointer;
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            transition: 0.2s;
+            background: rgba(245, 158, 11, 0.15); border: 1.5px solid #f59e0b; color: #fbbf24;
+            padding: 10px 18px; border-radius: 10px; font-size: 13.5px; font-weight: 700;
+            cursor: pointer; display: flex; align-items: center; gap: 8px; transition: 0.2s;
         }
-        .btn-history:hover {
-            background: #f59e0b;
-            color: #040814;
-        }
+        .btn-history:hover { background: #f59e0b; color: #040814; }
         .user-tag {
-            background: #0f172a;
-            border: 1px solid #1e293b;
-            padding: 8px 16px;
-            border-radius: 10px;
-            color: #38bdf8;
-            font-size: 13.5px;
-            font-weight: 700;
+            background: #0f172a; border: 1px solid #1e293b; padding: 10px 16px;
+            border-radius: 10px; color: #38bdf8; font-size: 13.5px; font-weight: 700;
         }
 
         .maps-grid {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 20px;
+            display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px;
         }
 
         .map-card {
-            background: #090f1e;
-            border: 1.5px solid #192642;
-            border-radius: 18px;
-            padding: 22px;
+            background: linear-gradient(180deg, #0b1325 0%, #070c17 100%);
+            border: 1.5px solid #192742;
+            border-radius: 20px;
+            padding: 24px;
             display: flex;
             flex-direction: column;
             justify-content: space-between;
             gap: 18px;
-            transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+            transition: all 0.25s ease;
         }
         .map-card:hover {
-            transform: translateY(-4px);
+            transform: translateY(-6px);
             border-color: #38bdf8;
-            box-shadow: 0 12px 30px rgba(56, 189, 248, 0.15);
+            box-shadow: 0 16px 38px rgba(56, 189, 248, 0.16);
         }
 
-        .map-top {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-        .map-icon {
-            font-size: 38px;
-            filter: drop-shadow(0 4px 10px rgba(56, 189, 248, 0.4));
-        }
-        .map-badge-level {
-            font-size: 11px;
-            font-weight: 800;
-            padding: 3px 10px;
-            border-radius: 6px;
-            background: rgba(56, 189, 248, 0.15);
-            color: #38bdf8;
-            border: 1px solid rgba(56, 189, 248, 0.3);
-        }
-
-        .map-title {
-            font-size: 18px;
-            font-weight: 800;
-            color: #f8fafc;
-            margin-bottom: 8px;
-        }
-        .map-desc {
-            font-size: 13.5px;
-            color: #94a3b8;
-            line-height: 1.55;
-            margin-bottom: 12px;
-        }
-        .map-topic {
-            font-size: 12.5px;
-            font-weight: 600;
-            color: #c084fc;
-            display: flex;
-            align-items: center;
-            gap: 6px;
-        }
-
-        .map-btn-row {
-            display: flex;
-            gap: 8px;
-        }
-        .btn-enter-map {
-            flex: 1;
-            text-align: center;
-            background: linear-gradient(135deg, #0284c7 0%, #0369a1 100%);
-            color: #ffffff;
-            font-weight: 700;
-            font-size: 13.5px;
-            padding: 11px;
-            border-radius: 10px;
-            text-decoration: none;
-            transition: 0.2s;
-            box-shadow: 0 4px 14px rgba(2, 132, 199, 0.4);
-        }
-        .btn-enter-map:hover {
-            background: linear-gradient(135deg, #38bdf8 0%, #0284c7 100%);
-        }
-        .btn-view-map-history {
-            background: #111a2e;
-            border: 1px solid #1e2c44;
-            color: #fbbf24;
-            padding: 0 12px;
-            border-radius: 10px;
-            cursor: pointer;
-            font-size: 16px;
+        .map-art-banner {
+            height: 130px;
+            border-radius: 14px;
+            background: radial-gradient(circle at 50% 50%, #172a50 0%, #070c18 100%);
+            border: 1px solid #223760;
             display: flex;
             align-items: center;
             justify-content: center;
-            transition: 0.2s;
+            margin-bottom: 14px;
+            position: relative;
         }
-        .btn-view-map-history:hover {
-            background: #f59e0b;
-            color: #040814;
+        .map-badge-level {
+            position: absolute; top: 10px; right: 10px;
+            font-size: 10.5px; font-weight: 800; padding: 3px 10px; border-radius: 6px;
+            background: rgba(56, 189, 248, 0.18); color: #38bdf8; border: 1px solid rgba(56, 189, 248, 0.4);
         }
 
-        /* MODAL LỊCH SỬ THIẾT KẾ MỚI CÓ TAB CHỌN MAP */
+        .map-title { font-size: 19px; font-weight: 800; color: #f8fafc; margin-bottom: 8px; }
+        .map-desc { font-size: 13.5px; color: #94a3b8; line-height: 1.6; margin-bottom: 12px; }
+        .map-topic { font-size: 12.5px; font-weight: 700; color: #c084fc; }
+
+        .map-btn-row { display: flex; gap: 10px; }
+        .btn-enter-map {
+            flex: 1; text-align: center;
+            background: linear-gradient(135deg, #0284c7 0%, #0369a1 100%);
+            color: #ffffff; font-weight: 800; font-size: 13.5px; padding: 12px;
+            border-radius: 10px; text-decoration: none; transition: 0.2s;
+        }
+        .btn-enter-map:hover { background: linear-gradient(135deg, #38bdf8 0%, #0284c7 100%); }
+        .btn-view-map-history {
+            background: #111a2e; border: 1px solid #223559; color: #fbbf24;
+            padding: 0 14px; border-radius: 10px; cursor: pointer; font-size: 16px;
+        }
+        .btn-view-map-history:hover { background: #f59e0b; color: #040814; }
+
+        /* MODAL LỊCH SỬ */
         .modal-overlay {
             position: fixed; inset: 0; background: rgba(3, 7, 18, 0.85); display: none;
-            align-items: center; justify-content: center; z-index: 300; backdrop-filter: blur(8px);
-            padding: 20px;
+            align-items: center; justify-content: center; z-index: 300; backdrop-filter: blur(8px); padding: 20px;
         }
         .modal-history-box {
             background: #090e1c; border: 2px solid #f59e0b; border-radius: 20px;
             padding: 24px 28px; width: 100%; max-width: 820px; max-height: 88vh;
             display: flex; flex-direction: column; gap: 14px;
-            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.8);
         }
         .modal-history-top {
             display: flex; justify-content: space-between; align-items: center;
             border-bottom: 1px solid #1e293b; padding-bottom: 12px;
         }
-        .modal-history-title {
-            font-size: 19px; font-weight: 800; color: #fbbf24; display: flex; align-items: center; gap: 8px;
-        }
-        .btn-close-modal {
-            background: none; border: none; color: #94a3b8; font-size: 24px; cursor: pointer;
-        }
-        .btn-close-modal:hover { color: #fff; }
-
-        /* THANH TAB LỌC MAP */
-        .map-filter-tabs {
-            display: flex;
-            gap: 8px;
-            overflow-x: auto;
-            padding-bottom: 4px;
-        }
+        .modal-history-title { font-size: 19px; font-weight: 800; color: #fbbf24; }
+        .btn-close-modal { background: none; border: none; color: #94a3b8; font-size: 24px; cursor: pointer; }
+        .map-filter-tabs { display: flex; gap: 8px; overflow-x: auto; padding-bottom: 4px; }
         .tab-btn {
-            background: #0f172a;
-            border: 1px solid #1e293b;
-            color: #94a3b8;
-            padding: 6px 14px;
-            border-radius: 8px;
-            font-size: 13px;
-            font-weight: 700;
-            cursor: pointer;
-            white-space: nowrap;
-            transition: 0.2s;
+            background: #0f172a; border: 1px solid #1e293b; color: #94a3b8;
+            padding: 6px 14px; border-radius: 8px; font-size: 13px; font-weight: 700; cursor: pointer;
         }
-        .tab-btn:hover { color: #fff; border-color: #38bdf8; }
-        .tab-btn.active {
-            background: rgba(56, 189, 248, 0.15);
-            border-color: #38bdf8;
-            color: #38bdf8;
-        }
-
-        .history-list-scroll {
-            overflow-y: auto; display: flex; flex-direction: column; gap: 12px; padding-right: 6px;
-        }
+        .tab-btn.active { background: rgba(56, 189, 248, 0.15); border-color: #38bdf8; color: #38bdf8; }
+        .history-list-scroll { overflow-y: auto; display: flex; flex-direction: column; gap: 12px; }
         .history-card-item {
             background: #0f172a; border: 1.5px solid #1e293b; border-radius: 12px;
             padding: 14px 16px; display: flex; flex-direction: column; gap: 8px;
         }
-        .h-tag-row {
-            display: flex; justify-content: space-between; align-items: center;
-            font-size: 12px; font-family: 'Fira Code', monospace;
-        }
+        .h-tag-row { display: flex; justify-content: space-between; font-size: 12px; font-family: 'Fira Code', monospace; }
         .h-map-badge { color: #38bdf8; background: rgba(56, 189, 248, 0.15); padding: 2px 8px; border-radius: 6px; }
-        .h-time { color: #64748b; }
+        .h-status-correct { color: #4ade80; font-weight: 700; }
+        .h-status-wrong { color: #f87171; font-weight: 700; }
         .h-question { font-size: 14px; font-weight: 700; color: #f8fafc; }
-        .h-code {
-            background: #03060d; border: 1px solid #1a253c; padding: 8px 12px;
-            border-radius: 6px; font-family: 'Fira Code', monospace; font-size: 12.5px; color: #7dd3fc;
-        }
-        .h-ans-box {
-            display: flex; flex-direction: column; gap: 4px; font-size: 12.5px;
-        }
-        .h-wrong-ans { color: #f87171; font-weight: 600; }
-        .h-correct-ans { color: #4ade80; font-weight: 700; }
-        .h-status-correct {
-            color: #4ade80; font-weight: 700; background: rgba(34, 197, 94, 0.15);
-            border: 1px solid #22c55e; padding: 2px 8px; border-radius: 6px; font-size: 11.5px;
-        }
-        .h-status-wrong {
-            color: #f87171; font-weight: 700; background: rgba(239, 68, 68, 0.15);
-            border: 1px solid #ef4444; padding: 2px 8px; border-radius: 6px; font-size: 11.5px;
-        }
-        .h-explain {
-            background: rgba(34, 197, 94, 0.1); border-left: 3px solid #22c55e;
-            padding: 8px 12px; font-size: 12.5px; color: #86efac; border-radius: 0 6px 6px 0;
-        }
-        .btn-clear-history {
-            background: #ef4444; color: #fff; border: none; padding: 8px 16px;
-            border-radius: 8px; font-weight: 700; font-size: 12.5px; cursor: pointer;
-        }
-        .btn-clear-history:hover { background: #dc2626; }
+        .h-code { background: #03060d; border: 1px solid #1a253c; padding: 8px 12px; border-radius: 6px; font-family: 'Fira Code', monospace; font-size: 12.5px; color: #7dd3fc; }
+        .h-explain { background: rgba(34, 197, 94, 0.1); border-left: 3px solid #22c55e; padding: 8px 12px; font-size: 12.5px; color: #86efac; }
+        .btn-clear-history { background: #ef4444; color: #fff; border: none; padding: 8px 16px; border-radius: 8px; font-weight: 700; cursor: pointer; }
     </style>
 </head>
 <body>
@@ -298,18 +178,21 @@
             <a href="/arena/speed-duel" class="menu-item"><span>⚔️</span> Đấu trường <span class="badge-live">LIVE</span></a>
             <a href="/leaderboard" class="menu-item"><span>🏆</span> Bảng xếp hạng</a>
             <a href="/profile" class="menu-item"><span>👤</span> Hồ sơ</a>
+            {{if eq .Username "admin"}}
+            <a href="/admin" class="menu-item" style="color:#f87171;"><span>🛡️</span> Quản Trị Admin</a>
+            {{end}}
         </nav>
     </aside>
 
     <main class="main-content">
         <div class="header-row">
             <div>
-                <h1 class="header-title">Thực Hành Bài Tập: Các Bản Đồ Thử Thách</h1>
-                <p class="header-desc">Vượt qua các ải lập trình từ Cơ Bản đến Chuyên Sâu để tích lũy kiến thức và rèn luyện tư duy.</p>
+                <h1 class="header-title">Thực Hành Bài Tập: 3 Bản Đồ Thử Thách</h1>
+                <p class="header-desc">Áp dụng kiến thức từ Bài 1, Bài 2 và Bài 3 để vượt qua 3 bản đồ tương tác.</p>
             </div>
             <div class="top-actions">
                 <button class="btn-history" onclick="openHistoryModal('all')">
-                    <span>📋</span> Lịch Sử Tổng Hợp (<span id="history-count-badge">0</span>)
+                    <span>📋</span> Lịch Sử Học Tập (<span id="history-count-badge">0</span>)
                 </button>
                 <div class="user-tag">👤 {{if .Username}}{{.Username}}{{else}}Chiến Binh{{end}}</div>
             </div>
@@ -319,80 +202,74 @@
             <!-- MAP 1 -->
             <div class="map-card">
                 <div>
-                    <div class="map-top">
-                        <span class="map-icon">🧙‍♂️</span>
-                        <span class="map-badge-level">CƠ BẢN</span>
+                    <div class="map-art-banner">
+                        <span class="map-badge-level">BÀI 1 • CÚ PHÁP</span>
+                        <span style="font-size: 54px; filter: drop-shadow(0 0 18px #38bdf8);">🧙‍♂️</span>
                     </div>
-                    <h3 class="map-title" style="margin-top: 14px;">Map 1: Diệt Quái Cú Pháp</h3>
-                    <p class="map-desc">Một mình trấn giữ cây cầu, trả lời 20 câu hỏi về biến và kiểu dữ liệu để phóng cầu phép thuật tiêu diệt 20 quái vật. Hồi đủ 3 mạng mỗi quái.</p>
-                    <div class="map-topic"><span>⚔️</span> Chủ đề: Biến & Kiểu Dữ Liệu</div>
+                    <h3 class="map-title">Map 1: Diệt Quái Cú Pháp</h3>
+                    <p class="map-desc">Trấn giữ cây cầu gỗ, trả lời 20 câu hỏi về biến, kiểu dữ liệu và toán tử để phóng cầu phép tiêu diệt 20 quái vật.</p>
+                    <div class="map-topic">⚔️ Kiến thức: Bài 1 - Cú pháp & Biến</div>
                 </div>
                 <div class="map-btn-row">
-                    <a href="/arena/battle?map=1" class="btn-enter-map">Vào Map 1 →</a>
-                    <button class="btn-view-map-history" title="Xem lịch sử Map 1" onclick="openHistoryModal('Map 1')">📋</button>
+                    <a href="/arena/battle?map=1" class="btn-enter-map">Vào Đấu Map 1 →</a>
+                    <button class="btn-view-map-history" onclick="openHistoryModal('Map 1')" title="Lịch sử Map 1">📋</button>
                 </div>
             </div>
 
             <!-- MAP 2 -->
             <div class="map-card">
                 <div>
-                    <div class="map-top">
-                        <span class="map-icon">🕹️</span>
-                        <span class="map-badge-level">CƠ BẢN</span>
+                    <div class="map-art-banner" style="background: radial-gradient(circle, #2e1065 0%, #070c18 100%); border-color:#581c87;">
+                        <span class="map-badge-level">BÀI 2 • VÒNG LẶP</span>
+                        <span style="font-size: 54px; filter: drop-shadow(0 0 18px #c084fc);">🕹️</span>
                     </div>
-                    <h3 class="map-title" style="margin-top: 14px;">Map 2: Memory Match Arcade</h3>
-                    <p class="map-desc">Máy chơi game thùng Arcade lật 20 thẻ bài (10 cặp). Lật trúng cặp sẽ mở khóa câu hỏi trắc nghiệm kiểm tra trí nhớ các khái niệm cốt lõi.</p>
-                    <div class="map-topic"><span>⚔️</span> Chủ đề: Khái niệm Python Core</div>
+                    <h3 class="map-title">Map 2: Memory Match Arcade</h3>
+                    <p class="map-desc">Lật 20 thẻ bài (10 cặp) trên máy game thùng. Ghép trúng cặp thẻ để mở khóa câu hỏi trắc nghiệm luồng điều khiển.</p>
+                    <div class="map-topic">⚔️ Kiến thức: Bài 2 - Luồng điều khiển</div>
                 </div>
                 <div class="map-btn-row">
-                    <a href="/arena/battle?map=2" class="btn-enter-map">Vào Map 2 →</a>
-                    <button class="btn-view-map-history" title="Xem lịch sử Map 2" onclick="openHistoryModal('Map 2')">📋</button>
+                    <a href="/arena/battle?map=2" class="btn-enter-map">Vào Đấu Map 2 →</a>
+                    <button class="btn-view-map-history" onclick="openHistoryModal('Map 2')" title="Lịch sử Map 2">📋</button>
                 </div>
             </div>
 
             <!-- MAP 3 -->
             <div class="map-card">
                 <div>
-                    <div class="map-top">
-                        <span class="map-icon">💣</span>
-                        <span class="map-badge-level">CƠ BẢN</span>
+                    <div class="map-art-banner" style="background: radial-gradient(circle, #450a0a 0%, #070c18 100%); border-color:#7f1d1d;">
+                        <span class="map-badge-level">BÀI 3 • DATA CORE</span>
+                        <span style="font-size: 54px; filter: drop-shadow(0 0 18px #f87171);">💣</span>
                     </div>
-                    <h3 class="map-title" style="margin-top: 14px;">Map 3: Defuse The Bomb</h3>
-                    <p class="map-desc">Quả bom hẹn giờ với 20 sợi dây kíp nổ. Tự do lựa chọn sợi dây muốn tháo gỡ trước, có 3 lần thử mỗi dây và tối đa 10 lỗi cho phép.</p>
-                    <div class="map-topic"><span>⚔️</span> Chủ đề: List, Tuple, Dict, Set</div>
+                    <h3 class="map-title">Map 3: Defuse The Bomb</h3>
+                    <p class="map-desc">Quả bom hẹn giờ với 20 sợi dây kíp nổ. Trả lời chính xác các câu hỏi về List, Tuple, Dict, Set để cắt đúng dây.</p>
+                    <div class="map-topic">⚔️ Kiến thức: Bài 3 - Cấu trúc dữ liệu</div>
                 </div>
                 <div class="map-btn-row">
-                    <a href="/arena/battle?map=3" class="btn-enter-map">Vào Map 3 →</a>
-                    <button class="btn-view-map-history" title="Xem lịch sử Map 3" onclick="openHistoryModal('Map 3')">📋</button>
+                    <a href="/arena/battle?map=3" class="btn-enter-map">Vào Đấu Map 3 →</a>
+                    <button class="btn-view-map-history" onclick="openHistoryModal('Map 3')" title="Lịch sử Map 3">📋</button>
                 </div>
             </div>
         </div>
     </main>
 
-    <!-- MODAL LỊCH SỬ CÓ LỌC THEO MAP -->
+    <!-- MODAL LỊCH SỬ -->
     <div class="modal-overlay" id="history-modal">
         <div class="modal-history-box">
             <div class="modal-history-top">
-                <div class="modal-history-title">
-                    <span>📋</span> LỊCH SỬ HỌC TẬP & RÚT KINH NGHIỆM
-                </div>
+                <div class="modal-history-title">📋 LỊCH SỬ HỌC TẬP & RÚT KINH NGHIỆM</div>
                 <button class="btn-close-modal" onclick="closeHistoryModal()">✕</button>
             </div>
-
-            <!-- THANH TAB LỌC TỪNG MAP -->
             <div class="map-filter-tabs">
                 <button class="tab-btn active" id="tab-all" onclick="filterHistory('all')">Tất Cả</button>
-                <button class="tab-btn" id="tab-map1" onclick="filterHistory('Map 1')">Map 1 (Diệt Quái)</button>
-                <button class="tab-btn" id="tab-map2" onclick="filterHistory('Map 2')">Map 2 (Memory)</button>
-                <button class="tab-btn" id="tab-map3" onclick="filterHistory('Map 3')">Map 3 (Defuse Bomb)</button>
+                <button class="tab-btn" id="tab-map1" onclick="filterHistory('Map 1')">Map 1 (Bài 1)</button>
+                <button class="tab-btn" id="tab-map2" onclick="filterHistory('Map 2')">Map 2 (Bài 2)</button>
+                <button class="tab-btn" id="tab-map3" onclick="filterHistory('Map 3')">Map 3 (Bài 3)</button>
                 <button class="tab-btn" id="tab-duel" onclick="filterHistory('Đấu Trường')">Đấu Trường 1v1</button>
             </div>
-
             <div class="history-list-scroll" id="history-list-container"></div>
-
             <div style="display:flex; justify-content:space-between; align-items:center; border-top: 1px solid #1e293b; padding-top: 12px;">
                 <button class="btn-clear-history" onclick="clearAllHistory()">Xóa Toàn Bộ Lịch Sử</button>
-                <span style="font-size:12px; color:#94a3b8;">Mỗi câu hỏi được lưu 1 thẻ duy nhất (cập nhật mới nhất)</span>
+                <span style="font-size:12px; color:#94a3b8;">Mỗi câu hỏi chỉ lưu 1 bản ghi duy nhất</span>
             </div>
         </div>
     </div>
@@ -402,8 +279,7 @@
 
         function loadHistoryBadge() {
             const historyMap = JSON.parse(localStorage.getItem("colosseum_unique_history") || "{}");
-            const keys = Object.keys(historyMap);
-            document.getElementById("history-count-badge").innerText = keys.length;
+            document.getElementById("history-count-badge").innerText = Object.keys(historyMap).length;
         }
 
         function filterHistory(filter) {
@@ -414,7 +290,6 @@
             else if (filter === 'Map 2') document.getElementById('tab-map2').classList.add('active');
             else if (filter === 'Map 3') document.getElementById('tab-map3').classList.add('active');
             else if (filter === 'Đấu Trường') document.getElementById('tab-duel').classList.add('active');
-
             renderHistoryList();
         }
 
@@ -424,23 +299,15 @@
             container.innerHTML = "";
 
             let items = Object.values(historyMap);
-
             if (currentFilter !== 'all') {
                 items = items.filter(it => it.mapName.includes(currentFilter));
             }
 
             if (items.length === 0) {
-                container.innerHTML = `
-                    <div style="text-align:center; padding: 36px 0; color:#94a3b8;">
-                        <div style="font-size: 36px; margin-bottom: 8px;">🎉</div>
-                        <div style="font-size: 15px; font-weight:700; color:#fff;">Chưa có dữ liệu câu hỏi trong mục này!</div>
-                        <p style="font-size: 13px; margin-top: 4px;">Hãy tham gia thử thách để hệ thống ghi nhận kinh nghiệm làm bài của bạn.</p>
-                    </div>
-                `;
+                container.innerHTML = `<div style="text-align:center; padding: 36px 0; color:#94a3b8;">Chưa có dữ liệu câu hỏi trong mục này!</div>`;
                 return;
             }
 
-            // Sắp xếp câu mới nhất lên đầu
             items.sort((a, b) => (b.timestampRaw || 0) - (a.timestampRaw || 0));
 
             items.forEach((item) => {
@@ -449,16 +316,16 @@
                 el.innerHTML = `
                     <div class="h-tag-row">
                         <span class="h-map-badge">${item.mapName}</span>
-                        <div style="display:flex; align-items:center; gap:8px;">
+                        <div>
                             ${item.isCorrect ? '<span class="h-status-correct">✓ ĐÃ LÀM ĐÚNG</span>' : '<span class="h-status-wrong">✗ LÀM SAI</span>'}
-                            <span class="h-time">${item.timestamp}</span>
+                            <span style="color:#64748b; margin-left:8px;">${item.timestamp}</span>
                         </div>
                     </div>
                     <div class="h-question">❓ ${item.question}</div>
                     ${item.code ? `<div class="h-code">${item.code}</div>` : ''}
-                    <div class="h-ans-box">
-                        ${!item.isCorrect ? `<div class="h-wrong-ans">❌ Lần gần nhất bạn chọn: ${item.userChoice}</div>` : ''}
-                        <div class="h-correct-ans">✅ Đáp án chính xác: ${item.correctChoice}</div>
+                    <div style="font-size:12.5px; color:#cbd5e1;">
+                        ${!item.isCorrect ? `<span style="color:#f87171;">❌ Bạn chọn: ${item.userChoice}</span> | ` : ''}
+                        <span style="color:#4ade80; font-weight:700;">✅ Đáp án đúng: ${item.correctChoice}</span>
                     </div>
                     ${item.explanation ? `<div class="h-explain">💡 <strong>Rút kinh nghiệm:</strong> ${item.explanation}</div>` : ''}
                 `;
@@ -476,17 +343,12 @@
         }
 
         function clearAllHistory() {
-            if (confirm("Bạn có chắc muốn xóa sạch toàn bộ lịch sử rút kinh nghiệm không?")) {
+            if (confirm("Xóa toàn bộ lịch sử học tập?")) {
                 localStorage.removeItem("colosseum_unique_history");
                 loadHistoryBadge();
                 renderHistoryList();
             }
         }
-
-        window.onclick = function(e) {
-            const modal = document.getElementById("history-modal");
-            if (e.target === modal) closeHistoryModal();
-        };
 
         loadHistoryBadge();
     </script>
