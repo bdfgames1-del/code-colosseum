@@ -4,6 +4,7 @@ import (
 	"encoding/json"
 	"fmt"
 	"log"
+	"math/rand"
 	"net/http"
 	"strings"
 	"sync"
@@ -26,39 +27,55 @@ type QuestionItem struct {
 	Exp      string   `json:"exp"`
 }
 
+// Mỗi trận đấu là 1 Máy chủ (Room) độc lập chạy song song
+type MatchRoom struct {
+	ID              int
+	Mode            string
+	Players         map[*Player]bool
+	AllAnsweredChan chan int
+	CurrentQuestion *QuestionItem
+	Round           int
+	Active          bool
+}
+
 type Player struct {
-	Hub      *ArenaHub
-	Conn     *websocket.Conn
-	Send     chan []byte
-	Username string
-	Score    int  `json:"score"`
-	Ready    bool `json:"ready"`
-	InMatch  bool `json:"inMatch"`
-	Answered bool `json:"answered"`
+	Hub          *ArenaHub
+	Conn         *websocket.Conn
+	Send         chan []byte
+	Username     string
+	Score        int    `json:"score"`
+	SelectedMode string `json:"mode"`
+	InQueue      bool   `json:"inQueue"`
+	Team         string `json:"team"` // "BLUE" (Đội Xanh) hoặc "RED" (Đội Đỏ)
+	Answered     bool   `json:"answered"`
+	Room         *MatchRoom
 }
 
 type ArenaHub struct {
-	Players         map[*Player]bool
-	Register        chan *Player
-	Unregister      chan *Player
-	Broadcast       chan []byte
-	AllAnsweredChan chan int
-	Mutex           sync.Mutex
-	GameRunning     bool
-	MatchID         int
-	Round           int
-	CurrentQuestion *QuestionItem
+	Players     map[*Player]bool
+	Rooms       map[int]*MatchRoom
+	Register    chan *Player
+	Unregister  chan *Player
+	Mutex       sync.Mutex
+	NextRoomSeq int
 }
 
 var GlobalArenaHub = &ArenaHub{
-	Players:         make(map[*Player]bool),
-	Register:        make(chan *Player),
-	Unregister:      make(chan *Player),
-	Broadcast:       make(chan []byte),
-	AllAnsweredChan: make(chan int, 20),
+	Players:  make(map[*Player]bool),
+	Rooms:    make(map[int]*MatchRoom),
+	Register: make(chan *Player),
+	Unregister: make(chan *Player),
 }
 
-// BỘ ĐỀ 10 CÂU HỎI ĐẤU TRƯỜNG TỐC ĐỘ
+// Số người cần thiết cho từng chế độ
+var ModeRequiredPlayers = map[string]int{
+	"1v1": 2,
+	"2v2": 4,
+	"3v3": 6,
+	"5v5": 10,
+}
+
+// BỘ ĐỀ 10 CÂU HỎI ĐẤU TRƯỜNG
 var ArenaQuestions = []QuestionItem{
 	{
 		Question: "Kết quả của cú pháp cắt lát (List Slicing) sau là gì?",
@@ -132,40 +149,8 @@ var ArenaQuestions = []QuestionItem{
 	},
 }
 
-// Đếm số người đã bấm nút SẴN SÀNG
-func (h *ArenaHub) countReadyPlayersLocked() int {
-	count := 0
-	for p := range h.Players {
-		if p.Ready {
-			count++
-		}
-	}
-	return count
-}
-
-// Đếm số người đang trực tiếp thi đấu trong trận
-func (h *ArenaHub) countMatchPlayersLocked() int {
-	count := 0
-	for p := range h.Players {
-		if p.InMatch {
-			count++
-		}
-	}
-	return count
-}
-
-// Kiểm tra tất cả người chơi đang trong trận đã chọn đáp án chưa
-func (h *ArenaHub) allMatchPlayersAnsweredLocked() bool {
-	active := 0
-	for p := range h.Players {
-		if p.InMatch {
-			active++
-			if !p.Answered {
-				return false
-			}
-		}
-	}
-	return active > 0
+func init() {
+	rand.Seed(time.Now().UnixNano())
 }
 
 func (h *ArenaHub) Run() {
@@ -174,84 +159,202 @@ func (h *ArenaHub) Run() {
 		case p := <-h.Register:
 			h.Mutex.Lock()
 			h.Players[p] = true
-			total := len(h.Players)
 			h.Mutex.Unlock()
-
-			log.Printf("[Sảnh Đấu Trường] Người chơi vào sảnh: %s (Tổng trong sảnh: %d)\n", p.Username, total)
-			h.broadcastLobbyState()
+			h.broadcastLobbyQueues()
 
 		case p := <-h.Unregister:
 			h.Mutex.Lock()
+			room := p.Room
 			if _, ok := h.Players[p]; ok {
 				delete(h.Players, p)
 				close(p.Send)
 			}
-			inMatchCount := h.countMatchPlayersLocked()
-			if h.GameRunning && inMatchCount == 0 {
-				h.GameRunning = false
-				h.MatchID++
-			} else if h.GameRunning && h.allMatchPlayersAnsweredLocked() {
-				select {
-				case h.AllAnsweredChan <- h.Round:
-				default:
+			if room != nil {
+				delete(room.Players, p)
+				p.Room = nil
+				if len(room.Players) == 0 {
+					room.Active = false
+					delete(h.Rooms, room.ID)
+				} else if h.checkRoomAllAnsweredLocked(room) {
+					select {
+					case room.AllAnsweredChan <- room.Round:
+					default:
+					}
 				}
 			}
 			h.Mutex.Unlock()
-			h.broadcastLobbyState()
 
-		case msg := <-h.Broadcast:
-			h.Mutex.Lock()
-			for p := range h.Players {
-				select {
-				case p.Send <- msg:
-				default:
-					close(p.Send)
-					delete(h.Players, p)
-				}
+			if room != nil {
+				h.broadcastRoomState(room)
 			}
-			h.Mutex.Unlock()
+			h.broadcastLobbyQueues()
 		}
 	}
 }
 
-func (h *ArenaHub) broadcastLobbyState() {
+func (h *ArenaHub) checkRoomAllAnsweredLocked(room *MatchRoom) bool {
+	if len(room.Players) == 0 {
+		return false
+	}
+	for p := range room.Players {
+		if !p.Answered {
+			return false
+		}
+	}
+	return true
+}
+
+// GHÉP TRẬN NGẪU NHIÊN VÀ TẠO MÁY CHỦ RIÊNG CHO TỪNG NHÓM ĐỦ NGƯỜI
+func (h *ArenaHub) tryMatchmakingLocked(mode string) {
+	required, ok := ModeRequiredPlayers[mode]
+	if !ok {
+		required = 2
+	}
+
+	var waiting []*Player
+	for p := range h.Players {
+		if p.Room == nil && p.InQueue && p.SelectedMode == mode {
+			waiting = append(waiting, p)
+		}
+	}
+
+	// Nếu đủ số người cho chế độ đó -> Trộn ngẫu nhiên và tạo Phòng/Server mới ngay!
+	for len(waiting) >= required {
+		rand.Shuffle(len(waiting), func(i, j int) {
+			waiting[i], waiting[j] = waiting[j], waiting[i]
+		})
+
+		matchedGroup := waiting[:required]
+		waiting = waiting[required:]
+
+		h.NextRoomSeq++
+		room := &MatchRoom{
+			ID:              h.NextRoomSeq,
+			Mode:            mode,
+			Players:         make(map[*Player]bool),
+			AllAnsweredChan: make(chan int, 20),
+			Active:          true,
+		}
+		h.Rooms[room.ID] = room
+
+		half := required / 2
+		for idx, pl := range matchedGroup {
+			pl.InQueue = false
+			pl.Room = room
+			pl.Score = 0
+			pl.Answered = false
+			if idx < half {
+				pl.Team = "BLUE"
+			} else {
+				pl.Team = "RED"
+			}
+			room.Players[pl] = true
+		}
+
+		log.Printf("⚡ [ Tạo Máy Chủ #%d ] Chế độ %s (%d người chơi) bắt đầu!\n", room.ID, strings.ToUpper(mode), required)
+		go h.runRoomMatch(room)
+	}
+}
+
+// Cập nhật số lượng người đang tìm trận ở sảnh chờ
+func (h *ArenaHub) broadcastLobbyQueues() {
 	h.Mutex.Lock()
 	defer h.Mutex.Unlock()
 
-	type PlayerInfo struct {
+	queueCounts := map[string]int{
+		"1v1": 0,
+		"2v2": 0,
+		"3v3": 0,
+		"5v5": 0,
+	}
+
+	type LobbyPlayer struct {
 		Username string `json:"username"`
+		Mode     string `json:"mode"`
+		InQueue  bool   `json:"inQueue"`
+		RoomID   int    `json:"roomId"`
+	}
+
+	var onlineList []LobbyPlayer
+	for p := range h.Players {
+		if p.Room == nil && p.InQueue {
+			queueCounts[p.SelectedMode]++
+		}
+		rID := 0
+		if p.Room != nil {
+			rID = p.Room.ID
+		}
+		onlineList = append(onlineList, LobbyPlayer{
+			Username: p.Username,
+			Mode:     p.SelectedMode,
+			InQueue:  p.InQueue,
+			RoomID:   rID,
+		})
+	}
+
+	payload, _ := json.Marshal(map[string]interface{}{
+		"action": "lobby_queues",
+		"data": map[string]interface{}{
+			"queues":        queueCounts,
+			"activeServers": len(h.Rooms),
+			"onlineCount":   len(h.Players),
+			"onlinePlayers": onlineList,
+		},
+	})
+
+	// Chỉ gửi thông tin sảnh chờ cho những người chưa vào trận
+	for p := range h.Players {
+		if p.Room == nil {
+			select {
+			case p.Send <- payload:
+			default:
+			}
+		}
+	}
+}
+
+// Gửi bảng điểm Đội Xanh vs Đội Đỏ trong phạm vi 1 Máy chủ (Room)
+func (h *ArenaHub) broadcastRoomState(room *MatchRoom) {
+	h.Mutex.Lock()
+	defer h.Mutex.Unlock()
+
+	type RoomPlayerInfo struct {
+		Username string `json:"username"`
+		Team     string `json:"team"`
 		Score    int    `json:"score"`
-		Ready    bool   `json:"ready"`
-		InMatch  bool   `json:"inMatch"`
 		Answered bool   `json:"answered"`
 	}
 
-	var list []PlayerInfo
-	readyCount := 0
-	for p := range h.Players {
-		if p.Ready {
-			readyCount++
+	var list []RoomPlayerInfo
+	blueScore := 0
+	redScore := 0
+
+	for p := range room.Players {
+		if p.Team == "BLUE" {
+			blueScore += p.Score
+		} else {
+			redScore += p.Score
 		}
-		list = append(list, PlayerInfo{
+		list = append(list, RoomPlayerInfo{
 			Username: p.Username,
+			Team:     p.Team,
 			Score:    p.Score,
-			Ready:    p.Ready,
-			InMatch:  p.InMatch,
 			Answered: p.Answered,
 		})
 	}
 
 	payload, _ := json.Marshal(map[string]interface{}{
-		"action": "lobby_state",
+		"action": "room_state",
 		"data": map[string]interface{}{
-			"totalPlayers": len(list),
-			"readyPlayers": readyCount,
-			"gameRunning":  h.GameRunning,
-			"players":      list,
+			"roomId":    room.ID,
+			"mode":      room.Mode,
+			"blueScore": blueScore,
+			"redScore":  redScore,
+			"players":   list,
 		},
 	})
 
-	for p := range h.Players {
+	for p := range room.Players {
 		select {
 		case p.Send <- payload:
 		default:
@@ -259,66 +362,70 @@ func (h *ArenaHub) broadcastLobbyState() {
 	}
 }
 
-// CHẠY TRẬN ĐẤU 10 CÂU CHO NHỮNG NGƯỜI ĐÃ BẤM SẴN SÀNG
-func (h *ArenaHub) runTenQuestionsMatch(matchID int) {
-	log.Printf("🔥 [BẮT ĐẦU TRẬN #%d] Các đấu thủ đã Sẵn Sàng! Đếm ngược 3 giây...\n", matchID)
+func (h *ArenaHub) broadcastToRoom(room *MatchRoom, action string, data interface{}) {
+	payload, _ := json.Marshal(map[string]interface{}{
+		"action": action,
+		"data":   data,
+	})
+	h.Mutex.Lock()
+	defer h.Mutex.Unlock()
+	for p := range room.Players {
+		select {
+		case p.Send <- payload:
+		default:
+		}
+	}
+}
 
+// LUỒNG CHẠY ĐỘC LẬP CỦA TỪNG MÁY CHỦ (10 CÂU HỎI)
+func (h *ArenaHub) runRoomMatch(room *MatchRoom) {
+	h.broadcastRoomState(room)
+	h.broadcastLobbyQueues()
+
+	// Đếm ngược 3 giây khi tìm thấy trận
 	for i := 3; i >= 1; i-- {
 		h.Mutex.Lock()
-		if !h.GameRunning || h.MatchID != matchID {
+		if !room.Active || len(room.Players) == 0 {
 			h.Mutex.Unlock()
 			return
 		}
 		h.Mutex.Unlock()
 
-		h.broadcastMatchJSON("countdown_start", map[string]interface{}{"seconds": i})
+		h.broadcastToRoom(room, "match_found_countdown", map[string]interface{}{
+			"seconds": i,
+			"roomId":  room.ID,
+			"mode":    strings.ToUpper(room.Mode),
+		})
 		time.Sleep(1 * time.Second)
 	}
-
-	h.Mutex.Lock()
-	if !h.GameRunning || h.MatchID != matchID {
-		h.Mutex.Unlock()
-		return
-	}
-	for p := range h.Players {
-		if p.InMatch {
-			p.Score = 0
-			p.Answered = false
-		}
-	}
-	h.Mutex.Unlock()
-	h.broadcastLobbyState()
 
 	totalQuestions := len(ArenaQuestions) // 10 câu
 
 	for round := 1; round <= totalQuestions; round++ {
 		h.Mutex.Lock()
-		if !h.GameRunning || h.MatchID != matchID || h.countMatchPlayersLocked() == 0 {
-			h.GameRunning = false
+		if !room.Active || len(room.Players) == 0 {
 			h.Mutex.Unlock()
 			return
 		}
 
-		for len(h.AllAnsweredChan) > 0 {
-			<-h.AllAnsweredChan
+		for len(room.AllAnsweredChan) > 0 {
+			<-room.AllAnsweredChan
 		}
 
-		for p := range h.Players {
-			if p.InMatch {
-				p.Answered = false
-			}
+		for p := range room.Players {
+			p.Answered = false
 		}
 
-		h.Round = round
+		room.Round = round
 		q := ArenaQuestions[round-1]
-		h.CurrentQuestion = &q
+		room.CurrentQuestion = &q
 		timeLimitSeconds := 20
 		h.Mutex.Unlock()
 
-		log.Printf("➡️ [Trận #%d] Câu hỏi %d / %d\n", matchID, round, totalQuestions)
-
-		h.broadcastLobbyState()
-		h.broadcastMatchJSON("new_round_question", map[string]interface{}{
+		h.broadcastRoomState(room)
+		h.broadcastToRoom(room, "new_round_question", map[string]interface{}{
+			"roomId":      room.ID,
+			"mode":        strings.ToUpper(room.Mode),
 			"round":       round,
 			"totalRounds": totalQuestions,
 			"timeLimit":   timeLimitSeconds,
@@ -336,16 +443,16 @@ func (h *ArenaHub) runTenQuestionsMatch(matchID int) {
 
 		for waiting {
 			select {
-			case doneRound := <-h.AllAnsweredChan:
+			case doneRound := <-room.AllAnsweredChan:
 				if doneRound == round {
 					timer.Stop()
 					waiting = false
 				}
 			case <-timer.C:
 				h.Mutex.Lock()
-				if h.MatchID == matchID {
-					for p := range h.Players {
-						if p.InMatch && !p.Answered {
+				if room.Active {
+					for p := range room.Players {
+						if !p.Answered {
 							p.Answered = true
 							p.sendJSON("answer_feedback", map[string]interface{}{
 								"correct":     false,
@@ -362,75 +469,74 @@ func (h *ArenaHub) runTenQuestionsMatch(matchID int) {
 			}
 		}
 
-		h.broadcastLobbyState()
-		h.broadcastMatchJSON("round_finished", map[string]interface{}{"round": round})
+		h.broadcastRoomState(room)
+		h.broadcastToRoom(room, "round_finished", map[string]interface{}{"round": round})
 
 		time.Sleep(1200 * time.Millisecond)
 	}
 
-	// KẾT THÚC ĐỦ 10 CÂU HỎI
+	// KẾT THÚC 10 CÂU HỎI TRONG MÁY CHỦ NÀY
 	h.Mutex.Lock()
-	if h.MatchID != matchID {
+	if !room.Active {
 		h.Mutex.Unlock()
 		return
 	}
-	h.GameRunning = false
-	h.CurrentQuestion = nil
+	room.Active = false
 
-	var topPlayer *Player
+	blueTotal := 0
+	redTotal := 0
+	var mvpPlayer *Player
 	maxScore := -1
-	for p := range h.Players {
-		if p.InMatch && p.Score > maxScore {
+
+	for p := range room.Players {
+		if p.Team == "BLUE" {
+			blueTotal += p.Score
+		} else {
+			redTotal += p.Score
+		}
+		if p.Score > maxScore {
 			maxScore = p.Score
-			topPlayer = p
+			mvpPlayer = p
 		}
 	}
 
-	winMsg := "Đã hoàn thành đủ 10 câu hỏi đua điểm tốc độ!"
-	if topPlayer != nil {
-		AddWinScore(topPlayer.Username, topPlayer.Score)
-		winMsg = fmt.Sprintf("🏆 QUÁN QUÂN: %s chiến thắng với %d PTS sau 10 câu!", topPlayer.Username, topPlayer.Score)
+	var resultTitle string
+	if blueTotal > redTotal {
+		resultTitle = fmt.Sprintf("🔵 ĐỘI XANH CHIẾN THẮNG! (%d - %d PTS)", blueTotal, redTotal)
+	} else if redTotal > blueTotal {
+		resultTitle = fmt.Sprintf("🔴 ĐỘI ĐỎ CHIẾN THẮNG! (%d - %d PTS)", redTotal, blueTotal)
+	} else {
+		resultTitle = fmt.Sprintf("⚖️ HAI ĐỘI HÒA NHAU! (%d - %d PTS)", blueTotal, redTotal)
 	}
 
-	// Gửi kết quả cho những người tham gia trận đấu và đặt lại trạng thái Sẵn Sàng
+	if mvpPlayer != nil {
+		AddWinScore(mvpPlayer.Username, mvpPlayer.Score)
+		resultTitle += fmt.Sprintf(" | 🌟 MVP: %s (%d PTS)", mvpPlayer.Username, mvpPlayer.Score)
+	}
+
 	endPayload, _ := json.Marshal(map[string]interface{}{
 		"action": "battle_royale_game_over",
 		"data": map[string]interface{}{
-			"msg": winMsg,
+			"msg":       resultTitle,
+			"blueScore": blueTotal,
+			"redScore":  redTotal,
 		},
 	})
-	for p := range h.Players {
-		if p.InMatch {
-			select {
-			case p.Send <- endPayload:
-			default:
-			}
+
+	for p := range room.Players {
+		select {
+		case p.Send <- endPayload:
+		default:
 		}
-		p.Ready = false
-		p.InMatch = false
+		p.Room = nil
+		p.InQueue = false
 		p.Answered = false
 	}
+
+	delete(h.Rooms, room.ID)
 	h.Mutex.Unlock()
 
-	h.broadcastLobbyState()
-}
-
-// Chỉ gửi sự kiện trận đấu cho những người chơi đã bấm Sẵn Sàng (InMatch = true)
-func (h *ArenaHub) broadcastMatchJSON(action string, data interface{}) {
-	payload, _ := json.Marshal(map[string]interface{}{
-		"action": action,
-		"data":   data,
-	})
-	h.Mutex.Lock()
-	defer h.Mutex.Unlock()
-	for p := range h.Players {
-		if p.InMatch {
-			select {
-			case p.Send <- payload:
-			default:
-			}
-		}
-	}
+	h.broadcastLobbyQueues()
 }
 
 func (p *Player) sendJSON(action string, data interface{}) {
@@ -458,6 +564,7 @@ func (p *Player) handleIncomingMessages() {
 
 		var req struct {
 			Action     string `json:"action"`
+			Mode       string `json:"mode"`
 			Ready      bool   `json:"ready"`
 			CustomName string `json:"customName"`
 			Chosen     int    `json:"chosenIdx"`
@@ -468,47 +575,36 @@ func (p *Player) handleIncomingMessages() {
 			continue
 		}
 
-		// XỬ LÝ KHI NGƯỜI CHƠI BẤM NÚT "SẴN SÀNG THI ĐẤU"
-		if req.Action == "toggle_ready" {
+		// NGƯỜI CHƠI BẤM TÌM TRẬN THEO CHẾ ĐỘ (1v1, 2v2, 3v3, 5v5)
+		if req.Action == "join_queue" {
 			p.Hub.Mutex.Lock()
-			if !p.Hub.GameRunning {
+			if p.Room == nil {
 				cleanName := strings.TrimSpace(req.CustomName)
 				if cleanName != "" && len(cleanName) <= 24 {
 					p.Username = cleanName
 				}
-				p.Ready = req.Ready
+				mode := strings.ToLower(strings.TrimSpace(req.Mode))
+				if _, ok := ModeRequiredPlayers[mode]; !ok {
+					mode = "1v1"
+				}
+				p.SelectedMode = mode
+				p.InQueue = req.Ready
 
-				readyCount := p.Hub.countReadyPlayersLocked()
-				// Khi có từ 2 người chơi thật trở lên bấm Sẵn Sàng -> Khóa những người đã Sẵn Sàng vào trận!
-				if readyCount >= 2 {
-					p.Hub.GameRunning = true
-					p.Hub.MatchID++
-					currentMatchID := p.Hub.MatchID
-					for pl := range p.Hub.Players {
-						if pl.Ready {
-							pl.InMatch = true
-							pl.Score = 0
-							pl.Answered = false
-						} else {
-							pl.InMatch = false
-						}
-					}
-					p.Hub.Mutex.Unlock()
-					p.Hub.broadcastLobbyState()
-					go p.Hub.runTenQuestionsMatch(currentMatchID)
-					continue
+				if p.InQueue {
+					p.Hub.tryMatchmakingLocked(mode)
 				}
 			}
 			p.Hub.Mutex.Unlock()
-			p.Hub.broadcastLobbyState()
+			p.Hub.broadcastLobbyQueues()
 		}
 
-		// XỬ LÝ KHI NGƯỜI CHƠI CHỌN ĐÁP ÁN TRONG TRẬN
+		// NGƯỜI CHƠI CHỌN ĐÁP ÁN TRONG MÁY CHỦ CỦA MÌNH
 		if req.Action == "submit_answer" {
 			p.Hub.Mutex.Lock()
-			if p.Hub.GameRunning && p.InMatch && !p.Answered && p.Hub.CurrentQuestion != nil {
+			room := p.Room
+			if room != nil && room.Active && !p.Answered && room.CurrentQuestion != nil {
 				p.Answered = true
-				isCorrect := (req.Chosen == p.Hub.CurrentQuestion.Ans)
+				isCorrect := (req.Chosen == room.CurrentQuestion.Ans)
 				scoreGain := 0
 
 				if isCorrect {
@@ -530,16 +626,18 @@ func (p *Player) handleIncomingMessages() {
 					"speedMs":     req.SubmitMs,
 				})
 
-				if p.Hub.allMatchPlayersAnsweredLocked() {
+				if p.Hub.checkRoomAllAnsweredLocked(room) {
 					select {
-					case p.Hub.AllAnsweredChan <- p.Hub.Round:
+					case room.AllAnsweredChan <- room.Round:
 					default:
 					}
 				}
 			}
 			p.Hub.Mutex.Unlock()
 
-			p.Hub.broadcastLobbyState()
+			if room != nil {
+				p.Hub.broadcastRoomState(room)
+			}
 		}
 	}
 }
@@ -575,14 +673,14 @@ func ServeArenaWs(hub *ArenaHub, w http.ResponseWriter, r *http.Request, usernam
 	}
 
 	player := &Player{
-		Hub:      hub,
-		Conn:     conn,
-		Send:     make(chan []byte, 256),
-		Username: username,
-		Score:    0,
-		Ready:    false,
-		InMatch:  false,
-		Answered: false,
+		Hub:          hub,
+		Conn:         conn,
+		Send:         make(chan []byte, 256),
+		Username:     username,
+		Score:        0,
+		SelectedMode: "1v1",
+		InQueue:      false,
+		Answered:     false,
 	}
 
 	hub.Register <- player
