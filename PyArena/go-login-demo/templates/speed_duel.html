@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Đấu Trường Đối Kháng - CodeColosseum</title>
+    <title>Đấu Trường Đa Máy Chủ (1v1, 2v2, 3v3, 5v5) - CodeColosseum</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@500;700&family=Plus+Jakarta+Sans:wght@500;600;700;800&family=Teko:wght@700&display=swap" rel="stylesheet">
@@ -49,92 +49,159 @@
 
         /* MAIN CONTENT */
         .arena-main {
-            flex: 1; padding: 24px 36px; display: flex; flex-direction: column; gap: 20px; max-height: 100vh; overflow-y: auto;
+            flex: 1; padding: 22px 34px; display: flex; flex-direction: column; gap: 18px; max-height: 100vh; overflow-y: auto;
         }
         .top-strip {
             display: flex; justify-content: space-between; align-items: center;
             background: #080e1a; border: 1.5px solid #162238; padding: 14px 26px; border-radius: 16px;
         }
-        .arena-title-text { font-size: 18px; font-weight: 800; color: #fb7185; display: flex; align-items: center; gap: 10px; }
+        .arena-title-text { font-size: 17.5px; font-weight: 800; color: #fb7185; display: flex; align-items: center; gap: 10px; }
+        .server-badge-pill {
+            background: rgba(34, 197, 94, 0.15); border: 1px solid #22c55e; color: #4ade80;
+            font-family: 'Fira Code', monospace; font-size: 12px; font-weight: 700; padding: 4px 12px; border-radius: 9999px;
+        }
         .user-tag { font-family: 'Fira Code', monospace; font-size: 13.5px; color: #38bdf8; font-weight: 700; }
 
-        .battle-grid-layout { display: grid; grid-template-columns: 1fr 340px; gap: 24px; flex: 1; }
+        .battle-grid-layout { display: grid; grid-template-columns: 1fr 350px; gap: 22px; flex: 1; }
 
         .question-arena-card {
             background: #090e1c; border: 2px solid #1e293b; border-radius: 22px;
-            padding: 32px; display: flex; flex-direction: column; justify-content: space-between;
-            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.7); position: relative; overflow: hidden; min-height: 540px;
+            padding: 28px; display: flex; flex-direction: column; justify-content: space-between;
+            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.7); position: relative; overflow: hidden; min-height: 550px;
         }
 
-        /* ==================== SẢNH CHỜ KIỂU LIÊN QUÂN ==================== */
+        /* ==================== SẢNH CHỌN CHẾ ĐỘ KIỂU LIÊN QUÂN (1v1, 2v2, 3v3, 5v5) ==================== */
         .lobby-eq-layer {
             position: absolute; inset: 0;
-            background: radial-gradient(circle at 50% 20%, #111f3d 0%, #070b18 60%, #04060d 100%);
-            display: flex; flex-direction: column; align-items: center; justify-content: center;
-            padding: 40px; z-index: 100; border-radius: 20px; text-align: center; gap: 24px;
+            background: radial-gradient(circle at 50% 15%, #132347 0%, #070c18 65%, #04060d 100%);
+            display: flex; flex-direction: column; align-items: center; justify-content: space-between;
+            padding: 30px 32px; z-index: 100; border-radius: 20px; text-align: center;
         }
 
         .lobby-eq-badge {
-            background: rgba(244, 63, 94, 0.15); border: 1px solid rgba(244, 63, 94, 0.4);
-            color: #fb7185; font-size: 11.5px; font-weight: 800; padding: 5px 16px; border-radius: 9999px; letter-spacing: 1px;
+            background: rgba(56, 189, 248, 0.14); border: 1px solid rgba(56, 189, 248, 0.4);
+            color: #38bdf8; font-size: 11px; font-weight: 800; padding: 5px 16px; border-radius: 9999px; letter-spacing: 1px;
         }
-        .lobby-eq-title { font-size: 32px; font-weight: 900; color: #ffffff; letter-spacing: -0.5px; }
-        .lobby-eq-desc { font-size: 14.5px; color: #94a3b8; max-width: 520px; line-height: 1.6; }
+        .lobby-eq-title { font-size: 27px; font-weight: 900; color: #ffffff; margin-top: 8px; }
+        .lobby-eq-desc { font-size: 13.5px; color: #94a3b8; max-width: 560px; margin-top: 4px; }
 
-        /* Nút Bắt Đầu Tìm Trận Hoành Tráng */
+        /* 4 THẺ CHẾ ĐỘ ĐẤU TRƯỜNG */
+        .modes-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 14px;
+            width: 100%;
+            margin: 14px 0;
+        }
+        .mode-card {
+            background: rgba(12, 20, 38, 0.9);
+            border: 2px solid #1e2f4d;
+            border-radius: 16px;
+            padding: 18px 12px;
+            cursor: pointer;
+            transition: all 0.22s ease;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 8px;
+            position: relative;
+        }
+        .mode-card:hover {
+            transform: translateY(-4px);
+            border-color: #38bdf8;
+        }
+        .mode-card.active {
+            background: linear-gradient(180deg, rgba(225, 29, 72, 0.28) 0%, rgba(15, 23, 42, 0.95) 100%);
+            border-color: #fb7185;
+            box-shadow: 0 10px 28px rgba(244, 63, 94, 0.3);
+        }
+        .mode-icon {
+            font-size: 28px;
+            font-weight: 900;
+            font-family: 'Teko', sans-serif;
+            color: #facc15;
+            background: rgba(250, 204, 21, 0.12);
+            border: 1px solid rgba(250, 204, 21, 0.35);
+            width: 58px;
+            height: 58px;
+            border-radius: 14px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            letter-spacing: 1px;
+        }
+        .mode-card.active .mode-icon {
+            background: #e11d48;
+            color: #fff;
+            border-color: #fda4af;
+        }
+        .mode-name { font-size: 15px; font-weight: 800; color: #ffffff; }
+        .mode-sub { font-size: 11.5px; color: #94a3b8; font-weight: 600; }
+        .mode-queue-tag {
+            font-family: 'Fira Code', monospace;
+            font-size: 11px;
+            font-weight: 700;
+            color: #38bdf8;
+            background: rgba(56, 189, 248, 0.12);
+            padding: 3px 10px;
+            border-radius: 9999px;
+            margin-top: 4px;
+        }
+
+        /* KHUNG NHẬP TÊN & NÚT BẮT ĐẦU GHÉP TRẬN */
         .matchmaking-btn-box {
-            display: flex; flex-direction: column; align-items: center; gap: 14px; width: 100%; max-width: 420px;
+            display: flex; flex-direction: column; align-items: center; gap: 12px; width: 100%; max-width: 440px;
         }
         .name-edit-input {
             width: 100%; background: #04060d; border: 1.5px solid #1e2d4a; color: #38bdf8;
-            font-family: 'Fira Code', monospace; font-size: 14.5px; font-weight: 700;
-            padding: 12px 18px; border-radius: 12px; outline: none; text-align: center;
+            font-family: 'Fira Code', monospace; font-size: 14px; font-weight: 700;
+            padding: 11px 16px; border-radius: 12px; outline: none; text-align: center;
         }
-        .name-edit-input:focus { border-color: #38bdf8; box-shadow: 0 0 15px rgba(56, 189, 248, 0.2); }
+        .name-edit-input:focus { border-color: #38bdf8; }
 
         .btn-start-queue {
-            width: 100%; background: linear-gradient(135deg, #e11d48 0%, #9f1239 100%);
-            color: #ffffff; border: none; padding: 16px 28px; border-radius: 14px;
-            font-size: 18px; font-weight: 900; cursor: pointer; letter-spacing: 1px;
-            box-shadow: 0 10px 30px rgba(225, 29, 72, 0.5); transition: all 0.25s ease;
-            display: flex; align-items: center; justify-content: center; gap: 10px;
+            width: 100%; background: linear-gradient(135deg, #e11d48 0%, #be123c 100%);
+            color: #ffffff; border: none; padding: 15px 28px; border-radius: 14px;
+            font-size: 17px; font-weight: 900; cursor: pointer; letter-spacing: 0.8px;
+            box-shadow: 0 10px 30px rgba(225, 29, 72, 0.5); transition: 0.25s;
         }
-        .btn-start-queue:hover { transform: translateY(-3px); box-shadow: 0 15px 40px rgba(244, 63, 94, 0.7); }
+        .btn-start-queue:hover { transform: translateY(-2px); box-shadow: 0 14px 36px rgba(244, 63, 94, 0.7); }
 
-        /* Hiệu ứng Đang Tìm Trận (Searching Overlay) */
+        /* HIỆU ỨNG RADAR ĐANG TÌM TRẬN */
         .searching-match-overlay {
-            position: absolute; inset: 0; background: rgba(4, 7, 17, 0.95);
+            position: absolute; inset: 0; background: rgba(4, 7, 17, 0.96);
             display: none; flex-direction: column; align-items: center; justify-content: center;
-            z-index: 120; border-radius: 20px; gap: 22px; text-align: center;
+            z-index: 120; border-radius: 20px; gap: 18px; text-align: center; padding: 24px;
         }
         .radar-spinner {
-            width: 90px; height: 90px; border: 4px solid rgba(56, 189, 248, 0.2);
-            border-top-color: #38bdf8; border-radius: 50%; animation: radarSpin 1.2s infinite linear;
+            width: 88px; height: 88px; border: 4px solid rgba(56, 189, 248, 0.2);
+            border-top-color: #38bdf8; border-right-color: #fb7185; border-radius: 50%;
+            animation: radarSpin 1s infinite linear;
         }
         @keyframes radarSpin { 100% { transform: rotate(360deg); } }
-
+        .queue-timer-text { font-family: 'Fira Code', monospace; font-size: 22px; font-weight: 800; color: #facc15; }
         .btn-cancel-queue {
-            background: #1e293b; border: 1px solid #475569; color: #f8fafc;
-            padding: 10px 24px; border-radius: 10px; font-weight: 700; cursor: pointer; transition: 0.2s;
+            background: #1e293b; border: 1.5px solid #475569; color: #f8fafc;
+            padding: 10px 26px; border-radius: 10px; font-weight: 700; cursor: pointer;
         }
-        .btn-cancel-queue:hover { background: #334155; border-color: #f87171; color: #f87171; }
+        .btn-cancel-queue:hover { border-color: #f87171; color: #f87171; }
 
-        /* GIAO DIỆN TRONG TRẬN THI ĐẤU (10 CÂU) */
-        .timer-progress-wrap { width: 100%; height: 10px; background: #1e293b; border-radius: 5px; overflow: hidden; margin-bottom: 16px; }
+        /* GIAO DIỆN LÀM BÀI 10 CÂU */
+        .timer-progress-wrap { width: 100%; height: 10px; background: #1e293b; border-radius: 5px; overflow: hidden; margin-bottom: 14px; }
         .timer-progress-bar { height: 100%; width: 100%; background: linear-gradient(90deg, #22c55e, #eab308, #ef4444); transition: width 0.08s linear; }
 
         .round-info-bar { display: flex; justify-content: space-between; align-items: center; margin-bottom: 14px; }
         .round-badge { background: rgba(56, 189, 248, 0.15); border: 1px solid #38bdf8; color: #38bdf8; font-family: 'Fira Code', monospace; padding: 5px 14px; border-radius: 8px; font-weight: 700; }
         .your-score-pill { background: rgba(250, 204, 21, 0.15); border: 1px solid #facc15; color: #facc15; font-family: 'Fira Code', monospace; font-size: 14px; font-weight: 800; padding: 5px 14px; border-radius: 8px; }
 
-        .question-prompt-text { font-size: 19px; font-weight: 800; color: #ffffff; margin-bottom: 12px; line-height: 1.5; }
-        .code-display-block { background: #03060d; border: 1px solid #1a253c; border-radius: 12px; padding: 16px 20px; font-family: 'Fira Code', monospace; font-size: 15px; color: #38bdf8; margin-bottom: 16px; white-space: pre-wrap; }
-        .wait-others-banner { font-size: 13.5px; font-weight: 700; color: #38bdf8; background: rgba(56, 189, 248, 0.1); border: 1px dashed rgba(56, 189, 248, 0.4); padding: 8px 14px; border-radius: 8px; text-align: center; margin-bottom: 14px; display: none; }
+        .question-prompt-text { font-size: 18.5px; font-weight: 800; color: #ffffff; margin-bottom: 12px; line-height: 1.5; }
+        .code-display-block { background: #03060d; border: 1px solid #1a253c; border-radius: 12px; padding: 15px 18px; font-family: 'Fira Code', monospace; font-size: 14.5px; color: #38bdf8; margin-bottom: 14px; white-space: pre-wrap; }
+        .wait-others-banner { font-size: 13px; font-weight: 700; color: #38bdf8; background: rgba(56, 189, 248, 0.1); border: 1px dashed rgba(56, 189, 248, 0.4); padding: 8px 14px; border-radius: 8px; text-align: center; margin-bottom: 12px; display: none; }
 
-        .options-fast-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+        .options-fast-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
         .btn-fast-option {
-            background: #0f172a; border: 2px solid #1e293b; color: #f8fafc; padding: 16px 20px; border-radius: 12px;
-            font-family: 'Fira Code', monospace; font-size: 15px; font-weight: 700; cursor: pointer; text-align: left; transition: 0.15s;
+            background: #0f172a; border: 2px solid #1e293b; color: #f8fafc; padding: 15px 18px; border-radius: 12px;
+            font-family: 'Fira Code', monospace; font-size: 14.5px; font-weight: 700; cursor: pointer; text-align: left; transition: 0.15s;
         }
         .btn-fast-option:hover:not(:disabled) { border-color: #38bdf8; background: #132038; transform: translateY(-2px); }
         .btn-fast-option.selected-choice { border-color: #facc15 !important; background: rgba(250, 204, 21, 0.15) !important; }
@@ -146,19 +213,38 @@
             background: rgba(5, 8, 17, 0.95); border: 2px solid #38bdf8; padding: 12px 28px; border-radius: 14px; display: none; z-index: 50; pointer-events: none;
         }
 
-        /* BẢNG ĐIỂM BÊN PHẢI */
+        /* ==================== CỘT BÊN PHẢI: TỶ SỐ ĐỘI XANH vs ĐỘI ĐỎ ==================== */
         .leaderboard-column { background: #090e1c; border: 2px solid #1e293b; border-radius: 22px; padding: 20px; display: flex; flex-direction: column; gap: 14px; }
-        .lb-header { font-size: 15px; font-weight: 800; color: #fb7185; display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid #1e293b; padding-bottom: 12px; }
+        .lb-header { font-size: 14.5px; font-weight: 800; color: #fb7185; display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid #1e293b; padding-bottom: 10px; }
         .players-count-badge { font-size: 11px; background: rgba(56, 189, 248, 0.15); color: #38bdf8; border: 1px solid #38bdf8; padding: 2px 8px; border-radius: 6px; }
-        .players-scroll-list { display: flex; flex-direction: column; gap: 10px; overflow-y: auto; flex: 1; }
-        .player-row-item { background: #0f172a; border: 1px solid #1e293b; border-radius: 10px; padding: 12px 14px; display: flex; justify-content: space-between; align-items: center; font-size: 13.5px; }
-        .player-name-text { font-weight: 700; color: #f8fafc; display: flex; flex-direction: column; gap: 3px; }
+
+        .teams-versus-bar {
+            display: none;
+            grid-template-columns: 1fr auto 1fr;
+            align-items: center;
+            gap: 8px;
+            background: #050914;
+            border: 1px solid #1e2d4a;
+            border-radius: 12px;
+            padding: 10px 12px;
+            font-family: 'Fira Code', monospace;
+        }
+        .team-score-box { text-align: center; }
+        .team-blue-lbl { font-size: 11px; color: #38bdf8; font-weight: 800; }
+        .team-red-lbl { font-size: 11px; color: #fb7185; font-weight: 800; }
+        .team-pts-num { font-size: 16px; font-weight: 900; color: #fff; }
+
+        .players-scroll-list { display: flex; flex-direction: column; gap: 9px; overflow-y: auto; flex: 1; }
+        .player-row-item { background: #0f172a; border: 1.5px solid #1e293b; border-radius: 10px; padding: 10px 12px; display: flex; justify-content: space-between; align-items: center; font-size: 13px; }
+        .player-row-item.team-blue { border-left: 4px solid #38bdf8; }
+        .player-row-item.team-red { border-left: 4px solid #fb7185; }
+        .player-name-text { font-weight: 700; color: #f8fafc; display: flex; flex-direction: column; gap: 2px; }
         .player-status-sub { font-size: 11px; font-weight: 600; }
         .status-done { color: #4ade80; }
         .status-waiting { color: #94a3b8; }
-        .player-score-text { font-family: 'Fira Code', monospace; color: #facc15; font-weight: 800; font-size: 14px; }
+        .player-score-text { font-family: 'Fira Code', monospace; color: #facc15; font-weight: 800; font-size: 13.5px; }
 
-        /* MODAL TỔNG KẾT */
+        /* MODAL KẾT THÚC */
         .modal-end-wrap { position: fixed; inset: 0; background: rgba(0,0,0,0.88); display: none; align-items: center; justify-content: center; z-index: 200; padding: 20px; }
         .modal-end-card { background: #090e1c; border: 2px solid #fb7185; border-radius: 20px; padding: 28px; width: 100%; max-width: 680px; max-height: 90vh; display: flex; flex-direction: column; gap: 16px; }
         .history-list-box { overflow-y: auto; display: flex; flex-direction: column; gap: 12px; max-height: 48vh; padding-right: 6px; }
@@ -199,53 +285,92 @@
 
     <main class="arena-main">
         <div class="top-strip">
-            <div class="arena-title-text"><span>⚡</span> ĐẤU TRƯỜNG ĐỐI KHÁNG TRỰC TIẾP (10 CÂU HỎI)</div>
+            <div class="arena-title-text">
+                <span>⚡</span> ĐẤU TRƯỜNG LIÊN QUÂN PYTHON
+                <span class="server-badge-pill" id="active-server-pill">🌐 Đang chạy: 0 Máy Chủ</span>
+            </div>
             <div class="user-tag" id="current-user-tag">👤 {{if .Username}}{{.Username}}{{else}}Chiến Binh{{end}}</div>
         </div>
 
         <div class="battle-grid-layout">
             <div class="question-arena-card">
 
-                <!-- SẢNH CHỜ GIAO DIỆN LIÊN QUÂN -->
+                <!-- SẢNH CHỜ CHỌN CHẾ ĐỘ 1V1, 2V2, 3V3, 5V5 -->
                 <div class="lobby-eq-layer" id="wait-layer">
-                    <span class="lobby-eq-badge">⚔️ ĐẤU HẠNG 1V1 • 100% NGƯỜI THẬT</span>
-                    <h1 class="lobby-eq-title">SẢNH CHỜ ĐẤU TRƯỜNG PYTHON</h1>
-                    <p class="lobby-eq-desc">
-                        Hệ thống ghép trận tự động theo thời gian thực. Bấm nút bên dưới để bắt đầu tìm kiếm đối thủ xứng tầm!
-                    </p>
+                    <div>
+                        <span class="lobby-eq-badge">⚔️ HỆ THỐNG ĐA MÁY CHỦ • GHÉP TRẬN NGẪU NHIÊN</span>
+                        <h1 class="lobby-eq-title">CHỌN CHẾ ĐỘ ĐẤU TRƯỜNG</h1>
+                        <p class="lobby-eq-desc">
+                            Mỗi trận đấu tự động khởi tạo một Máy chủ (Server) riêng biệt. Nhiều nhóm có thể thi đấu cùng lúc mà không cần chờ nhau!
+                        </p>
+                    </div>
+
+                    <!-- 4 THẺ CHẾ ĐỘ -->
+                    <div class="modes-grid">
+                        <div class="mode-card active" id="mode-1v1" onclick="selectGameMode('1v1', 2)">
+                            <div class="mode-icon">1v1</div>
+                            <div class="mode-name">Solo Đỉnh Cao</div>
+                            <div class="mode-sub">2 Người (1 vs 1)</div>
+                            <div class="mode-queue-tag" id="q-count-1v1">Đang chờ: 0/2</div>
+                        </div>
+
+                        <div class="mode-card" id="mode-2v2" onclick="selectGameMode('2v2', 4)">
+                            <div class="mode-icon">2v2</div>
+                            <div class="mode-name">Song Đấu</div>
+                            <div class="mode-sub">4 Người (Xanh vs Đỏ)</div>
+                            <div class="mode-queue-tag" id="q-count-2v2">Đang chờ: 0/4</div>
+                        </div>
+
+                        <div class="mode-card" id="mode-3v3" onclick="selectGameMode('3v3', 6)">
+                            <div class="mode-icon">3v3</div>
+                            <div class="mode-name">Tam Hùng</div>
+                            <div class="mode-sub">6 Người (Xanh vs Đỏ)</div>
+                            <div class="mode-queue-tag" id="q-count-3v3">Đang chờ: 0/6</div>
+                        </div>
+
+                        <div class="mode-card" id="mode-5v5" onclick="selectGameMode('5v5', 10)">
+                            <div class="mode-icon">5v5</div>
+                            <div class="mode-name">Đại Chiến</div>
+                            <div class="mode-sub">10 Người (Liên Quân)</div>
+                            <div class="mode-queue-tag" id="q-count-5v5">Đang chờ: 0/10</div>
+                        </div>
+                    </div>
 
                     <div class="matchmaking-btn-box">
-                        <input type="text" id="fighter-name-input" class="name-edit-input" value="{{if .Username}}{{.Username}}{{end}}" placeholder="Nhập tên chiến binh...">
-                        <button class="btn-start-queue" onclick="startMatchmaking()">
-                            <span>⚔️</span> BẮT ĐẦU TÌM TRẬN (1V1)
+                        <input type="text" id="fighter-name-input" class="name-edit-input" value="{{if .Username}}{{.Username}}{{end}}" placeholder="Nhập tên chiến binh của bạn...">
+                        <button class="btn-start-queue" id="btn-main-queue" onclick="startMatchmaking()">
+                            ⚔️ BẮT ĐẦU GHÉP TRẬN (1V1)
                         </button>
                     </div>
 
-                    <!-- Hiệu ứng Đang Tìm Trận -->
+                    <!-- MÀN HÌNH RADAR QUÉT TÌM ĐỐI THỦ -->
                     <div class="searching-match-overlay" id="searching-overlay">
                         <div class="radar-spinner"></div>
-                        <h2 style="font-size: 22px; color: #fff;" id="searching-status-text">Đang tìm kiếm đối thủ (0/2)...</h2>
-                        <p style="color: #94a3b8; font-size: 13.5px;">Hệ thống đang ghép nối các chiến binh trực tuyến...</p>
-                        <button class="btn-cancel-queue" onclick="cancelMatchmaking()">Hủy Tìm Trận</button>
+                        <div class="queue-timer-text" id="queue-timer">00:00</div>
+                        <h2 style="font-size: 22px; color: #fff;" id="searching-status-text">Đang ghép ngẫu nhiên chế độ 1V1 (1/2)...</h2>
+                        <p style="color: #94a3b8; font-size: 13.5px; max-width: 440px;">
+                            Ngay khi đủ người, hệ thống sẽ tự tách máy chủ riêng và chia Đội Xanh - Đội Đỏ!
+                        </p>
+                        <button class="btn-cancel-queue" onclick="cancelMatchmaking()">✕ Hủy Tìm Trận</button>
                     </div>
                 </div>
 
                 <div class="feedback-pop" id="feedback-txt">CHÍNH XÁC!</div>
 
-                <!-- KHUNG CÂU HỎI TRONG TRẬN -->
+                <!-- GIAO DIỆN TRONG TRẬN ĐẤU (10 CÂU) -->
                 <div>
                     <div class="timer-progress-wrap">
                         <div class="timer-progress-bar" id="time-bar"></div>
                     </div>
 
                     <div class="round-info-bar">
-                        <span class="round-badge" id="round-num-badge">CÂU 1 / 10</span>
-                        <div class="your-score-pill" id="your-score-box">⚡ Điểm: 0 PTS</div>
+                        <span class="round-badge" id="round-num-badge">MÁY CHỦ #1 • CÂU 1 / 10</span>
+                        <div class="your-score-pill" id="your-score-box">⚡ Điểm cá nhân: 0 PTS</div>
                     </div>
 
                     <div class="question-prompt-text" id="q-title-text">Đang chuẩn bị đề bài...</div>
                     <div class="code-display-block" id="q-code-text"># Code Python sẽ xuất hiện tại đây</div>
-                    <div class="wait-others-banner" id="wait-others-msg">⏳ Đã chốt đáp án! Đang chờ đối thủ chọn (khi tất cả chọn xong sẽ qua câu ngay)...</div>
+                    <div class="wait-others-banner" id="wait-others-msg">⏳ Đã khóa đáp án! Đang chờ các chiến binh trong Máy chủ này chọn xong...</div>
                 </div>
 
                 <div class="options-fast-grid" id="options-container">
@@ -256,12 +381,26 @@
                 </div>
             </div>
 
-            <!-- BẢNG ĐIỂM BÊN PHẢI -->
+            <!-- CỘT PHẢI: TỶ SỐ ĐỘI XANH vs ĐỘI ĐỎ HOẶC SẢNH CHỜ -->
             <div class="leaderboard-column">
                 <div class="lb-header">
-                    <span>🏆 BẢNG ĐIỂM TRỰC TIẾP</span>
+                    <span id="right-panel-title">🏆 TRẠNG THÁI SẢNH</span>
                     <span class="players-count-badge" id="players-badge-txt">Online: 1</span>
                 </div>
+
+                <!-- Thanh tỷ số Đội Xanh vs Đội Đỏ khi vào trận -->
+                <div class="teams-versus-bar" id="teams-score-bar">
+                    <div class="team-score-box">
+                        <div class="team-blue-lbl">🔵 ĐỘI XANH</div>
+                        <div class="team-pts-num" id="blue-total-pts">0</div>
+                    </div>
+                    <div style="color:#64748b; font-weight:900;">VS</div>
+                    <div class="team-score-box">
+                        <div class="team-red-lbl">🔴 ĐỘI ĐỎ</div>
+                        <div class="team-pts-num" id="red-total-pts">0</div>
+                    </div>
+                </div>
+
                 <div class="players-scroll-list" id="players-list-box"></div>
             </div>
         </div>
@@ -270,24 +409,29 @@
     <!-- MODAL KẾT THÚC 10 CÂU -->
     <div class="modal-end-wrap" id="end-modal">
         <div class="modal-end-card">
-            <h2 id="modal-title" style="font-size: 24px; color: #fb7185; text-align: center;">HOÀN THÀNH 10 CÂU HỎI!</h2>
+            <h2 id="modal-title" style="font-size: 24px; color: #fb7185; text-align: center;">KẾT QUẢ TRẬN ĐẤU (10 CÂU)</h2>
             <p id="modal-msg" style="color: #facc15; font-size: 16px; font-weight: 800; text-align: center;"></p>
 
             <div style="font-weight: 800; font-size: 14px; color: #38bdf8; border-bottom: 1px solid #1e293b; padding-bottom: 6px;">
-                📋 LỊCH SỬ 10 CÂU HỎI & BÀI HỌC RÚT KINH NGHIỆM:
+                📋 LỊCH SỬ 10 CÂU HỎI & RÚT KINH NGHIỆM:
             </div>
 
             <div class="history-list-box" id="duel-history-list"></div>
 
             <div class="btn-action-row">
-                <button class="btn-replay-duel" onclick="backToLobbyRoom()">Tiếp Tục Tìm Trận</button>
+                <button class="btn-replay-duel" onclick="backToLobbyRoom()">Về Sảnh Ghép Trận Mới</button>
                 <a href="/arena" class="btn-back-arena">Về Danh Sách Map</a>
             </div>
         </div>
     </div>
 
     <script>
+        let selectedMode = '1v1';
+        let requiredForMode = 2;
         let isSearching = false;
+        let queueSeconds = 0;
+        let queueClockInterval = null;
+
         let currentQuestion = null;
         let questionStartTime = 0;
         let timerInterval = null;
@@ -307,9 +451,20 @@
         const searchingOverlay = document.getElementById("searching-overlay");
         const nameInput = document.getElementById("fighter-name-input");
         const feedbackTxt = document.getElementById("feedback-txt");
+        const teamsScoreBar = document.getElementById("teams-score-bar");
 
         const protocol = window.location.protocol === 'https:' ? 'wss:' : 'ws:';
-        const ws = new WebSocket(`${protocol}//${window.location.host}/ws/arena?mode=super_mind`);
+        const ws = new WebSocket(`${protocol}//${window.location.host}/ws/arena`);
+
+        function selectGameMode(mode, reqCount) {
+            if (isSearching) return;
+            selectedMode = mode;
+            requiredForMode = reqCount;
+
+            document.querySelectorAll('.mode-card').forEach(el => el.classList.remove('active'));
+            document.getElementById('mode-' + mode).classList.add('active');
+            document.getElementById('btn-main-queue').innerText = `⚔️ BẮT ĐẦU GHÉP TRẬN (${mode.toUpperCase()})`;
+        }
 
         function startMatchmaking() {
             isSearching = true;
@@ -318,10 +473,21 @@
                 document.getElementById("current-user-tag").innerText = "👤 " + customName;
             }
 
+            queueSeconds = 0;
+            document.getElementById("queue-timer").innerText = "00:00";
+            clearInterval(queueClockInterval);
+            queueClockInterval = setInterval(() => {
+                queueSeconds++;
+                const m = String(Math.floor(queueSeconds / 60)).padStart(2, '0');
+                const s = String(queueSeconds % 60).padStart(2, '0');
+                document.getElementById("queue-timer").innerText = `${m}:${s}`;
+            }, 1000);
+
             searchingOverlay.style.display = "flex";
 
             ws.send(JSON.stringify({
-                action: "toggle_ready",
+                action: "join_queue",
+                mode: selectedMode,
                 ready: true,
                 customName: customName
             }));
@@ -329,10 +495,12 @@
 
         function cancelMatchmaking() {
             isSearching = false;
+            clearInterval(queueClockInterval);
             searchingOverlay.style.display = "none";
 
             ws.send(JSON.stringify({
-                action: "toggle_ready",
+                action: "join_queue",
+                mode: selectedMode,
                 ready: false,
                 customName: nameInput.value.trim()
             }));
@@ -341,7 +509,10 @@
         function backToLobbyRoom() {
             document.getElementById("end-modal").style.display = "none";
             isSearching = false;
+            clearInterval(queueClockInterval);
             searchingOverlay.style.display = "none";
+            teamsScoreBar.style.display = "none";
+            document.getElementById("right-panel-title").innerText = "🏆 TRẠNG THÁI SẢNH";
             waitLayer.style.display = "flex";
         }
 
@@ -350,24 +521,42 @@
             const action = res.action;
             const data = res.data;
 
-            if (action === "lobby_state") {
-                const readyCount = data.readyPlayers || 0;
+            if (action === "lobby_queues") {
+                const q = data.queues || {};
+                document.getElementById("q-count-1v1").innerText = `Đang chờ: ${q['1v1'] || 0}/2`;
+                document.getElementById("q-count-2v2").innerText = `Đang chờ: ${q['2v2'] || 0}/4`;
+                document.getElementById("q-count-3v3").innerText = `Đang chờ: ${q['3v3'] || 0}/6`;
+                document.getElementById("q-count-5v5").innerText = `Đang chờ: ${q['5v5'] || 0}/10`;
+                document.getElementById("active-server-pill").innerText = `🌐 Đang chạy: ${data.activeServers || 0} Máy Chủ`;
+
                 if (isSearching) {
+                    const cur = q[selectedMode] || 1;
                     document.getElementById("searching-status-text").innerText =
-                        `Đang tìm đối thủ (${readyCount} người đã sẵn sàng)...`;
+                        `Đang ghép ngẫu nhiên chế độ ${selectedMode.toUpperCase()} (${cur}/${requiredForMode} Chiến Binh)...`;
                 }
-                renderLeaderboard(data.players);
+                renderLobbyPlayers(data.onlinePlayers || []);
             }
-            else if (action === "countdown_start") {
-                searchingOverlay.style.display = "none";
-                waitLayer.style.display = "none";
+            else if (action === "match_found_countdown") {
+                clearInterval(queueClockInterval);
+                searchingOverlay.style.display = "flex";
+                document.getElementById("searching-status-text").innerText =
+                    `🔥 ĐÃ TÌM THẤY TRẬN (${data.mode} - MÁY CHỦ #${data.roomId})! Vào trận sau ${data.seconds}s...`;
                 myRunningScore = 0;
                 duelRoundRecords = [];
-                yourScoreBox.innerText = `⚡ Điểm: 0 PTS`;
+                yourScoreBox.innerText = `⚡ Điểm cá nhân: 0 PTS`;
+            }
+            else if (action === "room_state") {
+                teamsScoreBar.style.display = "grid";
+                document.getElementById("right-panel-title").innerText = `⚔️ MÁY CHỦ #${data.roomId} (${data.mode.toUpperCase()})`;
+                document.getElementById("blue-total-pts").innerText = data.blueScore || 0;
+                document.getElementById("red-total-pts").innerText = data.redScore || 0;
+                renderRoomPlayers(data.players || []);
             }
             else if (action === "new_round_question") {
-                waitLayer.style.display = "none";
+                isSearching = false;
+                clearInterval(queueClockInterval);
                 searchingOverlay.style.display = "none";
+                waitLayer.style.display = "none";
                 startRoundQuestion(data);
             }
             else if (action === "round_finished") {
@@ -378,7 +567,7 @@
                 const last = duelRoundRecords[duelRoundRecords.length - 1];
                 const gained = data.scoreGained || 0;
                 myRunningScore = (data.totalScore !== undefined) ? data.totalScore : (myRunningScore + gained);
-                yourScoreBox.innerText = `⚡ Điểm: ${myRunningScore} PTS`;
+                yourScoreBox.innerText = `⚡ Điểm cá nhân: ${myRunningScore} PTS`;
 
                 if (data.correct) {
                     feedbackTxt.innerText = `✓ CHÍNH XÁC! +${gained} PTS (${((data.speedMs || 0) / 1000).toFixed(2)}s)`;
@@ -414,7 +603,7 @@
             currentQuestion = data.question;
 
             const totalR = data.totalRounds || 10;
-            roundNumBadge.innerText = `CÂU ${data.round} / ${totalR}`;
+            roundNumBadge.innerText = `MÁY CHỦ #${data.roomId} (${data.mode}) • CÂU ${data.round} / ${totalR}`;
             qTitleText.innerText = `Câu ${data.round}: ${currentQuestion.question}`;
             qCodeText.innerText = currentQuestion.code || "# Không có đoạn mã kèm theo";
 
@@ -482,31 +671,46 @@
             }));
         }
 
-        function renderLeaderboard(players) {
-            if (!players) return;
-            players.sort((a, b) => b.score - a.score);
-
+        function renderLobbyPlayers(players) {
             playersListBox.innerHTML = "";
-
-            players.forEach((p, rank) => {
+            players.forEach((p) => {
                 const row = document.createElement("div");
                 row.className = "player-row-item";
-                const medal = rank === 0 ? "🥇" : (rank === 1 ? "🥈" : `#${rank + 1}`);
-
-                let statusHtml = "";
-                if (p.inMatch) {
-                    statusHtml = p.answered
-                        ? `<span class="player-status-sub status-done">✅ Đã chọn đáp án</span>`
-                        : `<span class="player-status-sub status-waiting">⏳ Đang làm bài...</span>`;
-                } else {
-                    statusHtml = p.ready
-                        ? `<span class="player-status-sub status-done">⚡ Đang tìm trận</span>`
-                        : `<span class="player-status-sub status-waiting">💤 Sảnh chờ</span>`;
+                let sub = `<span class="player-status-sub status-waiting">💤 Đang ở sảnh</span>`;
+                if (p.roomId > 0) {
+                    sub = `<span class="player-status-sub status-done">⚔️ Đang đấu Máy chủ #${p.roomId}</span>`;
+                } else if (p.inQueue) {
+                    sub = `<span class="player-status-sub status-done">🔍 Đang tìm trận ${p.mode.toUpperCase()}</span>`;
                 }
 
                 row.innerHTML = `
                     <div class="player-name-text">
-                        <div><span>${medal}</span> <span>${p.username}</span></div>
+                        <div>👤 ${p.username}</div>
+                        ${sub}
+                    </div>
+                    <div class="player-score-text">${p.mode ? p.mode.toUpperCase() : '1V1'}</div>
+                `;
+                playersListBox.appendChild(row);
+            });
+            document.getElementById("players-badge-txt").innerText = `Online: ${players.length}`;
+        }
+
+        function renderRoomPlayers(players) {
+            players.sort((a, b) => b.score - a.score);
+            playersListBox.innerHTML = "";
+
+            players.forEach((p) => {
+                const row = document.createElement("div");
+                const isBlue = (p.team === "BLUE");
+                row.className = `player-row-item ${isBlue ? 'team-blue' : 'team-red'}`;
+                const teamBadge = isBlue ? "🔵" : "🔴";
+                const statusHtml = p.answered
+                    ? `<span class="player-status-sub status-done">✅ Đã chọn đáp án</span>`
+                    : `<span class="player-status-sub status-waiting">⏳ Đang suy nghĩ...</span>`;
+
+                row.innerHTML = `
+                    <div class="player-name-text">
+                        <div><span>${teamBadge}</span> <span>${p.username}</span></div>
                         ${statusHtml}
                     </div>
                     <div class="player-score-text">${p.score} pts</div>
@@ -514,7 +718,7 @@
                 playersListBox.appendChild(row);
             });
 
-            document.getElementById("players-badge-txt").innerText = `Online: ${players.length}`;
+            document.getElementById("players-badge-txt").innerText = `Trong trận: ${players.length}`;
         }
 
         function showDuelEndModal(msg) {
@@ -543,7 +747,7 @@
                 listEl.appendChild(box);
 
                 saveUniqueQuestionRecord(
-                    "Đấu Trường 1v1",
+                    "Đấu Trường Liên Quân",
                     item.question,
                     item.code,
                     item.chosen,
