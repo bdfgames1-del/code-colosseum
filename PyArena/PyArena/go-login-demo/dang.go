@@ -21,12 +21,26 @@ type User struct {
 	IsAdmin  bool
 }
 
-type PlayerActivity struct {
-	Username      string `json:"username"`
-	CurrentAction string `json:"currentAction"`
-	LastActive    string `json:"lastActive"`
-	Status        string `json:"status"`
+// Từng dòng lịch sử của người chơi
+type ActivityLog struct {
+	Time   string `json:"time"`
+	Action string `json:"action"`
+	Status string `json:"status"`
 }
+
+// Hồ sơ theo dõi người chơi (giữ nguyên dữ liệu cả khi đã thoát game)
+type PlayerActivity struct {
+	Username      string        `json:"username"`
+	IsOnline      bool          `json:"isOnline"`
+	CurrentAction string        `json:"currentAction"`
+	LastActive    string        `json:"lastActive"`
+	LastExitTime  string        `json:"lastExitTime"`
+	Status        string        `json:"status"`
+	TotalScore    int           `json:"totalScore"`
+	History       []ActivityLog `json:"history"`
+}
+
+const playerDBFile = "player_history_db.json"
 
 var (
 	users          = make(map[string]User)
@@ -42,6 +56,26 @@ func init() {
 
 	hashedAdmin, _ := bcrypt.GenerateFromPassword([]byte("admin@2026"), bcrypt.DefaultCost)
 	users["admin"] = User{Username: "admin", Password: string(hashedAdmin), IsAdmin: true}
+
+	loadPlayerDataFromFile()
+}
+
+func loadPlayerDataFromFile() {
+	trackLock.Lock()
+	defer trackLock.Unlock()
+
+	data, err := os.ReadFile(playerDBFile)
+	if err != nil {
+		return
+	}
+	_ = json.Unmarshal(data, &activeTracking)
+}
+
+func savePlayerDataLocked() {
+	data, err := json.MarshalIndent(activeTracking, "", "  ")
+	if err == nil {
+		_ = os.WriteFile(playerDBFile, data, 0644)
+	}
 }
 
 func generateToken() string {
@@ -60,22 +94,115 @@ func getSessionUsername(r *http.Request) string {
 	return sessions[cookie.Value]
 }
 
+// Cộng điểm tích lũy và ghi vào lịch sử người chơi
 func AddWinScore(username string, score int) {
-	log.Printf("[Score] Đấu thủ %s nhận được +%d điểm chiến thắng!\n", username, score)
+	if username == "" || username == "admin" {
+		return
+	}
+	nowStr := time.Now().Format("15:04:05 02/01/2006")
+
+	trackLock.Lock()
+	defer trackLock.Unlock()
+
+	p, exists := activeTracking[username]
+	if !exists {
+		p = &PlayerActivity{
+			Username: username,
+			History:  []ActivityLog{},
+		}
+		activeTracking[username] = p
+	}
+
+	p.TotalScore += score
+	p.LastActive = nowStr
+	entry := ActivityLog{
+		Time:   nowStr,
+		Action: fmt.Sprintf("Hoàn thành trận Đấu Trường (+%d PTS)", score),
+		Status: fmt.Sprintf("Tổng điểm: %d PTS", p.TotalScore),
+	}
+	p.History = append([]ActivityLog{entry}, p.History...)
+	if len(p.History) > 100 {
+		p.History = p.History[:100]
+	}
+
+	savePlayerDataLocked()
 }
 
+// Ghi nhận hoạt động mới vào danh sách lịch sử của người chơi
 func TrackPlayer(username, action, status string) {
 	if username == "" || username == "admin" {
 		return
 	}
+	nowStr := time.Now().Format("15:04:05 02/01/2006")
+
 	trackLock.Lock()
 	defer trackLock.Unlock()
-	activeTracking[username] = &PlayerActivity{
-		Username:      username,
-		CurrentAction: action,
-		LastActive:    time.Now().Format("15:04:05 02/01/2006"),
-		Status:        status,
+
+	p, exists := activeTracking[username]
+	if !exists {
+		p = &PlayerActivity{
+			Username:     username,
+			LastExitTime: "Chưa thoát lần nào",
+			History:      []ActivityLog{},
+		}
+		activeTracking[username] = p
 	}
+
+	p.IsOnline = true
+	p.CurrentAction = action
+	p.LastActive = nowStr
+	p.Status = status
+
+	entry := ActivityLog{
+		Time:   nowStr,
+		Action: action,
+		Status: status,
+	}
+	// Đưa hoạt động mới nhất lên đầu mảng lịch sử
+	p.History = append([]ActivityLog{entry}, p.History...)
+	if len(p.History) > 100 {
+		p.History = p.History[:100]
+	}
+
+	savePlayerDataLocked()
+}
+
+// Ghi nhận khi người chơi thoát khỏi trò chơi / đóng tab (giữ nguyên dữ liệu cũ)
+func TrackPlayerExit(username, reason string) {
+	if username == "" || username == "admin" {
+		return
+	}
+	nowStr := time.Now().Format("15:04:05 02/01/2006")
+
+	trackLock.Lock()
+	defer trackLock.Unlock()
+
+	p, exists := activeTracking[username]
+	if !exists {
+		p = &PlayerActivity{
+			Username: username,
+			History:  []ActivityLog{},
+		}
+		activeTracking[username] = p
+	}
+
+	p.IsOnline = false
+	p.CurrentAction = reason
+	p.LastActive = nowStr
+	p.LastExitTime = nowStr
+	p.Status = "Đã thoát game (Offline)"
+
+	entry := ActivityLog{
+		Time:   nowStr,
+		Action: reason,
+		Status: "Đã thoát trò chơi",
+	}
+	p.History = append([]ActivityLog{entry}, p.History...)
+	if len(p.History) > 100 {
+		p.History = p.History[:100]
+	}
+
+	savePlayerDataLocked()
 }
 
 func trackActivityHandler(w http.ResponseWriter, r *http.Request) {
@@ -83,13 +210,22 @@ func trackActivityHandler(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 	var req struct {
-		Action string `json:"action"`
-		Status string `json:"status"`
+		Username string `json:"username"`
+		Action   string `json:"action"`
+		Status   string `json:"status"`
+		IsExit   bool   `json:"isExit"`
 	}
 	if err := json.NewDecoder(r.Body).Decode(&req); err == nil {
 		u := getSessionUsername(r)
+		if u == "" {
+			u = req.Username
+		}
 		if u != "" {
-			TrackPlayer(u, req.Action, req.Status)
+			if req.IsExit {
+				TrackPlayerExit(u, req.Action)
+			} else {
+				TrackPlayer(u, req.Action, req.Status)
+			}
 		}
 	}
 	w.WriteHeader(http.StatusOK)
@@ -138,6 +274,9 @@ func adminPageHandler(w http.ResponseWriter, r *http.Request) {
 
 func homeHandler(w http.ResponseWriter, r *http.Request) {
 	username := getSessionUsername(r)
+	if username != "" {
+		TrackPlayer(username, "Đang xem Trang chủ", "Đang Online")
+	}
 	tmpl, err := template.ParseFiles("templates/home.html")
 	if err != nil {
 		http.Redirect(w, r, "/arena", http.StatusSeeOther)
@@ -148,6 +287,9 @@ func homeHandler(w http.ResponseWriter, r *http.Request) {
 
 func coursesHandler(w http.ResponseWriter, r *http.Request) {
 	username := getSessionUsername(r)
+	if username != "" {
+		TrackPlayer(username, "Đang xem Kho Bài Học Python", "Đang học lý thuyết")
+	}
 	tmpl, err := template.ParseFiles("templates/courses.html")
 	if err != nil {
 		http.Redirect(w, r, "/arena", http.StatusSeeOther)
@@ -158,7 +300,7 @@ func coursesHandler(w http.ResponseWriter, r *http.Request) {
 
 func arenaSelectHandler(w http.ResponseWriter, r *http.Request) {
 	username := getSessionUsername(r)
-	TrackPlayer(username, "Đang ở sảnh chọn Map", "Online")
+	TrackPlayer(username, "Đang ở sảnh chọn 3 Bản Đồ", "Đang Online")
 
 	tmpl, err := template.ParseFiles("templates/arena_select.html")
 	if err != nil {
@@ -171,7 +313,7 @@ func arenaSelectHandler(w http.ResponseWriter, r *http.Request) {
 func arenaBattleHandler(w http.ResponseWriter, r *http.Request) {
 	username := getSessionUsername(r)
 	mapID := r.URL.Query().Get("map")
-	TrackPlayer(username, "Đang làm bài Map "+mapID, "Đang giải đố")
+	TrackPlayer(username, "Vào thực hành Bản đồ Map "+mapID, "Đang giải đố")
 
 	tmpl, err := template.ParseFiles("templates/arena.html")
 	if err != nil {
@@ -183,7 +325,7 @@ func arenaBattleHandler(w http.ResponseWriter, r *http.Request) {
 
 func speedDuelHandler(w http.ResponseWriter, r *http.Request) {
 	username := getSessionUsername(r)
-	TrackPlayer(username, "Đang vào Đấu trường 1v1", "Chờ / Thi đấu")
+	TrackPlayer(username, "Vào Đấu Trường Kiến Thức Python", "Đang ở sảnh đấu trường")
 
 	tmpl, err := template.ParseFiles("templates/speed_duel.html")
 	if err != nil {
@@ -195,6 +337,9 @@ func speedDuelHandler(w http.ResponseWriter, r *http.Request) {
 
 func leaderboardHandler(w http.ResponseWriter, r *http.Request) {
 	username := getSessionUsername(r)
+	if username != "" {
+		TrackPlayer(username, "Đang xem Bảng xếp hạng", "Đang Online")
+	}
 	tmpl, err := template.ParseFiles("templates/leaderboard.html")
 	if err != nil {
 		http.Redirect(w, r, "/arena", http.StatusSeeOther)
@@ -239,6 +384,7 @@ func registerHandler(w http.ResponseWriter, r *http.Request) {
 	users[username] = User{Username: username, Password: string(hashedPassword), IsAdmin: false}
 	sessionLock.Unlock()
 
+	TrackPlayer(username, "Vừa đăng ký tài khoản mới", "Tài khoản mới")
 	http.Redirect(w, r, "/login", http.StatusSeeOther)
 }
 
@@ -282,6 +428,7 @@ func loginHandler(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
+	TrackPlayer(username, "Vừa đăng nhập vào hệ thống", "Đang Online")
 	http.Redirect(w, r, "/arena", http.StatusSeeOther)
 }
 
