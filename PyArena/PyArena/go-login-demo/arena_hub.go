@@ -192,7 +192,6 @@ func (h *ArenaHub) Run() {
 			h.Players[p] = true
 			h.Mutex.Unlock()
 
-			// Báo cho Admin biết người chơi vừa kết nối vào Đấu Trường
 			TrackPlayer(p.Username, "Kết nối vào Sảnh Đấu Trường", "Đang Online")
 
 			for _, r := range affectedRooms {
@@ -211,7 +210,6 @@ func (h *ArenaHub) Run() {
 			room := h.removePlayerLocked(p)
 			h.Mutex.Unlock()
 
-			// Báo cho Admin biết người chơi đã thoát khỏi trò chơi / rời trận
 			if wasInRoom {
 				TrackPlayerExit(p.Username, fmt.Sprintf("Đã thoát giữa trận Đấu Trường (%s)", roomMode))
 			} else {
@@ -640,7 +638,7 @@ func (p *Player) handleIncomingMessages() {
 				if req.Chosen >= 0 && req.Chosen < len(room.CurrentQuestion.Options) {
 					chosenText = room.CurrentQuestion.Options[req.Chosen]
 				}
-				statusStr := fmt.Sprintf("Sai (+0 PTS)")
+				statusStr := "Sai (+0 PTS)"
 				if isCorrect {
 					statusStr = fmt.Sprintf("Đúng (+%d PTS)", scoreGain)
 				}
