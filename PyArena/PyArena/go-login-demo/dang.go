@@ -21,7 +21,7 @@ type User struct {
 	IsAdmin  bool
 }
 
-// Từng dòng lịch sử của người chơi
+// Từng dòng lịch sử hoạt động của người chơi
 type ActivityLog struct {
 	Time   string `json:"time"`
 	Action string `json:"action"`
@@ -107,8 +107,9 @@ func AddWinScore(username string, score int) {
 	p, exists := activeTracking[username]
 	if !exists {
 		p = &PlayerActivity{
-			Username: username,
-			History:  []ActivityLog{},
+			Username:     username,
+			LastExitTime: "Chưa thoát",
+			History:      []ActivityLog{},
 		}
 		activeTracking[username] = p
 	}
@@ -142,7 +143,7 @@ func TrackPlayer(username, action, status string) {
 	if !exists {
 		p = &PlayerActivity{
 			Username:     username,
-			LastExitTime: "Chưa thoát lần nào",
+			LastExitTime: "Chưa thoát",
 			History:      []ActivityLog{},
 		}
 		activeTracking[username] = p
@@ -158,7 +159,6 @@ func TrackPlayer(username, action, status string) {
 		Action: action,
 		Status: status,
 	}
-	// Đưa hoạt động mới nhất lên đầu mảng lịch sử
 	p.History = append([]ActivityLog{entry}, p.History...)
 	if len(p.History) > 100 {
 		p.History = p.History[:100]
@@ -167,7 +167,7 @@ func TrackPlayer(username, action, status string) {
 	savePlayerDataLocked()
 }
 
-// Ghi nhận khi người chơi thoát khỏi trò chơi / đóng tab (giữ nguyên dữ liệu cũ)
+// Ghi nhận ngay lập tức khi người chơi thoát khỏi trò chơi (giữ nguyên dữ liệu)
 func TrackPlayerExit(username, reason string) {
 	if username == "" || username == "admin" {
 		return
@@ -203,6 +203,42 @@ func TrackPlayerExit(username, reason string) {
 	}
 
 	savePlayerDataLocked()
+}
+
+// Goroutine Go chạy ngầm: Tự động chuyển sang "Đã thoát game" nếu người chơi đóng trình duyệt quá 2 phút
+func autoCheckOfflinePlayers() {
+	for {
+		time.Sleep(15 * time.Second)
+		now := time.Now()
+
+		trackLock.Lock()
+		changed := false
+		for _, p := range activeTracking {
+			if p.IsOnline {
+				lastTime, err := time.ParseInLocation("15:04:05 02/01/2006", p.LastActive, time.Local)
+				if err == nil && now.Sub(lastTime) > 2*time.Minute {
+					nowStr := now.Format("15:04:05 02/01/2006")
+					p.IsOnline = false
+					p.LastExitTime = nowStr
+					p.Status = "Đã thoát game (Offline)"
+					p.CurrentAction = "Ngắt kết nối / Đóng trình duyệt"
+					p.History = append([]ActivityLog{{
+						Time:   nowStr,
+						Action: "Hệ thống Go phát hiện người chơi đã đóng tab",
+						Status: "Đã thoát trò chơi",
+					}}, p.History...)
+					if len(p.History) > 100 {
+						p.History = p.History[:100]
+					}
+					changed = true
+				}
+			}
+		}
+		if changed {
+			savePlayerDataLocked()
+		}
+		trackLock.Unlock()
+	}
 }
 
 func trackActivityHandler(w http.ResponseWriter, r *http.Request) {
@@ -434,6 +470,7 @@ func loginHandler(w http.ResponseWriter, r *http.Request) {
 
 func main() {
 	go GlobalArenaHub.Run()
+	go autoCheckOfflinePlayers()
 
 	http.HandleFunc("/", homeHandler)
 	http.HandleFunc("/courses", coursesHandler)
