@@ -21,14 +21,12 @@ type User struct {
 	IsAdmin  bool
 }
 
-// Từng dòng lịch sử hoạt động của người chơi
 type ActivityLog struct {
 	Time   string `json:"time"`
 	Action string `json:"action"`
 	Status string `json:"status"`
 }
 
-// Hồ sơ theo dõi người chơi (giữ nguyên dữ liệu cả khi đã thoát game)
 type PlayerActivity struct {
 	Username      string        `json:"username"`
 	IsOnline      bool          `json:"isOnline"`
@@ -94,7 +92,6 @@ func getSessionUsername(r *http.Request) string {
 	return sessions[cookie.Value]
 }
 
-// Cộng điểm tích lũy và ghi vào lịch sử người chơi
 func AddWinScore(username string, score int) {
 	if username == "" || username == "admin" {
 		return
@@ -129,7 +126,6 @@ func AddWinScore(username string, score int) {
 	savePlayerDataLocked()
 }
 
-// Ghi nhận hoạt động mới vào danh sách lịch sử của người chơi
 func TrackPlayer(username, action, status string) {
 	if username == "" || username == "admin" {
 		return
@@ -167,7 +163,6 @@ func TrackPlayer(username, action, status string) {
 	savePlayerDataLocked()
 }
 
-// Ghi nhận ngay lập tức khi người chơi thoát khỏi trò chơi (giữ nguyên dữ liệu)
 func TrackPlayerExit(username, reason string) {
 	if username == "" || username == "admin" {
 		return
@@ -205,7 +200,6 @@ func TrackPlayerExit(username, reason string) {
 	savePlayerDataLocked()
 }
 
-// Goroutine Go chạy ngầm: Tự động chuyển sang "Đã thoát game" nếu người chơi đóng trình duyệt quá 2 phút
 func autoCheckOfflinePlayers() {
 	for {
 		time.Sleep(15 * time.Second)
@@ -465,7 +459,34 @@ func loginHandler(w http.ResponseWriter, r *http.Request) {
 	}
 
 	TrackPlayer(username, "Vừa đăng nhập vào hệ thống", "Đang Online")
-	http.Redirect(w, r, "/arena", http.StatusSeeOther)
+	http.Redirect(w, r, "/", http.StatusSeeOther)
+}
+
+// HÀM ĐĂNG XUẤT CHO CẢ ADMIN VÀ NGƯỜI CHƠI
+func logoutHandler(w http.ResponseWriter, r *http.Request) {
+	cookie, err := r.Cookie("session_token")
+	if err == nil {
+		sessionLock.Lock()
+		username := sessions[cookie.Value]
+		delete(sessions, cookie.Value)
+		sessionLock.Unlock()
+
+		if username != "" && username != "admin" {
+			TrackPlayerExit(username, "Chủ động bấm Đăng xuất khỏi tài khoản")
+		}
+	}
+
+	// Xóa cookie session_token trên trình duyệt
+	http.SetCookie(w, &http.Cookie{
+		Name:     "session_token",
+		Value:    "",
+		Path:     "/",
+		Expires:  time.Unix(0, 0),
+		MaxAge:   -1,
+		HttpOnly: true,
+	})
+
+	http.Redirect(w, r, "/login", http.StatusSeeOther)
 }
 
 func main() {
@@ -492,6 +513,7 @@ func main() {
 	http.HandleFunc("/leaderboard", leaderboardHandler)
 	http.HandleFunc("/login", loginHandler)
 	http.HandleFunc("/register", registerHandler)
+	http.HandleFunc("/logout", logoutHandler) // <-- Đường dẫn Đăng xuất
 
 	port := os.Getenv("PORT")
 	if port == "" {
