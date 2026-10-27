@@ -1,6 +1,7 @@
 package main
 
 import (
+	"bytes"
 	"crypto/rand"
 	"encoding/hex"
 	"encoding/json"
@@ -9,6 +10,7 @@ import (
 	"log"
 	"net/http"
 	"os"
+	"strings"
 	"sync"
 	"time"
 
@@ -21,12 +23,24 @@ type User struct {
 	IsAdmin  bool
 }
 
-type PlayerActivity struct {
-	Username      string `json:"username"`
-	CurrentAction string `json:"currentAction"`
-	LastActive    string `json:"lastActive"`
-	Status        string `json:"status"`
+type ActivityLog struct {
+	Time   string `json:"time"`
+	Action string `json:"action"`
+	Status string `json:"status"`
 }
+
+type PlayerActivity struct {
+	Username      string        `json:"username"`
+	IsOnline      bool          `json:"isOnline"`
+	CurrentAction string        `json:"currentAction"`
+	LastActive    string        `json:"lastActive"`
+	LastExitTime  string        `json:"lastExitTime"`
+	Status        string        `json:"status"`
+	TotalScore    int           `json:"totalScore"`
+	History       []ActivityLog `json:"history"`
+}
+
+const playerDBFile = "player_history_db.json"
 
 var (
 	users          = make(map[string]User)
@@ -42,6 +56,26 @@ func init() {
 
 	hashedAdmin, _ := bcrypt.GenerateFromPassword([]byte("admin@2026"), bcrypt.DefaultCost)
 	users["admin"] = User{Username: "admin", Password: string(hashedAdmin), IsAdmin: true}
+
+	loadPlayerDataFromFile()
+}
+
+func loadPlayerDataFromFile() {
+	trackLock.Lock()
+	defer trackLock.Unlock()
+
+	data, err := os.ReadFile(playerDBFile)
+	if err != nil {
+		return
+	}
+	_ = json.Unmarshal(data, &activeTracking)
+}
+
+func savePlayerDataLocked() {
+	data, err := json.MarshalIndent(activeTracking, "", "  ")
+	if err == nil {
+		_ = os.WriteFile(playerDBFile, data, 0644)
+	}
 }
 
 func generateToken() string {
@@ -60,21 +94,177 @@ func getSessionUsername(r *http.Request) string {
 	return sessions[cookie.Value]
 }
 
+// HÀM GO TỰ ĐỘNG HIỂN THỊ TRANG WEB VÀ GẮN NÚT ĐĂNG XUẤT CHO CẢ ADMIN LẪN NGƯỜI CHƠI
+func renderPage(w http.ResponseWriter, tmplFile string, username string) error {
+	tmpl, err := template.ParseFiles(tmplFile)
+	if err != nil {
+		return err
+	}
+
+	var buf bytes.Buffer
+	if err := tmpl.Execute(&buf, map[string]interface{}{"Username": username}); err != nil {
+		return err
+	}
+
+	htmlStr := buf.String()
+
+	// Nếu đã đăng nhập, Go tự động gắn nút Đăng xuất vào góc phải và vào thanh menu trái
+	if username != "" && !strings.Contains(htmlStr, `href="/logout"`) {
+		logoutTopBtn := fmt.Sprintf(
+			`👤 %s <a href="/logout" style="margin-left:12px; background:linear-gradient(135deg,#e11d48 0%%,#be123c 100%%); color:#ffffff; padding:6px 14px; border-radius:8px; font-size:12.5px; font-weight:800; text-decoration:none; box-shadow:0 4px 12px rgba(225,29,72,0.45); display:inline-flex; align-items:center; gap:6px; vertical-align:middle;">🚪 Đăng xuất</a>`,
+			username,
+		)
+		htmlStr = strings.Replace(htmlStr, "👤 "+username, logoutTopBtn, 1)
+
+		logoutSidebarBtn := `<a href="/logout" class="menu-item" style="color:#fb7185 !important; border:1px solid rgba(244,63,94,0.45); background:rgba(244,63,94,0.12); margin-top:10px; font-weight:800;"><span>🚪</span> Đăng xuất</a></nav>`
+		htmlStr = strings.Replace(htmlStr, "</nav>", logoutSidebarBtn, 1)
+	}
+
+	w.Header().Set("Content-Type", "text/html; charset=utf-8")
+	_, _ = w.Write([]byte(htmlStr))
+	return nil
+}
+
 func AddWinScore(username string, score int) {
-	log.Printf("[Score] Đấu thủ %s nhận được +%d điểm chiến thắng!\n", username, score)
+	if username == "" || username == "admin" {
+		return
+	}
+	nowStr := time.Now().Format("15:04:05 02/01/2006")
+
+	trackLock.Lock()
+	defer trackLock.Unlock()
+
+	p, exists := activeTracking[username]
+	if !exists {
+		p = &PlayerActivity{
+			Username:     username,
+			LastExitTime: "Chưa thoát",
+			History:      []ActivityLog{},
+		}
+		activeTracking[username] = p
+	}
+
+	p.TotalScore += score
+	p.LastActive = nowStr
+	entry := ActivityLog{
+		Time:   nowStr,
+		Action: fmt.Sprintf("Hoàn thành trận Đấu Trường (+%d PTS)", score),
+		Status: fmt.Sprintf("Tổng điểm: %d PTS", p.TotalScore),
+	}
+	p.History = append([]ActivityLog{entry}, p.History...)
+	if len(p.History) > 100 {
+		p.History = p.History[:100]
+	}
+
+	savePlayerDataLocked()
 }
 
 func TrackPlayer(username, action, status string) {
 	if username == "" || username == "admin" {
 		return
 	}
+	nowStr := time.Now().Format("15:04:05 02/01/2006")
+
 	trackLock.Lock()
 	defer trackLock.Unlock()
-	activeTracking[username] = &PlayerActivity{
-		Username:      username,
-		CurrentAction: action,
-		LastActive:    time.Now().Format("15:04:05 02/01/2006"),
-		Status:        status,
+
+	p, exists := activeTracking[username]
+	if !exists {
+		p = &PlayerActivity{
+			Username:     username,
+			LastExitTime: "Chưa thoát",
+			History:      []ActivityLog{},
+		}
+		activeTracking[username] = p
+	}
+
+	p.IsOnline = true
+	p.CurrentAction = action
+	p.LastActive = nowStr
+	p.Status = status
+
+	entry := ActivityLog{
+		Time:   nowStr,
+		Action: action,
+		Status: status,
+	}
+	p.History = append([]ActivityLog{entry}, p.History...)
+	if len(p.History) > 100 {
+		p.History = p.History[:100]
+	}
+
+	savePlayerDataLocked()
+}
+
+func TrackPlayerExit(username, reason string) {
+	if username == "" || username == "admin" {
+		return
+	}
+	nowStr := time.Now().Format("15:04:05 02/01/2006")
+
+	trackLock.Lock()
+	defer trackLock.Unlock()
+
+	p, exists := activeTracking[username]
+	if !exists {
+		p = &PlayerActivity{
+			Username: username,
+			History:  []ActivityLog{},
+		}
+		activeTracking[username] = p
+	}
+
+	p.IsOnline = false
+	p.CurrentAction = reason
+	p.LastActive = nowStr
+	p.LastExitTime = nowStr
+	p.Status = "Đã thoát game (Offline)"
+
+	entry := ActivityLog{
+		Time:   nowStr,
+		Action: reason,
+		Status: "Đã thoát trò chơi",
+	}
+	p.History = append([]ActivityLog{entry}, p.History...)
+	if len(p.History) > 100 {
+		p.History = p.History[:100]
+	}
+
+	savePlayerDataLocked()
+}
+
+func autoCheckOfflinePlayers() {
+	for {
+		time.Sleep(15 * time.Second)
+		now := time.Now()
+
+		trackLock.Lock()
+		changed := false
+		for _, p := range activeTracking {
+			if p.IsOnline {
+				lastTime, err := time.ParseInLocation("15:04:05 02/01/2006", p.LastActive, time.Local)
+				if err == nil && now.Sub(lastTime) > 2*time.Minute {
+					nowStr := now.Format("15:04:05 02/01/2006")
+					p.IsOnline = false
+					p.LastExitTime = nowStr
+					p.Status = "Đã thoát game (Offline)"
+					p.CurrentAction = "Ngắt kết nối / Đóng trình duyệt"
+					p.History = append([]ActivityLog{{
+						Time:   nowStr,
+						Action: "Hệ thống Go phát hiện người chơi đã đóng tab",
+						Status: "Đã thoát trò chơi",
+					}}, p.History...)
+					if len(p.History) > 100 {
+						p.History = p.History[:100]
+					}
+					changed = true
+				}
+			}
+		}
+		if changed {
+			savePlayerDataLocked()
+		}
+		trackLock.Unlock()
 	}
 }
 
@@ -83,13 +273,22 @@ func trackActivityHandler(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 	var req struct {
-		Action string `json:"action"`
-		Status string `json:"status"`
+		Username string `json:"username"`
+		Action   string `json:"action"`
+		Status   string `json:"status"`
+		IsExit   bool   `json:"isExit"`
 	}
 	if err := json.NewDecoder(r.Body).Decode(&req); err == nil {
 		u := getSessionUsername(r)
+		if u == "" {
+			u = req.Username
+		}
 		if u != "" {
-			TrackPlayer(u, req.Action, req.Status)
+			if req.IsExit {
+				TrackPlayerExit(u, req.Action)
+			} else {
+				TrackPlayer(u, req.Action, req.Status)
+			}
 		}
 	}
 	w.WriteHeader(http.StatusOK)
@@ -128,79 +327,67 @@ func adminPageHandler(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	tmpl, err := template.ParseFiles("templates/admin.html")
-	if err != nil {
+	if err := renderPage(w, "templates/admin.html", username); err != nil {
 		http.Error(w, "Lỗi nạp templates/admin.html: "+err.Error(), http.StatusInternalServerError)
-		return
 	}
-	tmpl.Execute(w, map[string]interface{}{"Username": username})
 }
 
 func homeHandler(w http.ResponseWriter, r *http.Request) {
 	username := getSessionUsername(r)
-	tmpl, err := template.ParseFiles("templates/home.html")
-	if err != nil {
-		http.Redirect(w, r, "/arena", http.StatusSeeOther)
-		return
+	if username != "" {
+		TrackPlayer(username, "Đang xem Trang chủ", "Đang Online")
 	}
-	tmpl.Execute(w, map[string]interface{}{"Username": username})
+	if err := renderPage(w, "templates/home.html", username); err != nil {
+		http.Redirect(w, r, "/arena", http.StatusSeeOther)
+	}
 }
 
 func coursesHandler(w http.ResponseWriter, r *http.Request) {
 	username := getSessionUsername(r)
-	tmpl, err := template.ParseFiles("templates/courses.html")
-	if err != nil {
-		http.Redirect(w, r, "/arena", http.StatusSeeOther)
-		return
+	if username != "" {
+		TrackPlayer(username, "Đang xem Kho Bài Học Python", "Đang học lý thuyết")
 	}
-	tmpl.Execute(w, map[string]interface{}{"Username": username})
+	if err := renderPage(w, "templates/courses.html", username); err != nil {
+		http.Redirect(w, r, "/arena", http.StatusSeeOther)
+	}
 }
 
 func arenaSelectHandler(w http.ResponseWriter, r *http.Request) {
 	username := getSessionUsername(r)
-	TrackPlayer(username, "Đang ở sảnh chọn Map", "Online")
+	TrackPlayer(username, "Đang ở sảnh chọn 3 Bản Đồ", "Đang Online")
 
-	tmpl, err := template.ParseFiles("templates/arena_select.html")
-	if err != nil {
+	if err := renderPage(w, "templates/arena_select.html", username); err != nil {
 		http.Error(w, err.Error(), http.StatusInternalServerError)
-		return
 	}
-	tmpl.Execute(w, map[string]interface{}{"Username": username})
 }
 
 func arenaBattleHandler(w http.ResponseWriter, r *http.Request) {
 	username := getSessionUsername(r)
 	mapID := r.URL.Query().Get("map")
-	TrackPlayer(username, "Đang làm bài Map "+mapID, "Đang giải đố")
+	TrackPlayer(username, "Vào thực hành Bản đồ Map "+mapID, "Đang giải đố")
 
-	tmpl, err := template.ParseFiles("templates/arena.html")
-	if err != nil {
+	if err := renderPage(w, "templates/arena.html", username); err != nil {
 		http.Error(w, err.Error(), http.StatusInternalServerError)
-		return
 	}
-	tmpl.Execute(w, map[string]interface{}{"Username": username})
 }
 
 func speedDuelHandler(w http.ResponseWriter, r *http.Request) {
 	username := getSessionUsername(r)
-	TrackPlayer(username, "Đang vào Đấu trường 1v1", "Chờ / Thi đấu")
+	TrackPlayer(username, "Vào Đấu Trường Kiến Thức Python", "Đang ở sảnh đấu trường")
 
-	tmpl, err := template.ParseFiles("templates/speed_duel.html")
-	if err != nil {
+	if err := renderPage(w, "templates/speed_duel.html", username); err != nil {
 		http.Error(w, err.Error(), http.StatusInternalServerError)
-		return
 	}
-	tmpl.Execute(w, map[string]interface{}{"Username": username})
 }
 
 func leaderboardHandler(w http.ResponseWriter, r *http.Request) {
 	username := getSessionUsername(r)
-	tmpl, err := template.ParseFiles("templates/leaderboard.html")
-	if err != nil {
-		http.Redirect(w, r, "/arena", http.StatusSeeOther)
-		return
+	if username != "" {
+		TrackPlayer(username, "Đang xem Bảng xếp hạng", "Đang Online")
 	}
-	tmpl.Execute(w, map[string]interface{}{"Username": username})
+	if err := renderPage(w, "templates/leaderboard.html", username); err != nil {
+		http.Redirect(w, r, "/arena", http.StatusSeeOther)
+	}
 }
 
 func registerHandler(w http.ResponseWriter, r *http.Request) {
@@ -239,6 +426,7 @@ func registerHandler(w http.ResponseWriter, r *http.Request) {
 	users[username] = User{Username: username, Password: string(hashedPassword), IsAdmin: false}
 	sessionLock.Unlock()
 
+	TrackPlayer(username, "Vừa đăng ký tài khoản mới", "Tài khoản mới")
 	http.Redirect(w, r, "/login", http.StatusSeeOther)
 }
 
@@ -282,11 +470,38 @@ func loginHandler(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	http.Redirect(w, r, "/arena", http.StatusSeeOther)
+	TrackPlayer(username, "Vừa đăng nhập vào hệ thống", "Đang Online")
+	http.Redirect(w, r, "/", http.StatusSeeOther)
+}
+
+func logoutHandler(w http.ResponseWriter, r *http.Request) {
+	cookie, err := r.Cookie("session_token")
+	if err == nil {
+		sessionLock.Lock()
+		username := sessions[cookie.Value]
+		delete(sessions, cookie.Value)
+		sessionLock.Unlock()
+
+		if username != "" && username != "admin" {
+			TrackPlayerExit(username, "Chủ động bấm Đăng xuất khỏi tài khoản")
+		}
+	}
+
+	http.SetCookie(w, &http.Cookie{
+		Name:     "session_token",
+		Value:    "",
+		Path:     "/",
+		Expires:  time.Unix(0, 0),
+		MaxAge:   -1,
+		HttpOnly: true,
+	})
+
+	http.Redirect(w, r, "/login", http.StatusSeeOther)
 }
 
 func main() {
 	go GlobalArenaHub.Run()
+	go autoCheckOfflinePlayers()
 
 	http.HandleFunc("/", homeHandler)
 	http.HandleFunc("/courses", coursesHandler)
@@ -308,6 +523,7 @@ func main() {
 	http.HandleFunc("/leaderboard", leaderboardHandler)
 	http.HandleFunc("/login", loginHandler)
 	http.HandleFunc("/register", registerHandler)
+	http.HandleFunc("/logout", logoutHandler)
 
 	port := os.Getenv("PORT")
 	if port == "" {
