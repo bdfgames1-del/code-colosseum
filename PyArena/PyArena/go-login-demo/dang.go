@@ -1,6 +1,7 @@
 package main
 
 import (
+	"bytes"
 	"crypto/rand"
 	"encoding/hex"
 	"encoding/json"
@@ -9,6 +10,7 @@ import (
 	"log"
 	"net/http"
 	"os"
+	"strings"
 	"sync"
 	"time"
 
@@ -90,6 +92,37 @@ func getSessionUsername(r *http.Request) string {
 	sessionLock.Lock()
 	defer sessionLock.Unlock()
 	return sessions[cookie.Value]
+}
+
+// HÀM GO TỰ ĐỘNG HIỂN THỊ TRANG WEB VÀ GẮN NÚT ĐĂNG XUẤT CHO CẢ ADMIN LẪN NGƯỜI CHƠI
+func renderPage(w http.ResponseWriter, tmplFile string, username string) error {
+	tmpl, err := template.ParseFiles(tmplFile)
+	if err != nil {
+		return err
+	}
+
+	var buf bytes.Buffer
+	if err := tmpl.Execute(&buf, map[string]interface{}{"Username": username}); err != nil {
+		return err
+	}
+
+	htmlStr := buf.String()
+
+	// Nếu đã đăng nhập, Go tự động gắn nút Đăng xuất vào góc phải và vào thanh menu trái
+	if username != "" && !strings.Contains(htmlStr, `href="/logout"`) {
+		logoutTopBtn := fmt.Sprintf(
+			`👤 %s <a href="/logout" style="margin-left:12px; background:linear-gradient(135deg,#e11d48 0%%,#be123c 100%%); color:#ffffff; padding:6px 14px; border-radius:8px; font-size:12.5px; font-weight:800; text-decoration:none; box-shadow:0 4px 12px rgba(225,29,72,0.45); display:inline-flex; align-items:center; gap:6px; vertical-align:middle;">🚪 Đăng xuất</a>`,
+			username,
+		)
+		htmlStr = strings.Replace(htmlStr, "👤 "+username, logoutTopBtn, 1)
+
+		logoutSidebarBtn := `<a href="/logout" class="menu-item" style="color:#fb7185 !important; border:1px solid rgba(244,63,94,0.45); background:rgba(244,63,94,0.12); margin-top:10px; font-weight:800;"><span>🚪</span> Đăng xuất</a></nav>`
+		htmlStr = strings.Replace(htmlStr, "</nav>", logoutSidebarBtn, 1)
+	}
+
+	w.Header().Set("Content-Type", "text/html; charset=utf-8")
+	_, _ = w.Write([]byte(htmlStr))
+	return nil
 }
 
 func AddWinScore(username string, score int) {
@@ -294,12 +327,9 @@ func adminPageHandler(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	tmpl, err := template.ParseFiles("templates/admin.html")
-	if err != nil {
+	if err := renderPage(w, "templates/admin.html", username); err != nil {
 		http.Error(w, "Lỗi nạp templates/admin.html: "+err.Error(), http.StatusInternalServerError)
-		return
 	}
-	tmpl.Execute(w, map[string]interface{}{"Username": username})
 }
 
 func homeHandler(w http.ResponseWriter, r *http.Request) {
@@ -307,12 +337,9 @@ func homeHandler(w http.ResponseWriter, r *http.Request) {
 	if username != "" {
 		TrackPlayer(username, "Đang xem Trang chủ", "Đang Online")
 	}
-	tmpl, err := template.ParseFiles("templates/home.html")
-	if err != nil {
+	if err := renderPage(w, "templates/home.html", username); err != nil {
 		http.Redirect(w, r, "/arena", http.StatusSeeOther)
-		return
 	}
-	tmpl.Execute(w, map[string]interface{}{"Username": username})
 }
 
 func coursesHandler(w http.ResponseWriter, r *http.Request) {
@@ -320,24 +347,18 @@ func coursesHandler(w http.ResponseWriter, r *http.Request) {
 	if username != "" {
 		TrackPlayer(username, "Đang xem Kho Bài Học Python", "Đang học lý thuyết")
 	}
-	tmpl, err := template.ParseFiles("templates/courses.html")
-	if err != nil {
+	if err := renderPage(w, "templates/courses.html", username); err != nil {
 		http.Redirect(w, r, "/arena", http.StatusSeeOther)
-		return
 	}
-	tmpl.Execute(w, map[string]interface{}{"Username": username})
 }
 
 func arenaSelectHandler(w http.ResponseWriter, r *http.Request) {
 	username := getSessionUsername(r)
 	TrackPlayer(username, "Đang ở sảnh chọn 3 Bản Đồ", "Đang Online")
 
-	tmpl, err := template.ParseFiles("templates/arena_select.html")
-	if err != nil {
+	if err := renderPage(w, "templates/arena_select.html", username); err != nil {
 		http.Error(w, err.Error(), http.StatusInternalServerError)
-		return
 	}
-	tmpl.Execute(w, map[string]interface{}{"Username": username})
 }
 
 func arenaBattleHandler(w http.ResponseWriter, r *http.Request) {
@@ -345,24 +366,18 @@ func arenaBattleHandler(w http.ResponseWriter, r *http.Request) {
 	mapID := r.URL.Query().Get("map")
 	TrackPlayer(username, "Vào thực hành Bản đồ Map "+mapID, "Đang giải đố")
 
-	tmpl, err := template.ParseFiles("templates/arena.html")
-	if err != nil {
+	if err := renderPage(w, "templates/arena.html", username); err != nil {
 		http.Error(w, err.Error(), http.StatusInternalServerError)
-		return
 	}
-	tmpl.Execute(w, map[string]interface{}{"Username": username})
 }
 
 func speedDuelHandler(w http.ResponseWriter, r *http.Request) {
 	username := getSessionUsername(r)
 	TrackPlayer(username, "Vào Đấu Trường Kiến Thức Python", "Đang ở sảnh đấu trường")
 
-	tmpl, err := template.ParseFiles("templates/speed_duel.html")
-	if err != nil {
+	if err := renderPage(w, "templates/speed_duel.html", username); err != nil {
 		http.Error(w, err.Error(), http.StatusInternalServerError)
-		return
 	}
-	tmpl.Execute(w, map[string]interface{}{"Username": username})
 }
 
 func leaderboardHandler(w http.ResponseWriter, r *http.Request) {
@@ -370,12 +385,9 @@ func leaderboardHandler(w http.ResponseWriter, r *http.Request) {
 	if username != "" {
 		TrackPlayer(username, "Đang xem Bảng xếp hạng", "Đang Online")
 	}
-	tmpl, err := template.ParseFiles("templates/leaderboard.html")
-	if err != nil {
+	if err := renderPage(w, "templates/leaderboard.html", username); err != nil {
 		http.Redirect(w, r, "/arena", http.StatusSeeOther)
-		return
 	}
-	tmpl.Execute(w, map[string]interface{}{"Username": username})
 }
 
 func registerHandler(w http.ResponseWriter, r *http.Request) {
@@ -462,7 +474,6 @@ func loginHandler(w http.ResponseWriter, r *http.Request) {
 	http.Redirect(w, r, "/", http.StatusSeeOther)
 }
 
-// HÀM ĐĂNG XUẤT CHO CẢ ADMIN VÀ NGƯỜI CHƠI
 func logoutHandler(w http.ResponseWriter, r *http.Request) {
 	cookie, err := r.Cookie("session_token")
 	if err == nil {
@@ -476,7 +487,6 @@ func logoutHandler(w http.ResponseWriter, r *http.Request) {
 		}
 	}
 
-	// Xóa cookie session_token trên trình duyệt
 	http.SetCookie(w, &http.Cookie{
 		Name:     "session_token",
 		Value:    "",
@@ -513,7 +523,7 @@ func main() {
 	http.HandleFunc("/leaderboard", leaderboardHandler)
 	http.HandleFunc("/login", loginHandler)
 	http.HandleFunc("/register", registerHandler)
-	http.HandleFunc("/logout", logoutHandler) // <-- Đường dẫn Đăng xuất
+	http.HandleFunc("/logout", logoutHandler)
 
 	port := os.Getenv("PORT")
 	if port == "" {
