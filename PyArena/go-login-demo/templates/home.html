@@ -33,15 +33,28 @@
             font-size: 19px; font-weight: 800; color: #fff; padding-left: 8px;
             display: flex; align-items: center; gap: 10px;
         }
-        .menu-list { display: flex; flex-direction: column; gap: 8px; }
+        .menu-list { display: flex; flex-direction: column; gap: 8px; flex: 1; }
         .menu-item {
             display: flex; align-items: center; gap: 12px; padding: 12px 16px; border-radius: 10px;
             color: #94a3b8; text-decoration: none; font-size: 14.5px; font-weight: 600; transition: 0.2s;
+            cursor: pointer;
         }
         .menu-item:hover { color: #38bdf8; background: rgba(56, 189, 248, 0.08); }
         .menu-item.active {
             background: linear-gradient(90deg, rgba(2, 132, 199, 0.18) 0%, rgba(56, 189, 248, 0.08) 100%);
             border: 1px solid rgba(56, 189, 248, 0.4); color: #38bdf8; font-weight: 700;
+        }
+        .menu-item.logout-sidebar-btn {
+            margin-top: 12px;
+            background: rgba(244, 63, 94, 0.14);
+            border: 1px solid rgba(244, 63, 94, 0.45);
+            color: #fb7185;
+            font-weight: 800;
+        }
+        .menu-item.logout-sidebar-btn:hover {
+            background: #e11d48;
+            color: #ffffff;
+            border-color: #e11d48;
         }
         .badge-live {
             font-size: 10px; background: #ef4444; color: #fff; padding: 2px 7px;
@@ -66,7 +79,36 @@
             font-family: 'Fira Code', monospace; font-size: 12px; font-weight: 700;
             color: #22c55e; display: flex; align-items: center; gap: 8px;
         }
-        .auth-btns { display: flex; gap: 10px; align-items: center; }
+        .auth-btns { display: flex; gap: 12px; align-items: center; }
+        .user-pill-box {
+            background: #0d1629;
+            border: 1px solid #1e3a5f;
+            color: #38bdf8;
+            padding: 7px 14px;
+            border-radius: 9px;
+            font-size: 14px;
+            font-weight: 700;
+        }
+        .btn-logout-top {
+            background: linear-gradient(135deg, #e11d48 0%, #be123c 100%);
+            color: #ffffff;
+            border: none;
+            padding: 8px 16px;
+            border-radius: 9px;
+            font-size: 13.5px;
+            font-weight: 800;
+            cursor: pointer;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            box-shadow: 0 4px 14px rgba(225, 29, 72, 0.45);
+            transition: 0.2s;
+        }
+        .btn-logout-top:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(244, 63, 94, 0.65);
+        }
         .btn-login {
             background: #111827; border: 1px solid #1f2937; color: #e2e8f0;
             padding: 8px 18px; border-radius: 9px; font-size: 13.5px; font-weight: 700; text-decoration: none;
@@ -76,7 +118,6 @@
             padding: 8px 18px; border-radius: 9px; font-size: 13.5px; font-weight: 700; text-decoration: none;
         }
 
-        /* HERO BANNER ĐỒ HỌA MỚI (KHÔNG CÒN 2 KHUNG CODE 2 BÊN) */
         .hero-card {
             position: relative;
             background: radial-gradient(circle at 50% 15%, #16264c 0%, #091022 60%, #050811 100%);
@@ -185,6 +226,12 @@
             {{if eq .Username "admin"}}
             <a href="/admin" class="menu-item" style="color:#f87171;"><span>🛡️</span> Quản Trị Admin</a>
             {{end}}
+
+            {{if .Username}}
+            <a href="/logout" onclick="logoutAccount(event)" class="menu-item logout-sidebar-btn">
+                <span>🚪</span> Đăng xuất
+            </a>
+            {{end}}
         </nav>
     </aside>
 
@@ -193,7 +240,8 @@
             <div class="sys-ready">● SYSTEM READY</div>
             <div class="auth-btns">
                 {{if .Username}}
-                    <span style="color:#38bdf8; font-weight:700; font-size:14px;">👤 {{.Username}}</span>
+                    <span class="user-pill-box">👤 {{.Username}}</span>
+                    <a href="/logout" onclick="logoutAccount(event)" class="btn-logout-top">🚪 Đăng xuất</a>
                 {{else}}
                     <a href="/login" class="btn-login">Đăng nhập</a>
                     <a href="/register" class="btn-register">Đăng ký</a>
@@ -270,5 +318,28 @@
         </section>
     </main>
 
+    <script>
+        function logoutAccount(e) {
+            if (e) e.preventDefault();
+            // Báo về Admin là người chơi đã đăng xuất
+            fetch('/api/track-activity', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({
+                    username: "{{.Username}}",
+                    action: "Chủ động bấm Đăng xuất khỏi tài khoản",
+                    status: "Đã thoát trò chơi",
+                    isExit: true
+                })
+            }).catch(() => {});
+
+            // Xóa trực tiếp cookie đăng nhập trên trình duyệt
+            document.cookie = "session_token=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
+            sessionStorage.clear();
+
+            // Chuyển thẳng về trang Đăng nhập
+            window.location.href = "/login";
+        }
+    </script>
 </body>
 </html>
