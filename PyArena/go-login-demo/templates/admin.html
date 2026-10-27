@@ -3,212 +3,424 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Bảng Điều Khiển Admin - CodeColosseum</title>
+    <title>Trung Tâm Quản Trị Admin - CodeColosseum</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@600;700;800&family=Fira+Code:wght@600&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@500;600;700&family=Orbitron:wght@700;800&family=Plus+Jakarta+Sans:wght@500;600;700;800&display=swap" rel="stylesheet">
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; }
         body {
-            background-color: #040814;
+            background-color: #03060f;
             color: #f8fafc;
             min-height: 100vh;
+            display: flex;
             font-family: 'Plus Jakarta Sans', sans-serif;
-            padding: 28px 36px;
+        }
+
+        .sidebar {
+            width: 260px;
+            background: linear-gradient(180deg, #070b16 0%, #04060d 100%);
+            border-right: 1px solid rgba(56, 189, 248, 0.14);
+            padding: 28px 18px;
+            display: flex;
+            flex-direction: column;
+            gap: 32px;
+            flex-shrink: 0;
+            min-height: 100vh;
+        }
+        .brand-logo { font-size: 20px; font-weight: 800; color: #fff; padding-left: 10px; display: flex; align-items: center; gap: 12px; }
+        .menu-list { display: flex; flex-direction: column; gap: 10px; flex: 1; }
+        .menu-item {
+            display: flex; align-items: center; gap: 14px; padding: 13px 18px; border-radius: 12px;
+            color: #94a3b8; text-decoration: none; font-size: 14.5px; font-weight: 600; transition: 0.25s; border: 1px solid transparent;
+        }
+        .menu-item:hover { color: #38bdf8; background: rgba(56, 189, 248, 0.08); }
+        .menu-item.active {
+            background: linear-gradient(135deg, rgba(244, 63, 94, 0.22) 0%, rgba(225, 29, 72, 0.06) 100%);
+            border-color: rgba(244, 63, 94, 0.5); color: #fb7185; font-weight: 700;
+        }
+        .menu-item.logout-btn {
+            margin-top: auto;
+            background: rgba(244, 63, 94, 0.12);
+            border: 1px solid rgba(244, 63, 94, 0.4);
+            color: #fb7185;
+            font-weight: 700;
+        }
+        .menu-item.logout-btn:hover {
+            background: #e11d48;
+            color: #ffffff;
+        }
+
+        .admin-main {
+            flex: 1; padding: 26px 36px; display: flex; flex-direction: column; gap: 22px; max-width: 1440px; margin: 0 auto;
         }
 
         .admin-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            border-bottom: 2px solid #1e293b;
-            padding-bottom: 18px;
-            margin-bottom: 24px;
+            display: flex; justify-content: space-between; align-items: center;
+            background: linear-gradient(90deg, #0b1326 0%, #070c18 100%);
+            border: 1.5px solid rgba(56, 189, 248, 0.25);
+            padding: 18px 28px; border-radius: 18px;
+            box-shadow: 0 12px 35px rgba(0, 0, 0, 0.6);
         }
         .admin-title {
-            font-size: 24px;
-            font-weight: 800;
-            color: #ef4444;
-            display: flex;
-            align-items: center;
-            gap: 10px;
+            font-family: 'Orbitron', sans-serif; font-size: 20px; font-weight: 800;
+            color: #38bdf8; display: flex; align-items: center; gap: 12px;
         }
-        .badge-live-pulse {
-            width: 10px;
-            height: 10px;
-            background: #22c55e;
-            border-radius: 50%;
-            box-shadow: 0 0 12px #22c55e;
-            animation: pulse 1.5s infinite;
+        .header-right-actions {
+            display: flex; align-items: center; gap: 14px;
         }
-        @keyframes pulse { 0% { opacity: 0.4; } 50% { opacity: 1; } 100% { opacity: 0.4; } }
-
-        .btn-link {
-            background: #0f172a;
-            border: 1px solid #1e293b;
-            color: #38bdf8;
-            padding: 8px 16px;
-            border-radius: 8px;
+        .live-indicator {
+            display: inline-flex; align-items: center; gap: 8px;
+            font-family: 'Fira Code', monospace; font-size: 12px; font-weight: 700;
+            color: #4ade80; background: rgba(34, 197, 94, 0.12);
+            border: 1px solid rgba(34, 197, 94, 0.4); padding: 7px 14px; border-radius: 9999px;
+        }
+        .btn-top-logout {
+            background: linear-gradient(135deg, #e11d48 0%, #be123c 100%);
+            color: #ffffff;
             text-decoration: none;
-            font-size: 13.5px;
-            font-weight: 700;
+            font-size: 13px;
+            font-weight: 800;
+            padding: 8px 16px;
+            border-radius: 10px;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            box-shadow: 0 4px 14px rgba(225, 29, 72, 0.4);
+            transition: 0.2s;
         }
+        .btn-top-logout:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(244, 63, 94, 0.6);
+        }
+        .pulse-dot {
+            width: 8px; height: 8px; border-radius: 50%; background: #22c55e;
+            box-shadow: 0 0 10px #22c55e; animation: pulse 1.4s infinite;
+        }
+        @keyframes pulse { 0%, 100% { opacity: 0.35; } 50% { opacity: 1; } }
 
         .stats-grid {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 18px;
-            margin-bottom: 28px;
+            display: grid; grid-template-columns: repeat(4, 1fr); gap: 18px;
         }
         .stat-card {
-            background: #090e1c;
-            border: 1.5px solid #1e293b;
-            border-radius: 14px;
-            padding: 20px;
+            background: #080e1c; border: 1.5px solid #192846; border-radius: 16px;
+            padding: 20px 22px; display: flex; flex-direction: column; gap: 6px;
         }
-        .stat-num {
-            font-size: 28px;
-            font-weight: 800;
-            color: #38bdf8;
-            font-family: 'Fira Code', monospace;
-            margin-top: 6px;
+        .stat-label { font-size: 12px; font-weight: 700; color: #94a3b8; text-transform: uppercase; letter-spacing: 0.6px; }
+        .stat-value { font-family: 'Orbitron', monospace; font-size: 28px; font-weight: 800; color: #ffffff; }
+
+        .filter-bar {
+            display: flex; justify-content: space-between; align-items: center; gap: 12px;
+        }
+        .filter-tabs { display: flex; gap: 10px; }
+        .filter-btn {
+            background: #0b1324; border: 1.5px solid #1e2f4d; color: #94a3b8;
+            padding: 8px 18px; border-radius: 10px; font-size: 13.5px; font-weight: 700; cursor: pointer; transition: 0.2s;
+        }
+        .filter-btn.active {
+            background: rgba(56, 189, 248, 0.16); border-color: #38bdf8; color: #38bdf8;
+        }
+        .search-box {
+            background: #080e1c; border: 1.5px solid #1e2f4d; color: #f8fafc;
+            padding: 9px 16px; border-radius: 10px; font-size: 13.5px; width: 280px; outline: none;
+        }
+        .search-box:focus { border-color: #38bdf8; }
+
+        .table-panel {
+            background: #080e1c; border: 1.5px solid #192846; border-radius: 18px;
+            overflow: hidden; box-shadow: 0 15px 45px rgba(0, 0, 0, 0.65);
+        }
+        table { width: 100%; border-collapse: collapse; text-align: left; }
+        th {
+            background: #0d172e; color: #7dd3fc; font-size: 12px; font-weight: 800;
+            text-transform: uppercase; letter-spacing: 0.6px; padding: 15px 18px;
+            border-bottom: 1.5px solid #1e2f4d;
+        }
+        td {
+            padding: 15px 18px; border-bottom: 1px solid #142038; font-size: 13.5px; vertical-align: middle;
+        }
+        tr:hover td { background: rgba(56, 189, 248, 0.04); }
+
+        .badge-online {
+            display: inline-flex; align-items: center; gap: 6px;
+            background: rgba(34, 197, 94, 0.15); border: 1px solid #22c55e; color: #4ade80;
+            font-size: 11.5px; font-weight: 800; padding: 4px 10px; border-radius: 9999px;
+        }
+        .badge-offline {
+            display: inline-flex; align-items: center; gap: 6px;
+            background: rgba(244, 63, 94, 0.15); border: 1px solid #f43f5e; color: #fb7185;
+            font-size: 11.5px; font-weight: 800; padding: 4px 10px; border-radius: 9999px;
         }
 
-        .table-wrap {
-            background: #090e1c;
-            border: 1.5px solid #1e293b;
-            border-radius: 16px;
-            overflow: hidden;
+        .btn-view-history {
+            background: rgba(56, 189, 248, 0.14); border: 1px solid #38bdf8; color: #38bdf8;
+            padding: 7px 14px; border-radius: 8px; font-size: 12.5px; font-weight: 700;
+            cursor: pointer; transition: 0.2s; font-family: 'Fira Code', monospace;
         }
-        table {
-            width: 100%;
-            border-collapse: collapse;
-            text-align: left;
+        .btn-view-history:hover { background: #38bdf8; color: #03060f; }
+
+        .modal-overlay {
+            position: fixed; inset: 0; background: rgba(2, 5, 12, 0.88);
+            backdrop-filter: blur(8px); display: none; align-items: center; justify-content: center;
+            z-index: 300; padding: 20px;
         }
-        th, td {
-            padding: 14px 18px;
-            border-bottom: 1px solid #162035;
-            font-size: 14px;
+        .modal-card {
+            background: #080f1e; border: 2px solid #38bdf8; border-radius: 20px;
+            width: 100%; max-width: 760px; max-height: 86vh;
+            display: flex; flex-direction: column; overflow: hidden;
+            box-shadow: 0 25px 70px rgba(0, 0, 0, 0.9);
         }
-        th {
-            background: #0f172a;
-            color: #94a3b8;
-            font-size: 12.5px;
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
+        .modal-header {
+            display: flex; justify-content: space-between; align-items: center;
+            padding: 18px 24px; background: #0d1830; border-bottom: 1px solid #1e3256;
         }
-        tr:hover { background: #0c1426; }
-        .player-badge {
-            font-weight: 700;
-            color: #f8fafc;
-            font-family: 'Fira Code', monospace;
+        .modal-title { font-size: 17px; font-weight: 800; color: #38bdf8; }
+        .btn-close { background: none; border: none; color: #94a3b8; font-size: 22px; cursor: pointer; }
+        .btn-close:hover { color: #fff; }
+
+        .modal-body {
+            padding: 20px 24px; overflow-y: auto; display: flex; flex-direction: column; gap: 10px;
         }
-        .action-tag {
-            background: rgba(56, 189, 248, 0.15);
-            color: #38bdf8;
-            border: 1px solid rgba(56, 189, 248, 0.3);
-            padding: 3px 10px;
-            border-radius: 6px;
-            font-size: 12.5px;
-            font-weight: 600;
+        .log-item {
+            background: #0c1528; border: 1px solid #1a2b4c; border-left: 4px solid #38bdf8;
+            border-radius: 10px; padding: 12px 16px; display: flex; justify-content: space-between; align-items: center;
         }
-        .status-pill {
-            color: #4ade80;
-            font-weight: 700;
-            font-size: 13px;
+        .log-item.exit-log { border-left-color: #f43f5e; background: rgba(244, 63, 94, 0.06); }
+        .log-action { font-size: 14px; font-weight: 700; color: #f8fafc; }
+        .log-time { font-family: 'Fira Code', monospace; font-size: 11.5px; color: #94a3b8; margin-top: 4px; }
+        .log-status {
+            font-family: 'Fira Code', monospace; font-size: 12px; font-weight: 700;
+            padding: 4px 10px; border-radius: 6px; background: rgba(56, 189, 248, 0.12); color: #7dd3fc;
         }
-        .time-text {
-            color: #64748b;
-            font-size: 12.5px;
-            font-family: 'Fira Code', monospace;
-        }
+        .log-item.exit-log .log-status { background: rgba(244, 63, 94, 0.18); color: #fb7185; }
     </style>
 </head>
 <body>
 
-    <header class="admin-header">
-        <div class="admin-title">
-            <div class="badge-live-pulse"></div>
-            <span>HỆ THỐNG GIÁM SÁT NGƯỜI CHƠI (ADMIN CONSOLE)</span>
-        </div>
-        <div style="display:flex; gap:10px;">
-            <a href="/arena" class="btn-link">Vào Sảnh Game</a>
-            <a href="/" class="btn-link">Trang Chủ</a>
-        </div>
-    </header>
+    <aside class="sidebar">
+        <div class="brand-logo">🛡️ Admin Center</div>
+        <nav class="menu-list">
+            <a href="/admin" class="menu-item active">📊 Giám Sát Người Chơi</a>
+            <a href="/" class="menu-item">🏠 Về Trang Chủ</a>
+            <a href="/courses" class="menu-item">📚 Kho Bài Học</a>
+            <a href="/arena" class="menu-item">📝 Bản Đồ Thực Hành</a>
+            <a href="/arena/speed-duel" class="menu-item">⚔️ Sảnh Đấu Trường</a>
+            <a href="/logout" class="menu-item logout-btn">🚪 Đăng Xuất Admin</a>
+        </nav>
+    </aside>
 
-    <div class="stats-grid">
-        <div class="stat-card">
-            <div style="color:#94a3b8; font-size:13px; font-weight:700;">NGƯỜI DÙNG ĐANG HOẠT ĐỘNG</div>
-            <div class="stat-num" id="active-count">0</div>
-        </div>
-        <div class="stat-card">
-            <div style="color:#94a3b8; font-size:13px; font-weight:700;">CHẾ ĐỘ THEO DÕI</div>
-            <div class="stat-num" style="color:#22c55e; font-size:22px;">Thời gian thực (1.5s)</div>
-        </div>
-        <div class="stat-card">
-            <div style="color:#94a3b8; font-size:13px; font-weight:700;">QUYỀN HẠN TÀI KHOẢN</div>
-            <div class="stat-num" style="color:#ef4444; font-size:22px;">QUẢN TRỊ VIÊN CẤP CAO</div>
-        </div>
-    </div>
+    <main class="admin-main">
+        <header class="admin-header">
+            <div>
+                <div class="admin-title">🛡️ HỆ THỐNG GIÁM SÁT & LỊCH SỬ NGƯỜI CHƠI</div>
+                <p style="font-size: 13px; color: #94a3b8; margin-top: 4px;">
+                    Tự động lưu trữ lịch sử làm bài, điểm số và trạng thái ngay cả khi người chơi đã thoát khỏi trò chơi.
+                </p>
+            </div>
+            <div class="header-right-actions">
+                <div class="live-indicator">
+                    <span class="pulse-dot"></span>
+                    <span>REALTIME SYNC (2s)</span>
+                </div>
+                <a href="/logout" class="btn-top-logout">🚪 Đăng xuất ({{.Username}})</a>
+            </div>
+        </header>
 
-    <div class="table-wrap">
-        <table>
-            <thead>
-                <tr>
-                    <th>Tên người chơi</th>
-                    <th>Vị trí / Hoạt động đang làm</th>
-                    <th>Trạng thái</th>
-                    <th>Cập nhật gần nhất</th>
-                </tr>
-            </thead>
-            <tbody id="players-table-body">
-                <tr>
-                    <td colspan="4" style="text-align:center; color:#94a3b8; padding:30px;">Đang tải danh sách người chơi...</td>
-                </tr>
-            </tbody>
-        </table>
+        <section class="stats-grid">
+            <div class="stat-card">
+                <span class="stat-label">Tổng Người Chơi Đã Ghi Nhận</span>
+                <span class="stat-value" id="stat-total-players">0</span>
+            </div>
+            <div class="stat-card">
+                <span class="stat-label" style="color:#4ade80;">🟢 Đang Trong Trò Chơi (Online)</span>
+                <span class="stat-value" id="stat-online-players" style="color:#4ade80;">0</span>
+            </div>
+            <div class="stat-card">
+                <span class="stat-label" style="color:#fb7185;">🔴 Đã Thoát Trò Chơi (Offline)</span>
+                <span class="stat-value" id="stat-offline-players" style="color:#fb7185;">0</span>
+            </div>
+            <div class="stat-card">
+                <span class="stat-label" style="color:#facc15;">⚡ Tổng Bản Ghi Lịch Sử</span>
+                <span class="stat-value" id="stat-total-logs" style="color:#facc15;">0</span>
+            </div>
+        </section>
+
+        <div class="filter-bar">
+            <div class="filter-tabs">
+                <button class="filter-btn active" id="f-all" onclick="setFilter('all')">Tất Cả Người Chơi</button>
+                <button class="filter-btn" id="f-online" onclick="setFilter('online')">🟢 Đang Online</button>
+                <button class="filter-btn" id="f-offline" onclick="setFilter('offline')">🔴 Đã Thoát Game</button>
+            </div>
+            <input type="text" id="search-input" class="search-box" placeholder="🔍 Tìm theo tên người chơi..." oninput="renderPlayersTable()">
+        </div>
+
+        <div class="table-panel">
+            <table>
+                <thead>
+                    <tr>
+                        <th>Người Chơi</th>
+                        <th>Trạng Thái Hiện Tại</th>
+                        <th>Hoạt Động Gần Nhất / Lý Do Thoát</th>
+                        <th>Điểm Tích Lũy</th>
+                        <th>Cập Nhật Cuối</th>
+                        <th>Thời Điểm Thoát Game</th>
+                        <th>Lịch Sử Chi Tiết</th>
+                    </tr>
+                </thead>
+                <tbody id="players-tbody">
+                    <tr>
+                        <td colspan="7" style="text-align:center; color:#94a3b8; padding: 32px;">Đang tải dữ liệu người chơi...</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </main>
+
+    <div class="modal-overlay" id="history-modal">
+        <div class="modal-card">
+            <div class="modal-header">
+                <div class="modal-title" id="modal-player-name">📜 Lịch sử chi tiết</div>
+                <button class="btn-close" onclick="closeModal()">✕</button>
+            </div>
+            <div class="modal-body" id="modal-logs-container"></div>
+        </div>
     </div>
 
     <script>
-        function fetchLivePlayers() {
-            fetch('/api/admin/active-players')
-                .then(res => {
-                    if (!res.ok) throw new Error("Chưa đăng nhập quyền Admin");
-                    return res.json();
-                })
-                .then(data => {
-                    const tbody = document.getElementById("players-table-body");
-                    const countEl = document.getElementById("active-count");
-                    tbody.innerHTML = "";
+        let allPlayersData = [];
+        let currentFilter = 'all';
+        let selectedUsernameForModal = null;
 
-                    if (!data || data.length === 0) {
-                        tbody.innerHTML = `<tr><td colspan="4" style="text-align:center; color:#94a3b8; padding:30px;">Hiện chưa có người chơi nào hoạt động.</td></tr>`;
-                        countEl.innerText = "0";
-                        return;
-                    }
-
-                    countEl.innerText = data.length;
-
-                    data.forEach(p => {
-                        const row = document.createElement("tr");
-                        row.innerHTML = `
-                            <td><span class="player-badge">👤 ${p.username}</span></td>
-                            <td><span class="action-tag">${p.currentAction}</span></td>
-                            <td><span class="status-pill">● ${p.status}</span></td>
-                            <td><span class="time-text">${p.lastActive}</span></td>
-                        `;
-                        tbody.appendChild(row);
-                    });
-                })
-                .catch(err => {
-                    console.error(err);
-                });
+        function setFilter(f) {
+            currentFilter = f;
+            document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+            document.getElementById('f-' + f).classList.add('active');
+            renderPlayersTable();
         }
 
-        // Tự động quét cập nhật mỗi 1.5 giây một lần
-        fetchLivePlayers();
-        setInterval(fetchLivePlayers, 1500);
+        async function fetchAdminPlayers() {
+            try {
+                const res = await fetch('/api/admin/active-players');
+                if (!res.ok) return;
+                const data = await res.json();
+                allPlayersData = data || [];
+                updateOverviewStats();
+                renderPlayersTable();
+                if (selectedUsernameForModal) {
+                    renderPlayerModalLogs(selectedUsernameForModal);
+                }
+            } catch (e) {}
+        }
+
+        function updateOverviewStats() {
+            const total = allPlayersData.length;
+            const online = allPlayersData.filter(p => p.isOnline).length;
+            const offline = total - online;
+            let logsCount = 0;
+            allPlayersData.forEach(p => {
+                logsCount += (p.history ? p.history.length : 0);
+            });
+
+            document.getElementById('stat-total-players').innerText = total;
+            document.getElementById('stat-online-players').innerText = online;
+            document.getElementById('stat-offline-players').innerText = offline;
+            document.getElementById('stat-total-logs').innerText = logsCount;
+        }
+
+        function renderPlayersTable() {
+            const tbody = document.getElementById('players-tbody');
+            const keyword = document.getElementById('search-input').value.trim().toLowerCase();
+
+            let filtered = allPlayersData.filter(p => {
+                if (currentFilter === 'online' && !p.isOnline) return false;
+                if (currentFilter === 'offline' && p.isOnline) return false;
+                if (keyword && !p.username.toLowerCase().includes(keyword)) return false;
+                return true;
+            });
+
+            if (filtered.length === 0) {
+                tbody.innerHTML = `<tr><td colspan="7" style="text-align:center; color:#94a3b8; padding: 32px;">Chưa có dữ liệu người chơi khớp với bộ lọc.</td></tr>`;
+                return;
+            }
+
+            filtered.sort((a, b) => (b.isOnline === a.isOnline) ? 0 : (b.isOnline ? 1 : -1));
+
+            tbody.innerHTML = '';
+            filtered.forEach(p => {
+                const tr = document.createElement('tr');
+                const historyLen = p.history ? p.history.length : 0;
+                const statusBadge = p.isOnline
+                    ? `<span class="badge-online">● Đang Online</span>`
+                    : `<span class="badge-offline">● Đã Thoát Game</span>`;
+
+                tr.innerHTML = `
+                    <td style="font-weight:800; color:#fff; font-family:'Fira Code', monospace;">👤 ${p.username}</td>
+                    <td>${statusBadge}</td>
+                    <td>
+                        <div style="font-weight:700; color:#e2e8f0;">${p.currentAction || '-'}</div>
+                        <div style="font-size:12px; color:#38bdf8; margin-top:2px;">${p.status || ''}</div>
+                    </td>
+                    <td style="font-family:'Fira Code', monospace; font-weight:800; color:#facc15;">${p.totalScore || 0} PTS</td>
+                    <td style="font-family:'Fira Code', monospace; font-size:12px; color:#94a3b8;">${p.lastActive || '-'}</td>
+                    <td style="font-family:'Fira Code', monospace; font-size:12px; color:#fb7185;">${p.lastExitTime || 'Chưa thoát'}</td>
+                    <td>
+                        <button class="btn-view-history" onclick="openPlayerHistory('${p.username}')">
+                            📜 Xem Lịch Sử (${historyLen})
+                        </button>
+                    </td>
+                `;
+                tbody.appendChild(tr);
+            });
+        }
+
+        function openPlayerHistory(username) {
+            selectedUsernameForModal = username;
+            renderPlayerModalLogs(username);
+            document.getElementById('history-modal').style.display = 'flex';
+        }
+
+        function renderPlayerModalLogs(username) {
+            const player = allPlayersData.find(p => p.username === username);
+            if (!player) return;
+
+            document.getElementById('modal-player-name').innerText =
+                `📜 LỊCH SỬ HOẠT ĐỘNG CHI TIẾT: ${player.username.toUpperCase()} (${player.isOnline ? 'ĐANG ONLINE' : 'ĐÃ THOÁT GAME'})`;
+
+            const box = document.getElementById('modal-logs-container');
+            box.innerHTML = '';
+
+            const logs = player.history || [];
+            if (logs.length === 0) {
+                box.innerHTML = `<div style="text-align:center; color:#94a3b8; padding:24px;">Chưa có bản ghi lịch sử nào.</div>`;
+                return;
+            }
+
+            logs.forEach((log, idx) => {
+                const isExit = log.status.includes("thoát") || log.action.includes("thoát") || log.action.includes("rời") || log.action.includes("Đăng xuất");
+                const item = document.createElement('div');
+                item.className = `log-item ${isExit ? 'exit-log' : ''}`;
+                item.innerHTML = `
+                    <div>
+                        <div class="log-action">#${logs.length - idx}. ${log.action}</div>
+                        <div class="log-time">🕒 Thời gian: ${log.time}</div>
+                    </div>
+                    <div class="log-status">${log.status}</div>
+                `;
+                box.appendChild(item);
+            });
+        }
+
+        function closeModal() {
+            selectedUsernameForModal = null;
+            document.getElementById('history-modal').style.display = 'none';
+        }
+
+        window.onclick = function(e) {
+            if (e.target === document.getElementById('history-modal')) closeModal();
+        };
+
+        fetchAdminPlayers();
+        setInterval(fetchAdminPlayers, 2000);
     </script>
 </body>
 </html>
