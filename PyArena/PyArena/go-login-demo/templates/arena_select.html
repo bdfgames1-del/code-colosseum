@@ -3,396 +3,462 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Thực Hành Bài Tập - CodeColosseum</title>
+    <title>Thực Hành 3 Bản Đồ Công Nghệ 4.0 - CodeColosseum</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@600;700;800&family=Fira+Code:wght@600&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@500;600;700&family=Orbitron:wght@700;800;900&family=Plus+Jakarta+Sans:wght@500;600;700;800&display=swap" rel="stylesheet">
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; }
         body {
-            background-color: #040814;
+            background-color: #03050c;
             color: #f8fafc;
             min-height: 100vh;
             display: flex;
             font-family: 'Plus Jakarta Sans', sans-serif;
+            overflow-x: hidden;
         }
 
+        /* ==================== SIDEBAR CYBER 4.0 ==================== */
         .sidebar {
-            width: 250px;
-            background: #080d1a;
-            border-right: 1px solid #162035;
-            padding: 24px 16px;
+            width: 260px;
+            background: linear-gradient(180deg, #060a15 0%, #03050b 100%);
+            border-right: 1px solid rgba(56, 189, 248, 0.16);
+            padding: 26px 18px;
             display: flex;
             flex-direction: column;
             gap: 28px;
             flex-shrink: 0;
             min-height: 100vh;
+            z-index: 20;
         }
-        .brand-logo { font-size: 19px; font-weight: 800; color: #fff; padding-left: 8px; }
-        .menu-list { display: flex; flex-direction: column; gap: 8px; }
+        .brand-logo {
+            font-size: 20px; font-weight: 800; color: #fff; padding-left: 10px;
+            display: flex; align-items: center; gap: 12px;
+        }
+        .menu-list { display: flex; flex-direction: column; gap: 8px; flex: 1; }
         .menu-item {
-            display: flex; align-items: center; gap: 12px; padding: 12px 16px; border-radius: 10px;
-            color: #94a3b8; text-decoration: none; font-size: 14.5px; font-weight: 600; transition: 0.2s;
+            display: flex; align-items: center; gap: 13px; padding: 12px 16px; border-radius: 12px;
+            color: #94a3b8; text-decoration: none; font-size: 14.5px; font-weight: 600;
+            transition: 0.25s; border: 1px solid transparent; cursor: pointer;
         }
-        .menu-item:hover { color: #38bdf8; background: rgba(56, 189, 248, 0.08); }
+        .menu-item svg { width: 20px; height: 20px; fill: currentColor; }
+        .menu-item:hover { color: #38bdf8; background: rgba(56, 189, 248, 0.08); border-color: rgba(56, 189, 248, 0.25); }
         .menu-item.active {
-            background: linear-gradient(90deg, rgba(2, 132, 199, 0.15) 0%, rgba(56, 189, 248, 0.15) 100%);
-            border: 1px solid rgba(56, 189, 248, 0.4); color: #38bdf8; font-weight: 700;
+            background: linear-gradient(135deg, rgba(14, 165, 233, 0.22) 0%, rgba(56, 189, 248, 0.05) 100%);
+            border-color: rgba(56, 189, 248, 0.5); color: #38bdf8; font-weight: 700;
+            box-shadow: 0 0 20px rgba(56, 189, 248, 0.15);
         }
+        .menu-item.logout-sidebar-btn {
+            margin-top: auto;
+            background: rgba(244, 63, 94, 0.14);
+            border: 1px solid rgba(244, 63, 94, 0.45);
+            color: #fb7185;
+            font-weight: 800;
+        }
+        .menu-item.logout-sidebar-btn:hover { background: #e11d48; color: #fff; }
         .badge-live {
-            font-size: 10px; background: #ef4444; color: #fff; padding: 2px 7px;
-            border-radius: 9999px; font-weight: 800; margin-left: auto;
+            font-size: 10px; background: linear-gradient(135deg, #ef4444 0%, #dc2626 100%);
+            color: #fff; padding: 3px 8px; border-radius: 9999px; font-weight: 800; margin-left: auto;
+            box-shadow: 0 0 10px rgba(239, 68, 68, 0.6);
         }
 
+        /* ==================== MAIN CONTENT ==================== */
         .main-content {
             flex: 1;
-            padding: 28px 36px;
+            padding: 24px 36px 40px 36px;
             display: flex;
             flex-direction: column;
-            gap: 24px;
-            overflow-y: auto;
+            gap: 26px;
+            max-width: 1420px;
+            margin: 0 auto;
         }
 
+        /* HEADER BANNER SCI-FI 4.0 */
         .header-row {
-            display: flex;
-            justify-content: space-between;
-            align-items: flex-start;
+            position: relative;
+            display: flex; justify-content: space-between; align-items: center;
+            background: 
+                radial-gradient(circle at 80% 20%, rgba(14, 165, 233, 0.22) 0%, rgba(244, 63, 94, 0.1) 50%, transparent 75%),
+                linear-gradient(135deg, #091328 0%, #050914 100%);
+            border: 1.5px solid rgba(56, 189, 248, 0.35);
+            border-radius: 22px; padding: 28px 34px;
+            overflow: hidden;
+            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.75);
         }
-        .header-title { font-size: 26px; font-weight: 800; color: #ffffff; letter-spacing: -0.5px; }
-        .header-desc { color: #94a3b8; font-size: 14.5px; margin-top: 6px; }
-        
-        .top-actions {
-            display: flex;
-            align-items: center;
-            gap: 12px;
+        .header-row::before {
+            content: ""; position: absolute; inset: 0;
+            background-image: 
+                linear-gradient(rgba(56, 189, 248, 0.05) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(56, 189, 248, 0.05) 1px, transparent 1px);
+            background-size: 32px 32px; pointer-events: none;
         }
+        .header-tag-pill {
+            display: inline-flex; align-items: center; gap: 6px;
+            font-family: 'Orbitron', sans-serif; font-size: 11px; font-weight: 800;
+            color: #38bdf8; background: rgba(56, 189, 248, 0.14);
+            border: 1px solid rgba(56, 189, 248, 0.4);
+            padding: 4px 12px; border-radius: 999px; margin-bottom: 10px;
+        }
+        .header-title {
+            font-size: 27px; font-weight: 900; color: #ffffff;
+            background: linear-gradient(90deg, #ffffff 0%, #7dd3fc 60%, #38bdf8 100%);
+            -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+        }
+        .header-desc { color: #94a3b8; font-size: 14px; margin-top: 6px; }
+
+        .top-actions { position: relative; z-index: 2; display: flex; align-items: center; gap: 12px; }
         .btn-history {
-            background: rgba(245, 158, 11, 0.15);
-            border: 1.5px solid #f59e0b;
-            color: #fbbf24;
-            padding: 8px 16px;
-            border-radius: 10px;
-            font-size: 13.5px;
-            font-weight: 700;
-            cursor: pointer;
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            transition: 0.2s;
+            background: rgba(245, 158, 11, 0.15); border: 1.5px solid #f59e0b; color: #fbbf24;
+            padding: 10px 18px; border-radius: 12px; font-size: 13.5px; font-weight: 800;
+            cursor: pointer; display: flex; align-items: center; gap: 8px; transition: 0.25s;
         }
-        .btn-history:hover {
-            background: #f59e0b;
-            color: #040814;
-        }
+        .btn-history:hover { background: #f59e0b; color: #040814; box-shadow: 0 0 20px rgba(245, 158, 11, 0.5); }
         .user-tag {
-            background: #0f172a;
-            border: 1px solid #1e293b;
-            padding: 8px 16px;
-            border-radius: 10px;
-            color: #38bdf8;
-            font-size: 13.5px;
-            font-weight: 700;
+            background: rgba(14, 165, 233, 0.12); border: 1px solid rgba(56, 189, 248, 0.35);
+            padding: 10px 16px; border-radius: 12px; color: #7dd3fc;
+            font-family: 'Fira Code', monospace; font-size: 13.5px; font-weight: 700;
         }
 
+        /* ==================== LƯỚI 3 BẢN ĐỒ HOLOGRAM 4.0 ==================== */
         .maps-grid {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 20px;
+            display: grid; grid-template-columns: repeat(3, 1fr); gap: 26px;
         }
 
         .map-card {
-            background: #090f1e;
-            border: 1.5px solid #192642;
-            border-radius: 18px;
-            padding: 22px;
+            background: linear-gradient(170deg, rgba(13, 23, 46, 0.92) 0%, rgba(6, 10, 22, 0.98) 100%);
+            border: 1.5px solid rgba(56, 189, 248, 0.28);
+            border-radius: 22px;
+            padding: 24px;
             display: flex;
             flex-direction: column;
             justify-content: space-between;
-            gap: 18px;
-            transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+            gap: 20px;
+            transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+            position: relative;
+            overflow: hidden;
+            box-shadow: 0 18px 45px rgba(0, 0, 0, 0.75);
         }
+        .map-card::before {
+            content: ""; position: absolute; top: 0; left: 15%; right: 15%; height: 3px;
+            background: #38bdf8; border-radius: 0 0 4px 4px; transition: 0.3s;
+        }
+        .map-card.theme-purple::before { background: #c084fc; }
+        .map-card.theme-red::before { background: #fb7185; }
+
         .map-card:hover {
-            transform: translateY(-4px);
+            transform: translateY(-8px);
             border-color: #38bdf8;
-            box-shadow: 0 12px 30px rgba(56, 189, 248, 0.15);
+            box-shadow: 0 22px 50px rgba(14, 165, 233, 0.25);
         }
+        .map-card.theme-purple:hover { border-color: #c084fc; box-shadow: 0 22px 50px rgba(192, 132, 252, 0.25); }
+        .map-card.theme-red:hover { border-color: #fb7185; box-shadow: 0 22px 50px rgba(251, 113, 133, 0.25); }
 
-        .map-top {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-        .map-icon {
-            font-size: 38px;
-            filter: drop-shadow(0 4px 10px rgba(56, 189, 248, 0.4));
-        }
-        .map-badge-level {
-            font-size: 11px;
-            font-weight: 800;
-            padding: 3px 10px;
-            border-radius: 6px;
-            background: rgba(56, 189, 248, 0.15);
-            color: #38bdf8;
-            border: 1px solid rgba(56, 189, 248, 0.3);
-        }
-
-        .map-title {
-            font-size: 18px;
-            font-weight: 800;
-            color: #f8fafc;
-            margin-bottom: 8px;
-        }
-        .map-desc {
-            font-size: 13.5px;
-            color: #94a3b8;
-            line-height: 1.55;
-            margin-bottom: 12px;
-        }
-        .map-topic {
-            font-size: 12.5px;
-            font-weight: 600;
-            color: #c084fc;
-            display: flex;
-            align-items: center;
-            gap: 6px;
-        }
-
-        .map-btn-row {
-            display: flex;
-            gap: 8px;
-        }
-        .btn-enter-map {
-            flex: 1;
-            text-align: center;
-            background: linear-gradient(135deg, #0284c7 0%, #0369a1 100%);
-            color: #ffffff;
-            font-weight: 700;
-            font-size: 13.5px;
-            padding: 11px;
-            border-radius: 10px;
-            text-decoration: none;
-            transition: 0.2s;
-            box-shadow: 0 4px 14px rgba(2, 132, 199, 0.4);
-        }
-        .btn-enter-map:hover {
-            background: linear-gradient(135deg, #38bdf8 0%, #0284c7 100%);
-        }
-        .btn-view-map-history {
-            background: #111a2e;
-            border: 1px solid #1e2c44;
-            color: #fbbf24;
-            padding: 0 12px;
-            border-radius: 10px;
-            cursor: pointer;
-            font-size: 16px;
+        /* KHUNG ĐỒ HỌA SVG 4.0 CHO TỪNG MAP */
+        .map-art-banner {
+            height: 165px;
+            border-radius: 16px;
+            background: 
+                radial-gradient(circle at 50% 50%, rgba(14, 165, 233, 0.28) 0%, #050914 85%);
+            border: 1px solid rgba(56, 189, 248, 0.35);
             display: flex;
             align-items: center;
             justify-content: center;
-            transition: 0.2s;
+            margin-bottom: 16px;
+            position: relative;
+            overflow: hidden;
         }
-        .btn-view-map-history:hover {
-            background: #f59e0b;
-            color: #040814;
+        .theme-purple .map-art-banner {
+            background: radial-gradient(circle at 50% 50%, rgba(168, 85, 247, 0.28) 0%, #050914 85%);
+            border-color: rgba(192, 132, 252, 0.4);
+        }
+        .theme-red .map-art-banner {
+            background: radial-gradient(circle at 50% 50%, rgba(244, 63, 94, 0.28) 0%, #050914 85%);
+            border-color: rgba(251, 113, 133, 0.4);
         }
 
-        /* MODAL LỊCH SỬ THIẾT KẾ MỚI CÓ TAB CHỌN MAP */
+        .map-badge-level {
+            position: absolute; top: 12px; right: 12px; z-index: 3;
+            font-family: 'Orbitron', monospace; font-size: 10px; font-weight: 800;
+            padding: 4px 10px; border-radius: 6px;
+            background: rgba(5, 9, 20, 0.9); color: #38bdf8; border: 1px solid rgba(56, 189, 248, 0.5);
+        }
+        .theme-purple .map-badge-level { color: #d8b4fe; border-color: rgba(192, 132, 252, 0.5); }
+        .theme-red .map-badge-level { color: #fda4af; border-color: rgba(251, 113, 133, 0.5); }
+
+        .map-mode-chip {
+            position: absolute; top: 12px; left: 12px; z-index: 3;
+            font-family: 'Fira Code', monospace; font-size: 10.5px; font-weight: 700;
+            padding: 3px 9px; border-radius: 6px;
+            background: rgba(250, 204, 21, 0.15); color: #facc15; border: 1px solid rgba(250, 204, 21, 0.4);
+        }
+
+        .holo-svg-icon {
+            width: 108px; height: 108px;
+            filter: drop-shadow(0 0 18px rgba(56, 189, 248, 0.6));
+            transition: transform 0.35s ease;
+        }
+        .map-card:hover .holo-svg-icon { transform: scale(1.1) translateY(-3px); }
+        .spin-ring { transform-origin: center; animation: spin360 12s infinite linear; }
+        .spin-rev { transform-origin: center; animation: spinRev 8s infinite linear; }
+        @keyframes spin360 { 100% { transform: rotate(360deg); } }
+        @keyframes spinRev { 100% { transform: rotate(-360deg); } }
+
+        .map-title { font-size: 20px; font-weight: 800; color: #ffffff; margin-bottom: 8px; }
+        .map-desc { font-size: 13.5px; color: #94a3b8; line-height: 1.6; margin-bottom: 14px; }
+
+        .map-features-row {
+            display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 10px;
+        }
+        .map-feat-tag {
+            font-family: 'Fira Code', monospace; font-size: 11px; font-weight: 600;
+            background: #091224; border: 1px solid #1e3256; color: #cbd5e1;
+            padding: 4px 9px; border-radius: 6px;
+        }
+
+        .map-topic {
+            font-size: 12.5px; font-weight: 700; color: #38bdf8;
+            display: flex; align-items: center; gap: 6px;
+        }
+        .theme-purple .map-topic { color: #c084fc; }
+        .theme-red .map-topic { color: #fb7185; }
+
+        .map-btn-row { display: flex; gap: 10px; padding-top: 12px; border-top: 1px solid #15223a; }
+        .btn-enter-map {
+            flex: 1; text-align: center;
+            background: linear-gradient(135deg, #0284c7 0%, #0369a1 100%);
+            border: 1px solid #38bdf8;
+            color: #ffffff; font-family: 'Orbitron', 'Plus Jakarta Sans', sans-serif;
+            font-weight: 800; font-size: 13.5px; padding: 13px;
+            border-radius: 12px; text-decoration: none; transition: 0.25s;
+            box-shadow: 0 6px 18px rgba(2, 132, 199, 0.35);
+        }
+        .theme-purple .btn-enter-map {
+            background: linear-gradient(135deg, #9333ea 0%, #6b21a8 100%);
+            border-color: #c084fc; box-shadow: 0 6px 18px rgba(147, 51, 234, 0.35);
+        }
+        .theme-red .btn-enter-map {
+            background: linear-gradient(135deg, #e11d48 0%, #9f1239 100%);
+            border-color: #fb7185; box-shadow: 0 6px 18px rgba(225, 29, 72, 0.35);
+        }
+        .btn-enter-map:hover { transform: translateY(-2px); filter: brightness(1.15); }
+
+        .btn-view-map-history {
+            background: #0d1629; border: 1.5px solid #223559; color: #fbbf24;
+            padding: 0 15px; border-radius: 12px; cursor: pointer; font-size: 16px; transition: 0.2s;
+        }
+        .btn-view-map-history:hover { background: #f59e0b; color: #040814; border-color: #f59e0b; }
+
+        /* MODAL LỊCH SỬ */
         .modal-overlay {
-            position: fixed; inset: 0; background: rgba(3, 7, 18, 0.85); display: none;
-            align-items: center; justify-content: center; z-index: 300; backdrop-filter: blur(8px);
-            padding: 20px;
+            position: fixed; inset: 0; background: rgba(3, 7, 18, 0.88); display: none;
+            align-items: center; justify-content: center; z-index: 300; backdrop-filter: blur(8px); padding: 20px;
         }
         .modal-history-box {
-            background: #090e1c; border: 2px solid #f59e0b; border-radius: 20px;
-            padding: 24px 28px; width: 100%; max-width: 820px; max-height: 88vh;
+            background: #080f1e; border: 2px solid #f59e0b; border-radius: 22px;
+            padding: 24px 28px; width: 100%; max-width: 840px; max-height: 88vh;
             display: flex; flex-direction: column; gap: 14px;
-            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.8);
         }
         .modal-history-top {
             display: flex; justify-content: space-between; align-items: center;
             border-bottom: 1px solid #1e293b; padding-bottom: 12px;
         }
-        .modal-history-title {
-            font-size: 19px; font-weight: 800; color: #fbbf24; display: flex; align-items: center; gap: 8px;
-        }
-        .btn-close-modal {
-            background: none; border: none; color: #94a3b8; font-size: 24px; cursor: pointer;
-        }
-        .btn-close-modal:hover { color: #fff; }
-
-        /* THANH TAB LỌC MAP */
-        .map-filter-tabs {
-            display: flex;
-            gap: 8px;
-            overflow-x: auto;
-            padding-bottom: 4px;
-        }
+        .modal-history-title { font-size: 19px; font-weight: 800; color: #fbbf24; }
+        .btn-close-modal { background: none; border: none; color: #94a3b8; font-size: 24px; cursor: pointer; }
+        .map-filter-tabs { display: flex; gap: 8px; overflow-x: auto; padding-bottom: 4px; }
         .tab-btn {
-            background: #0f172a;
-            border: 1px solid #1e293b;
-            color: #94a3b8;
-            padding: 6px 14px;
-            border-radius: 8px;
-            font-size: 13px;
-            font-weight: 700;
-            cursor: pointer;
-            white-space: nowrap;
-            transition: 0.2s;
+            background: #0f172a; border: 1px solid #1e293b; color: #94a3b8;
+            padding: 7px 14px; border-radius: 8px; font-size: 13px; font-weight: 700; cursor: pointer;
         }
-        .tab-btn:hover { color: #fff; border-color: #38bdf8; }
-        .tab-btn.active {
-            background: rgba(56, 189, 248, 0.15);
-            border-color: #38bdf8;
-            color: #38bdf8;
-        }
-
-        .history-list-scroll {
-            overflow-y: auto; display: flex; flex-direction: column; gap: 12px; padding-right: 6px;
-        }
+        .tab-btn.active { background: rgba(56, 189, 248, 0.15); border-color: #38bdf8; color: #38bdf8; }
+        .history-list-scroll { overflow-y: auto; display: flex; flex-direction: column; gap: 12px; }
         .history-card-item {
             background: #0f172a; border: 1.5px solid #1e293b; border-radius: 12px;
             padding: 14px 16px; display: flex; flex-direction: column; gap: 8px;
         }
-        .h-tag-row {
-            display: flex; justify-content: space-between; align-items: center;
-            font-size: 12px; font-family: 'Fira Code', monospace;
-        }
+        .h-tag-row { display: flex; justify-content: space-between; font-size: 12px; font-family: 'Fira Code', monospace; }
         .h-map-badge { color: #38bdf8; background: rgba(56, 189, 248, 0.15); padding: 2px 8px; border-radius: 6px; }
-        .h-time { color: #64748b; }
+        .h-status-correct { color: #4ade80; font-weight: 700; }
+        .h-status-wrong { color: #f87171; font-weight: 700; }
         .h-question { font-size: 14px; font-weight: 700; color: #f8fafc; }
-        .h-code {
-            background: #03060d; border: 1px solid #1a253c; padding: 8px 12px;
-            border-radius: 6px; font-family: 'Fira Code', monospace; font-size: 12.5px; color: #7dd3fc;
-        }
-        .h-ans-box {
-            display: flex; flex-direction: column; gap: 4px; font-size: 12.5px;
-        }
-        .h-wrong-ans { color: #f87171; font-weight: 600; }
-        .h-correct-ans { color: #4ade80; font-weight: 700; }
-        .h-status-correct {
-            color: #4ade80; font-weight: 700; background: rgba(34, 197, 94, 0.15);
-            border: 1px solid #22c55e; padding: 2px 8px; border-radius: 6px; font-size: 11.5px;
-        }
-        .h-status-wrong {
-            color: #f87171; font-weight: 700; background: rgba(239, 68, 68, 0.15);
-            border: 1px solid #ef4444; padding: 2px 8px; border-radius: 6px; font-size: 11.5px;
-        }
-        .h-explain {
-            background: rgba(34, 197, 94, 0.1); border-left: 3px solid #22c55e;
-            padding: 8px 12px; font-size: 12.5px; color: #86efac; border-radius: 0 6px 6px 0;
-        }
-        .btn-clear-history {
-            background: #ef4444; color: #fff; border: none; padding: 8px 16px;
-            border-radius: 8px; font-weight: 700; font-size: 12.5px; cursor: pointer;
-        }
-        .btn-clear-history:hover { background: #dc2626; }
+        .h-code { background: #03060d; border: 1px solid #1a253c; padding: 8px 12px; border-radius: 6px; font-family: 'Fira Code', monospace; font-size: 12.5px; color: #7dd3fc; white-space: pre-wrap; }
+        .h-explain { background: rgba(34, 197, 94, 0.1); border-left: 3px solid #22c55e; padding: 8px 12px; font-size: 12.5px; color: #86efac; }
+        .btn-clear-history { background: #ef4444; color: #fff; border: none; padding: 8px 16px; border-radius: 8px; font-weight: 700; cursor: pointer; }
     </style>
 </head>
 <body>
 
     <aside class="sidebar">
-        <div class="brand-logo"><span>⚔️</span> CodeColosseum</div>
+        <div class="brand-logo">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#38bdf8" stroke-width="2.5"><path d="M14.5 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7.5L14.5 2z"/><polyline points="14 2 14 8 20 8"/><line x1="9" y1="13" x2="15" y2="13"/><line x1="9" y1="17" x2="13" y2="17"/></svg>
+            CodeColosseum
+        </div>
         <nav class="menu-list">
-            <a href="/" class="menu-item"><span>🏠</span> Trang chủ</a>
-            <a href="/courses" class="menu-item"><span>📚</span> Bài học</a>
-            <a href="/arena" class="menu-item active"><span>📝</span> Thực hành bài tập</a>
-            <a href="/arena/speed-duel" class="menu-item"><span>⚔️</span> Đấu trường <span class="badge-live">LIVE</span></a>
-            <a href="/leaderboard" class="menu-item"><span>🏆</span> Bảng xếp hạng</a>
-            <a href="/profile" class="menu-item"><span>👤</span> Hồ sơ</a>
+            <a href="/" class="menu-item">
+                <svg viewBox="0 0 24 24"><path d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z"/></svg>Trang chủ
+            </a>
+            <a href="/courses" class="menu-item">
+                <svg viewBox="0 0 24 24"><path d="M4 6H2v14c0 1.1.9 2 2 2h14v-2H4V6zm16-4H8c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2zm0 14H8V4h12v12z"/></svg>Bài học
+            </a>
+            <a href="/arena" class="menu-item active">
+                <svg viewBox="0 0 24 24"><path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm-5 14H7v-2h7v2zm3-4H7v-2h10v2zm0-4H7V7h10v2z"/></svg>Thực hành bài tập
+            </a>
+            <a href="/arena/speed-duel" class="menu-item">
+                <svg viewBox="0 0 24 24"><path d="M14.25 2.5a.75.75 0 0 1 .75-.75h4.5a.75.75 0 0 1 .75.75v4.5a.75.75 0 0 1-1.5 0V4.56l-5.22 5.22a.75.75 0 1 1-1.06-1.06l5.22-5.22h-2.69a.75.75 0 0 1-.75-.75zM3.75 11.25a.75.75 0 0 1 .75-.75h4.5a.75.75 0 0 1 0 1.5H5.56l5.22 5.22a.75.75 0 1 1-1.06 1.06L4.5 13.06v2.69a.75.75 0 0 1-1.5 0v-4.5z"/></svg>Đấu trường <span class="badge-live">LIVE</span>
+            </a>
+            <a href="/leaderboard" class="menu-item">
+                <svg viewBox="0 0 24 24"><path d="M19 5h-2.18c.37-.78.58-1.65.58-2.5C17.4 1.13 16.27 0 14.9 0c-1.05 0-1.95.66-2.3 1.6-.2.5-.3 1.05-.3 1.6 0 .55.1 1.1.3 1.6.35.94 1.25 1.6 2.3 1.6 1.37 0 2.5-1.13 2.5-2.5 0-.85-.21-1.72-.58-2.5H19v14h-2.05c-.14-.54-.36-1.05-.66-1.5H19V5zM5 19H3V5h2v14zm14 0H5v2h14v-2z"/></svg>Bảng xếp hạng
+            </a>
+            <a href="/profile" class="menu-item">
+                <svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 3c1.66 0 3 1.34 3 3s-1.34 3-3 3-3-1.34-3-3 1.34-3 3-3zm0 14.2c-2.5 0-4.71-1.28-6-3.22.03-1.99 4-3.08 6-3.08 1.99 0 5.97 1.09 6 3.08-1.29 1.94-3.5 3.22-6 3.22z"/></svg>Hồ sơ
+            </a>
+            {{if eq .Username "admin"}}
+            <a href="/admin" class="menu-item" style="color:#f87171;">🛡️ Quản Trị Admin</a>
+            {{end}}
+            {{if .Username}}
+            <a href="/logout" onclick="logoutAccount(event)" class="menu-item logout-sidebar-btn">🚪 Đăng xuất</a>
+            {{end}}
         </nav>
     </aside>
 
     <main class="main-content">
         <div class="header-row">
-            <div>
-                <h1 class="header-title">Thực Hành Bài Tập: Các Bản Đồ Thử Thách</h1>
-                <p class="header-desc">Vượt qua các ải lập trình từ Cơ Bản đến Chuyên Sâu để tích lũy kiến thức và rèn luyện tư duy.</p>
+            <div style="position:relative; z-index:2;">
+                <div class="header-tag-pill">⚡ HỆ THỐNG GIẢ LẬP CHIẾN ĐẤU 4.0 // SIMULATOR</div>
+                <h1 class="header-title">Thực Hành Bài Tập: 3 Bản Đồ Thử Thách</h1>
+                <p class="header-desc">Áp dụng kiến thức từ Bài 1, Bài 2 và Bài 3 vào 3 mô hình chiến đấu tương tác đồ họa công nghệ cao.</p>
             </div>
             <div class="top-actions">
                 <button class="btn-history" onclick="openHistoryModal('all')">
-                    <span>📋</span> Lịch Sử Tổng Hợp (<span id="history-count-badge">0</span>)
+                    <span>📋</span> Lịch Sử Học Tập (<span id="history-count-badge">0</span>)
                 </button>
                 <div class="user-tag">👤 {{if .Username}}{{.Username}}{{else}}Chiến Binh{{end}}</div>
             </div>
         </div>
 
         <div class="maps-grid">
-            <!-- MAP 1 -->
+            <!-- MAP 1: CYBER RPG MULTI-BIOME -->
             <div class="map-card">
                 <div>
-                    <div class="map-top">
-                        <span class="map-icon">🧙‍♂️</span>
-                        <span class="map-badge-level">CƠ BẢN</span>
+                    <div class="map-art-banner">
+                        <span class="map-mode-chip">4 KHUNG CẢNH • 4 NHÂN VẬT</span>
+                        <span class="map-badge-level">BÀI 1 • CÚ PHÁP</span>
+                        <!-- Đồ họa SVG Cyber Mage & Quái Vật -->
+                        <svg class="holo-svg-icon" viewBox="0 0 110 110" fill="none">
+                            <circle class="spin-ring" cx="55" cy="55" r="46" stroke="#38bdf8" stroke-width="1.8" stroke-dasharray="14 8"/>
+                            <polygon points="55,14 90,34 90,76 55,96 20,76 20,34" fill="rgba(14,165,233,0.18)" stroke="#38bdf8" stroke-width="2"/>
+                            <path d="M35 72 L55 26 L75 72 Z" fill="url(#m1Grad)" stroke="#7dd3fc" stroke-width="2"/>
+                            <circle cx="55" cy="48" r="9" fill="#facc15"/>
+                            <path d="M26 55 L84 55" stroke="#f43f5e" stroke-width="2.5" stroke-dasharray="4 4"/>
+                            <defs>
+                                <linearGradient id="m1Grad" x1="35" y1="26" x2="75" y2="72" gradientUnits="userSpaceOnUse">
+                                    <stop offset="0%" stop-color="#38bdf8"/>
+                                    <stop offset="100%" stop-color="#1e3a8a"/>
+                                </linearGradient>
+                            </defs>
+                        </svg>
                     </div>
-                    <h3 class="map-title" style="margin-top: 14px;">Map 1: Diệt Quái Cú Pháp</h3>
-                    <p class="map-desc">Một mình trấn giữ cây cầu, trả lời 20 câu hỏi về biến và kiểu dữ liệu để phóng cầu phép thuật tiêu diệt 20 quái vật. Hồi đủ 3 mạng mỗi quái.</p>
-                    <div class="map-topic"><span>⚔️</span> Chủ đề: Biến & Kiểu Dữ Liệu</div>
+                    <h3 class="map-title">Map 1: Diệt Quái Cú Pháp 4.0</h3>
+                    <p class="map-desc">
+                        Chọn 1 trong 4 Chiến Binh Cyber, vượt qua 4 vùng đất biến đổi liên tục và tiêu diệt 20 chủng loại Quái vật & Boss bằng kiến thức Biến, Kiểu dữ liệu & Toán tử.
+                    </p>
+                    <div class="map-features-row">
+                        <span class="map-feat-tag">🌌 4 Khung cảnh động</span>
+                        <span class="map-feat-tag">🦸 4 Nhân vật</span>
+                        <span class="map-feat-tag">👾 20 Quái & Boss SVG</span>
+                    </div>
+                    <div class="map-topic">⚡ Kiến thức: Bài 1 - Cú pháp, Biến & 7 Toán tử</div>
                 </div>
                 <div class="map-btn-row">
-                    <a href="/arena/battle?map=1" class="btn-enter-map">Vào Map 1 →</a>
-                    <button class="btn-view-map-history" title="Xem lịch sử Map 1" onclick="openHistoryModal('Map 1')">📋</button>
+                    <a href="/arena/battle?map=1" class="btn-enter-map">⚔️ VÀO ĐẤU MAP 1 →</a>
+                    <button class="btn-view-map-history" onclick="openHistoryModal('Map 1')" title="Lịch sử Map 1">📋</button>
                 </div>
             </div>
 
-            <!-- MAP 2 -->
-            <div class="map-card">
+            <!-- MAP 2: NEURAL MEMORY MATRIX 3D -->
+            <div class="map-card theme-purple">
                 <div>
-                    <div class="map-top">
-                        <span class="map-icon">🕹️</span>
-                        <span class="map-badge-level">CƠ BẢN</span>
+                    <div class="map-art-banner">
+                        <span class="map-mode-chip">LẬT THẺ 3D HOLOGRAM</span>
+                        <span class="map-badge-level">BÀI 2 • VÒNG LẶP</span>
+                        <!-- Đồ họa SVG Neural Matrix 3D -->
+                        <svg class="holo-svg-icon" viewBox="0 0 110 110" fill="none">
+                            <circle class="spin-rev" cx="55" cy="55" r="46" stroke="#c084fc" stroke-width="1.8" stroke-dasharray="10 8"/>
+                            <rect x="24" y="24" width="28" height="28" rx="6" fill="rgba(168,85,247,0.3)" stroke="#c084fc" stroke-width="2"/>
+                            <rect x="58" y="24" width="28" height="28" rx="6" fill="rgba(56,189,248,0.3)" stroke="#38bdf8" stroke-width="2"/>
+                            <rect x="24" y="58" width="28" height="28" rx="6" fill="rgba(250,204,21,0.25)" stroke="#facc15" stroke-width="2"/>
+                            <rect x="58" y="58" width="28" height="28" rx="6" fill="rgba(244,63,94,0.3)" stroke="#fb7185" stroke-width="2"/>
+                            <circle cx="55" cy="55" r="8" fill="#ffffff"/>
+                        </svg>
                     </div>
-                    <h3 class="map-title" style="margin-top: 14px;">Map 2: Memory Match Arcade</h3>
-                    <p class="map-desc">Máy chơi game thùng Arcade lật 20 thẻ bài (10 cặp). Lật trúng cặp sẽ mở khóa câu hỏi trắc nghiệm kiểm tra trí nhớ các khái niệm cốt lõi.</p>
-                    <div class="map-topic"><span>⚔️</span> Chủ đề: Khái niệm Python Core</div>
+                    <h3 class="map-title">Map 2: Ma Trận Thẻ Bài 3D</h3>
+                    <p class="map-desc">
+                        Giải mã 20 vi mạch Hologram 3D với 10 biểu tượng đồ họa rực rỡ. Ghép trúng cặp thẻ đồng bộ để kích hoạt câu hỏi rẽ nhánh & vòng lặp.
+                    </p>
+                    <div class="map-features-row">
+                        <span class="map-feat-tag">🃏 Lật thẻ 3D mượt</span>
+                        <span class="map-feat-tag">🎨 10 Icon Neon riêng</span>
+                        <span class="map-feat-tag">🔄 if / for / while</span>
+                    </div>
+                    <div class="map-topic">⚡ Kiến thức: Bài 2 - Rẽ nhánh & Vòng lặp</div>
                 </div>
                 <div class="map-btn-row">
-                    <a href="/arena/battle?map=2" class="btn-enter-map">Vào Map 2 →</a>
-                    <button class="btn-view-map-history" title="Xem lịch sử Map 2" onclick="openHistoryModal('Map 2')">📋</button>
+                    <a href="/arena/battle?map=2" class="btn-enter-map">🕹️ VÀO ĐẤU MAP 2 →</a>
+                    <button class="btn-view-map-history" onclick="openHistoryModal('Map 2')" title="Lịch sử Map 2">📋</button>
                 </div>
             </div>
 
-            <!-- MAP 3 -->
-            <div class="map-card">
+            <!-- MAP 3: SEQUENTIAL CYBER BOMB REACTOR -->
+            <div class="map-card theme-red">
                 <div>
-                    <div class="map-top">
-                        <span class="map-icon">💣</span>
-                        <span class="map-badge-level">CƠ BẢN</span>
+                    <div class="map-art-banner">
+                        <span class="map-mode-chip">GỠ TUẦN TỰ DÂY 1 → 20</span>
+                        <span class="map-badge-level">BÀI 3 • DATA CORE</span>
+                        <!-- Đồ họa SVG Lò Phản Ứng Bom Hạt Nhân -->
+                        <svg class="holo-svg-icon" viewBox="0 0 110 110" fill="none">
+                            <circle class="spin-ring" cx="55" cy="55" r="46" stroke="#fb7185" stroke-width="2" stroke-dasharray="18 6"/>
+                            <circle class="spin-rev" cx="55" cy="55" r="34" stroke="#facc15" stroke-width="1.8" stroke-dasharray="8 8"/>
+                            <circle cx="55" cy="55" r="22" fill="rgba(225,29,72,0.35)" stroke="#f43f5e" stroke-width="2.5"/>
+                            <circle cx="55" cy="55" r="9" fill="#facc15"/>
+                            <path d="M12 45 C30 45, 30 55, 33 55 M12 65 C30 65, 30 55, 33 55 M98 45 C80 45, 80 55, 77 55 M98 65 C80 65, 80 55, 77 55" stroke="#38bdf8" stroke-width="2.5"/>
+                        </svg>
                     </div>
-                    <h3 class="map-title" style="margin-top: 14px;">Map 3: Defuse The Bomb</h3>
-                    <p class="map-desc">Quả bom hẹn giờ với 20 sợi dây kíp nổ. Tự do lựa chọn sợi dây muốn tháo gỡ trước, có 3 lần thử mỗi dây và tối đa 10 lỗi cho phép.</p>
-                    <div class="map-topic"><span>⚔️</span> Chủ đề: List, Tuple, Dict, Set</div>
+                    <h3 class="map-title">Map 3: Gỡ Bom Hạt Nhân 4.0</h3>
+                    <p class="map-desc">
+                        Tháo gỡ tuần tự từng lớp khóa từ Dây 1 đến Dây 20 trên Lõi Phản Ứng Lượng Tử. Cắt đúng dây bằng kiến thức List, Tuple, Set, Dict hoặc kích nổ chấn động!
+                    </p>
+                    <div class="map-features-row">
+                        <span class="map-feat-tag">⚡ Tuần tự Dây 1 → 20</span>
+                        <span class="map-feat-tag">💥 Hiệu ứng nổ Plasma</span>
+                        <span class="map-feat-tag">✂️ Tia cắt Laser</span>
+                    </div>
+                    <div class="map-topic">⚡ Kiến thức: Bài 3 - List, Tuple, Set, Dict & Chuỗi</div>
                 </div>
                 <div class="map-btn-row">
-                    <a href="/arena/battle?map=3" class="btn-enter-map">Vào Map 3 →</a>
-                    <button class="btn-view-map-history" title="Xem lịch sử Map 3" onclick="openHistoryModal('Map 3')">📋</button>
+                    <a href="/arena/battle?map=3" class="btn-enter-map">💣 VÀO ĐẤU MAP 3 →</a>
+                    <button class="btn-view-map-history" onclick="openHistoryModal('Map 3')" title="Lịch sử Map 3">📋</button>
                 </div>
             </div>
         </div>
     </main>
 
-    <!-- MODAL LỊCH SỬ CÓ LỌC THEO MAP -->
+    <!-- MODAL LỊCH SỬ -->
     <div class="modal-overlay" id="history-modal">
         <div class="modal-history-box">
             <div class="modal-history-top">
-                <div class="modal-history-title">
-                    <span>📋</span> LỊCH SỬ HỌC TẬP & RÚT KINH NGHIỆM
-                </div>
+                <div class="modal-history-title">📋 LỊCH SỬ HỌC TẬP & RÚT KINH NGHIỆM</div>
                 <button class="btn-close-modal" onclick="closeHistoryModal()">✕</button>
             </div>
-
-            <!-- THANH TAB LỌC TỪNG MAP -->
             <div class="map-filter-tabs">
                 <button class="tab-btn active" id="tab-all" onclick="filterHistory('all')">Tất Cả</button>
-                <button class="tab-btn" id="tab-map1" onclick="filterHistory('Map 1')">Map 1 (Diệt Quái)</button>
-                <button class="tab-btn" id="tab-map2" onclick="filterHistory('Map 2')">Map 2 (Memory)</button>
-                <button class="tab-btn" id="tab-map3" onclick="filterHistory('Map 3')">Map 3 (Defuse Bomb)</button>
-                <button class="tab-btn" id="tab-duel" onclick="filterHistory('Đấu Trường')">Đấu Trường 1v1</button>
+                <button class="tab-btn" id="tab-map1" onclick="filterHistory('Map 1')">Map 1 (Bài 1)</button>
+                <button class="tab-btn" id="tab-map2" onclick="filterHistory('Map 2')">Map 2 (Bài 2)</button>
+                <button class="tab-btn" id="tab-map3" onclick="filterHistory('Map 3')">Map 3 (Bài 3)</button>
+                <button class="tab-btn" id="tab-duel" onclick="filterHistory('Đấu Trường')">Đấu Trường</button>
             </div>
-
             <div class="history-list-scroll" id="history-list-container"></div>
-
             <div style="display:flex; justify-content:space-between; align-items:center; border-top: 1px solid #1e293b; padding-top: 12px;">
                 <button class="btn-clear-history" onclick="clearAllHistory()">Xóa Toàn Bộ Lịch Sử</button>
-                <span style="font-size:12px; color:#94a3b8;">Mỗi câu hỏi được lưu 1 thẻ duy nhất (cập nhật mới nhất)</span>
+                <span style="font-size:12px; color:#94a3b8;">Mỗi câu hỏi chỉ lưu 1 bản ghi duy nhất</span>
             </div>
         </div>
     </div>
@@ -402,8 +468,7 @@
 
         function loadHistoryBadge() {
             const historyMap = JSON.parse(localStorage.getItem("colosseum_unique_history") || "{}");
-            const keys = Object.keys(historyMap);
-            document.getElementById("history-count-badge").innerText = keys.length;
+            document.getElementById("history-count-badge").innerText = Object.keys(historyMap).length;
         }
 
         function filterHistory(filter) {
@@ -414,7 +479,6 @@
             else if (filter === 'Map 2') document.getElementById('tab-map2').classList.add('active');
             else if (filter === 'Map 3') document.getElementById('tab-map3').classList.add('active');
             else if (filter === 'Đấu Trường') document.getElementById('tab-duel').classList.add('active');
-
             renderHistoryList();
         }
 
@@ -424,23 +488,15 @@
             container.innerHTML = "";
 
             let items = Object.values(historyMap);
-
             if (currentFilter !== 'all') {
                 items = items.filter(it => it.mapName.includes(currentFilter));
             }
 
             if (items.length === 0) {
-                container.innerHTML = `
-                    <div style="text-align:center; padding: 36px 0; color:#94a3b8;">
-                        <div style="font-size: 36px; margin-bottom: 8px;">🎉</div>
-                        <div style="font-size: 15px; font-weight:700; color:#fff;">Chưa có dữ liệu câu hỏi trong mục này!</div>
-                        <p style="font-size: 13px; margin-top: 4px;">Hãy tham gia thử thách để hệ thống ghi nhận kinh nghiệm làm bài của bạn.</p>
-                    </div>
-                `;
+                container.innerHTML = `<div style="text-align:center; padding: 36px 0; color:#94a3b8;">Chưa có dữ liệu câu hỏi trong mục này!</div>`;
                 return;
             }
 
-            // Sắp xếp câu mới nhất lên đầu
             items.sort((a, b) => (b.timestampRaw || 0) - (a.timestampRaw || 0));
 
             items.forEach((item) => {
@@ -449,16 +505,16 @@
                 el.innerHTML = `
                     <div class="h-tag-row">
                         <span class="h-map-badge">${item.mapName}</span>
-                        <div style="display:flex; align-items:center; gap:8px;">
+                        <div>
                             ${item.isCorrect ? '<span class="h-status-correct">✓ ĐÃ LÀM ĐÚNG</span>' : '<span class="h-status-wrong">✗ LÀM SAI</span>'}
-                            <span class="h-time">${item.timestamp}</span>
+                            <span style="color:#64748b; margin-left:8px;">${item.timestamp}</span>
                         </div>
                     </div>
                     <div class="h-question">❓ ${item.question}</div>
                     ${item.code ? `<div class="h-code">${item.code}</div>` : ''}
-                    <div class="h-ans-box">
-                        ${!item.isCorrect ? `<div class="h-wrong-ans">❌ Lần gần nhất bạn chọn: ${item.userChoice}</div>` : ''}
-                        <div class="h-correct-ans">✅ Đáp án chính xác: ${item.correctChoice}</div>
+                    <div style="font-size:12.5px; color:#cbd5e1;">
+                        ${!item.isCorrect ? `<span style="color:#f87171;">❌ Bạn chọn: ${item.userChoice}</span> | ` : ''}
+                        <span style="color:#4ade80; font-weight:700;">✅ Đáp án đúng: ${item.correctChoice}</span>
                     </div>
                     ${item.explanation ? `<div class="h-explain">💡 <strong>Rút kinh nghiệm:</strong> ${item.explanation}</div>` : ''}
                 `;
@@ -476,17 +532,19 @@
         }
 
         function clearAllHistory() {
-            if (confirm("Bạn có chắc muốn xóa sạch toàn bộ lịch sử rút kinh nghiệm không?")) {
+            if (confirm("Xóa toàn bộ lịch sử học tập?")) {
                 localStorage.removeItem("colosseum_unique_history");
                 loadHistoryBadge();
                 renderHistoryList();
             }
         }
 
-        window.onclick = function(e) {
-            const modal = document.getElementById("history-modal");
-            if (e.target === modal) closeHistoryModal();
-        };
+        function logoutAccount(e) {
+            if (e) e.preventDefault();
+            document.cookie = "session_token=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
+            sessionStorage.clear();
+            window.location.href = "/login";
+        }
 
         loadHistoryBadge();
     </script>
