@@ -65,7 +65,6 @@
             border: 1px solid rgba(250, 204, 21, 0.4); padding: 6px 14px; border-radius: 999px;
         }
 
-        /* KHUNG CẢNH CHIẾN ĐẤU (4 BIOMES BIẾN ĐỔI) */
         .m1-stage-viewport {
             position: relative; width: 100%; height: 320px;
             border-radius: 22px; overflow: hidden;
@@ -73,21 +72,17 @@
             box-shadow: 0 20px 55px rgba(0, 0, 0, 0.85);
             transition: background 0.8s ease;
         }
-        /* Biome 1: Cầu Cổ Ngữ Ánh Sao (Câu 1-5) */
         .m1-stage-viewport.biome-1 {
             background: radial-gradient(circle at 50% 20%, #172a5a 0%, #091128 60%, #040712 100%);
         }
-        /* Biome 2: Thành Phố Neon Cyber 4.0 (Câu 6-10) */
         .m1-stage-viewport.biome-2 {
             background: radial-gradient(circle at 50% 15%, #3b0764 0%, #1e1b4b 55%, #050814 100%);
             border-color: #c084fc;
         }
-        /* Biome 3: Hầm Ngục Dung Nham Hỏa Ngục (Câu 11-15) */
         .m1-stage-viewport.biome-3 {
             background: radial-gradient(circle at 50% 20%, #7f1d1d 0%, #310b0b 60%, #090406 100%);
             border-color: #fb7185;
         }
-        /* Biome 4: Thánh Điện Không Gian Lượng Tử (Câu 16-20) */
         .m1-stage-viewport.biome-4 {
             background: radial-gradient(circle at 50% 25%, #065f46 0%, #0f172a 60%, #020617 100%);
             border-color: #34d399;
@@ -97,7 +92,6 @@
             position: absolute; inset: 0; width: 100%; height: 100%; pointer-events: none;
         }
 
-        /* Sàn đấu công nghệ */
         .m1-cyber-bridge {
             position: absolute; bottom: 0; left: 0; right: 0; height: 74px;
             background: linear-gradient(180deg, rgba(15, 23, 42, 0.92) 0%, #050914 100%);
@@ -114,7 +108,6 @@
             border-left: 1px solid rgba(56, 189, 248, 0.4); border-right: 1px solid rgba(56, 189, 248, 0.4);
         }
 
-        /* Nhân vật Chiến Binh & Quái Vật trên cầu */
         .fighter-entity {
             position: absolute; bottom: 66px;
             display: flex; flex-direction: column; align-items: center;
@@ -147,7 +140,6 @@
             background: rgba(225, 29, 72, 0.25); border: 1.5px solid #fb7185; color: #fecdd3;
         }
 
-        /* Tia Chưởng Laser / Plasma khi trả lời đúng */
         .laser-beam-shot {
             position: absolute; bottom: 132px; left: 22%; width: 36px; height: 14px;
             border-radius: 99px; background: #38bdf8;
@@ -160,7 +152,6 @@
             100% { left: 78%; width: 20px; opacity: 0; }
         }
 
-        /* Khung Câu Hỏi Map 1 */
         .m1-question-panel {
             background: linear-gradient(180deg, #091122 0%, #050914 100%);
             border: 1.5px solid rgba(56, 189, 248, 0.3);
@@ -189,7 +180,7 @@
         .m1-opt-btn:hover { border-color: #38bdf8; background: #12213d; transform: translateY(-2px); }
 
         /* ==========================================================================
-           MAP 2: MA TRẬN LẬT THẺ 3D HOLOGRAM (10 CẶP ĐỒ HỌA NEON ĐA SẮC MÀU)
+           MAP 2: MA TRẬN LẬT THẺ 3D HOLOGRAM
            ========================================================================== */
         .m2-arcade-frame {
             background: radial-gradient(circle at 50% 0%, #1b1238 0%, #070b18 70%);
@@ -225,7 +216,6 @@
             border-radius: 16px; display: flex; flex-direction: column;
             align-items: center; justify-content: center; padding: 10px;
         }
-        /* Mặt sau thẻ: Vi mạch Cyber 4.0 */
         .holo-back {
             background: linear-gradient(145deg, #0d162d 0%, #060a17 100%);
             border: 1.5px solid rgba(56, 189, 248, 0.38);
@@ -236,7 +226,6 @@
             border-color: #c084fc;
             box-shadow: 0 0 22px rgba(192, 132, 252, 0.35), inset 0 0 20px rgba(192, 132, 252, 0.2);
         }
-        /* Mặt trước thẻ: Đồ họa SVG đa dạng cho từng cặp */
         .holo-front {
             transform: rotateY(180deg);
             background: #0b1326;
@@ -252,7 +241,7 @@
         .card-pair-sub { font-size: 10.5px; color: #cbd5e1; font-weight: 600; }
 
         /* ==========================================================================
-           MAP 3: GỠ BOM HẠT NHÂN 4.0 (TUẦN TỰ DÂY 1 -> DÂY 2 -> ... -> DÂY 20)
+           MAP 3: GỠ BOM HẠT NHÂN 4.0 (TUẦN TỰ DÂY 1 -> DÂY 20)
            ========================================================================== */
         .m3-reactor-shell {
             position: relative;
@@ -263,7 +252,6 @@
             overflow: hidden;
         }
 
-        /* Hiệu ứng Rung Chấn & Nổ Tung Màn Hình */
         @keyframes reactorShake {
             0%, 100% { transform: translate(0, 0) rotate(0deg); }
             15% { transform: translate(-12px, -8px) rotate(-1.5deg); }
@@ -272,11 +260,11 @@
             60% { transform: translate(10px, -6px) rotate(1deg); }
             75% { transform: translate(-6px, 4px) rotate(-0.5deg); }
         }
-        .m3-reactor-shell.shake-blast {
-            animation: reactorShake 0.65s cubic-bezier(0.36, 0.07, 0.19, 0.97);
+        .m3-reactor-shell.shake-blast,
+        .m1-stage-viewport.shake-blast {
+            animation: reactorShake 0.6s cubic-bezier(0.36, 0.07, 0.19, 0.97);
         }
 
-        /* THANH TIẾN TRÌNH TUẦN TỰ DÂY 1 -> DÂY 20 (THAY CHO 20 NÚT RƯỜM RÀ) */
         .m3-sequential-header {
             display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 14px;
             background: rgba(9, 14, 28, 0.92); border: 1px solid rgba(244, 63, 94, 0.35);
@@ -303,7 +291,6 @@
         }
         @keyframes pulseCurrentNode { 0% { transform: scaleY(1); } 100% { transform: scaleY(1.45); } }
 
-        /* BỐ CỤC LÕI BOM HẠT NHÂN & HỆ THỐNG 4 DÂY CÁP VẬT LÝ */
         .m3-core-workstation {
             display: grid; grid-template-columns: 310px 1fr; gap: 28px; align-items: center;
         }
@@ -320,13 +307,17 @@
             width: 190px; height: 190px;
             filter: drop-shadow(0 0 25px rgba(244, 63, 94, 0.65));
         }
+        .spin-ring { transform-origin: center; animation: spin360 12s infinite linear; }
+        .spin-rev { transform-origin: center; animation: spinRev 8s infinite linear; }
+        @keyframes spin360 { 100% { transform: rotate(360deg); } }
+        @keyframes spinRev { 100% { transform: rotate(-360deg); } }
+
         .reactor-digital-readout {
             font-family: 'Orbitron', monospace; font-size: 13px; font-weight: 800;
             color: #facc15; background: #050812; border: 1px solid #334155;
             padding: 8px 16px; border-radius: 10px; letter-spacing: 1px;
         }
 
-        /* KHUNG CÂU HỎI & 4 DÂY CÁP MẠCH ĐIỆN 3D */
         .m3-wires-terminal {
             display: flex; flex-direction: column; gap: 16px;
         }
@@ -346,11 +337,10 @@
             color: #38bdf8; white-space: pre-wrap;
         }
 
-        /* 4 Dây Cáp Năng Lượng để cắt */
         .cables-list-box { display: flex; flex-direction: column; gap: 12px; }
         .cable-row-unit {
             display: grid; grid-template-columns: 1fr 290px; align-items: center; gap: 14px;
-            cursor: pointer; group: cable;
+            cursor: pointer;
         }
         .physical-wire-track {
             position: relative; height: 18px; border-radius: 99px;
@@ -362,7 +352,6 @@
             width: 100%; height: 10px; border-radius: 99px;
             position: relative; transition: all 0.35s ease;
         }
-        /* Hiệu ứng xung điện chạy dọc sợi dây */
         .wire-energy-beam::after {
             content: ""; position: absolute; top: 0; left: -40%; width: 35%; height: 100%;
             background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.85), transparent);
@@ -370,7 +359,6 @@
         }
         @keyframes pulseCurrent { 100% { left: 120%; } }
 
-        /* Khi sợi dây bị cắt */
         .cable-row-unit.wire-cut-success .wire-energy-beam {
             clip-path: polygon(0 0, 44% 0, 44% 100%, 0 100%, 0 0, 56% 0, 100% 0, 100% 100%, 56% 100%);
             filter: brightness(1.4);
@@ -392,7 +380,7 @@
             background: rgba(255, 255, 255, 0.08); color: #94a3b8;
         }
 
-        /* LỚP PHỦ VỤ NỔ HẠT NHÂN / PLASMA SHOCKWAVE */
+        /* LỚP PHỦ VỤ NỔ HẠT NHÂN */
         .explosion-fx-layer {
             position: absolute; inset: 0; pointer-events: none; z-index: 90;
             display: none; align-items: center; justify-content: center;
@@ -418,17 +406,137 @@
             background: #facc15; box-shadow: 0 0 12px #ef4444;
         }
 
-        /* MODAL CÂU HỎI MAP 2 & MODAL TỔNG KẾT */
+        /* ==========================================================================
+           MODAL HOLOGRAM 4.0 HIỂN THỊ RÕ GIỮA MÀN HÌNH CHO CẢ MAP 1, MAP 2, MAP 3
+           (THAY THẾ HOÀN TOÀN HỘP THOẠI ALERT SƠ SÀI)
+           ========================================================================== */
         .cyber-modal-overlay {
-            position: fixed; inset: 0; background: rgba(2, 5, 14, 0.9);
-            backdrop-filter: blur(8px); display: none; align-items: center; justify-content: center;
-            z-index: 300; padding: 20px;
+            position: fixed; inset: 0;
+            background: rgba(2, 5, 14, 0.88);
+            backdrop-filter: blur(12px);
+            display: none; align-items: center; justify-content: center;
+            z-index: 450; padding: 20px;
         }
         .cyber-modal-box {
-            background: #081022; border: 2px solid #38bdf8; border-radius: 22px;
-            padding: 28px; width: 100%; max-width: 660px;
+            background: linear-gradient(165deg, #0b1428 0%, #050914 100%);
+            border: 2px solid #38bdf8;
+            border-radius: 24px;
+            padding: 28px 32px;
+            width: 100%; max-width: 660px;
             display: flex; flex-direction: column; gap: 16px;
-            box-shadow: 0 0 60px rgba(56, 189, 248, 0.3);
+            box-shadow: 0 0 65px rgba(56, 189, 248, 0.35);
+            position: relative;
+            animation: modalPopCenter 0.28s cubic-bezier(0.34, 1.56, 0.64, 1);
+        }
+        @keyframes modalPopCenter {
+            0% { transform: scale(0.82); opacity: 0; }
+            100% { transform: scale(1); opacity: 1; }
+        }
+
+        /* Bảng Phân Tích Đáp Án Sai / Giải Thích Giữa Màn Hình */
+        .feedback-holo-card {
+            background: radial-gradient(circle at 50% 0%, rgba(225, 29, 72, 0.22) 0%, #070d1c 65%, #040711 100%);
+            border: 2px solid #f43f5e;
+            border-radius: 24px;
+            padding: 28px 32px;
+            width: 100%; max-width: 650px;
+            display: flex; flex-direction: column; gap: 16px;
+            box-shadow: 0 0 80px rgba(244, 63, 94, 0.45), inset 0 0 30px rgba(244, 63, 94, 0.12);
+            position: relative;
+            overflow: hidden;
+            animation: modalPopCenter 0.28s cubic-bezier(0.34, 1.56, 0.64, 1);
+        }
+        /* 4 góc ngắm HUD trên bảng thông báo giữa màn hình */
+        .fb-hud-corner {
+            position: absolute; width: 20px; height: 20px;
+            border-color: #fb7185; border-style: solid; pointer-events: none;
+        }
+        .fb-tl { top: 12px; left: 12px; border-width: 3px 0 0 3px; }
+        .fb-tr { top: 12px; right: 12px; border-width: 3px 3px 0 0; }
+        .fb-bl { bottom: 12px; left: 12px; border-width: 0 0 3px 3px; }
+        .fb-br { bottom: 12px; right: 12px; border-width: 0 3px 3px 0; }
+
+        .fb-header-row {
+            display: flex; align-items: center; gap: 16px;
+            border-bottom: 1px solid rgba(244, 63, 94, 0.3);
+            padding-bottom: 14px;
+        }
+        .fb-icon-svg {
+            width: 58px; height: 58px; flex-shrink: 0;
+            filter: drop-shadow(0 0 16px rgba(244, 63, 94, 0.75));
+        }
+        .fb-map-pill {
+            display: inline-block;
+            font-family: 'Orbitron', monospace; font-size: 11px; font-weight: 800;
+            color: #fda4af; background: rgba(225, 29, 72, 0.22);
+            border: 1px solid rgba(251, 113, 133, 0.5);
+            padding: 3px 10px; border-radius: 6px; margin-bottom: 4px;
+        }
+        .fb-main-heading {
+            font-family: 'Orbitron', 'Plus Jakarta Sans', sans-serif;
+            font-size: 21px; font-weight: 900; color: #ffffff;
+            letter-spacing: 0.4px;
+        }
+
+        .fb-compare-grid {
+            display: grid; grid-template-columns: 1fr 1fr; gap: 14px;
+        }
+        .fb-choice-box {
+            padding: 14px 16px; border-radius: 14px;
+            display: flex; flex-direction: column; gap: 6px;
+        }
+        .fb-choice-wrong {
+            background: rgba(244, 63, 94, 0.12);
+            border: 1.5px solid rgba(244, 63, 94, 0.5);
+        }
+        .fb-choice-correct {
+            background: rgba(34, 197, 94, 0.14);
+            border: 1.5px solid #22c55e;
+            box-shadow: 0 0 22px rgba(34, 197, 94, 0.2);
+        }
+        .fb-choice-label {
+            font-size: 11px; font-weight: 800; letter-spacing: 0.6px; text-transform: uppercase;
+        }
+        .fb-choice-wrong .fb-choice-label { color: #fb7185; }
+        .fb-choice-correct .fb-choice-label { color: #4ade80; }
+        .fb-choice-value {
+            font-family: 'Fira Code', monospace; font-size: 14.5px; font-weight: 800; color: #ffffff;
+            word-break: break-word;
+        }
+
+        .fb-explain-panel {
+            background: rgba(14, 165, 233, 0.12);
+            border: 1.5px solid rgba(56, 189, 248, 0.45);
+            border-left: 5px solid #38bdf8;
+            border-radius: 14px;
+            padding: 15px 18px;
+            display: flex; flex-direction: column; gap: 6px;
+        }
+        .fb-explain-title {
+            font-family: 'Orbitron', sans-serif; font-size: 12px; font-weight: 800;
+            color: #38bdf8; display: flex; align-items: center; gap: 6px;
+        }
+        .fb-explain-text {
+            font-size: 14.5px; color: #e2e8f0; line-height: 1.6; font-weight: 600;
+        }
+
+        .btn-fb-continue {
+            width: 100%;
+            background: linear-gradient(135deg, #0ea5e9 0%, #0284c7 100%);
+            border: 1px solid #7dd3fc;
+            color: #ffffff;
+            padding: 14px 24px;
+            border-radius: 12px;
+            font-family: 'Orbitron', 'Plus Jakarta Sans', sans-serif;
+            font-size: 15px; font-weight: 900;
+            cursor: pointer; letter-spacing: 0.8px;
+            box-shadow: 0 8px 25px rgba(14, 165, 233, 0.45);
+            transition: 0.22s;
+        }
+        .btn-fb-continue:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 12px 32px rgba(56, 189, 248, 0.7);
+            filter: brightness(1.1);
         }
     </style>
 </head>
@@ -463,21 +571,15 @@
             <div class="biome-indicator-pill" id="m1-biome-label">🌌 VÙNG ĐẤT 1: CẦU CỔ NGỮ ÁNH SAO</div>
         </div>
 
-        <!-- KHUNG CẢNH ĐẤU TRƯỜNG BIẾN ĐỔI THEO CHẶNG -->
         <div class="m1-stage-viewport biome-1" id="m1-viewport">
-            <!-- Bối cảnh SVG động phía sau -->
             <svg class="m1-scenery-svg" id="m1-scenery-art" viewBox="0 0 1200 320" preserveAspectRatio="none"></svg>
-
-            <!-- Tia Laser bắn từ Nhân vật sang Quái vật -->
             <div class="laser-beam-shot" id="m1-laser-shot"></div>
 
-            <!-- Nhân vật của người chơi -->
             <div class="fighter-entity hero-pos" id="m1-hero-box">
                 <div class="entity-svg-wrap" id="m1-hero-svg"></div>
                 <div class="entity-name-badge" id="m1-hero-name">Pháp Sư Lượng Tử</div>
             </div>
 
-            <!-- Quái vật biến đổi đa dạng qua từng câu hỏi -->
             <div class="fighter-entity monster-pos" id="m1-monster-box">
                 <div class="monster-hp-bar"><div class="monster-hp-fill" id="m1-monster-hp"></div></div>
                 <div class="entity-svg-wrap" id="m1-monster-svg"></div>
@@ -494,7 +596,6 @@
             </div>
         </div>
 
-        <!-- BẢNG CÂU HỎI MAP 1 -->
         <div class="m1-question-panel">
             <div class="m1-q-top">
                 <span class="m1-q-badge" id="m1-progress-badge">QUÁI VẬT 1 / 20</span>
@@ -507,7 +608,7 @@
     </section>
 
     <!-- ==========================================================================
-         GIAO DIỆN MAP 2: MA TRẬN THẺ BÀI 3D HOLOGRAM (10 CẶP ĐỒ HỌA ĐA DẠNG)
+         GIAO DIỆN MAP 2: MA TRẬN THẺ BÀI 3D HOLOGRAM
          ========================================================================== -->
     <section class="map-wrapper" id="map-2-view">
         <div class="m2-arcade-frame">
@@ -522,14 +623,12 @@
     </section>
 
     <!-- ==========================================================================
-         GIAO DIỆN MAP 3: GỠ BOM HẠT NHÂN TUẦN TỰ (DÂY 1 -> DÂY 2 -> ... -> DÂY 20)
+         GIAO DIỆN MAP 3: GỠ BOM HẠT NHÂN TUẦN TỰ (DÂY 1 -> DÂY 20)
          ========================================================================== -->
     <section class="map-wrapper" id="map-3-view">
         <div class="m3-reactor-shell" id="m3-shell">
-            <!-- Lớp hiệu ứng Nổ Tung & Chấn Động khi cắt nhầm dây -->
             <div class="explosion-fx-layer" id="m3-explosion-layer"></div>
 
-            <!-- Thanh Tiến Trình Tuần Tự Dây 1 -> Dây 20 (Không còn 20 nút rối mắt) -->
             <div class="m3-sequential-header">
                 <div style="width:100%; display:flex; justify-content:space-between; align-items:center;">
                     <div class="m3-step-title">
@@ -541,11 +640,9 @@
                         <span style="color:#fb7185;">🛡️ Độ bền lõi bom: <strong id="m3-fails-left">10/10</strong></span>
                     </div>
                 </div>
-                <!-- 20 Nốt đèn LED biểu thị tiến trình từ Dây 1 -> Dây 20 -->
                 <div class="m3-nodes-track" id="m3-nodes-bar"></div>
             </div>
 
-            <!-- LÕI BOM HẠT NHÂN & 4 SỢI DÂY CÁP NĂNG LƯỢNG -->
             <div class="m3-core-workstation">
                 <div class="bomb-reactor-visual">
                     <svg class="reactor-svg-core" viewBox="0 0 200 200" fill="none">
@@ -594,6 +691,54 @@
         </div>
     </div>
 
+    <!-- ==========================================================================
+         BẢNG PHÂN TÍCH LỖI HOLOGRAM 4.0 CHÍNH GIỮA MÀN HÌNH (DÙNG CHUNG MAP 1, 2, 3)
+         ========================================================================== -->
+    <div class="cyber-modal-overlay" id="cyber-feedback-modal">
+        <div class="feedback-holo-card">
+            <div class="fb-hud-corner fb-tl"></div>
+            <div class="fb-hud-corner fb-tr"></div>
+            <div class="fb-hud-corner fb-bl"></div>
+            <div class="fb-hud-corner fb-br"></div>
+
+            <div class="fb-header-row">
+                <svg class="fb-icon-svg" viewBox="0 0 80 80" fill="none">
+                    <circle class="spin-ring" cx="40" cy="40" r="35" stroke="#fb7185" stroke-width="2" stroke-dasharray="12 6"/>
+                    <polygon points="40,12 68,62 12,62" fill="rgba(225,29,72,0.28)" stroke="#f43f5e" stroke-width="3"/>
+                    <line x1="40" y1="28" x2="40" y2="46" stroke="#facc15" stroke-width="4" stroke-linecap="round"/>
+                    <circle cx="40" cy="54" r="2.8" fill="#facc15"/>
+                </svg>
+                <div>
+                    <span class="fb-map-pill" id="fb-map-badge">MAP 1 • PHÂN TÍCH THUẬT TOÁN</span>
+                    <h3 class="fb-main-heading" id="fb-heading-txt">⚠️ PHÁT HIỆN LỖI ĐÁP ÁN!</h3>
+                </div>
+            </div>
+
+            <div style="font-size:15.5px; font-weight:800; color:#f8fafc; line-height:1.45;" id="fb-question-txt"></div>
+            <div class="m1-code-box" style="margin-bottom:0; padding:11px 15px; font-size:13.5px;" id="fb-code-txt"></div>
+
+            <div class="fb-compare-grid">
+                <div class="fb-choice-box fb-choice-wrong">
+                    <span class="fb-choice-label">❌ ĐÁP ÁN BẠN CHỌN</span>
+                    <div class="fb-choice-value" id="fb-user-choice">...</div>
+                </div>
+                <div class="fb-choice-box fb-choice-correct">
+                    <span class="fb-choice-label">✅ ĐÁP ÁN CHÍNH XÁC</span>
+                    <div class="fb-choice-value" id="fb-correct-choice">...</div>
+                </div>
+            </div>
+
+            <div class="fb-explain-panel">
+                <div class="fb-explain-title">💡 GIẢI THÍCH & GHI NHỚ KIẾN THỨC:</div>
+                <div class="fb-explain-text" id="fb-explain-txt"></div>
+            </div>
+
+            <button class="btn-fb-continue" onclick="closeCyberFeedbackModal()">
+                ⚡ ĐÃ HIỂU • TIẾP TỤC CHIẾN ĐẤU →
+            </button>
+        </div>
+    </div>
+
     <!-- MODAL KẾT THÚC MAP -->
     <div class="cyber-modal-overlay" id="end-game-modal">
         <div class="cyber-modal-box" style="text-align:center; align-items:center;">
@@ -609,6 +754,38 @@
     <script>
         const urlParams = new URLSearchParams(window.location.search);
         const currentMap = parseInt(urlParams.get("map") || "1", 10);
+        let feedbackCloseCallback = null;
+
+        // HIỂN THỊ BẢNG HOLOGRAM RÕ RÀNG CHÍNH GIỮA MÀN HÌNH CHO CẢ MAP 1, MAP 2, MAP 3
+        function showCyberFeedbackModal(mapLabel, headingText, question, code, userChoice, correctChoice, explanation, onClose) {
+            document.getElementById("fb-map-badge").innerText = mapLabel;
+            document.getElementById("fb-heading-txt").innerText = headingText;
+            document.getElementById("fb-question-txt").innerText = "❓ " + question;
+
+            const codeBox = document.getElementById("fb-code-txt");
+            if (code && code.trim() !== "") {
+                codeBox.style.display = "block";
+                codeBox.innerText = code;
+            } else {
+                codeBox.style.display = "none";
+            }
+
+            document.getElementById("fb-user-choice").innerText = userChoice;
+            document.getElementById("fb-correct-choice").innerText = correctChoice;
+            document.getElementById("fb-explain-txt").innerText = explanation;
+
+            feedbackCloseCallback = onClose || null;
+            document.getElementById("cyber-feedback-modal").style.display = "flex";
+        }
+
+        function closeCyberFeedbackModal() {
+            document.getElementById("cyber-feedback-modal").style.display = "none";
+            if (typeof feedbackCloseCallback === "function") {
+                const cb = feedbackCloseCallback;
+                feedbackCloseCallback = null;
+                cb();
+            }
+        }
 
         // Lưu lịch sử học tập duy nhất cho từng câu hỏi
         function recordUniqueHistory(mapName, question, code, userChoice, correctChoice, isCorrect, explanation) {
@@ -701,7 +878,6 @@
             }
         ];
 
-        // 6 Chủng loại đồ họa Quái vật & Boss SVG xoay vòng qua 20 câu
         const M1_MONSTER_ART = [
             {
                 title: "Slime Axit Cú Pháp",
@@ -753,7 +929,6 @@
             }
         ];
 
-        // 20 Câu hỏi Map 1 bám sát Bài 1 (Tài liệu căn bản Python)
         const M1_QUESTIONS = [
             { q: "Trong Python, kết quả của hàm type(10 / 2) là gì?", code: "print(type(10 / 2))", options: ["<class 'int'>", "<class 'float'>", "<class 'double'>", "<class 'complex'>"], ans: 1, exp: "Phép chia '/' trong Python luôn trả về số thực (float), nên 10 / 2 = 5.0." },
             { q: "Theo quy tắc đặt tên biến trong Python, tên biến nào sau đây HỢP LỆ?", code: "# Chọn tên biến đúng quy tắc", options: ["2_player = 10", "player_score_1 = 100", "player-score = 100", "def = 50"], ans: 1, exp: "Tên biến chỉ chứa chữ cái, số, dấu gạch dưới (_) và không được bắt đầu bằng số hay trùng từ khóa." },
@@ -895,16 +1070,32 @@
                 }, 480);
             } else {
                 m1Lives--;
+                const vp = document.getElementById("m1-viewport");
+                vp.classList.remove("shake-blast");
+                void vp.offsetWidth;
+                vp.classList.add("shake-blast");
+
                 document.getElementById("m1-lives-txt").innerText = "❤️".repeat(Math.max(0, m1Lives)) + ` (${m1Lives} Mạng)`;
-                alert(`❌ Sai rồi! Đáp án đúng là: ${item.options[item.ans]}\n💡 Giải thích: ${item.exp}`);
-                if (m1Lives <= 0) {
-                    showEndModal("💀 THẤT BẠI!", "Bạn đã hết mạng! Hãy xem lại Lịch sử học tập và thử sức lại nhé.");
-                }
+
+                showCyberFeedbackModal(
+                    `MAP 1: DIỆT QUÁI CÚ PHÁP • CÒN ${m1Lives} MẠNG`,
+                    "❌ ĐÒN TẤN CÔNG BỊ LỆCH MỤC TIÊU!",
+                    item.q,
+                    item.code,
+                    item.options[chosenIdx],
+                    item.options[item.ans],
+                    item.exp,
+                    () => {
+                        if (m1Lives <= 0) {
+                            showEndModal("💀 THẤT BẠI!", "Bạn đã hết mạng! Hãy xem lại Lịch sử học tập và thử sức lại nhé.");
+                        }
+                    }
+                );
             }
         }
 
         /* ==========================================================================
-           DỮ LIỆU & LOGIC MAP 2: MA TRẬN LẬT THẺ 3D HOLOGRAM (10 CẶP ĐỒ HỌA ĐA SẮC)
+           DỮ LIỆU & LOGIC MAP 2: MA TRẬN LẬT THẺ 3D HOLOGRAM
            ========================================================================== */
         const M2_PAIRS_DATA = [
             { id: 1, icon: "🔀", color: "#38bdf8", title: "if / else", sub: "Rẽ nhánh điều kiện", q: "Với x = 8, đoạn mã sau in ra gì?", code: "x = 8\nif x % 2 == 0:\n    print('Chẵn')\nelse:\n    print('Lẻ')", options: ["Lẻ", "Chẵn", "8", "Lỗi"], ans: 1, exp: "8 chia hết cho 2 (8 % 2 == 0) nên điều kiện if đúng, in ra 'Chẵn'." },
@@ -1045,12 +1236,24 @@
                     showEndModal("🏆 PHÁ ĐẢO MA TRẬN MAP 2!", `Bạn đã giải mã thành công cả 10 cặp vi mạch với ${m2Score} PTS sau ${m2FlipsCount} lượt lật!`);
                 }
             } else {
-                alert(`❌ Chưa chính xác! Đáp án đúng: ${pairData.options[pairData.ans]}\n💡 Giải thích: ${pairData.exp}`);
-                m2FirstCard.el.classList.remove("flipped");
-                m2SecondCard.el.classList.remove("flipped");
-                m2FirstCard = null;
-                m2SecondCard = null;
-                m2LockBoard = false;
+                const c1 = m2FirstCard;
+                const c2 = m2SecondCard;
+                showCyberFeedbackModal(
+                    `MAP 2: MA TRẬN THẺ BÀI 3D • CẶP [${pairData.title.toUpperCase()}]`,
+                    "❌ GIẢI MÃ VI MẠCH CHƯA CHÍNH XÁC!",
+                    pairData.q,
+                    pairData.code,
+                    pairData.options[chosenIdx],
+                    pairData.options[pairData.ans],
+                    pairData.exp,
+                    () => {
+                        if (c1 && c1.el) c1.el.classList.remove("flipped");
+                        if (c2 && c2.el) c2.el.classList.remove("flipped");
+                        m2FirstCard = null;
+                        m2SecondCard = null;
+                        m2LockBoard = false;
+                    }
+                );
             }
         }
 
@@ -1087,7 +1290,7 @@
             { name: "DÂY OMEGA", color: "linear-gradient(90deg, #3b82f6, #38bdf8)", glow: "#38bdf8" }
         ];
 
-        let m3WireIdx = 0; // Bắt đầu từ Dây 1 (index 0) -> tự động tiến lên Dây 20
+        let m3WireIdx = 0;
         let m3FailsLeft = 10;
         let m3LockCut = false;
 
@@ -1155,7 +1358,6 @@
                 <div class="shockwave-ring"></div>
             `;
 
-            // Tạo 24 hạt tia lửa văng tứ phía
             for (let i = 0; i < 24; i++) {
                 const sp = document.createElement("div");
                 sp.className = "spark-particle";
@@ -1219,16 +1421,26 @@
                 triggerM3ExplosionFX();
 
                 setTimeout(() => {
-                    if (m3FailsLeft <= 0) {
-                        showEndModal("💥 LÕI BOM PHÁT NỔ!", "Lõi phản ứng đã quá tải sau 10 lần cắt nhầm dây! Hãy ôn lại Bài 3 và thử lại nhé.");
-                    } else {
-                        m3LockCut = false;
-                    }
-                }, 700);
+                    showCyberFeedbackModal(
+                        `MAP 3: GỠ BOM HẠT NHÂN • DÂY SỐ ${m3WireIdx + 1}/20`,
+                        "💥 CẮT NHẦM DÂY KÍP NỔ! (-1 ĐỘ BỀN LÕI)",
+                        item.q,
+                        item.code,
+                        item.options[chosenIdx],
+                        item.options[item.ans],
+                        item.exp,
+                        () => {
+                            if (m3FailsLeft <= 0) {
+                                showEndModal("💥 LÕI BOM PHÁT NỔ!", "Lõi phản ứng đã quá tải sau 10 lần cắt nhầm dây! Hãy ôn lại Bài 3 và thử lại nhé.");
+                            } else {
+                                m3LockCut = false;
+                            }
+                        }
+                    );
+                }, 480);
             }
         }
 
-        // KHỞI ĐỘNG BẢN ĐỒ TƯƠNG ỨNG
         function bootArenaMap() {
             document.querySelectorAll(".map-wrapper").forEach(el => el.classList.remove("active"));
             if (currentMap === 2) {
