@@ -18,7 +18,7 @@
             overflow-x: hidden;
         }
 
-        /* ==================== SIDEBAR CYBER ==================== */
+        /* ==================== SIDEBAR CYBER (ĐÃ BỎ BẢNG XẾP HẠNG & HỒ SƠ) ==================== */
         .sidebar {
             width: 260px;
             background: linear-gradient(180deg, #060a15 0%, #03050b 100%);
@@ -32,17 +32,18 @@
             z-index: 20;
         }
         .brand-logo {
-            font-size: 20px; font-weight: 800; color: #fff; padding-left: 10px;
-            display: flex; align-items: center; gap: 12px;
+            font-family: 'Orbitron', 'Plus Jakarta Sans', sans-serif;
+            font-size: 19px; font-weight: 900; color: #fff; padding-left: 10px;
+            display: flex; align-items: center; gap: 12px; letter-spacing: 0.5px;
         }
-        .menu-list { display: flex; flex-direction: column; gap: 8px; flex: 1; }
+        .menu-list { display: flex; flex-direction: column; gap: 10px; flex: 1; }
         .menu-item {
-            display: flex; align-items: center; gap: 13px; padding: 12px 16px; border-radius: 12px;
+            display: flex; align-items: center; gap: 13px; padding: 13px 16px; border-radius: 12px;
             color: #94a3b8; text-decoration: none; font-size: 14.5px; font-weight: 600;
             transition: 0.25s; border: 1px solid transparent; cursor: pointer;
         }
-        .menu-item svg { width: 20px; height: 20px; fill: currentColor; }
-        .menu-item:hover { color: #38bdf8; background: rgba(56, 189, 248, 0.08); border-color: rgba(56, 189, 248, 0.25); }
+        .menu-item svg { width: 20px; height: 20px; fill: currentColor; flex-shrink: 0; }
+        .menu-item:hover { color: #38bdf8; background: rgba(56, 189, 248, 0.08); border-color: rgba(56, 189, 248, 0.25); transform: translateX(3px); }
         .menu-item.active {
             background: linear-gradient(135deg, rgba(14, 165, 233, 0.22) 0%, rgba(56, 189, 248, 0.05) 100%);
             border-color: rgba(56, 189, 248, 0.5); color: #38bdf8; font-weight: 700;
@@ -55,7 +56,7 @@
             color: #fb7185;
             font-weight: 800;
         }
-        .menu-item.logout-sidebar-btn:hover { background: #e11d48; color: #fff; }
+        .menu-item.logout-sidebar-btn:hover { background: #e11d48; color: #fff; border-color: #e11d48; }
         .badge-live {
             font-size: 10px; background: linear-gradient(135deg, #ef4444 0%, #dc2626 100%);
             color: #fff; padding: 3px 8px; border-radius: 9999px; font-weight: 800; margin-left: auto;
@@ -73,7 +74,6 @@
             margin: 0 auto;
         }
 
-        /* TOPBAR HUD */
         .top-hud-bar {
             display: flex; justify-content: space-between; align-items: center;
             background: rgba(8, 14, 28, 0.9); border: 1px solid rgba(56, 189, 248, 0.22);
@@ -95,7 +95,6 @@
             padding: 7px 14px; border-radius: 8px; cursor: pointer; border: none;
         }
 
-        /* ==================== HERO BANNER CÔNG NGHỆ & THANH TIẾN ĐỘ TỔNG ==================== */
         .course-hero {
             position: relative;
             background: 
@@ -133,7 +132,6 @@
         }
         .course-hero-desc { color: #94a3b8; font-size: 14px; line-height: 1.6; max-width: 680px; margin-bottom: 18px; }
 
-        /* Thanh Động Lực & Cột Mốc Tổng */
         .global-progress-box {
             background: rgba(4, 8, 19, 0.85);
             border: 1px solid rgba(56, 189, 248, 0.3);
@@ -172,7 +170,6 @@
         @keyframes spin360 { 100% { transform: rotate(360deg); } }
         @keyframes spinRev { 100% { transform: rotate(-360deg); } }
 
-        /* ==================== LƯỚI 3 BÀI HỌC HOLOGRAM ==================== */
         .courses-grid {
             display: grid;
             grid-template-columns: repeat(3, 1fr);
@@ -208,7 +205,6 @@
         .lesson-card.card-theme-2:hover { border-color: #c084fc; box-shadow: 0 20px 45px rgba(192, 132, 252, 0.22); }
         .lesson-card.card-theme-3:hover { border-color: #fb7185; box-shadow: 0 20px 45px rgba(251, 113, 133, 0.22); }
 
-        /* Khung Đồ Họa SVG Từng Bài */
         .lesson-graphic-banner {
             height: 135px;
             border-radius: 16px;
@@ -254,7 +250,6 @@
         .lesson-title { font-size: 20px; font-weight: 800; color: #ffffff; margin-bottom: 6px; }
         .lesson-desc { color: #94a3b8; font-size: 13px; line-height: 1.55; margin-bottom: 14px; }
 
-        /* ==================== DANH SÁCH CỘT MỐC TRÊN THẺ BÀI HỌC ==================== */
         .milestone-checklist {
             background: rgba(4, 8, 18, 0.8);
             border: 1px solid #16243e;
@@ -289,23 +284,11 @@
         }
         .ms-mini-item.done span { color: #86efac; text-decoration: line-through; opacity: 0.85; }
 
-        /* Thanh tiến độ từng bài */
-        .card-progress-wrap {
-            display: flex; align-items: center; gap: 10px;
-        }
-        .card-progress-track {
-            flex: 1; height: 7px; background: #0f172a; border-radius: 99px; overflow: hidden;
-        }
-        .card-progress-fill {
-            height: 100%; width: 0%;
-            background: linear-gradient(90deg, #38bdf8, #22c55e);
-            transition: width 0.35s ease;
-        }
-        .card-progress-pct {
-            font-family: 'Fira Code', monospace; font-size: 11.5px; font-weight: 800; color: #4ade80;
-        }
+        .card-progress-wrap { display: flex; align-items: center; gap: 10px; }
+        .card-progress-track { flex: 1; height: 7px; background: #0f172a; border-radius: 99px; overflow: hidden; }
+        .card-progress-fill { height: 100%; width: 0%; background: linear-gradient(90deg, #38bdf8, #22c55e); transition: width 0.35s ease; }
+        .card-progress-pct { font-family: 'Fira Code', monospace; font-size: 11.5px; font-weight: 800; color: #4ade80; }
 
-        /* Cụm nút hành động */
         .lesson-actions {
             display: grid; grid-template-columns: 1.15fr 0.85fr; gap: 10px;
             padding-top: 10px; border-top: 1px solid #15223a;
@@ -329,11 +312,9 @@
             display: flex; align-items: center; justify-content: center; gap: 6px;
             box-shadow: 0 4px 15px rgba(234, 88, 12, 0.4); transition: 0.2s;
         }
-        .btn-fight-map:hover {
-            transform: translateY(-2px); box-shadow: 0 6px 20px rgba(249, 115, 22, 0.65);
-        }
+        .btn-fight-map:hover { transform: translateY(-2px); box-shadow: 0 6px 20px rgba(249, 115, 22, 0.65); }
 
-        /* ==================== MODAL HỌC TẬP THEO CỘT MỐC (CYBER CONSOLE) ==================== */
+        /* MODAL */
         .lesson-modal-overlay {
             position: fixed; inset: 0; background: rgba(2, 5, 13, 0.92);
             backdrop-filter: blur(10px); display: none; align-items: center; justify-content: center;
@@ -359,14 +340,10 @@
         }
         .btn-close-modal:hover { background: #e11d48; color: #fff; }
 
-        /* Bố cục 2 cột trong Modal: Cột trái chọn Cột Mốc - Cột phải đọc Tài liệu & Câu hỏi nhỏ */
-        .modal-split-layout {
-            display: grid; grid-template-columns: 290px 1fr; flex: 1; overflow: hidden;
-        }
+        .modal-split-layout { display: grid; grid-template-columns: 290px 1fr; flex: 1; overflow: hidden; }
         .modal-milestone-sidebar {
             background: #050914; border-right: 1px solid #1a2a47;
-            padding: 20px 16px; display: flex; flex-direction: column; gap: 12px;
-            overflow-y: auto;
+            padding: 20px 16px; display: flex; flex-direction: column; gap: 12px; overflow-y: auto;
         }
         .ms-tab-btn {
             background: #0b1326; border: 1.5px solid #1c2d4d; border-radius: 14px;
@@ -389,14 +366,8 @@
             padding: 26px 32px; overflow-y: auto; display: flex; flex-direction: column; gap: 18px;
             line-height: 1.7; font-size: 14.5px; color: #e2e8f0;
         }
-
-        .theory-section {
-            background: #0b1428; border: 1px solid #1d3156; border-radius: 14px; padding: 18px 22px;
-        }
-        .theory-section h4 {
-            color: #facc15; font-size: 16px; font-weight: 800; margin-bottom: 10px;
-            display: flex; align-items: center; gap: 8px;
-        }
+        .theory-section { background: #0b1428; border: 1px solid #1d3156; border-radius: 14px; padding: 18px 22px; }
+        .theory-section h4 { color: #facc15; font-size: 16px; font-weight: 800; margin-bottom: 10px; }
         .theory-section ul { padding-left: 20px; margin-top: 6px; display: flex; flex-direction: column; gap: 6px; }
         .theory-section code {
             font-family: 'Fira Code', monospace; background: rgba(56, 189, 248, 0.14);
@@ -408,7 +379,6 @@
             font-size: 13.5px; color: #7dd3fc; margin-top: 10px; white-space: pre-wrap;
         }
 
-        /* KHUNG THỬ THÁCH NHỎ CUỐI MỖI CỘT MỐC ĐỂ NHẬN EXP */
         .checkpoint-quiz-box {
             background: linear-gradient(135deg, rgba(20, 83, 45, 0.25) 0%, rgba(11, 20, 40, 0.95) 100%);
             border: 1.5px solid #22c55e; border-radius: 16px; padding: 20px 24px;
@@ -432,8 +402,6 @@
             font-size: 14px; font-weight: 800; cursor: pointer; align-self: flex-start;
             box-shadow: 0 6px 20px rgba(34, 197, 94, 0.4); transition: 0.2s;
         }
-        .btn-complete-milestone:hover { transform: translateY(-2px); box-shadow: 0 8px 25px rgba(34, 197, 94, 0.6); }
-
         .modal-bottom-bar {
             padding: 15px 28px; background: #0b152b; border-top: 1.5px solid #1e3256;
             display: flex; justify-content: space-between; align-items: center;
@@ -460,12 +428,6 @@
             <a href="/arena/speed-duel" class="menu-item">
                 <svg viewBox="0 0 24 24"><path d="M14.25 2.5a.75.75 0 0 1 .75-.75h4.5a.75.75 0 0 1 .75.75v4.5a.75.75 0 0 1-1.5 0V4.56l-5.22 5.22a.75.75 0 1 1-1.06-1.06l5.22-5.22h-2.69a.75.75 0 0 1-.75-.75zM3.75 11.25a.75.75 0 0 1 .75-.75h4.5a.75.75 0 0 1 0 1.5H5.56l5.22 5.22a.75.75 0 1 1-1.06 1.06L4.5 13.06v2.69a.75.75 0 0 1-1.5 0v-4.5z"/></svg>Đấu trường <span class="badge-live">LIVE</span>
             </a>
-            <a href="/leaderboard" class="menu-item">
-                <svg viewBox="0 0 24 24"><path d="M19 5h-2.18c.37-.78.58-1.65.58-2.5C17.4 1.13 16.27 0 14.9 0c-1.05 0-1.95.66-2.3 1.6-.2.5-.3 1.05-.3 1.6 0 .55.1 1.1.3 1.6.35.94 1.25 1.6 2.3 1.6 1.37 0 2.5-1.13 2.5-2.5 0-.85-.21-1.72-.58-2.5H19v14h-2.05c-.14-.54-.36-1.05-.66-1.5H19V5zM5 19H3V5h2v14zm14 0H5v2h14v-2z"/></svg>Bảng xếp hạng
-            </a>
-            <a href="/profile" class="menu-item">
-                <svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 3c1.66 0 3 1.34 3 3s-1.34 3-3 3-3-1.34-3-3 1.34-3 3-3zm0 14.2c-2.5 0-4.71-1.28-6-3.22.03-1.99 4-3.08 6-3.08 1.99 0 5.97 1.09 6 3.08-1.29 1.94-3.5 3.22-6 3.22z"/></svg>Hồ sơ
-            </a>
             {{if eq .Username "admin"}}
             <a href="/admin" class="menu-item" style="color:#f87171;">🛡️ Quản Trị Admin</a>
             {{end}}
@@ -476,7 +438,6 @@
     </aside>
 
     <main class="main-content">
-        <!-- THANH HUD PHÍA TRÊN -->
         <div class="top-hud-bar">
             <div class="hud-status-left">
                 <span>⚡</span> HỆ THỐNG ĐÀO TẠO CHIẾN BINH PYTHON // CYBER ACADEMY
@@ -489,7 +450,6 @@
             </div>
         </div>
 
-        <!-- BANNER CHÍNH & TIẾN ĐỘ 9 CỘT MỐC -->
         <section class="course-hero">
             <div class="hero-grid-bg"></div>
             <div class="course-hero-text">
@@ -510,7 +470,6 @@
                 </div>
             </div>
 
-            <!-- ĐỒ HỌA LÕI CYBER CORE XOAY ĐA TẦNG -->
             <svg class="hero-art-svg" viewBox="0 0 120 120" fill="none">
                 <circle class="spin-slow" cx="60" cy="60" r="52" stroke="#38bdf8" stroke-width="2" stroke-dasharray="16 10" opacity="0.8"/>
                 <polygon class="spin-reverse" points="60,14 100,37 100,83 60,106 20,83 20,37" stroke="#f43f5e" stroke-width="2" fill="rgba(14, 165, 233, 0.12)"/>
@@ -525,10 +484,8 @@
             </svg>
         </section>
 
-        <!-- LƯỚI 3 BÀI HỌC TƯƠNG ỨNG 3 MAP -->
         <section class="courses-grid">
-
-            <!-- ==================== BÀI 1 ==================== -->
+            <!-- BÀI 1 -->
             <div class="lesson-card card-theme-1">
                 <div>
                     <div class="lesson-graphic-banner">
@@ -546,7 +503,6 @@
                         Nắm vững biến, 6 quy tắc đặt tên, hằng số, kiểu dữ liệu (`str`, `int`, `float`, `complex`, `bool`), hàm `print()` và 7 nhóm toán tử.
                     </p>
 
-                    <!-- 3 Cột mốc nhỏ của Bài 1 -->
                     <div class="milestone-checklist">
                         <div class="ms-header-row">
                             <span>🎯 CỘT MỐC BÀI 1</span>
@@ -580,7 +536,7 @@
                 </div>
             </div>
 
-            <!-- ==================== BÀI 2 ==================== -->
+            <!-- BÀI 2 -->
             <div class="lesson-card card-theme-2">
                 <div>
                     <div class="lesson-graphic-banner">
@@ -598,7 +554,6 @@
                         Làm chủ cấu trúc rẽ nhánh `if / elif / else`, vòng lặp `for` với `range()`, vòng lặp `while`, `while-else` và lệnh `break`, `continue`.
                     </p>
 
-                    <!-- 3 Cột mốc nhỏ của Bài 2 -->
                     <div class="milestone-checklist">
                         <div class="ms-header-row">
                             <span style="color:#d8b4fe;">🎯 CỘT MỐC BÀI 2</span>
@@ -632,7 +587,7 @@
                 </div>
             </div>
 
-            <!-- ==================== BÀI 3 ==================== -->
+            <!-- BÀI 3 -->
             <div class="lesson-card card-theme-3">
                 <div>
                     <div class="lesson-graphic-banner">
@@ -650,7 +605,6 @@
                         Chinh phục 4 cấu trúc dữ liệu cốt lõi (`List`, `Tuple`, `Set`, `Dictionary`) và bộ phương thức xử lý chuỗi ký tự nâng cao (`String`).
                     </p>
 
-                    <!-- 3 Cột mốc nhỏ của Bài 3 -->
                     <div class="milestone-checklist">
                         <div class="ms-header-row">
                             <span style="color:#fda4af;">🎯 CỘT MỐC BÀI 3</span>
@@ -683,11 +637,10 @@
                     <a href="/arena/battle?map=3" class="btn-fight-map">⚔️ Đấu Map 3</a>
                 </div>
             </div>
-
         </section>
     </main>
 
-    <!-- ==================== MODAL HỌC TẬP TƯƠNG TÁC THEO TỪNG CỘT MỐC ==================== -->
+    <!-- MODAL HỌC TẬP TƯƠNG TÁC -->
     <div class="lesson-modal-overlay" id="lesson-modal">
         <div class="lesson-modal-card">
             <div class="modal-top-bar">
@@ -696,10 +649,7 @@
             </div>
 
             <div class="modal-split-layout">
-                <!-- Cột bên trái: Danh sách 3 Cột Mốc -->
                 <div class="modal-milestone-sidebar" id="m-sidebar-tabs"></div>
-
-                <!-- Cột bên phải: Nội dung chi tiết + Câu hỏi mở khóa Cột Mốc -->
                 <div class="modal-body-content" id="m-body"></div>
             </div>
 
@@ -716,7 +666,6 @@
     </div>
 
     <script>
-        // TOÀN BỘ NỘI DUNG TÀI LIỆU CĂN BẢN PYTHON ĐƯỢC CHIA THÀNH 3 BÀI x 3 CỘT MỐC = 9 CỘT MỐC
         const CURRICULUM_DB = {
             1: {
                 title: "📘 BÀI 1: CÚ PHÁP, BIẾN, KIỂU DỮ LIỆU & TOÁN TỬ",
@@ -736,7 +685,6 @@
                                 <div class="code-block-sample">a = 10  # Biến 'a' được khởi tạo và gán giá trị 10
 a = 20  # Giá trị của 'a' đã thay đổi từ 10 thành 20</div>
                             </div>
-
                             <div class="theory-section">
                                 <h4>2. 6 Quy tắc đặt tên biến & Từ khóa trong Python 3</h4>
                                 <ul>
@@ -745,14 +693,12 @@ a = 20  # Giá trị của 'a' đã thay đổi từ 10 thành 20</div>
                                     <li><strong>Quy tắc 3:</strong> Tên biến chỉ có thể chứa chữ cái (<code>a-z</code>, <code>A-Z</code>), ký tự số (<code>0-9</code>) và dấu gạch dưới (<code>_</code>).</li>
                                     <li><strong>Quy tắc 4:</strong> Tên biến nên có một tên có ý nghĩa.</li>
                                     <li><strong>Quy tắc 5:</strong> Tên biến không được là <strong>từ khóa (keywords)</strong> dành riêng trong Python: <code>False</code>, <code>True</code>, <code>None</code>, <code>and</code>, <code>or</code>, <code>not</code>, <code>if</code>, <code>elif</code>, <code>else</code>, <code>for</code>, <code>while</code>, <code>break</code>, <code>continue</code>, <code>def</code>, <code>class</code>, <code>return</code>, <code>in</code>, <code>is</code>...</li>
-                                    <li><strong>Quy tắc 6:</strong> Tên biến nên được viết thường và dùng dấu gạch dưới để ngăn cách các từ (snake_case).</li>
+                                    <li><strong>Quy tắc 6:</strong> Tên biến nên được viết thường và dùng dấu gạch dưới để ngăn cách các từ.</li>
                                 </ul>
                             </div>
-
                             <div class="theory-section">
                                 <h4>3. Hằng số (Constants)</h4>
-                                <p>• Hằng số là biến có giá trị không thay đổi trong suốt quá trình chương trình thực thi. Trong Python KHÔNG có cách khai báo chính thức cho hằng số mà thường khai báo thông qua một mô đun (module).</p>
-                                <p>• <em>Lưu ý:</em> Tên của hằng số nên được <strong>viết hoa toàn bộ</strong> và dùng dấu gạch dưới để ngăn cách các từ.</p>
+                                <p>• Hằng số là biến có giá trị không thay đổi trong suốt quá trình chương trình thực thi. Tên hằng số nên được <strong>viết hoa toàn bộ</strong> và dùng dấu gạch dưới để ngăn cách các từ.</p>
                                 <div class="code-block-sample">PI = 3.14159
 MAX_SPEED = 120</div>
                             </div>
@@ -771,32 +717,21 @@ MAX_SPEED = 120</div>
                             <div class="theory-section">
                                 <h4>1. Kiểu dữ liệu Chuỗi (String) & Nhập dữ liệu input()</h4>
                                 <p>• Chuỗi ký tự được đặt trong nháy đơn <code>''</code> hoặc nháy kép <code>""</code>. Chuỗi nhiều dòng đặt trong 3 dấu nháy <code>'''...'''</code>.</p>
-                                <p>• Có thể nhập chuỗi từ bàn phím qua hàm <code>input()</code>.</p>
                                 <div class="code-block-sample">name = "Python"
-text = '''Đây là dòng 1
-Đây là dòng 2'''
 user_name = input("Nhập tên của bạn: ")</div>
                             </div>
-
                             <div class="theory-section">
                                 <h4>2. Kiểu dữ liệu Số (int, float, complex) & Kiểu Bool</h4>
                                 <ul>
-                                    <li><strong>Số nguyên (<code>int</code>):</strong> Số không chứa phần thập phân (VD: <code>a = 5</code>, <code>b = -10</code>). Ép kiểu khi nhập: <code>age = int(input("Nhập tuổi: "))</code>.</li>
-                                    <li><strong>Số thực (<code>float</code>):</strong> Số có chứa phần thập phân (VD: <code>1.5</code>, <code>-1.25</code>). Ép kiểu: <code>weight = float(input("Nhập cân nặng: "))</code>.</li>
-                                    <li><strong>Số phức (<code>complex</code>):</strong> Có dạng <code>z = a + bj</code> (với <code>j² = -1</code>). Ví dụ: <code>z = 2 + 3j</code>. Lưu ý khi nhập vào <code>complex()</code> phải viết liền không có khoảng trắng.</li>
-                                    <li><strong>Kiểu Logic (<code>bool</code>):</strong> Lưu trữ 2 giá trị <code>True</code> (Đúng) và <code>False</code> (Sai). Ví dụ: <code>5 > 4</code> là <code>True</code>.</li>
+                                    <li><strong>Số nguyên (<code>int</code>):</strong> Số không chứa phần thập phân. Ép kiểu: <code>age = int(input("Nhập tuổi: "))</code>.</li>
+                                    <li><strong>Số thực (<code>float</code>):</strong> Số có chứa phần thập phân. Ép kiểu: <code>weight = float(input("Nhập cân nặng: "))</code>.</li>
+                                    <li><strong>Số phức (<code>complex</code>):</strong> Có dạng <code>z = a + bj</code> (VD: <code>z = 2 + 3j</code>).</li>
+                                    <li><strong>Kiểu Logic (<code>bool</code>):</strong> Lưu trữ 2 giá trị <code>True</code> và <code>False</code>.</li>
                                 </ul>
                             </div>
-
                             <div class="theory-section">
                                 <h4>3. Hàm xuất dữ liệu print()</h4>
                                 <p><strong>Cú pháp:</strong> <code>print(object(s), sep=separator, end=end, file=file, flush=flush)</code></p>
-                                <ul>
-                                    <li><code>object(s)</code>: Đối tượng cần in ra màn hình.</li>
-                                    <li><code>sep</code>: Ký tự ngăn cách giữa các đối tượng (mặc định là khoảng trắng).</li>
-                                    <li><code>end</code>: Ký tự kết thúc mỗi lần in (mặc định là xuống dòng <code>\\n</code>).</li>
-                                    <li><code>file</code>: Tập tin ghi vào (mặc định <code>sys.stdout</code>). <code>flush</code>: Xóa bộ đệm (mặc định <code>False</code>).</li>
-                                </ul>
                                 <div class="code-block-sample">print("Hello", "World", sep="-", end="!\\n")
 # Kết quả in ra: Hello-World!</div>
                             </div>
@@ -815,28 +750,22 @@ user_name = input("Nhập tên của bạn: ")</div>
                             <div class="theory-section">
                                 <h4>1. Toán tử Số học, So sánh & Toán tử Gán</h4>
                                 <ul>
-                                    <li><strong>1. Toán tử số học:</strong> <code>+</code> (Cộng), <code>-</code> (Trừ), <code>*</code> (Nhân), <code>/</code> (Chia), <code>//</code> (Chia lấy phần nguyên), <code>%</code> (Chia lấy phần dư), <code>**</code> (Lũy thừa).</li>
-                                    <li><strong>2. Toán tử so sánh:</strong> <code>==</code> (Bằng), <code>!=</code> (Khác), <code>&gt;</code>, <code>&lt;</code>, <code>&gt;=</code>, <code>&lt;=</code> (Trả về <code>True</code> hoặc <code>False</code>).</li>
-                                    <li><strong>3. Toán tử gán:</strong> <code>=</code>, <code>+=</code>, <code>-=</code>, <code>*=</code>, <code>/=</code> (VD: <code>x += 1</code> tương đương <code>x = x + 1</code>).</li>
+                                    <li><strong>1. Toán tử số học:</strong> <code>+</code>, <code>-</code>, <code>*</code>, <code>/</code>, <code>//</code> (Chia lấy phần nguyên), <code>%</code> (Chia lấy phần dư), <code>**</code> (Lũy thừa).</li>
+                                    <li><strong>2. Toán tử so sánh:</strong> <code>==</code>, <code>!=</code>, <code>&gt;</code>, <code>&lt;</code>, <code>&gt;=</code>, <code>&lt;=</code>.</li>
+                                    <li><strong>3. Toán tử gán:</strong> <code>=</code>, <code>+=</code>, <code>-=</code>, <code>*=</code>, <code>/=</code>.</li>
                                 </ul>
-                                <div class="code-block-sample">print(5 // 2)  # Kết quả: 2 (chia lấy nguyên)
-print(5 % 2)   # Kết quả: 1 (chia lấy dư)
-print(2 ** 3)  # Kết quả: 8 (lũy thừa)</div>
+                                <div class="code-block-sample">print(5 // 2)  # Kết quả: 2
+print(5 % 2)   # Kết quả: 1
+print(2 ** 3)  # Kết quả: 8</div>
                             </div>
-
                             <div class="theory-section">
                                 <h4>2. Toán tử Logic, Định danh, Thành viên & Bitwise</h4>
                                 <ul>
-                                    <li><strong>4. Toán tử logic:</strong> <code>and</code> (Đúng khi cả 2 cùng đúng), <code>or</code> (Đúng khi 1 trong 2 đúng), <code>not</code> (Đảo ngược kết quả).</li>
-                                    <li><strong>5. Toán tử định danh:</strong> <code>is</code> và <code>is not</code> (So sánh 2 đối tượng có cùng địa chỉ bộ nhớ hay không).</li>
-                                    <li><strong>6. Toán tử thành viên:</strong> <code>in</code> và <code>not in</code> (Kiểm tra một giá trị có nằm trong chuỗi, list, set, dict hay không).</li>
-                                    <li><strong>7. Toán tử bitwise (Logic bit):</strong> <code>&amp;</code> (AND), <code>|</code> (OR), <code>^</code> (XOR), <code>~</code> (NOT), <code>&lt;&lt;</code> (Dịch trái), <code>&gt;&gt;</code> (Dịch phải).</li>
+                                    <li><strong>4. Toán tử logic:</strong> <code>and</code>, <code>or</code>, <code>not</code>.</li>
+                                    <li><strong>5. Toán tử định danh:</strong> <code>is</code>, <code>is not</code>.</li>
+                                    <li><strong>6. Toán tử thành viên:</strong> <code>in</code>, <code>not in</code>.</li>
+                                    <li><strong>7. Toán tử bitwise:</strong> <code>&amp;</code>, <code>|</code>, <code>^</code>, <code>~</code>, <code>&lt;&lt;</code>, <code>&gt;&gt;</code>.</li>
                                 </ul>
-                                <div class="code-block-sample">a = [1, 2]
-b = [1, 2]
-print(a is b)          # False (khác vùng nhớ)
-print(2 in [1, 2, 3])  # True
-print(5 & 3)           # 1 (0101 & 0011 = 0001)</div>
                             </div>
                         `,
                         quiz: {
@@ -858,19 +787,7 @@ print(5 & 3)           # 1 (0101 & 0011 = 0001)</div>
                         name: "Cấu trúc rẽ nhánh if / elif / else",
                         content: `
                             <div class="theory-section">
-                                <h4>1. Cấu trúc if và if...else</h4>
-                                <p>• <strong>Cấu trúc <code>if</code>:</strong> Khi điều kiện đúng (<code>True</code>) sẽ thực thi khối lệnh bên trong <code>if</code>.</p>
-                                <p>• <strong>Cấu trúc <code>if...else</code>:</strong> Thực thi khối lệnh 1 nếu điều kiện đúng, ngược lại thực thi khối lệnh trong <code>else</code>.</p>
-                                <div class="code-block-sample">x = 7
-if x % 2 == 0:
-    print("Số chẵn")
-else:
-    print("Số lẻ")</div>
-                            </div>
-
-                            <div class="theory-section">
-                                <h4>2. Cấu trúc đa nhánh if...elif...else</h4>
-                                <p>Dùng khi cần kiểm tra nhiều điều kiện nối tiếp nhau:</p>
+                                <h4>1. Cấu trúc if, if...else và if...elif...else</h4>
                                 <div class="code-block-sample">diem = 7.5
 if diem >= 8:
     print("Giỏi")
@@ -892,17 +809,11 @@ else:
                         name: "Vòng lặp for & Hàm range()",
                         content: `
                             <div class="theory-section">
-                                <h4>1. Vòng lặp for trong Python</h4>
-                                <p>• Được sử dụng để lặp qua một tập hợp (collection) các phần tử như <code>list</code>, <code>tuple</code>, <code>string</code>...</p>
-                                <p>• <em>Lưu ý quan trọng:</em> Phải có dấu hai chấm <code>:</code> ở cuối dòng <code>for</code> và thụt lề (thường 4 khoảng trắng) cho khối lệnh bên trong.</p>
-                            </div>
-
-                            <div class="theory-section">
-                                <h4>2. Hàm range(start, stop, step)</h4>
-                                <p>• Tạo ra một chuỗi số nguyên liên tiếp bắt đầu từ <code>start</code>, tăng theo bước <code>step</code> và <strong>dừng lại trước giá trị <code>stop</code></strong>.</p>
+                                <h4>1. Vòng lặp for & Hàm range(start, stop, step)</h4>
+                                <p>• Tạo ra chuỗi số nguyên bắt đầu từ <code>start</code>, tăng theo <code>step</code> và dừng trước <code>stop</code>.</p>
                                 <div class="code-block-sample">for i in range(1, 5, 1):
     print(i)
-# Kết quả in ra: 1, 2, 3, 4 (Dừng lại trước số 5)</div>
+# In ra: 1, 2, 3, 4</div>
                             </div>
                         `,
                         quiz: {
@@ -917,30 +828,18 @@ else:
                         name: "Vòng lặp while, break & continue",
                         content: `
                             <div class="theory-section">
-                                <h4>1. Vòng lặp while & while - else</h4>
-                                <p>• <strong>Vòng lặp <code>while</code>:</strong> Lặp lại một đoạn mã khi điều kiện còn đúng (<code>True</code>). Dừng khi điều kiện sai.</p>
-                                <p>• <strong>Cấu trúc <code>while - else</code>:</strong> Khối lệnh trong <code>else</code> được thực thi 1 lần khi điều kiện <code>while</code> sai (kết thúc tự nhiên), NHƯNG sẽ <strong>không chạy</strong> nếu vòng lặp bị ngắt bởi lệnh <code>break</code>.</p>
-                                <div class="code-block-sample">i = 0
-while i < 3:
-    print(i)
-    i += 1
-else:
-    print("Vòng lặp đã kết thúc tự nhiên")</div>
-                            </div>
-
-                            <div class="theory-section">
-                                <h4>2. Lệnh điều khiển break và continue</h4>
+                                <h4>1. Vòng lặp while, while-else & Lệnh break, continue</h4>
                                 <ul>
-                                    <li><strong><code>break</code>:</strong> Thoát hẳn khỏi vòng lặp hiện tại ngay lập tức.</li>
-                                    <li><strong><code>continue</code>:</strong> Bỏ qua phần còn lại của lượt lặp hiện tại, chuyển ngay sang lần lặp tiếp theo.</li>
+                                    <li><strong><code>break</code>:</strong> Thoát hẳn khỏi vòng lặp hiện tại.</li>
+                                    <li><strong><code>continue</code>:</strong> Bỏ qua lượt lặp hiện tại, chuyển sang lần lặp tiếp theo.</li>
                                 </ul>
                                 <div class="code-block-sample">for i in range(5):
     if i == 3:
-        break     # Dừng hẳn vòng lặp khi i = 3
+        break
     if i == 1:
-        continue  # Bỏ qua không in số 1
+        continue
     print(i)
-# Kết quả in ra: 0, 2</div>
+# Kết quả: 0, 2</div>
                             </div>
                         `,
                         quiz: {
@@ -962,25 +861,9 @@ else:
                         name: "Danh sách (List) & Bộ bất biến (Tuple)",
                         content: `
                             <div class="theory-section">
-                                <h4>1. Kiểu dữ liệu List (Danh sách)</h4>
-                                <p>Cho phép sắp xếp, thay đổi giá trị, các phần tử có thể trùng lặp. Đặt trong ngoặc vuông <code>[]</code>, chỉ số bắt đầu từ <code>0</code>.</p>
-                                <ul>
-                                    <li><strong>Thêm phần tử:</strong> <code>append(x)</code> (thêm vào cuối), <code>insert(i, x)</code> (chèn vào vị trí <code>i</code>).</li>
-                                    <li><strong>Xóa phần tử:</strong> <code>remove(x)</code> (xóa giá trị <code>x</code>), <code>pop()</code> (xóa phần tử cuối), hoặc <code>del</code>.</li>
-                                    <li><strong>Hàm có sẵn:</strong> <code>len()</code>, <code>max()</code>, <code>min()</code>, <code>sum()</code>, <code>list.sort()</code>, <code>list.reverse()</code>.</li>
-                                </ul>
-                                <div class="code-block-sample">m_list = [10, 20, 30]
-m_list[0] = 100       # [100, 20, 30]
-m_list.append(40)     # [100, 20, 30, 40]
-m_list.insert(1, 15)  # [100, 15, 20, 30, 40]</div>
-                            </div>
-
-                            <div class="theory-section">
-                                <h4>2. Kiểu dữ liệu Tuple (Bộ bất biến)</h4>
-                                <p>• Đặt trong ngoặc đơn <code>()</code>. Khá giống List nhưng <strong>bất biến (immutable)</strong> — không thể thay đổi giá trị sau khi tạo (gán <code>m_tuple[0] = 10</code> sẽ báo lỗi).</p>
-                                <p>• Hỗ trợ chỉ số âm (<code>m_tuple[-1]</code> lấy phần tử cuối) và các hàm <code>len(tuple)</code>, <code>tuple.count(x)</code>, <code>tuple.index(x)</code>.</p>
-                                <div class="code-block-sample">m_tuple = (1, 2, 3)
-print(m_tuple[-1])  # In ra: 3</div>
+                                <h4>1. Kiểu dữ liệu List [] & Tuple ()</h4>
+                                <p>• <strong>List:</strong> Có thể thay đổi, thêm bằng <code>append()</code>, <code>insert()</code>, xóa bằng <code>remove()</code>, <code>pop()</code>.</p>
+                                <p>• <strong>Tuple:</strong> Đặt trong ngoặc đơn <code>()</code>, <strong>bất biến (immutable)</strong> — không thể thay đổi sau khi tạo.</p>
                             </div>
                         `,
                         quiz: {
@@ -995,23 +878,9 @@ print(m_tuple[-1])  # In ra: 3</div>
                         name: "Tập hợp (Set) & Từ điển (Dictionary)",
                         content: `
                             <div class="theory-section">
-                                <h4>1. Kiểu dữ liệu Set (Tập hợp)</h4>
-                                <p>• Lưu trữ các phần tử <strong>không trùng lặp</strong> và <strong>không theo thứ tự</strong>, đặt trong ngoặc nhọn <code>{}</code>. Không truy cập được bằng chỉ số mà dùng vòng lặp <code>for</code> hoặc toán tử <code>in</code>.</p>
-                                <p>• <strong>Thêm:</strong> <code>add()</code>, <code>update()</code>. <strong>Xóa:</strong> <code>remove()</code> (báo lỗi nếu không có) hoặc <code>discard()</code> (không báo lỗi). <strong>Phép toán:</strong> <code>union()</code> (hợp), <code>intersection()</code> (giao), <code>difference()</code> (hiệu).</p>
-                                <div class="code-block-sample">my_set = {1, 2, 3}
-my_set.add(4)
-my_set.discard(99)  # An toàn, không báo lỗi</div>
-                            </div>
-
-                            <div class="theory-section">
-                                <h4>2. Kiểu dữ liệu Dictionary (Từ điển)</h4>
-                                <p>• Lưu trữ theo cặp <code>key:value</code> (khóa:giá trị). Có thể thay đổi, <code>key</code> không được trùng lặp.</p>
-                                <p>• <strong>Phương thức quan trọng:</strong> <code>keys()</code> (lấy các khóa), <code>values()</code> (lấy các giá trị), <code>items()</code> (duyệt cặp khóa-giá trị), <code>update()</code>, xóa bằng <code>del</code>, <code>pop()</code>, <code>popitem()</code>, <code>clear()</code>.</p>
-                                <div class="code-block-sample">my_dict = {"name": "Alice", "age": 20}
-my_dict["age"] = 21
-my_dict.update({"city": "Hanoi"})
-for k, v in my_dict.items():
-    print(f"Key: {k}, Value: {v}")</div>
+                                <h4>1. Kiểu dữ liệu Set & Dictionary</h4>
+                                <p>• <strong>Set:</strong> Không trùng lặp. Thêm bằng <code>add()</code>, xóa an toàn không lỗi bằng <code>discard()</code>.</p>
+                                <p>• <strong>Dictionary:</strong> Lưu trữ cặp <code>key:value</code>. Duyệt bằng <code>items()</code>, lấy khóa bằng <code>keys()</code>, xóa sạch bằng <code>clear()</code>.</p>
                             </div>
                         `,
                         quiz: {
@@ -1026,23 +895,11 @@ for k, v in my_dict.items():
                         name: "Xử lý Chuỗi nâng cao (String UTF-8)",
                         content: `
                             <div class="theory-section">
-                                <h4>1. Chuỗi ký tự Unicode UTF-8 & Các phương thức xử lý phổ biến</h4>
-                                <p>Chuỗi trong Python là tập hợp ký tự Unicode mã hóa UTF-8. Các phương thức xử lý chuỗi thường gặp nhất:</p>
-                                <ul>
-                                    <li><code>text.upper()</code>: Chuyển toàn bộ chuỗi sang chữ IN HOA.</li>
-                                    <li><code>text.lower()</code>: Chuyển toàn bộ chuỗi sang chữ thường.</li>
-                                    <li><code>text.strip()</code>: Xóa khoảng trắng thừa ở 2 đầu chuỗi.</li>
-                                    <li><code>text.replace(old, new)</code>: Thay thế chuỗi con.</li>
-                                    <li><code>text.split()</code>: Tách chuỗi thành một danh sách (<code>List</code>) các từ.</li>
-                                    <li><code>text.find(sub)</code>: Tìm vị trí xuất hiện đầu tiên của chuỗi con.</li>
-                                </ul>
+                                <h4>1. Các phương thức xử lý Chuỗi</h4>
                                 <div class="code-block-sample">text = " Hello Python "
-print(text.upper())           # " HELLO PYTHON "
-print(text.lower())           # " hello python "
-print(text.strip())           # "Hello Python"
-print(text.replace("o", "a")) # " Hella Pythan "
-print(text.split())           # ['Hello', 'Python']
-print(text.find("P"))         # 7</div>
+print(text.upper())  # " HELLO PYTHON "
+print(text.strip())  # "Hello Python"
+print(text.split())  # ['Hello', 'Python']</div>
                             </div>
                         `,
                         quiz: {
@@ -1064,21 +921,9 @@ print(text.find("P"))         # 7</div>
 
         function saveMilestoneDone(msId, msTitle) {
             const doneMap = getCompletedMap();
-            const isNew = !doneMap[msId];
             doneMap[msId] = true;
             localStorage.setItem("colosseum_milestones_done", JSON.stringify(doneMap));
             updateAllProgressUI();
-
-            if (isNew) {
-                fetch('/api/track-activity', {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({
-                        action: `Hoàn thành ${msTitle}`,
-                        status: "Đang học lý thuyết (+100 EXP)"
-                    })
-                }).catch(() => {});
-            }
         }
 
         function updateAllProgressUI() {
@@ -1224,8 +1069,6 @@ print(text.find("P"))         # 7</div>
             } else {
                 renderModalTabs();
                 renderModalContent();
-                document.getElementById("m-footer-status").innerHTML =
-                    `<span style="color:#4ade80; font-weight:800;">🏆 Tuyệt vời! Bạn đã hoàn thành toàn bộ 3 cột mốc của bài này. Hãy bấm "Đấu Map" để thực chiến!</span>`;
             }
         }
 
@@ -1240,16 +1083,6 @@ print(text.find("P"))         # 7</div>
 
         function logoutAccount(e) {
             if (e) e.preventDefault();
-            fetch('/api/track-activity', {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({
-                    username: "{{.Username}}",
-                    action: "Chủ động bấm Đăng xuất khỏi tài khoản",
-                    status: "Đã thoát trò chơi",
-                    isExit: true
-                })
-            }).catch(() => {});
             document.cookie = "session_token=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
             sessionStorage.clear();
             window.location.href = "/login";
