@@ -3,14 +3,14 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>CodeColosseum - Đấu Trường Lập Trình Đối Kháng</title>
+    <title>CodeColosseum 4.0 - Đấu Trường Lập Trình Đối Kháng</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@500;700&family=Plus+Jakarta+Sans:wght@500;600;700;800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@500;600;700&family=Orbitron:wght@700;800;900&family=Plus+Jakarta+Sans:wght@500;600;700;800&display=swap" rel="stylesheet">
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; }
         body {
-            background-color: #040711;
+            background-color: #03050c;
             color: #f8fafc;
             min-height: 100vh;
             display: flex;
@@ -18,213 +18,405 @@
             overflow-x: hidden;
         }
 
+        /* ==================== SIDEBAR CYBER 4.0 (ĐÃ XÓA BẢNG XẾP HẠNG & HỒ SƠ) ==================== */
         .sidebar {
-            width: 250px;
-            background: #080d1a;
-            border-right: 1px solid #162035;
-            padding: 24px 16px;
+            width: 260px;
+            background: linear-gradient(180deg, #060a15 0%, #03050b 100%);
+            border-right: 1px solid rgba(56, 189, 248, 0.16);
+            padding: 26px 18px;
             display: flex;
             flex-direction: column;
-            gap: 28px;
+            gap: 30px;
             flex-shrink: 0;
             min-height: 100vh;
+            z-index: 20;
+            box-shadow: 6px 0 35px rgba(0, 0, 0, 0.6);
         }
         .brand-logo {
-            font-size: 19px; font-weight: 800; color: #fff; padding-left: 8px;
-            display: flex; align-items: center; gap: 10px;
+            font-family: 'Orbitron', 'Plus Jakarta Sans', sans-serif;
+            font-size: 18.5px; font-weight: 900; color: #fff; padding-left: 8px;
+            display: flex; align-items: center; gap: 12px; letter-spacing: 0.5px;
+            text-shadow: 0 0 15px rgba(56, 189, 248, 0.45);
         }
-        .menu-list { display: flex; flex-direction: column; gap: 8px; flex: 1; }
+        .menu-list { display: flex; flex-direction: column; gap: 10px; flex: 1; }
         .menu-item {
-            display: flex; align-items: center; gap: 12px; padding: 12px 16px; border-radius: 10px;
-            color: #94a3b8; text-decoration: none; font-size: 14.5px; font-weight: 600; transition: 0.2s;
-            cursor: pointer;
+            display: flex; align-items: center; gap: 13px; padding: 13px 16px; border-radius: 12px;
+            color: #94a3b8; text-decoration: none; font-size: 14.5px; font-weight: 600;
+            transition: all 0.25s ease; border: 1px solid transparent; cursor: pointer;
         }
-        .menu-item:hover { color: #38bdf8; background: rgba(56, 189, 248, 0.08); }
+        .menu-item svg { width: 20px; height: 20px; fill: currentColor; transition: transform 0.2s; }
+        .menu-item:hover {
+            color: #38bdf8; background: rgba(56, 189, 248, 0.08);
+            border-color: rgba(56, 189, 248, 0.28); transform: translateX(4px);
+        }
+        .menu-item:hover svg { transform: scale(1.12); }
         .menu-item.active {
-            background: linear-gradient(90deg, rgba(2, 132, 199, 0.18) 0%, rgba(56, 189, 248, 0.08) 100%);
-            border: 1px solid rgba(56, 189, 248, 0.4); color: #38bdf8; font-weight: 700;
+            background: linear-gradient(135deg, rgba(14, 165, 233, 0.24) 0%, rgba(56, 189, 248, 0.05) 100%);
+            border-color: rgba(56, 189, 248, 0.55); color: #38bdf8; font-weight: 700;
+            box-shadow: 0 0 22px rgba(56, 189, 248, 0.18);
         }
         .menu-item.logout-sidebar-btn {
-            margin-top: 12px;
+            margin-top: auto;
             background: rgba(244, 63, 94, 0.14);
             border: 1px solid rgba(244, 63, 94, 0.45);
             color: #fb7185;
             font-weight: 800;
         }
         .menu-item.logout-sidebar-btn:hover {
-            background: #e11d48;
-            color: #ffffff;
-            border-color: #e11d48;
+            background: #e11d48; color: #ffffff; border-color: #e11d48;
+            box-shadow: 0 0 20px rgba(225, 29, 72, 0.5);
         }
         .badge-live {
-            font-size: 10px; background: #ef4444; color: #fff; padding: 2px 7px;
-            border-radius: 9999px; font-weight: 800; margin-left: auto;
-            box-shadow: 0 0 10px rgba(239, 68, 68, 0.6);
+            font-size: 10px; background: linear-gradient(135deg, #ef4444 0%, #dc2626 100%);
+            color: #fff; padding: 3px 8px; border-radius: 9999px; font-weight: 800; margin-left: auto;
+            box-shadow: 0 0 12px rgba(239, 68, 68, 0.7);
         }
 
+        /* ==================== MAIN CONTAINER ==================== */
         .main-container {
             flex: 1;
-            padding: 20px 38px 38px 38px;
+            padding: 20px 36px 40px 36px;
             display: flex;
             flex-direction: column;
             gap: 26px;
-            max-width: 1360px;
+            max-width: 1420px;
             margin: 0 auto;
         }
 
+        /* THANH TOP HUD CÔNG NGHỆ CAO */
         .top-bar {
             display: flex; justify-content: space-between; align-items: center;
+            background: linear-gradient(90deg, rgba(10, 18, 36, 0.95) 0%, rgba(6, 11, 24, 0.95) 100%);
+            border: 1px solid rgba(56, 189, 248, 0.26);
+            padding: 12px 24px; border-radius: 14px;
+            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.65);
+            position: relative;
+        }
+        .top-bar::before {
+            content: ""; position: absolute; left: 0; top: 20%; bottom: 20%; width: 4px;
+            background: #22c55e; border-radius: 0 4px 4px 0; box-shadow: 0 0 12px #22c55e;
         }
         .sys-ready {
-            font-family: 'Fira Code', monospace; font-size: 12px; font-weight: 700;
-            color: #22c55e; display: flex; align-items: center; gap: 8px;
+            font-family: 'Orbitron', monospace; font-size: 12px; font-weight: 800;
+            color: #4ade80; display: flex; align-items: center; gap: 10px; letter-spacing: 1px;
         }
+        .status-dot {
+            width: 9px; height: 9px; background: #22c55e; border-radius: 50%;
+            box-shadow: 0 0 12px #22c55e; animation: pulseDot 1.4s infinite;
+        }
+        @keyframes pulseDot { 0%, 100% { opacity: 0.35; } 50% { opacity: 1; } }
+
         .auth-btns { display: flex; gap: 12px; align-items: center; }
         .user-pill-box {
-            background: #0d1629;
-            border: 1px solid #1e3a5f;
-            color: #38bdf8;
-            padding: 7px 14px;
+            background: rgba(14, 165, 233, 0.12);
+            border: 1px solid rgba(56, 189, 248, 0.4);
+            color: #7dd3fc;
+            padding: 7px 16px;
             border-radius: 9px;
-            font-size: 14px;
+            font-family: 'Fira Code', monospace;
+            font-size: 13.5px;
             font-weight: 700;
         }
         .btn-logout-top {
             background: linear-gradient(135deg, #e11d48 0%, #be123c 100%);
-            color: #ffffff;
-            border: none;
-            padding: 8px 16px;
-            border-radius: 9px;
-            font-size: 13.5px;
-            font-weight: 800;
-            cursor: pointer;
-            text-decoration: none;
-            display: inline-flex;
-            align-items: center;
-            gap: 6px;
-            box-shadow: 0 4px 14px rgba(225, 29, 72, 0.45);
-            transition: 0.2s;
+            color: #ffffff; border: 1px solid #fda4af;
+            padding: 7px 16px; border-radius: 9px;
+            font-size: 13px; font-weight: 800; cursor: pointer; text-decoration: none;
+            display: inline-flex; align-items: center; gap: 6px;
+            box-shadow: 0 4px 14px rgba(225, 29, 72, 0.45); transition: 0.2s;
         }
-        .btn-logout-top:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 6px 20px rgba(244, 63, 94, 0.65);
-        }
-        .btn-login {
-            background: #111827; border: 1px solid #1f2937; color: #e2e8f0;
-            padding: 8px 18px; border-radius: 9px; font-size: 13.5px; font-weight: 700; text-decoration: none;
-        }
-        .btn-register {
-            background: linear-gradient(135deg, #0ea5e9 0%, #0284c7 100%); color: #fff;
-            padding: 8px 18px; border-radius: 9px; font-size: 13.5px; font-weight: 700; text-decoration: none;
-        }
+        .btn-logout-top:hover { transform: translateY(-2px); box-shadow: 0 6px 20px rgba(244, 63, 94, 0.7); }
 
+        .btn-login {
+            background: rgba(15, 23, 42, 0.9); border: 1.5px solid rgba(56, 189, 248, 0.4);
+            color: #7dd3fc; padding: 8px 20px; border-radius: 10px;
+            font-family: 'Orbitron', 'Plus Jakarta Sans', sans-serif;
+            font-size: 12.5px; font-weight: 800; text-decoration: none; transition: 0.25s;
+        }
+        .btn-login:hover { background: rgba(56, 189, 248, 0.15); color: #fff; box-shadow: 0 0 18px rgba(56, 189, 248, 0.35); }
+
+        .btn-register {
+            background: linear-gradient(135deg, #0ea5e9 0%, #0284c7 100%);
+            border: 1px solid #7dd3fc; color: #fff;
+            padding: 8px 20px; border-radius: 10px;
+            font-family: 'Orbitron', 'Plus Jakarta Sans', sans-serif;
+            font-size: 12.5px; font-weight: 800; text-decoration: none;
+            box-shadow: 0 4px 18px rgba(14, 165, 233, 0.45); transition: 0.25s;
+        }
+        .btn-register:hover { transform: translateY(-2px); box-shadow: 0 8px 24px rgba(56, 189, 248, 0.7); }
+
+        /* ==================== HERO BANNER SCI-FI HOLOGRAM 4.0 ==================== */
         .hero-card {
             position: relative;
-            background: radial-gradient(circle at 50% 15%, #16264c 0%, #091022 60%, #050811 100%);
-            border: 1.5px solid #1e2f52;
-            border-radius: 24px;
-            padding: 48px 32px;
+            background: 
+                radial-gradient(circle at 50% 15%, rgba(14, 165, 233, 0.25) 0%, rgba(225, 29, 72, 0.1) 42%, transparent 72%),
+                linear-gradient(180deg, #081126 0%, #040814 70%, #03050b 100%);
+            border: 1.5px solid rgba(56, 189, 248, 0.35);
+            border-radius: 26px;
+            padding: 44px 36px 38px 36px;
             display: flex;
             flex-direction: column;
             align-items: center;
             justify-content: center;
             text-align: center;
             overflow: hidden;
-            box-shadow: 0 22px 55px rgba(0, 0, 0, 0.75);
+            box-shadow: 0 25px 65px rgba(0, 0, 0, 0.85), inset 0 1px 0 rgba(255, 255, 255, 0.12);
         }
-        .hero-emblem {
-            width: 84px; height: 84px; margin-bottom: 14px;
-            filter: drop-shadow(0 0 24px rgba(56, 189, 248, 0.55));
-            animation: floatHero 3s ease-in-out infinite alternate;
+
+        /* Lưới không gian Cyber Grid */
+        .hero-cyber-grid {
+            position: absolute; inset: 0;
+            background-image: 
+                linear-gradient(rgba(56, 189, 248, 0.07) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(56, 189, 248, 0.07) 1px, transparent 1px);
+            background-size: 40px 40px;
+            mask-image: radial-gradient(ellipse at 50% 45%, black 30%, transparent 80%);
+            pointer-events: none;
         }
-        @keyframes floatHero {
-            0% { transform: translateY(0); }
-            100% { transform: translateY(-6px); }
+
+        /* Tia quét Laser Scanline */
+        .hero-scanline {
+            position: absolute; left: 0; right: 0; height: 2px;
+            background: linear-gradient(90deg, transparent 0%, rgba(56, 189, 248, 0.55) 50%, transparent 100%);
+            box-shadow: 0 0 15px #38bdf8;
+            animation: scanMove 6s infinite linear;
+            pointer-events: none; opacity: 0.55;
+        }
+        @keyframes scanMove { 0% { top: -5%; } 100% { top: 105%; } }
+
+        /* 4 Góc ngắm HUD Quân sự */
+        .hud-corner {
+            position: absolute; width: 24px; height: 24px;
+            border-color: #38bdf8; border-style: solid; opacity: 0.75; pointer-events: none;
+        }
+        .hud-tl { top: 16px; left: 16px; border-width: 3px 0 0 3px; }
+        .hud-tr { top: 16px; right: 16px; border-width: 3px 3px 0 0; }
+        .hud-bl { bottom: 16px; left: 16px; border-width: 0 0 3px 3px; }
+        .hud-br { bottom: 16px; right: 16px; border-width: 0 3px 3px 0; }
+
+        /* Lõi Khiên Lượng Tử Xoay Đa Tầng */
+        .hero-core-wrap {
+            position: relative; z-index: 2;
+            width: 112px; height: 112px; margin-bottom: 14px;
+            filter: drop-shadow(0 0 28px rgba(56, 189, 248, 0.65));
+        }
+        .spin-cw { transform-origin: center; animation: spinRight 12s infinite linear; }
+        .spin-ccw { transform-origin: center; animation: spinLeft 8s infinite linear; }
+        @keyframes spinRight { 100% { transform: rotate(360deg); } }
+        @keyframes spinLeft { 100% { transform: rotate(-360deg); } }
+
+        .hero-season-pill {
+            position: relative; z-index: 2;
+            font-family: 'Orbitron', monospace; font-size: 11px; font-weight: 800;
+            color: #facc15; background: rgba(250, 204, 21, 0.12);
+            border: 1px solid rgba(250, 204, 21, 0.45);
+            padding: 4px 16px; border-radius: 999px; letter-spacing: 1.2px;
+            margin-bottom: 12px;
         }
 
         .hero-title {
-            font-size: 28px; font-weight: 800; color: #ffffff;
-            letter-spacing: 0.4px; margin-bottom: 10px;
-            display: flex; align-items: center; gap: 10px;
-        }
-        .hero-sub {
-            color: #94a3b8; font-size: 14.5px; max-width: 580px; line-height: 1.6; margin-bottom: 26px;
+            position: relative; z-index: 2;
+            font-family: 'Orbitron', 'Plus Jakarta Sans', sans-serif;
+            font-size: 32px; font-weight: 900; letter-spacing: 1px;
+            background: linear-gradient(90deg, #ffffff 0%, #7dd3fc 50%, #fb7185 100%);
+            -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+            margin-bottom: 12px;
+            text-shadow: 0 0 35px rgba(56, 189, 248, 0.3);
         }
 
-        .stats-badges-row {
+        .hero-sub {
+            position: relative; z-index: 2;
+            color: #94a3b8; font-size: 14.5px; max-width: 650px;
+            line-height: 1.65; margin-bottom: 24px;
+        }
+
+        /* 2 Nút Hành Động Chính Giữa Hero */
+        .hero-cta-row {
+            position: relative; z-index: 2;
             display: flex; gap: 16px; flex-wrap: wrap; justify-content: center;
+            margin-bottom: 30px;
+        }
+        .btn-hero-primary {
+            position: relative; overflow: hidden;
+            background: linear-gradient(135deg, #e11d48 0%, #be123c 100%);
+            border: 1px solid #fda4af; color: #ffffff;
+            padding: 13px 28px; border-radius: 12px;
+            font-family: 'Orbitron', 'Plus Jakarta Sans', sans-serif;
+            font-size: 13.5px; font-weight: 900; text-decoration: none;
+            display: inline-flex; align-items: center; gap: 10px;
+            box-shadow: 0 8px 25px rgba(225, 29, 72, 0.5); transition: 0.25s;
+        }
+        .btn-hero-primary:hover { transform: translateY(-3px); box-shadow: 0 12px 32px rgba(244, 63, 94, 0.8); }
+        .btn-hero-secondary {
+            background: rgba(11, 20, 40, 0.9);
+            border: 1.5px solid #38bdf8; color: #38bdf8;
+            padding: 13px 26px; border-radius: 12px;
+            font-family: 'Orbitron', 'Plus Jakarta Sans', sans-serif;
+            font-size: 13.5px; font-weight: 800; text-decoration: none;
+            display: inline-flex; align-items: center; gap: 10px; transition: 0.25s;
+        }
+        .btn-hero-secondary:hover {
+            background: rgba(56, 189, 248, 0.16); color: #ffffff;
+            transform: translateY(-3px); box-shadow: 0 8px 25px rgba(56, 189, 248, 0.3);
+        }
+
+        /* 4 Mô-đun Thông Số Hologram */
+        .stats-badges-row {
+            position: relative; z-index: 2;
+            display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px;
+            width: 100%; max-width: 860px;
         }
         .stat-badge-item {
-            background: rgba(11, 18, 34, 0.85);
-            border: 1px solid #223559;
+            background: rgba(8, 15, 32, 0.88);
+            border: 1px solid rgba(56, 189, 248, 0.3);
+            border-top: 2.5px solid #38bdf8;
             border-radius: 14px;
-            padding: 14px 24px;
-            min-width: 150px;
+            padding: 14px 18px;
             transition: 0.25s;
+            backdrop-filter: blur(8px);
         }
         .stat-badge-item:hover {
-            border-color: #38bdf8;
-            transform: translateY(-3px);
+            border-color: #7dd3fc;
+            transform: translateY(-4px);
+            box-shadow: 0 10px 25px rgba(14, 165, 233, 0.22);
         }
-        .stat-badge-title { font-size: 15px; font-weight: 800; color: #38bdf8; margin-bottom: 4px; }
-        .stat-badge-sub { font-size: 10px; font-weight: 700; color: #94a3b8; text-transform: uppercase; letter-spacing: 0.5px; }
+        .stat-badge-title {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 15px; font-weight: 900; color: #38bdf8; margin-bottom: 4px;
+        }
+        .stat-badge-sub {
+            font-family: 'Fira Code', monospace;
+            font-size: 10px; font-weight: 700; color: #94a3b8;
+            text-transform: uppercase; letter-spacing: 0.5px;
+        }
 
+        /* ==================== BẢNG ĐIỀU KHIỂN NHANH 4.0 ==================== */
         .quick-section-title {
-            font-size: 16px; font-weight: 800; color: #f8fafc;
-            display: flex; align-items: center; gap: 8px;
+            font-family: 'Orbitron', 'Plus Jakarta Sans', sans-serif;
+            font-size: 15px; font-weight: 800; color: #7dd3fc;
+            display: flex; align-items: center; gap: 10px; letter-spacing: 0.8px;
         }
 
         .cards-row {
-            display: grid; grid-template-columns: repeat(3, 1fr); gap: 22px;
+            display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px;
         }
         .nav-card {
-            background: linear-gradient(180deg, #0b1325 0%, #070c17 100%);
-            border: 1.5px solid #192742;
-            border-radius: 18px;
+            position: relative; overflow: hidden;
+            background: linear-gradient(170deg, rgba(12, 22, 44, 0.92) 0%, rgba(6, 10, 22, 0.98) 100%);
+            border: 1.5px solid rgba(56, 189, 248, 0.26);
+            border-radius: 20px;
             padding: 26px;
             display: flex;
             flex-direction: column;
             justify-content: space-between;
-            gap: 18px;
-            transition: 0.25s;
+            gap: 20px;
+            transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.7);
         }
+        .nav-card::before {
+            content: ""; position: absolute; top: 0; left: 15%; right: 15%; height: 3px;
+            background: #38bdf8; border-radius: 0 0 4px 4px; transition: 0.3s;
+        }
+        .nav-card.practice-card::before { background: #c084fc; }
+        .nav-card.duel-card::before { background: #fb7185; }
+
         .nav-card:hover {
-            transform: translateY(-5px);
+            transform: translateY(-7px);
             border-color: #38bdf8;
-            box-shadow: 0 14px 35px rgba(56, 189, 248, 0.15);
+            box-shadow: 0 20px 45px rgba(14, 165, 233, 0.22);
+        }
+        .nav-card.practice-card:hover {
+            border-color: #c084fc;
+            box-shadow: 0 20px 45px rgba(192, 132, 252, 0.22);
         }
         .nav-card.duel-card {
-            border-color: rgba(244, 63, 94, 0.4);
-            background: linear-gradient(180deg, #170d1e 0%, #080b16 100%);
+            border-color: rgba(244, 63, 94, 0.35);
+            background: linear-gradient(170deg, rgba(32, 11, 28, 0.92) 0%, rgba(7, 10, 22, 0.98) 100%);
         }
-        .nav-card.duel-card:hover { border-color: #fb7185; }
+        .nav-card.duel-card:hover {
+            border-color: #fb7185;
+            box-shadow: 0 20px 45px rgba(244, 63, 94, 0.28);
+        }
 
-        .card-icon-wrap {
-            width: 48px; height: 48px; border-radius: 12px;
-            background: #111d36; border: 1px solid #223863;
-            display: flex; align-items: center; justify-content: center;
-            font-size: 22px; margin-bottom: 14px;
+        .card-top-row {
+            display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px;
         }
-        .card-heading { font-size: 18px; font-weight: 800; color: #ffffff; margin-bottom: 8px; }
+        .card-svg-holo {
+            width: 58px; height: 58px;
+            border-radius: 14px;
+            background: rgba(14, 165, 233, 0.12);
+            border: 1px solid rgba(56, 189, 248, 0.35);
+            display: flex; align-items: center; justify-content: center;
+            box-shadow: inset 0 0 15px rgba(56, 189, 248, 0.15);
+        }
+        .practice-card .card-svg-holo {
+            background: rgba(168, 85, 247, 0.14);
+            border-color: rgba(192, 132, 252, 0.4);
+        }
+        .duel-card .card-svg-holo {
+            background: rgba(244, 63, 94, 0.15);
+            border-color: rgba(251, 113, 133, 0.45);
+        }
+
+        .card-code-tag {
+            font-family: 'Orbitron', monospace; font-size: 10.5px; font-weight: 800;
+            color: #38bdf8; background: rgba(56, 189, 248, 0.12);
+            border: 1px solid rgba(56, 189, 248, 0.3);
+            padding: 4px 10px; border-radius: 6px;
+        }
+        .practice-card .card-code-tag { color: #d8b4fe; background: rgba(168, 85, 247, 0.14); border-color: rgba(192, 132, 252, 0.35); }
+        .duel-card .card-code-tag { color: #fda4af; background: rgba(244, 63, 94, 0.16); border-color: rgba(251, 113, 133, 0.4); }
+
+        .card-heading { font-size: 19px; font-weight: 800; color: #ffffff; margin-bottom: 8px; }
         .duel-card .card-heading { color: #fb7185; }
         .card-text { font-size: 13.5px; color: #94a3b8; line-height: 1.6; }
-        .card-action-link { font-size: 13.5px; font-weight: 800; color: #38bdf8; text-decoration: none; }
-        .duel-card .card-action-link { color: #fb7185; }
+
+        .card-action-link {
+            font-family: 'Orbitron', 'Plus Jakarta Sans', sans-serif;
+            font-size: 13px; font-weight: 800; color: #38bdf8; text-decoration: none;
+            display: inline-flex; align-items: center; gap: 8px;
+            padding-top: 12px; border-top: 1px solid rgba(56, 189, 248, 0.15);
+            transition: 0.2s;
+        }
+        .card-action-link:hover { gap: 14px; color: #fff; }
+        .practice-card .card-action-link { color: #c084fc; border-top-color: rgba(192, 132, 252, 0.18); }
+        .duel-card .card-action-link { color: #fb7185; border-top-color: rgba(244, 63, 94, 0.2); }
     </style>
 </head>
 <body>
 
+    <!-- SIDEBAR ĐÃ XÓA BẢNG XẾP HẠNG & HỒ SƠ -->
     <aside class="sidebar">
-        <div class="brand-logo"><span>⚔️</span> CodeColosseum</div>
+        <div class="brand-logo">
+            <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#38bdf8" stroke-width="2.5">
+                <polygon points="12 2 22 8.5 22 15.5 12 22 2 15.5 2 8.5 12 2"/>
+                <line x1="12" y1="22" x2="12" y2="15.5"/>
+                <polyline points="22 8.5 12 15.5 2 8.5"/>
+            </svg>
+            CodeColosseum
+        </div>
         <nav class="menu-list">
-            <a href="/" class="menu-item active"><span>🏠</span> Trang chủ</a>
-            <a href="/courses" class="menu-item"><span>📚</span> Bài học</a>
-            <a href="/arena" class="menu-item"><span>📝</span> Thực hành bài tập</a>
-            <a href="/arena/speed-duel" class="menu-item"><span>⚔️</span> Đấu trường <span class="badge-live">LIVE</span></a>
-            <a href="/leaderboard" class="menu-item"><span>🏆</span> Bảng xếp hạng</a>
-            <a href="/profile" class="menu-item"><span>👤</span> Hồ sơ</a>
+            <a href="/" class="menu-item active">
+                <svg viewBox="0 0 24 24"><path d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z"/></svg>
+                Trang chủ
+            </a>
+            <a href="/courses" class="menu-item">
+                <svg viewBox="0 0 24 24"><path d="M4 6H2v14c0 1.1.9 2 2 2h14v-2H4V6zm16-4H8c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2zm0 14H8V4h12v12z"/></svg>
+                Bài học
+            </a>
+            <a href="/arena" class="menu-item">
+                <svg viewBox="0 0 24 24"><path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm-5 14H7v-2h7v2zm3-4H7v-2h10v2zm0-4H7V7h10v2z"/></svg>
+                Thực hành bài tập
+            </a>
+            <a href="/arena/speed-duel" class="menu-item">
+                <svg viewBox="0 0 24 24"><path d="M14.25 2.5a.75.75 0 0 1 .75-.75h4.5a.75.75 0 0 1 .75.75v4.5a.75.75 0 0 1-1.5 0V4.56l-5.22 5.22a.75.75 0 1 1-1.06-1.06l5.22-5.22h-2.69a.75.75 0 0 1-.75-.75zM3.75 11.25a.75.75 0 0 1 .75-.75h4.5a.75.75 0 0 1 0 1.5H5.56l5.22 5.22a.75.75 0 1 1-1.06 1.06L4.5 13.06v2.69a.75.75 0 0 1-1.5 0v-4.5z"/></svg>
+                Đấu trường <span class="badge-live">LIVE</span>
+            </a>
+
             {{if eq .Username "admin"}}
-            <a href="/admin" class="menu-item" style="color:#f87171;"><span>🛡️</span> Quản Trị Admin</a>
+            <a href="/admin" class="menu-item" style="color:#f87171; border:1px dashed rgba(248,113,113,0.4);">
+                <span>🛡️</span> Quản Trị Admin
+            </a>
             {{end}}
 
             {{if .Username}}
@@ -236,8 +428,12 @@
     </aside>
 
     <main class="main-container">
+        <!-- TOP HUD BAR -->
         <div class="top-bar">
-            <div class="sys-ready">● SYSTEM READY</div>
+            <div class="sys-ready">
+                <span class="status-dot"></span>
+                <span>SYSTEM CORE // ONLINE 4.0</span>
+            </div>
             <div class="auth-btns">
                 {{if .Username}}
                     <span class="user-pill-box">👤 {{.Username}}</span>
@@ -249,33 +445,62 @@
             </div>
         </div>
 
+        <!-- HERO BANNER CÔNG NGHỆ HOLOGRAM -->
         <section class="hero-card">
-            <svg class="hero-emblem" viewBox="0 0 100 100" fill="none">
-                <polygon points="50,6 88,24 78,74 50,94 22,74 12,24" fill="#1e3a8a" stroke="#38bdf8" stroke-width="2.5"/>
-                <path d="M30,30 L70,70 M70,30 L30,70" stroke="#ffffff" stroke-width="5" stroke-linecap="round"/>
-                <circle cx="50" cy="50" r="13" fill="#0ea5e9" stroke="#ffffff" stroke-width="2"/>
-                <circle cx="50" cy="50" r="5" fill="#facc15"/>
+            <div class="hero-cyber-grid"></div>
+            <div class="hero-scanline"></div>
+            <div class="hud-corner hud-tl"></div>
+            <div class="hud-corner hud-tr"></div>
+            <div class="hud-corner hud-bl"></div>
+            <div class="hud-corner hud-br"></div>
+
+            <!-- Biểu tượng Lõi Khiên & Song Kiếm Laser Xoay Đa Tầng -->
+            <svg class="hero-core-wrap" viewBox="0 0 120 120" fill="none">
+                <circle class="spin-cw" cx="60" cy="60" r="54" stroke="#38bdf8" stroke-width="2" stroke-dasharray="18 10" opacity="0.75"/>
+                <circle class="spin-ccw" cx="60" cy="60" r="44" stroke="#fb7185" stroke-width="1.8" stroke-dasharray="10 8" opacity="0.7"/>
+                <polygon points="60,12 96,30 86,84 60,106 34,84 24,30" fill="url(#cyberShield)" stroke="#38bdf8" stroke-width="2.5"/>
+                <path d="M36,36 L84,84 M84,36 L36,84" stroke="#ffffff" stroke-width="5" stroke-linecap="round"/>
+                <circle cx="60" cy="60" r="15" fill="#0ea5e9" stroke="#ffffff" stroke-width="2.5"/>
+                <circle cx="60" cy="60" r="6" fill="#facc15"/>
+                <defs>
+                    <linearGradient id="cyberShield" x1="0" y1="0" x2="120" y2="120" gradientUnits="userSpaceOnUse">
+                        <stop offset="0%" stop-color="#1e3a8a"/>
+                        <stop offset="55%" stop-color="#0f172a"/>
+                        <stop offset="100%" stop-color="#881337"/>
+                    </linearGradient>
+                </defs>
             </svg>
 
+            <div class="hero-season-pill">⚡ CYBER PYTHON ARENA • GENERATION 4.0 ⚡</div>
+
             <h1 class="hero-title">
-                <span>⚔️</span> ĐẤU TRƯỜNG LẬP TRÌNH ĐỐI KHÁNG <span>⚡</span>
+                ⚔️ ĐẤU TRƯỜNG LẬP TRÌNH ĐỐI KHÁNG ⚡
             </h1>
             <p class="hero-sub">
-                Hệ thống học tập và thực hành lập trình Python tương tác qua 3 chuyên đề trọng tâm và đấu trường đua điểm tốc độ 1v1 thời gian thực.
+                Hệ thống học tập và giả lập chiến đấu Python công nghệ cao: Chinh phục 9 cột mốc lý thuyết trọng tâm, phá đảo 3 bản đồ tương tác 4.0 và so tài tốc độ tại đấu trường đa máy chủ thời gian thực.
             </p>
+
+            <div class="hero-cta-row">
+                <a href="/arena/speed-duel" class="btn-hero-primary">
+                    <span>⚔️</span> VÀO ĐẤU TRƯỜNG NGAY
+                </a>
+                <a href="/courses" class="btn-hero-secondary">
+                    <span>📚</span> LỘ TRÌNH 3 BÀI HỌC
+                </a>
+            </div>
 
             <div class="stats-badges-row">
                 <div class="stat-badge-item">
                     <div class="stat-badge-title">3 BÀI HỌC</div>
-                    <div class="stat-badge-sub">LÝ THUYẾT TRỌNG TÂM</div>
+                    <div class="stat-badge-sub">9 CỘT MỐC LÝ THUYẾT</div>
                 </div>
                 <div class="stat-badge-item">
                     <div class="stat-badge-title">3 BẢN ĐỒ</div>
-                    <div class="stat-badge-sub">THỰC HÀNH TƯƠNG TÁC</div>
+                    <div class="stat-badge-sub">GIẢ LẬP ĐỒ HỌA 4.0</div>
                 </div>
                 <div class="stat-badge-item">
-                    <div class="stat-badge-title">10 CÂU HỎI</div>
-                    <div class="stat-badge-sub">ĐẤU TRƯỜNG 1V1</div>
+                    <div class="stat-badge-title">1V1 → 5V5</div>
+                    <div class="stat-badge-sub">GHÉP TRẬN ĐA MÁY CHỦ</div>
                 </div>
                 <div class="stat-badge-item">
                     <div class="stat-badge-title">PVP REALTIME</div>
@@ -284,36 +509,70 @@
             </div>
         </section>
 
+        <!-- BẢNG ĐIỀU KHIỂN NHANH 4.0 -->
         <div class="quick-section-title">
-            <span>⚡</span> Bảng điều khiển nhanh
+            <span>⚡</span> TRUNG TÂM ĐIỀU KHIỂN NHANH // COMMAND MODULES
         </div>
 
         <section class="cards-row">
+            <!-- Mô-đun 1: Kho 3 Bài Học -->
             <div class="nav-card">
                 <div>
-                    <div class="card-icon-wrap">📚</div>
+                    <div class="card-top-row">
+                        <div class="card-svg-holo">
+                            <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="#38bdf8" stroke-width="2">
+                                <path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/>
+                                <path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/>
+                            </svg>
+                        </div>
+                        <span class="card-code-tag">MODULE 01 • +900 EXP</span>
+                    </div>
                     <h3 class="card-heading">Kho 3 Bài Học Python</h3>
-                    <p class="card-text">Nắm vững 3 chuyên đề cốt lõi: Cú pháp & Biến, Luồng điều khiển và Cấu trúc dữ liệu trước khi vào Map.</p>
+                    <p class="card-text">
+                        Chinh phục 9 cột mốc kiến thức chuẩn: Cú pháp & 7 Toán tử, Luồng điều khiển if/for/while và 4 Cấu trúc dữ liệu cốt lõi.
+                    </p>
                 </div>
-                <a href="/courses" class="card-action-link">Bắt đầu học →</a>
+                <a href="/courses" class="card-action-link">KHỞI ĐỘNG HỌC TẬP →</a>
             </div>
 
-            <div class="nav-card">
+            <!-- Mô-đun 2: Thực Hành 3 Bản Đồ -->
+            <div class="nav-card practice-card">
                 <div>
-                    <div class="card-icon-wrap">📝</div>
-                    <h3 class="card-heading">Thực Hành 3 Bản Đồ</h3>
-                    <p class="card-text">Vượt qua 3 ải thực hành: Map 1 Diệt Quái Cú Pháp, Map 2 Memory Match, Map 3 Gỡ Bom Hẹn Giờ.</p>
+                    <div class="card-top-row">
+                        <div class="card-svg-holo">
+                            <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="#c084fc" stroke-width="2">
+                                <polygon points="12 2 2 7 12 12 22 7 12 2"/>
+                                <polyline points="2 17 12 22 22 17"/>
+                                <polyline points="2 12 12 17 22 12"/>
+                            </svg>
+                        </div>
+                        <span class="card-code-tag">MODULE 02 • 3 MAPS</span>
+                    </div>
+                    <h3 class="card-heading">Thực Hành 3 Bản Đồ 4.0</h3>
+                    <p class="card-text">
+                        Trải nghiệm 3 chế độ giả lập: Map 1 Diệt Quái Đa Vùng Đất, Map 2 Ma Trận Thẻ Bài 3D và Map 3 Gỡ Bom Hạt Nhân Tuần Tự.
+                    </p>
                 </div>
-                <a href="/arena" class="card-action-link">Luyện tập ngay →</a>
+                <a href="/arena" class="card-action-link">VÀO BẢN ĐỒ THỰC HÀNH →</a>
             </div>
 
+            <!-- Mô-đun 3: Đấu Trường Kiến Thức -->
             <div class="nav-card duel-card">
                 <div>
-                    <div class="card-icon-wrap">⚔️</div>
-                    <h3 class="card-heading">Đấu Trường 1v1 (10 Câu)</h3>
-                    <p class="card-text">Đối kháng đua điểm tốc độ 10 câu hỏi trực tiếp: Ai trả lời đúng và nhanh hơn sẽ giành chiến thắng.</p>
+                    <div class="card-top-row">
+                        <div class="card-svg-holo">
+                            <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="#fb7185" stroke-width="2">
+                                <polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/>
+                            </svg>
+                        </div>
+                        <span class="card-code-tag">MODULE 03 • LIVE PVP</span>
+                    </div>
+                    <h3 class="card-heading">Đấu Trường Kiến Thức (10 Câu)</h3>
+                    <p class="card-text">
+                        Ghép trận ngẫu nhiên 1v1, 2v2, 3v3, 5v5 thời gian thực: Trả lời đúng và nhanh để mang chiến thắng về cho Đội Xanh hoặc Đội Đỏ.
+                    </p>
                 </div>
-                <a href="/arena/speed-duel" class="card-action-link">Vào đấu trường →</a>
+                <a href="/arena/speed-duel" class="card-action-link">GHÉP TRẬN ĐẤU TRƯỜNG →</a>
             </div>
         </section>
     </main>
@@ -321,7 +580,6 @@
     <script>
         function logoutAccount(e) {
             if (e) e.preventDefault();
-            // Báo về Admin là người chơi đã đăng xuất
             fetch('/api/track-activity', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
@@ -333,11 +591,8 @@
                 })
             }).catch(() => {});
 
-            // Xóa trực tiếp cookie đăng nhập trên trình duyệt
             document.cookie = "session_token=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
             sessionStorage.clear();
-
-            // Chuyển thẳng về trang Đăng nhập
             window.location.href = "/login";
         }
     </script>
