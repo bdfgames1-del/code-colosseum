@@ -18,7 +18,7 @@
             overflow-x: hidden;
         }
 
-        /* ==================== SIDEBAR CYBER 4.0 ==================== */
+        /* ==================== SIDEBAR CYBER 4.0 (ĐÃ BỎ BẢNG XẾP HẠNG & HỒ SƠ) ==================== */
         .sidebar {
             width: 260px;
             background: linear-gradient(180deg, #060a15 0%, #03050b 100%);
@@ -32,17 +32,18 @@
             z-index: 20;
         }
         .brand-logo {
-            font-size: 20px; font-weight: 800; color: #fff; padding-left: 10px;
-            display: flex; align-items: center; gap: 12px;
+            font-family: 'Orbitron', 'Plus Jakarta Sans', sans-serif;
+            font-size: 19px; font-weight: 900; color: #fff; padding-left: 10px;
+            display: flex; align-items: center; gap: 12px; letter-spacing: 0.5px;
         }
-        .menu-list { display: flex; flex-direction: column; gap: 8px; flex: 1; }
+        .menu-list { display: flex; flex-direction: column; gap: 10px; flex: 1; }
         .menu-item {
-            display: flex; align-items: center; gap: 13px; padding: 12px 16px; border-radius: 12px;
+            display: flex; align-items: center; gap: 13px; padding: 13px 16px; border-radius: 12px;
             color: #94a3b8; text-decoration: none; font-size: 14.5px; font-weight: 600;
             transition: 0.25s; border: 1px solid transparent; cursor: pointer;
         }
-        .menu-item svg { width: 20px; height: 20px; fill: currentColor; }
-        .menu-item:hover { color: #38bdf8; background: rgba(56, 189, 248, 0.08); border-color: rgba(56, 189, 248, 0.25); }
+        .menu-item svg { width: 20px; height: 20px; fill: currentColor; flex-shrink: 0; }
+        .menu-item:hover { color: #38bdf8; background: rgba(56, 189, 248, 0.08); border-color: rgba(56, 189, 248, 0.25); transform: translateX(3px); }
         .menu-item.active {
             background: linear-gradient(135deg, rgba(14, 165, 233, 0.22) 0%, rgba(56, 189, 248, 0.05) 100%);
             border-color: rgba(56, 189, 248, 0.5); color: #38bdf8; font-weight: 700;
@@ -55,7 +56,7 @@
             color: #fb7185;
             font-weight: 800;
         }
-        .menu-item.logout-sidebar-btn:hover { background: #e11d48; color: #fff; }
+        .menu-item.logout-sidebar-btn:hover { background: #e11d48; color: #fff; border-color: #e11d48; }
         .badge-live {
             font-size: 10px; background: linear-gradient(135deg, #ef4444 0%, #dc2626 100%);
             color: #fff; padding: 3px 8px; border-radius: 9999px; font-weight: 800; margin-left: auto;
@@ -73,7 +74,6 @@
             margin: 0 auto;
         }
 
-        /* HEADER BANNER SCI-FI 4.0 */
         .header-row {
             position: relative;
             display: flex; justify-content: space-between; align-items: center;
@@ -84,13 +84,6 @@
             border-radius: 22px; padding: 28px 34px;
             overflow: hidden;
             box-shadow: 0 20px 50px rgba(0, 0, 0, 0.75);
-        }
-        .header-row::before {
-            content: ""; position: absolute; inset: 0;
-            background-image: 
-                linear-gradient(rgba(56, 189, 248, 0.05) 1px, transparent 1px),
-                linear-gradient(90deg, rgba(56, 189, 248, 0.05) 1px, transparent 1px);
-            background-size: 32px 32px; pointer-events: none;
         }
         .header-tag-pill {
             display: inline-flex; align-items: center; gap: 6px;
@@ -119,23 +112,15 @@
             font-family: 'Fira Code', monospace; font-size: 13.5px; font-weight: 700;
         }
 
-        /* ==================== LƯỚI 3 BẢN ĐỒ HOLOGRAM 4.0 ==================== */
-        .maps-grid {
-            display: grid; grid-template-columns: repeat(3, 1fr); gap: 26px;
-        }
+        .maps-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 26px; }
 
         .map-card {
             background: linear-gradient(170deg, rgba(13, 23, 46, 0.92) 0%, rgba(6, 10, 22, 0.98) 100%);
             border: 1.5px solid rgba(56, 189, 248, 0.28);
-            border-radius: 22px;
-            padding: 24px;
-            display: flex;
-            flex-direction: column;
-            justify-content: space-between;
-            gap: 20px;
+            border-radius: 22px; padding: 24px;
+            display: flex; flex-direction: column; justify-content: space-between; gap: 20px;
             transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
-            position: relative;
-            overflow: hidden;
+            position: relative; overflow: hidden;
             box-shadow: 0 18px 45px rgba(0, 0, 0, 0.75);
         }
         .map-card::before {
@@ -145,27 +130,16 @@
         .map-card.theme-purple::before { background: #c084fc; }
         .map-card.theme-red::before { background: #fb7185; }
 
-        .map-card:hover {
-            transform: translateY(-8px);
-            border-color: #38bdf8;
-            box-shadow: 0 22px 50px rgba(14, 165, 233, 0.25);
-        }
+        .map-card:hover { transform: translateY(-8px); border-color: #38bdf8; box-shadow: 0 22px 50px rgba(14, 165, 233, 0.25); }
         .map-card.theme-purple:hover { border-color: #c084fc; box-shadow: 0 22px 50px rgba(192, 132, 252, 0.25); }
         .map-card.theme-red:hover { border-color: #fb7185; box-shadow: 0 22px 50px rgba(251, 113, 133, 0.25); }
 
-        /* KHUNG ĐỒ HỌA SVG 4.0 CHO TỪNG MAP */
         .map-art-banner {
-            height: 165px;
-            border-radius: 16px;
-            background: 
-                radial-gradient(circle at 50% 50%, rgba(14, 165, 233, 0.28) 0%, #050914 85%);
+            height: 165px; border-radius: 16px;
+            background: radial-gradient(circle at 50% 50%, rgba(14, 165, 233, 0.28) 0%, #050914 85%);
             border: 1px solid rgba(56, 189, 248, 0.35);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            margin-bottom: 16px;
-            position: relative;
-            overflow: hidden;
+            display: flex; align-items: center; justify-content: center;
+            margin-bottom: 16px; position: relative; overflow: hidden;
         }
         .theme-purple .map-art-banner {
             background: radial-gradient(circle at 50% 50%, rgba(168, 85, 247, 0.28) 0%, #050914 85%);
@@ -205,20 +179,13 @@
 
         .map-title { font-size: 20px; font-weight: 800; color: #ffffff; margin-bottom: 8px; }
         .map-desc { font-size: 13.5px; color: #94a3b8; line-height: 1.6; margin-bottom: 14px; }
-
-        .map-features-row {
-            display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 10px;
-        }
+        .map-features-row { display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 10px; }
         .map-feat-tag {
             font-family: 'Fira Code', monospace; font-size: 11px; font-weight: 600;
             background: #091224; border: 1px solid #1e3256; color: #cbd5e1;
             padding: 4px 9px; border-radius: 6px;
         }
-
-        .map-topic {
-            font-size: 12.5px; font-weight: 700; color: #38bdf8;
-            display: flex; align-items: center; gap: 6px;
-        }
+        .map-topic { font-size: 12.5px; font-weight: 700; color: #38bdf8; }
         .theme-purple .map-topic { color: #c084fc; }
         .theme-red .map-topic { color: #fb7185; }
 
@@ -226,20 +193,13 @@
         .btn-enter-map {
             flex: 1; text-align: center;
             background: linear-gradient(135deg, #0284c7 0%, #0369a1 100%);
-            border: 1px solid #38bdf8;
-            color: #ffffff; font-family: 'Orbitron', 'Plus Jakarta Sans', sans-serif;
+            border: 1px solid #38bdf8; color: #ffffff;
+            font-family: 'Orbitron', 'Plus Jakarta Sans', sans-serif;
             font-weight: 800; font-size: 13.5px; padding: 13px;
             border-radius: 12px; text-decoration: none; transition: 0.25s;
-            box-shadow: 0 6px 18px rgba(2, 132, 199, 0.35);
         }
-        .theme-purple .btn-enter-map {
-            background: linear-gradient(135deg, #9333ea 0%, #6b21a8 100%);
-            border-color: #c084fc; box-shadow: 0 6px 18px rgba(147, 51, 234, 0.35);
-        }
-        .theme-red .btn-enter-map {
-            background: linear-gradient(135deg, #e11d48 0%, #9f1239 100%);
-            border-color: #fb7185; box-shadow: 0 6px 18px rgba(225, 29, 72, 0.35);
-        }
+        .theme-purple .btn-enter-map { background: linear-gradient(135deg, #9333ea 0%, #6b21a8 100%); border-color: #c084fc; }
+        .theme-red .btn-enter-map { background: linear-gradient(135deg, #e11d48 0%, #9f1239 100%); border-color: #fb7185; }
         .btn-enter-map:hover { transform: translateY(-2px); filter: brightness(1.15); }
 
         .btn-view-map-history {
@@ -258,10 +218,7 @@
             padding: 24px 28px; width: 100%; max-width: 840px; max-height: 88vh;
             display: flex; flex-direction: column; gap: 14px;
         }
-        .modal-history-top {
-            display: flex; justify-content: space-between; align-items: center;
-            border-bottom: 1px solid #1e293b; padding-bottom: 12px;
-        }
+        .modal-history-top { display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid #1e293b; padding-bottom: 12px; }
         .modal-history-title { font-size: 19px; font-weight: 800; color: #fbbf24; }
         .btn-close-modal { background: none; border: none; color: #94a3b8; font-size: 24px; cursor: pointer; }
         .map-filter-tabs { display: flex; gap: 8px; overflow-x: auto; padding-bottom: 4px; }
@@ -305,12 +262,6 @@
             <a href="/arena/speed-duel" class="menu-item">
                 <svg viewBox="0 0 24 24"><path d="M14.25 2.5a.75.75 0 0 1 .75-.75h4.5a.75.75 0 0 1 .75.75v4.5a.75.75 0 0 1-1.5 0V4.56l-5.22 5.22a.75.75 0 1 1-1.06-1.06l5.22-5.22h-2.69a.75.75 0 0 1-.75-.75zM3.75 11.25a.75.75 0 0 1 .75-.75h4.5a.75.75 0 0 1 0 1.5H5.56l5.22 5.22a.75.75 0 1 1-1.06 1.06L4.5 13.06v2.69a.75.75 0 0 1-1.5 0v-4.5z"/></svg>Đấu trường <span class="badge-live">LIVE</span>
             </a>
-            <a href="/leaderboard" class="menu-item">
-                <svg viewBox="0 0 24 24"><path d="M19 5h-2.18c.37-.78.58-1.65.58-2.5C17.4 1.13 16.27 0 14.9 0c-1.05 0-1.95.66-2.3 1.6-.2.5-.3 1.05-.3 1.6 0 .55.1 1.1.3 1.6.35.94 1.25 1.6 2.3 1.6 1.37 0 2.5-1.13 2.5-2.5 0-.85-.21-1.72-.58-2.5H19v14h-2.05c-.14-.54-.36-1.05-.66-1.5H19V5zM5 19H3V5h2v14zm14 0H5v2h14v-2z"/></svg>Bảng xếp hạng
-            </a>
-            <a href="/profile" class="menu-item">
-                <svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 3c1.66 0 3 1.34 3 3s-1.34 3-3 3-3-1.34-3-3 1.34-3 3-3zm0 14.2c-2.5 0-4.71-1.28-6-3.22.03-1.99 4-3.08 6-3.08 1.99 0 5.97 1.09 6 3.08-1.29 1.94-3.5 3.22-6 3.22z"/></svg>Hồ sơ
-            </a>
             {{if eq .Username "admin"}}
             <a href="/admin" class="menu-item" style="color:#f87171;">🛡️ Quản Trị Admin</a>
             {{end}}
@@ -336,13 +287,12 @@
         </div>
 
         <div class="maps-grid">
-            <!-- MAP 1: CYBER RPG MULTI-BIOME -->
+            <!-- MAP 1 -->
             <div class="map-card">
                 <div>
                     <div class="map-art-banner">
                         <span class="map-mode-chip">4 KHUNG CẢNH • 4 NHÂN VẬT</span>
                         <span class="map-badge-level">BÀI 1 • CÚ PHÁP</span>
-                        <!-- Đồ họa SVG Cyber Mage & Quái Vật -->
                         <svg class="holo-svg-icon" viewBox="0 0 110 110" fill="none">
                             <circle class="spin-ring" cx="55" cy="55" r="46" stroke="#38bdf8" stroke-width="1.8" stroke-dasharray="14 8"/>
                             <polygon points="55,14 90,34 90,76 55,96 20,76 20,34" fill="rgba(14,165,233,0.18)" stroke="#38bdf8" stroke-width="2"/>
@@ -374,13 +324,12 @@
                 </div>
             </div>
 
-            <!-- MAP 2: NEURAL MEMORY MATRIX 3D -->
+            <!-- MAP 2 -->
             <div class="map-card theme-purple">
                 <div>
                     <div class="map-art-banner">
                         <span class="map-mode-chip">LẬT THẺ 3D HOLOGRAM</span>
                         <span class="map-badge-level">BÀI 2 • VÒNG LẶP</span>
-                        <!-- Đồ họa SVG Neural Matrix 3D -->
                         <svg class="holo-svg-icon" viewBox="0 0 110 110" fill="none">
                             <circle class="spin-rev" cx="55" cy="55" r="46" stroke="#c084fc" stroke-width="1.8" stroke-dasharray="10 8"/>
                             <rect x="24" y="24" width="28" height="28" rx="6" fill="rgba(168,85,247,0.3)" stroke="#c084fc" stroke-width="2"/>
@@ -407,13 +356,12 @@
                 </div>
             </div>
 
-            <!-- MAP 3: SEQUENTIAL CYBER BOMB REACTOR -->
+            <!-- MAP 3 -->
             <div class="map-card theme-red">
                 <div>
                     <div class="map-art-banner">
                         <span class="map-mode-chip">GỠ TUẦN TỰ DÂY 1 → 20</span>
                         <span class="map-badge-level">BÀI 3 • DATA CORE</span>
-                        <!-- Đồ họa SVG Lò Phản Ứng Bom Hạt Nhân -->
                         <svg class="holo-svg-icon" viewBox="0 0 110 110" fill="none">
                             <circle class="spin-ring" cx="55" cy="55" r="46" stroke="#fb7185" stroke-width="2" stroke-dasharray="18 6"/>
                             <circle class="spin-rev" cx="55" cy="55" r="34" stroke="#facc15" stroke-width="1.8" stroke-dasharray="8 8"/>
