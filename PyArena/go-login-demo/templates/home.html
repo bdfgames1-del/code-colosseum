@@ -3,14 +3,14 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>CodeColosseum 4.0 - Đấu Trường Lập Trình Đối Kháng</title>
+    <title>CodeColosseum - Đấu Trường Lập Trình Đối Kháng</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@500;600;700&family=Orbitron:wght@700;800;900&family=Plus+Jakarta+Sans:wght@500;600;700;800&display=swap" rel="stylesheet">
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; }
         body {
-            background-color: #03050c;
+            background-color: #030611;
             color: #f8fafc;
             min-height: 100vh;
             display: flex;
@@ -18,63 +18,368 @@
             overflow-x: hidden;
         }
 
-        /* ==================== SIDEBAR CYBER 4.0 (ĐÃ BỎ BẢNG XẾP HẠNG & HỒ SƠ) ==================== */
+        /* ==================== SIDEBAR COMMAND DECK 4.0 (LẤP ĐẦY KHOẢNG TRỐNG & ĐỔI MÀU) ==================== */
         .sidebar {
-            width: 260px;
-            background: linear-gradient(180deg, #060a15 0%, #03050b 100%);
-            border-right: 1px solid rgba(56, 189, 248, 0.16);
-            padding: 26px 18px;
+            width: 288px;
+            background: 
+                radial-gradient(circle at 0% 15%, rgba(0, 242, 254, 0.14) 0%, transparent 45%),
+                radial-gradient(circle at 100% 85%, rgba(255, 107, 0, 0.12) 0%, transparent 45%),
+                linear-gradient(180deg, #070d1f 0%, #040814 55%, #03060f 100%);
+            border-right: 1.5px solid rgba(0, 242, 254, 0.25);
+            padding: 20px 16px;
             display: flex;
             flex-direction: column;
-            gap: 28px;
+            justify-content: space-between;
+            gap: 18px;
             flex-shrink: 0;
             min-height: 100vh;
+            box-shadow: 10px 0 40px rgba(0, 0, 0, 0.75);
+            position: relative;
             z-index: 20;
         }
-        .brand-logo {
-            font-family: 'Orbitron', 'Plus Jakarta Sans', sans-serif;
-            font-size: 19px; font-weight: 900; color: #fff; padding-left: 10px;
-            display: flex; align-items: center; gap: 12px; letter-spacing: 0.5px;
+
+        /* Thanh viền neon chạy dọc mép phải Sidebar */
+        .sidebar::after {
+            content: "";
+            position: absolute;
+            top: 10%;
+            bottom: 10%;
+            right: -1.5px;
+            width: 2px;
+            background: linear-gradient(180deg, transparent, #00f2fe, #ff6b00, transparent);
+            box-shadow: 0 0 12px #00f2fe;
         }
-        .menu-list { display: flex; flex-direction: column; gap: 10px; flex: 1; }
+
+        /* KHỐI LOGO KIM NGƯU VS MÃNH HỔ Ở ĐẦU SIDEBAR */
+        .brand-showcase-box {
+            background: linear-gradient(145deg, rgba(11, 22, 48, 0.95) 0%, rgba(5, 10, 24, 0.98) 100%);
+            border: 1.5px solid rgba(0, 242, 254, 0.35);
+            border-radius: 16px;
+            padding: 12px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 8px;
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.6), inset 0 0 20px rgba(0, 242, 254, 0.08);
+            text-decoration: none;
+            position: relative;
+            overflow: hidden;
+        }
+        .brand-showcase-box::before {
+            content: "";
+            position: absolute;
+            top: 0; left: 15%; right: 15%; height: 2px;
+            background: linear-gradient(90deg, #00f2fe, #ff6b00);
+        }
+        .brand-banner-img {
+            width: 100%;
+            height: 68px;
+            object-fit: cover;
+            border-radius: 10px;
+            border: 1px solid rgba(255, 255, 255, 0.12);
+            display: block;
+        }
+        .brand-fallback-header {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            width: 100%;
+            padding: 4px 6px;
+        }
+        .brand-text-logo {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 17.5px;
+            font-weight: 900;
+            letter-spacing: 0.5px;
+            color: #ffffff;
+        }
+        .brand-text-logo span {
+            background: linear-gradient(90deg, #00f2fe 0%, #38bdf8 50%, #ff8c00 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        .brand-sub-tag {
+            font-family: 'Fira Code', monospace;
+            font-size: 10px;
+            font-weight: 700;
+            color: #fb923c;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+        }
+
+        /* NHÃN PHÂN KHU ĐIỀU HƯỚNG */
+        .nav-section-label {
+            font-family: 'Orbitron', monospace;
+            font-size: 10.5px;
+            font-weight: 800;
+            color: #64748b;
+            letter-spacing: 1.4px;
+            padding: 0 8px;
+            margin-bottom: -4px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        /* DANH SÁCH MODULE ĐIỀU HƯỚNG 2 TẦNG */
+        .menu-list {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
         .menu-item {
-            display: flex; align-items: center; gap: 13px; padding: 13px 16px; border-radius: 12px;
-            color: #94a3b8; text-decoration: none; font-size: 14.5px; font-weight: 600;
-            transition: 0.25s; border: 1px solid transparent; cursor: pointer;
+            position: relative;
+            display: flex;
+            align-items: center;
+            gap: 13px;
+            padding: 12px 14px;
+            border-radius: 14px;
+            background: rgba(11, 19, 38, 0.75);
+            border: 1.5px solid rgba(30, 48, 84, 0.8);
+            color: #cbd5e1;
+            text-decoration: none;
+            transition: all 0.25s cubic-bezier(0.25, 0.8, 0.25, 1);
+            overflow: hidden;
         }
-        .menu-item svg { width: 20px; height: 20px; fill: currentColor; flex-shrink: 0; }
+        .menu-item::before {
+            content: "";
+            position: absolute;
+            left: 0; top: 20%; bottom: 20%;
+            width: 3.5px;
+            background: transparent;
+            border-radius: 0 4px 4px 0;
+            transition: 0.25s;
+        }
+        .menu-icon-box {
+            width: 40px;
+            height: 40px;
+            border-radius: 11px;
+            background: rgba(15, 28, 56, 0.9);
+            border: 1px solid rgba(56, 189, 248, 0.25);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+            transition: 0.25s;
+        }
+        .menu-icon-box svg {
+            width: 20px;
+            height: 20px;
+            fill: #38bdf8;
+            transition: 0.25s;
+        }
+        .menu-text-wrap {
+            display: flex;
+            flex-direction: column;
+            gap: 2px;
+            flex: 1;
+        }
+        .menu-main-txt {
+            font-size: 14px;
+            font-weight: 800;
+            color: #f8fafc;
+            letter-spacing: 0.2px;
+        }
+        .menu-sub-txt {
+            font-family: 'Fira Code', monospace;
+            font-size: 10.5px;
+            color: #64748b;
+            font-weight: 600;
+        }
+
+        /* Hiệu ứng Hover & Active rực rỡ */
         .menu-item:hover {
-            color: #38bdf8; background: rgba(56, 189, 248, 0.08);
-            border-color: rgba(56, 189, 248, 0.25); transform: translateX(3px);
+            transform: translateX(4px);
+            background: linear-gradient(90deg, rgba(0, 242, 254, 0.14) 0%, rgba(15, 23, 42, 0.9) 100%);
+            border-color: rgba(0, 242, 254, 0.5);
+            box-shadow: 0 6px 20px rgba(0, 242, 254, 0.15);
+        }
+        .menu-item:hover::before {
+            background: #00f2fe;
+            box-shadow: 0 0 10px #00f2fe;
         }
         .menu-item.active {
-            background: linear-gradient(135deg, rgba(14, 165, 233, 0.22) 0%, rgba(56, 189, 248, 0.05) 100%);
-            border-color: rgba(56, 189, 248, 0.5); color: #38bdf8; font-weight: 700;
-            box-shadow: 0 0 20px rgba(56, 189, 248, 0.15);
+            background: linear-gradient(90deg, rgba(0, 242, 254, 0.2) 0%, rgba(255, 107, 0, 0.12) 100%);
+            border-color: #00f2fe;
+            box-shadow: 0 8px 25px rgba(0, 242, 254, 0.22), inset 0 0 15px rgba(0, 242, 254, 0.1);
         }
-        .menu-item.logout-sidebar-btn {
+        .menu-item.active::before {
+            background: linear-gradient(180deg, #00f2fe, #ff6b00);
+            box-shadow: 0 0 12px #00f2fe;
+        }
+        .menu-item.active .menu-icon-box {
+            background: linear-gradient(135deg, #0284c7 0%, #0369a1 100%);
+            border-color: #7dd3fc;
+            box-shadow: 0 0 15px rgba(0, 242, 254, 0.5);
+        }
+        .menu-item.active .menu-icon-box svg { fill: #ffffff; }
+        .menu-item.active .menu-sub-txt { color: #7dd3fc; }
+
+        .badge-live {
+            font-family: 'Orbitron', monospace;
+            font-size: 9.5px;
+            background: linear-gradient(135deg, #ff512f 0%, #dd2476 100%);
+            color: #fff;
+            padding: 3px 8px;
+            border-radius: 9999px;
+            font-weight: 900;
+            box-shadow: 0 0 12px rgba(255, 81, 47, 0.7);
+            animation: pulseDot 1.5s infinite;
+        }
+
+        /* ==================== KHU VỰC LẤP ĐẦY PHẦN DƯỚI SIDEBAR (COMMAND WIDGETS) ==================== */
+        .sidebar-bottom-deck {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
             margin-top: auto;
-            background: rgba(244, 63, 94, 0.14);
-            border: 1px solid rgba(244, 63, 94, 0.45);
+        }
+
+        /* Widget 1: Trạm Tiến Độ Chiến Binh (Bull vs Tiger Mastery) */
+        .warrior-progress-widget {
+            background: linear-gradient(160deg, rgba(13, 24, 50, 0.92) 0%, rgba(8, 13, 28, 0.98) 100%);
+            border: 1.5px solid rgba(255, 107, 0, 0.38);
+            border-radius: 16px;
+            padding: 14px;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.6), inset 0 0 18px rgba(255, 107, 0, 0.08);
+            position: relative;
+            overflow: hidden;
+        }
+        .wp-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .wp-rank-title {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 11px;
+            font-weight: 800;
+            color: #fb923c;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+        .wp-exp-pill {
+            font-family: 'Fira Code', monospace;
+            font-size: 11px;
+            font-weight: 800;
+            color: #00f2fe;
+            background: rgba(0, 242, 254, 0.12);
+            border: 1px solid rgba(0, 242, 254, 0.35);
+            padding: 2px 8px;
+            border-radius: 6px;
+        }
+        .wp-bar-bg {
+            width: 100%;
+            height: 8px;
+            background: #050914;
+            border-radius: 99px;
+            overflow: hidden;
+            border: 1px solid #1e293b;
+        }
+        .wp-bar-fill {
+            height: 100%;
+            width: 33%;
+            background: linear-gradient(90deg, #00f2fe 0%, #facc15 50%, #ff6b00 100%);
+            box-shadow: 0 0 10px rgba(0, 242, 254, 0.6);
+            transition: width 0.4s ease;
+        }
+        .wp-sub-stats {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 8px;
+            padding-top: 4px;
+        }
+        .wp-mini-box {
+            background: rgba(4, 8, 18, 0.85);
+            border: 1px solid #1a2946;
+            border-radius: 8px;
+            padding: 6px 8px;
+            text-align: center;
+        }
+        .wp-mini-val {
+            font-family: 'Orbitron', monospace;
+            font-size: 12.5px;
+            font-weight: 800;
+            color: #ffffff;
+        }
+        .wp-mini-lbl {
+            font-size: 9.5px;
+            color: #94a3b8;
+            font-weight: 700;
+            text-transform: uppercase;
+        }
+
+        /* Widget 2: Lõi Xung Nhịp Đấu Trường */
+        .cyber-telemetry-card {
+            background: rgba(8, 15, 32, 0.9);
+            border: 1px solid rgba(0, 242, 254, 0.28);
+            border-radius: 14px;
+            padding: 11px 14px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+        .telemetry-left {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        .telemetry-bars {
+            display: flex;
+            align-items: flex-end;
+            gap: 3px;
+            height: 18px;
+        }
+        .t-bar {
+            width: 3.5px;
+            background: #00f2fe;
+            border-radius: 2px;
+            animation: eqBounce 1s infinite ease-in-out alternate;
+        }
+        .t-bar:nth-child(1) { height: 45%; animation-delay: 0.1s; }
+        .t-bar:nth-child(2) { height: 95%; animation-delay: 0.3s; background: #ff6b00; }
+        .t-bar:nth-child(3) { height: 65%; animation-delay: 0.2s; }
+        .t-bar:nth-child(4) { height: 100%; animation-delay: 0.4s; background: #facc15; }
+        @keyframes eqBounce { 0% { transform: scaleY(0.35); } 100% { transform: scaleY(1); } }
+
+        .telemetry-txt {
+            font-family: 'Fira Code', monospace;
+            font-size: 11px;
+            font-weight: 700;
+            color: #7dd3fc;
+        }
+        .telemetry-ping {
+            font-family: 'Fira Code', monospace;
+            font-size: 10.5px;
+            font-weight: 800;
+            color: #4ade80;
+        }
+
+        .menu-item.logout-sidebar-btn {
+            background: rgba(244, 63, 94, 0.15);
+            border: 1.5px solid rgba(244, 63, 94, 0.45);
             color: #fb7185;
             font-weight: 800;
+            justify-content: center;
+            padding: 10px;
         }
         .menu-item.logout-sidebar-btn:hover {
-            background: #e11d48; color: #ffffff; border-color: #e11d48;
-        }
-        .badge-live {
-            font-size: 10px; background: linear-gradient(135deg, #ef4444 0%, #dc2626 100%);
-            color: #fff; padding: 3px 8px; border-radius: 9999px; font-weight: 800; margin-left: auto;
-            box-shadow: 0 0 10px rgba(239, 68, 68, 0.6);
+            background: #e11d48;
+            color: #ffffff;
+            transform: translateY(-2px);
         }
 
         /* ==================== MAIN CONTENT ==================== */
         .main-container {
             flex: 1;
-            padding: 20px 38px 40px 38px;
+            padding: 20px 36px 40px 36px;
             display: flex;
             flex-direction: column;
-            gap: 26px;
+            gap: 24px;
             max-width: 1420px;
             margin: 0 auto;
         }
@@ -82,30 +387,31 @@
         /* TOP HUD BAR */
         .top-bar {
             display: flex; justify-content: space-between; align-items: center;
-            background: linear-gradient(90deg, rgba(10, 18, 36, 0.95) 0%, rgba(6, 11, 24, 0.95) 100%);
-            border: 1px solid rgba(56, 189, 248, 0.25);
-            padding: 12px 24px; border-radius: 14px;
-            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.6);
+            background: linear-gradient(90deg, rgba(10, 20, 42, 0.95) 0%, rgba(18, 12, 28, 0.95) 100%);
+            border: 1.5px solid rgba(0, 242, 254, 0.3);
+            padding: 12px 24px; border-radius: 16px;
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.65);
             position: relative;
         }
         .top-bar::before {
             content: ""; position: absolute; left: 0; top: 20%; bottom: 20%; width: 4px;
-            background: #22c55e; border-radius: 0 4px 4px 0; box-shadow: 0 0 12px #22c55e;
+            background: linear-gradient(180deg, #00f2fe, #ff6b00);
+            border-radius: 0 4px 4px 0; box-shadow: 0 0 12px #00f2fe;
         }
         .sys-ready {
             font-family: 'Orbitron', monospace; font-size: 12px; font-weight: 800;
-            color: #4ade80; display: flex; align-items: center; gap: 10px; letter-spacing: 1px;
+            color: #00f2fe; display: flex; align-items: center; gap: 10px; letter-spacing: 1px;
         }
         .pulse-dot {
-            width: 8px; height: 8px; border-radius: 50%; background: #22c55e;
-            box-shadow: 0 0 10px #22c55e; animation: pulseDot 1.5s infinite;
+            width: 9px; height: 9px; border-radius: 50%; background: #22c55e;
+            box-shadow: 0 0 12px #22c55e; animation: pulseDot 1.5s infinite;
         }
-        @keyframes pulseDot { 0%, 100% { opacity: 0.35; } 50% { opacity: 1; } }
+        @keyframes pulseDot { 0%, 100% { opacity: 0.4; } 50% { opacity: 1; } }
 
         .auth-btns { display: flex; gap: 12px; align-items: center; }
         .user-pill-box {
-            background: rgba(14, 165, 233, 0.12);
-            border: 1px solid rgba(56, 189, 248, 0.4);
+            background: rgba(0, 242, 254, 0.12);
+            border: 1px solid rgba(0, 242, 254, 0.4);
             color: #7dd3fc;
             padding: 7px 16px;
             border-radius: 9px;
@@ -120,91 +426,83 @@
             cursor: pointer; text-decoration: none; display: inline-flex; align-items: center; gap: 6px;
             box-shadow: 0 4px 14px rgba(225, 29, 72, 0.45); transition: 0.2s;
         }
-        .btn-logout-top:hover { transform: translateY(-2px); box-shadow: 0 6px 20px rgba(244, 63, 94, 0.65); }
-
         .btn-login {
             background: #0d1629; border: 1.5px solid #223559; color: #e2e8f0;
             padding: 8px 20px; border-radius: 10px; font-size: 13.5px; font-weight: 700;
             text-decoration: none; transition: 0.2s;
         }
-        .btn-login:hover { border-color: #38bdf8; color: #38bdf8; }
+        .btn-login:hover { border-color: #00f2fe; color: #00f2fe; }
         .btn-register {
-            background: linear-gradient(135deg, #0ea5e9 0%, #0284c7 100%);
+            background: linear-gradient(135deg, #00f2fe 0%, #0284c7 50%, #ff6b00 100%);
             border: 1px solid #7dd3fc; color: #fff;
             padding: 8px 20px; border-radius: 10px; font-size: 13.5px; font-weight: 800;
-            text-decoration: none; box-shadow: 0 4px 15px rgba(14, 165, 233, 0.45); transition: 0.2s;
+            text-decoration: none; box-shadow: 0 4px 18px rgba(0, 242, 254, 0.4); transition: 0.2s;
         }
-        .btn-register:hover { transform: translateY(-2px); box-shadow: 0 6px 22px rgba(56, 189, 248, 0.65); }
 
-        /* ==================== HERO BANNER SCI-FI HOLOGRAM 4.0 ==================== */
+        /* ==================== HERO BANNER KIM NGƯU CYBER VS MÃNH HỔ LỬA ==================== */
         .hero-card {
             position: relative;
             background: 
-                radial-gradient(circle at 50% 10%, rgba(14, 165, 233, 0.26) 0%, rgba(225, 29, 72, 0.1) 42%, transparent 72%),
-                linear-gradient(180deg, #081126 0%, #050914 65%, #03050b 100%);
-            border: 1.5px solid rgba(56, 189, 248, 0.35);
+                radial-gradient(circle at 22% 20%, rgba(0, 242, 254, 0.25) 0%, transparent 48%),
+                radial-gradient(circle at 78% 20%, rgba(255, 107, 0, 0.25) 0%, transparent 48%),
+                linear-gradient(180deg, #09132c 0%, #050a18 65%, #030610 100%);
+            border: 1.5px solid rgba(0, 242, 254, 0.4);
             border-radius: 26px;
-            padding: 46px 36px 40px 36px;
+            padding: 36px 36px 34px 36px;
             display: flex;
             flex-direction: column;
             align-items: center;
             justify-content: center;
             text-align: center;
             overflow: hidden;
-            box-shadow: 0 25px 65px rgba(0, 0, 0, 0.85), inset 0 1px 0 rgba(255, 255, 255, 0.12);
+            box-shadow: 0 25px 65px rgba(0, 0, 0, 0.85), inset 0 1px 0 rgba(255, 255, 255, 0.15);
         }
 
-        /* Lưới không gian Cyber Grid 3D */
         .cyber-grid-bg {
             position: absolute; inset: 0;
             background-image: 
-                linear-gradient(rgba(56, 189, 248, 0.07) 1px, transparent 1px),
-                linear-gradient(90deg, rgba(56, 189, 248, 0.07) 1px, transparent 1px);
-            background-size: 40px 40px;
-            mask-image: radial-gradient(ellipse at 50% 45%, black 30%, transparent 78%);
+                linear-gradient(rgba(0, 242, 254, 0.07) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(255, 107, 0, 0.06) 1px, transparent 1px);
+            background-size: 38px 38px;
+            mask-image: radial-gradient(ellipse at 50% 45%, black 35%, transparent 80%);
             pointer-events: none;
         }
 
-        /* Tia quét Laser Scanline */
-        .cyber-scanline {
-            position: absolute; left: 0; right: 0; height: 2px;
-            background: linear-gradient(90deg, transparent 0%, rgba(56, 189, 248, 0.6) 50%, transparent 100%);
-            box-shadow: 0 0 16px #38bdf8;
-            animation: scanMove 6s infinite linear;
-            pointer-events: none; opacity: 0.55;
-        }
-        @keyframes scanMove { 0% { top: -5%; } 100% { top: 105%; } }
-
-        /* 4 Góc ngắm HUD Quân sự */
         .hud-corner {
-            position: absolute; width: 24px; height: 24px;
-            border-color: #38bdf8; border-style: solid; opacity: 0.75; pointer-events: none;
+            position: absolute; width: 26px; height: 26px;
+            border-style: solid; opacity: 0.85; pointer-events: none;
         }
-        .hud-tl { top: 16px; left: 16px; border-width: 2.5px 0 0 2.5px; }
-        .hud-tr { top: 16px; right: 16px; border-width: 2.5px 2.5px 0 0; }
-        .hud-bl { bottom: 16px; left: 16px; border-width: 0 0 2.5px 2.5px; }
-        .hud-br { bottom: 16px; right: 16px; border-width: 0 2.5px 2.5px 0; }
+        .hud-tl { top: 16px; left: 16px; border-color: #00f2fe; border-width: 3px 0 0 3px; }
+        .hud-tr { top: 16px; right: 16px; border-color: #ff6b00; border-width: 3px 3px 0 0; }
+        .hud-bl { bottom: 16px; left: 16px; border-color: #00f2fe; border-width: 0 0 3px 3px; }
+        .hud-br { bottom: 16px; right: 16px; border-color: #ff6b00; border-width: 0 3px 3px 0; }
 
-        /* Lõi Năng Lượng Cyber Core SVG Đa Tầng */
-        .hero-emblem-wrap {
-            position: relative; z-index: 2; margin-bottom: 14px;
-            display: flex; align-items: center; justify-content: center;
+        /* KHUNG HIỂN THỊ ẢNH LOGO KIM NGƯU VS MÃNH HỔ TRUNG TÂM */
+        .hero-logo-banner-wrap {
+            position: relative;
+            z-index: 2;
+            margin-bottom: 16px;
+            padding: 6px;
+            border-radius: 20px;
+            background: linear-gradient(90deg, rgba(0, 242, 254, 0.35), rgba(255, 107, 0, 0.35));
+            box-shadow: 0 0 35px rgba(0, 242, 254, 0.35), 0 0 35px rgba(255, 107, 0, 0.25);
         }
-        .hero-emblem {
-            width: 106px; height: 106px;
-            filter: drop-shadow(0 0 26px rgba(56, 189, 248, 0.65));
+        .hero-custom-logo-img {
+            max-width: 440px;
+            width: 100%;
+            height: 138px;
+            object-fit: cover;
+            border-radius: 15px;
+            display: block;
         }
-        .spin-cw { transform-origin: center; animation: spin360 12s infinite linear; }
-        .spin-ccw { transform-origin: center; animation: spinRev 8s infinite linear; }
-        @keyframes spin360 { 100% { transform: rotate(360deg); } }
-        @keyframes spinRev { 100% { transform: rotate(-360deg); } }
 
         .hero-sys-tag {
             position: relative; z-index: 2;
             font-family: 'Orbitron', monospace; font-size: 11px; font-weight: 800;
-            color: #facc15; background: rgba(250, 204, 21, 0.12);
-            border: 1px solid rgba(250, 204, 21, 0.4);
-            padding: 4px 16px; border-radius: 999px; letter-spacing: 1.5px;
+            color: #fde047;
+            background: linear-gradient(90deg, rgba(0, 242, 254, 0.18), rgba(255, 107, 0, 0.18));
+            border: 1px solid rgba(250, 204, 21, 0.5);
+            padding: 5px 18px; border-radius: 999px; letter-spacing: 1.5px;
             margin-bottom: 12px;
         }
 
@@ -212,51 +510,51 @@
             position: relative; z-index: 2;
             font-family: 'Orbitron', 'Plus Jakarta Sans', sans-serif;
             font-size: 31px; font-weight: 900; letter-spacing: 1px;
-            background: linear-gradient(90deg, #ffffff 0%, #7dd3fc 50%, #fb7185 100%);
+            background: linear-gradient(90deg, #00f2fe 0%, #ffffff 50%, #ff8c00 100%);
             -webkit-background-clip: text; -webkit-text-fill-color: transparent;
-            margin-bottom: 12px;
+            margin-bottom: 10px;
             display: flex; align-items: center; gap: 12px;
-            text-shadow: 0 0 30px rgba(56, 189, 248, 0.3);
         }
 
         .hero-sub {
             position: relative; z-index: 2;
-            color: #94a3b8; font-size: 14.5px; max-width: 640px; line-height: 1.65; margin-bottom: 28px;
+            color: #cbd5e1; font-size: 14.5px; max-width: 660px; line-height: 1.6; margin-bottom: 24px;
         }
 
-        /* 4 Ô Thông Số Hologram */
         .stats-badges-row {
             position: relative; z-index: 2;
             display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px;
-            width: 100%; max-width: 820px;
+            width: 100%; max-width: 850px;
         }
         .stat-badge-item {
-            background: rgba(8, 15, 32, 0.85);
-            border: 1.5px solid rgba(56, 189, 248, 0.28);
+            background: rgba(7, 14, 30, 0.88);
+            border: 1.5px solid rgba(0, 242, 254, 0.3);
             border-radius: 16px;
-            padding: 15px 18px;
-            backdrop-filter: blur(8px);
+            padding: 14px 16px;
             transition: all 0.25s ease;
             position: relative; overflow: hidden;
         }
-        .stat-badge-item::before {
-            content: ""; position: absolute; top: 0; left: 25%; right: 25%; height: 2px;
-            background: #38bdf8; box-shadow: 0 0 10px #38bdf8;
+        .stat-badge-item:nth-child(even) {
+            border-color: rgba(255, 107, 0, 0.35);
         }
         .stat-badge-item:hover {
-            border-color: #38bdf8; transform: translateY(-4px);
-            box-shadow: 0 10px 25px rgba(14, 165, 233, 0.22);
+            transform: translateY(-4px);
+            border-color: #00f2fe;
+            box-shadow: 0 10px 25px rgba(0, 242, 254, 0.25);
         }
         .stat-badge-title {
             font-family: 'Orbitron', sans-serif; font-size: 16px; font-weight: 900;
-            color: #38bdf8; margin-bottom: 4px; letter-spacing: 0.5px;
+            color: #00f2fe; margin-bottom: 4px;
+        }
+        .stat-badge-item:nth-child(even) .stat-badge-title {
+            color: #fb923c;
         }
         .stat-badge-sub {
             font-family: 'Fira Code', monospace; font-size: 10px; font-weight: 700;
-            color: #94a3b8; text-transform: uppercase; letter-spacing: 0.5px;
+            color: #94a3b8; text-transform: uppercase;
         }
 
-        /* ==================== BẢNG ĐIỀU KHIỂN NHANH HOLOGRAM 4.0 ==================== */
+        /* ==================== BẢNG ĐIỀU KHIỂN NHANH ==================== */
         .quick-section-title {
             font-family: 'Orbitron', 'Plus Jakarta Sans', sans-serif;
             font-size: 15.5px; font-weight: 800; color: #f8fafc;
@@ -267,94 +565,79 @@
             display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px;
         }
         .nav-card {
-            background: linear-gradient(170deg, rgba(13, 23, 46, 0.92) 0%, rgba(6, 10, 22, 0.98) 100%);
-            border: 1.5px solid rgba(56, 189, 248, 0.26);
+            background: linear-gradient(165deg, rgba(12, 24, 52, 0.95) 0%, rgba(5, 10, 24, 0.98) 100%);
+            border: 1.5px solid rgba(0, 242, 254, 0.3);
             border-radius: 22px;
             padding: 26px;
             display: flex;
             flex-direction: column;
             justify-content: space-between;
             gap: 20px;
-            transition: all 0.28s cubic-bezier(0.25, 0.8, 0.25, 1);
+            transition: all 0.28s ease;
             position: relative; overflow: hidden;
-            box-shadow: 0 16px 40px rgba(0, 0, 0, 0.7);
+            box-shadow: 0 16px 40px rgba(0, 0, 0, 0.75);
         }
         .nav-card::before {
-            content: ""; position: absolute; top: 0; left: 15%; right: 15%; height: 3px;
-            background: #38bdf8; border-radius: 0 0 4px 4px; transition: 0.3s;
+            content: ""; position: absolute; top: 0; left: 10%; right: 10%; height: 3px;
+            background: #00f2fe; box-shadow: 0 0 12px #00f2fe;
         }
-        .nav-card.map-card-theme::before { background: #c084fc; }
-        .nav-card.duel-card::before { background: #fb7185; }
+        .nav-card.map-card-theme {
+            border-color: rgba(255, 107, 0, 0.38);
+            background: linear-gradient(165deg, rgba(38, 18, 10, 0.92) 0%, rgba(7, 10, 22, 0.98) 100%);
+        }
+        .nav-card.map-card-theme::before { background: #ff6b00; box-shadow: 0 0 12px #ff6b00; }
 
-        .nav-card:hover {
-            transform: translateY(-7px);
-            border-color: #38bdf8;
-            box-shadow: 0 20px 45px rgba(14, 165, 233, 0.22);
-        }
-        .nav-card.map-card-theme:hover {
-            border-color: #c084fc;
-            box-shadow: 0 20px 45px rgba(192, 132, 252, 0.22);
-        }
         .nav-card.duel-card {
-            border-color: rgba(244, 63, 94, 0.38);
-            background: linear-gradient(170deg, rgba(38, 12, 28, 0.92) 0%, rgba(7, 10, 22, 0.98) 100%);
+            border-color: rgba(244, 63, 94, 0.42);
+            background: linear-gradient(165deg, rgba(42, 11, 28, 0.92) 0%, rgba(7, 10, 22, 0.98) 100%);
         }
-        .nav-card.duel-card:hover {
-            border-color: #fb7185;
-            box-shadow: 0 20px 45px rgba(244, 63, 94, 0.28);
-        }
+        .nav-card.duel-card::before { background: #fb7185; box-shadow: 0 0 12px #fb7185; }
 
-        .card-top-row {
-            display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px;
-        }
+        .nav-card:hover { transform: translateY(-7px); box-shadow: 0 22px 48px rgba(0, 242, 254, 0.22); }
+
+        .card-top-row { display: flex; justify-content: space-between; align-items: center; margin-bottom: 14px; }
         .card-icon-wrap {
-            width: 56px; height: 56px; border-radius: 14px;
-            background: rgba(14, 165, 233, 0.12);
-            border: 1.5px solid rgba(56, 189, 248, 0.4);
+            width: 54px; height: 54px; border-radius: 14px;
+            background: rgba(0, 242, 254, 0.14); border: 1.5px solid rgba(0, 242, 254, 0.45);
             display: flex; align-items: center; justify-content: center;
-            box-shadow: 0 0 18px rgba(56, 189, 248, 0.2);
         }
         .map-card-theme .card-icon-wrap {
-            background: rgba(168, 85, 247, 0.14);
-            border-color: rgba(192, 132, 252, 0.45);
-            box-shadow: 0 0 18px rgba(192, 132, 252, 0.2);
+            background: rgba(255, 107, 0, 0.15); border-color: rgba(255, 107, 0, 0.5);
         }
         .duel-card .card-icon-wrap {
-            background: rgba(244, 63, 94, 0.16);
-            border-color: rgba(251, 113, 133, 0.5);
-            box-shadow: 0 0 18px rgba(244, 63, 94, 0.25);
+            background: rgba(244, 63, 94, 0.16); border-color: rgba(251, 113, 133, 0.5);
         }
 
         .card-tech-tag {
             font-family: 'Orbitron', monospace; font-size: 10px; font-weight: 800;
             padding: 4px 10px; border-radius: 6px;
-            background: rgba(56, 189, 248, 0.12); color: #38bdf8;
-            border: 1px solid rgba(56, 189, 248, 0.35);
+            background: rgba(0, 242, 254, 0.12); color: #00f2fe; border: 1px solid rgba(0, 242, 254, 0.35);
         }
         .map-card-theme .card-tech-tag {
-            background: rgba(192, 132, 252, 0.12); color: #d8b4fe; border-color: rgba(192, 132, 252, 0.35);
+            background: rgba(255, 107, 0, 0.15); color: #fb923c; border-color: rgba(255, 107, 0, 0.4);
         }
         .duel-card .card-tech-tag {
             background: rgba(244, 63, 94, 0.18); color: #fda4af; border-color: rgba(251, 113, 133, 0.45);
         }
 
         .card-heading { font-size: 19px; font-weight: 800; color: #ffffff; margin-bottom: 8px; }
-        .duel-card .card-heading { color: #fb7185; }
+        .map-card-theme .card-heading { color: #fdba74; }
+        .duel-card .card-heading { color: #fda4af; }
         .card-text { font-size: 13.5px; color: #94a3b8; line-height: 1.6; }
 
         .card-action-link {
             font-family: 'Orbitron', 'Plus Jakarta Sans', sans-serif;
-            font-size: 13px; font-weight: 800; color: #38bdf8; text-decoration: none;
+            font-size: 13px; font-weight: 800; color: #00f2fe; text-decoration: none;
             display: inline-flex; align-items: center; gap: 8px;
             padding: 11px 16px; border-radius: 10px;
-            background: rgba(14, 165, 233, 0.12); border: 1px solid rgba(56, 189, 248, 0.35);
+            background: rgba(0, 242, 254, 0.12); border: 1px solid rgba(0, 242, 254, 0.4);
             transition: 0.22s;
         }
         .card-action-link:hover { background: #0284c7; color: #fff; transform: translateX(4px); }
         .map-card-theme .card-action-link {
-            color: #d8b4fe; background: rgba(168, 85, 247, 0.14); border-color: rgba(192, 132, 252, 0.4);
+            color: #fb923c; background: rgba(255, 107, 0, 0.15); border-color: rgba(255, 107, 0, 0.45);
         }
-        .map-card-theme .card-action-link:hover { background: #9333ea; color: #fff; }
+        .map-card-theme .card-action-link:hover { background: #ea580c; color: #fff; }
         .duel-card .card-action-link {
             color: #fda4af; background: rgba(225, 29, 72, 0.18); border-color: rgba(251, 113, 133, 0.45);
         }
@@ -363,41 +646,135 @@
 </head>
 <body>
 
+    <!-- ==================== SIDEBAR COMMAND DECK MỚI (ĐẦY ĐẶN, MÀU SẮC CYAN - TIGER ORANGE) ==================== -->
     <aside class="sidebar">
-        <div class="brand-logo">
-            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#38bdf8" stroke-width="2.5"><path d="M14.5 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7.5L14.5 2z"/><polyline points="14 2 14 8 20 8"/><line x1="9" y1="13" x2="15" y2="13"/><line x1="9" y1="17" x2="13" y2="17"/></svg>
-            CodeColosseum
+        <div style="display:flex; flex-direction:column; gap:16px;">
+            <!-- Khối Logo Kim Ngưu vs Mãnh Hổ -->
+            <a href="/" class="brand-showcase-box">
+                <img src="/static/logo.jpg" alt="CodeColosseum" class="brand-banner-img" onerror="this.style.display='none'">
+                <div class="brand-fallback-header">
+                    <svg width="28" height="28" viewBox="0 0 36 36" fill="none">
+                        <polygon points="18,2 33,10 30,27 18,34 6,27 3,10" fill="rgba(0,242,254,0.18)" stroke="#00f2fe" stroke-width="2.2"/>
+                        <path d="M11 18 L16 13 M11 18 L16 23 M25 18 L20 13 M25 18 L20 23" stroke="#ff6b00" stroke-width="2.5" stroke-linecap="round"/>
+                    </svg>
+                    <div>
+                        <div class="brand-text-logo">Code<span>Colosseum</span></div>
+                        <div class="brand-sub-tag">⚡ BULL VS TIGER ARENA</div>
+                    </div>
+                </div>
+            </a>
+
+            <div class="nav-section-label">
+                <span>// HỆ THỐNG ĐIỀU HÀNH</span>
+                <span style="color:#00f2fe;">v4.0</span>
+            </div>
+
+            <!-- 4 Module Điều Hướng 2 Tầng -->
+            <nav class="menu-list">
+                <a href="/" class="menu-item active">
+                    <div class="menu-icon-box">
+                        <svg viewBox="0 0 24 24"><path d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z"/></svg>
+                    </div>
+                    <div class="menu-text-wrap">
+                        <span class="menu-main-txt">Trang chủ</span>
+                        <span class="menu-sub-txt">Trung tâm chỉ huy</span>
+                    </div>
+                </a>
+
+                <a href="/courses" class="menu-item">
+                    <div class="menu-icon-box">
+                        <svg viewBox="0 0 24 24"><path d="M4 6H2v14c0 1.1.9 2 2 2h14v-2H4V6zm16-4H8c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2zm0 14H8V4h12v12z"/></svg>
+                    </div>
+                    <div class="menu-text-wrap">
+                        <span class="menu-main-txt">Bài học</span>
+                        <span class="menu-sub-txt">3 Bài • 9 Mốc EXP</span>
+                    </div>
+                </a>
+
+                <a href="/arena" class="menu-item">
+                    <div class="menu-icon-box">
+                        <svg viewBox="0 0 24 24"><path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm-5 14H7v-2h7v2zm3-4H7v-2h10v2zm0-4H7V7h10v2z"/></svg>
+                    </div>
+                    <div class="menu-text-wrap">
+                        <span class="menu-main-txt">Thực hành bài tập</span>
+                        <span class="menu-sub-txt">3 Bản đồ giả lập 4.0</span>
+                    </div>
+                </a>
+
+                <a href="/arena/speed-duel" class="menu-item">
+                    <div class="menu-icon-box">
+                        <svg viewBox="0 0 24 24"><path d="M14.25 2.5a.75.75 0 0 1 .75-.75h4.5a.75.75 0 0 1 .75.75v4.5a.75.75 0 0 1-1.5 0V4.56l-5.22 5.22a.75.75 0 1 1-1.06-1.06l5.22-5.22h-2.69a.75.75 0 0 1-.75-.75zM3.75 11.25a.75.75 0 0 1 .75-.75h4.5a.75.75 0 0 1 0 1.5H5.56l5.22 5.22a.75.75 0 1 1-1.06 1.06L4.5 13.06v2.69a.75.75 0 0 1-1.5 0v-4.5z"/></svg>
+                    </div>
+                    <div class="menu-text-wrap">
+                        <span class="menu-main-txt">Đấu trường</span>
+                        <span class="menu-sub-txt">PvP 1v1 • 2v2 • 5v5</span>
+                    </div>
+                    <span class="badge-live">LIVE</span>
+                </a>
+
+                {{if eq .Username "admin"}}
+                <a href="/admin" class="menu-item" style="border-color:rgba(244,63,94,0.45);">
+                    <div class="menu-icon-box" style="border-color:#fb7185;">
+                        <svg viewBox="0 0 24 24"><path d="M12 1L3 5v6c0 5.55 3.84 10.74 9 12 5.16-1.26 9-6.45 9-12V5l-9-4z"/></svg>
+                    </div>
+                    <div class="menu-text-wrap">
+                        <span class="menu-main-txt" style="color:#fb7185;">Quản Trị Admin</span>
+                        <span class="menu-sub-txt">Giám sát hệ thống</span>
+                    </div>
+                </a>
+                {{end}}
+            </nav>
         </div>
-        <nav class="menu-list">
-            <a href="/" class="menu-item active">
-                <svg viewBox="0 0 24 24"><path d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z"/></svg>Trang chủ
-            </a>
-            <a href="/courses" class="menu-item">
-                <svg viewBox="0 0 24 24"><path d="M4 6H2v14c0 1.1.9 2 2 2h14v-2H4V6zm16-4H8c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2zm0 14H8V4h12v12z"/></svg>Bài học
-            </a>
-            <a href="/arena" class="menu-item">
-                <svg viewBox="0 0 24 24"><path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm-5 14H7v-2h7v2zm3-4H7v-2h10v2zm0-4H7V7h10v2z"/></svg>Thực hành bài tập
-            </a>
-            <a href="/arena/speed-duel" class="menu-item">
-                <svg viewBox="0 0 24 24"><path d="M14.25 2.5a.75.75 0 0 1 .75-.75h4.5a.75.75 0 0 1 .75.75v4.5a.75.75 0 0 1-1.5 0V4.56l-5.22 5.22a.75.75 0 1 1-1.06-1.06l5.22-5.22h-2.69a.75.75 0 0 1-.75-.75zM3.75 11.25a.75.75 0 0 1 .75-.75h4.5a.75.75 0 0 1 0 1.5H5.56l5.22 5.22a.75.75 0 1 1-1.06 1.06L4.5 13.06v2.69a.75.75 0 0 1-1.5 0v-4.5z"/></svg>Đấu trường <span class="badge-live">LIVE</span>
-            </a>
-            {{if eq .Username "admin"}}
-            <a href="/admin" class="menu-item" style="color:#f87171;">🛡️ Quản Trị Admin</a>
-            {{end}}
+
+        <!-- KHU VỰC WIDGET LẤP ĐẦY PHẦN DƯỚI SIDEBAR -->
+        <div class="sidebar-bottom-deck">
+            <div class="warrior-progress-widget">
+                <div class="wp-header">
+                    <span class="wp-rank-title" id="sb-rank-title">🐯 CHIẾN BINH PYTHON</span>
+                    <span class="wp-exp-pill" id="sb-exp-pill">0 EXP</span>
+                </div>
+                <div class="wp-bar-bg">
+                    <div class="wp-bar-fill" id="sb-exp-bar"></div>
+                </div>
+                <div class="wp-sub-stats">
+                    <div class="wp-mini-box">
+                        <div class="wp-mini-val" id="sb-ms-done">0 / 9</div>
+                        <div class="wp-mini-lbl">Cột Mốc Học</div>
+                    </div>
+                    <div class="wp-mini-box">
+                        <div class="wp-mini-val" id="sb-history-done">0 Câu</div>
+                        <div class="wp-mini-lbl">Đã Thực Chiến</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="cyber-telemetry-card">
+                <div class="telemetry-left">
+                    <div class="telemetry-bars">
+                        <div class="t-bar"></div>
+                        <div class="t-bar"></div>
+                        <div class="t-bar"></div>
+                        <div class="t-bar"></div>
+                    </div>
+                    <span class="telemetry-txt">ARENA SERVER</span>
+                </div>
+                <span class="telemetry-ping">● ONLINE</span>
+            </div>
 
             {{if .Username}}
             <a href="/logout" onclick="logoutAccount(event)" class="menu-item logout-sidebar-btn">
-                <span>🚪</span> Đăng xuất
+                <span>🚪</span> Đăng xuất tài khoản
             </a>
             {{end}}
-        </nav>
+        </div>
     </aside>
 
+    <!-- ==================== MAIN CONTENT ==================== -->
     <main class="main-container">
         <div class="top-bar">
             <div class="sys-ready">
                 <span class="pulse-dot"></span>
-                <span>SYSTEM READY // CYBER CORE 4.0</span>
+                <span>CODE COLOSSEUM // BULL VS TIGER MATRIX 4.0</span>
             </div>
             <div class="auth-btns">
                 {{if .Username}}
@@ -410,31 +787,27 @@
             </div>
         </div>
 
-        <!-- HERO BANNER CÔNG NGHỆ CAO 4.0 -->
+        <!-- HERO BANNER TÍCH HỢP LOGO KIM NGƯU VS MÃNH HỔ -->
         <section class="hero-card">
             <div class="cyber-grid-bg"></div>
-            <div class="cyber-scanline"></div>
             <div class="hud-corner hud-tl"></div>
             <div class="hud-corner hud-tr"></div>
             <div class="hud-corner hud-bl"></div>
             <div class="hud-corner hud-br"></div>
 
-            <div class="hero-emblem-wrap">
-                <svg class="hero-emblem" viewBox="0 0 120 120" fill="none">
-                    <circle class="spin-cw" cx="60" cy="60" r="54" stroke="#38bdf8" stroke-width="2" stroke-dasharray="18 10" opacity="0.8"/>
-                    <polygon class="spin-ccw" points="60,12 102,36 102,84 60,108 18,84 18,36" stroke="#fb7185" stroke-width="2" fill="rgba(14, 165, 233, 0.1)"/>
-                    <polygon points="60,22 92,40 82,82 60,98 38,82 28,40" fill="url(#shieldHolo)" stroke="#7dd3fc" stroke-width="2.5"/>
-                    <path d="M40,40 L80,80 M80,40 L40,80" stroke="#ffffff" stroke-width="5" stroke-linecap="round"/>
-                    <circle cx="60" cy="60" r="15" fill="#0ea5e9" stroke="#ffffff" stroke-width="2.5"/>
-                    <circle cx="60" cy="60" r="6" fill="#facc15"/>
-                    <defs>
-                        <linearGradient id="shieldHolo" x1="28" y1="22" x2="92" y2="98" gradientUnits="userSpaceOnUse">
-                            <stop offset="0%" stop-color="#0284c7"/>
-                            <stop offset="50%" stop-color="#0f172a"/>
-                            <stop offset="100%" stop-color="#881337"/>
-                        </linearGradient>
-                    </defs>
-                </svg>
+            <!-- Ảnh Logo Kim Ngưu vs Mãnh Hổ của bạn (Tự động hiện nếu có /static/logo.jpg, kèm huy hiệu SVG dự phòng) -->
+            <div class="hero-logo-banner-wrap">
+                <img src="/static/logo.jpg" alt="CodeColosseum Logo" class="hero-custom-logo-img" onerror="this.style.display='none'; document.getElementById('fallback-bull-tiger-svg').style.display='flex';">
+                <div id="fallback-bull-tiger-svg" style="display:none; align-items:center; gap:18px; padding:12px 26px; background:#060c1d; border-radius:14px;">
+                    <span style="font-size:44px; filter:drop-shadow(0 0 14px #00f2fe);">🐂</span>
+                    <div style="text-align:center;">
+                        <div style="font-family:'Orbitron',sans-serif; font-size:24px; font-weight:900; color:#fff;">
+                            CODE<span style="color:#00f2fe;">COLOSSEUM</span>
+                        </div>
+                        <div style="font-family:'Fira Code',monospace; font-size:12px; color:#fb923c; font-weight:700;">&lt;/&gt; CYBER DUEL ARENA &lt;/&gt;</div>
+                    </div>
+                    <span style="font-size:44px; filter:drop-shadow(0 0 14px #ff6b00);">🐯</span>
+                </div>
             </div>
 
             <div class="hero-sys-tag">⚡ PYTHON ESPORTS & TRAINING MATRIX 4.0 ⚡</div>
@@ -467,16 +840,16 @@
         </section>
 
         <div class="quick-section-title">
-            <span style="color:#facc15;">⚡</span> TRUNG TÂM ĐIỀU HÀNH NHANH // QUICK LAUNCH
+            <span style="color:#ff6b00;">⚡</span> TRUNG TÂM ĐIỀU HÀNH NHANH // QUICK LAUNCH
         </div>
 
         <section class="cards-row">
-            <!-- THẺ 1: KHO BÀI HỌC -->
+            <!-- THẺ 1 -->
             <div class="nav-card">
                 <div>
                     <div class="card-top-row">
                         <div class="card-icon-wrap">
-                            <svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="#38bdf8" stroke-width="2.2">
+                            <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#00f2fe" stroke-width="2.2">
                                 <polygon points="12 2 2 7 12 12 22 7 12 2"/>
                                 <polyline points="2 17 12 22 22 17"/>
                                 <polyline points="2 12 12 17 22 12"/>
@@ -492,12 +865,12 @@
                 <a href="/courses" class="card-action-link">⚡ BẮT ĐẦU HỌC NGAY →</a>
             </div>
 
-            <!-- THẺ 2: THỰC HÀNH 3 BẢN ĐỒ -->
+            <!-- THẺ 2 -->
             <div class="nav-card map-card-theme">
                 <div>
                     <div class="card-top-row">
                         <div class="card-icon-wrap">
-                            <svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="#c084fc" stroke-width="2.2">
+                            <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#fb923c" stroke-width="2.2">
                                 <rect x="3" y="3" width="7" height="7" rx="1.5"/>
                                 <rect x="14" y="3" width="7" height="7" rx="1.5"/>
                                 <rect x="14" y="14" width="7" height="7" rx="1.5"/>
@@ -514,12 +887,12 @@
                 <a href="/arena" class="card-action-link">🕹️ LUYỆN TẬP NGAY →</a>
             </div>
 
-            <!-- THẺ 3: ĐẤU TRƯỜNG TRỰC TIẾP -->
+            <!-- THẺ 3 -->
             <div class="nav-card duel-card">
                 <div>
                     <div class="card-top-row">
                         <div class="card-icon-wrap">
-                            <svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="#fb7185" stroke-width="2.2">
+                            <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#fb7185" stroke-width="2.2">
                                 <path d="M14.5 17.5L3 6V3h3l11.5 11.5"/>
                                 <path d="M13 19l6-6"/>
                                 <path d="M16 16l4 4"/>
@@ -539,6 +912,28 @@
     </main>
 
     <script>
+        // Tự động đồng bộ tiến độ Cột mốc & Lịch sử lên Widget ở góc dưới Sidebar
+        function loadSidebarStats() {
+            const doneMap = JSON.parse(localStorage.getItem("colosseum_milestones_done") || "{}");
+            const historyMap = JSON.parse(localStorage.getItem("colosseum_unique_history") || "{}");
+
+            const msCount = Object.keys(doneMap).length;
+            const hCount = Object.keys(historyMap).length;
+            const exp = msCount * 100;
+            const pct = Math.max(12, Math.round((msCount / 9) * 100));
+
+            document.getElementById("sb-exp-pill").innerText = `${exp} EXP`;
+            document.getElementById("sb-exp-bar").style.width = `${pct}%`;
+            document.getElementById("sb-ms-done").innerText = `${msCount} / 9`;
+            document.getElementById("sb-history-done").innerText = `${hCount} Câu`;
+
+            if (msCount >= 9) {
+                document.getElementById("sb-rank-title").innerText = "🏆 BẬC THẦY PYTHON";
+            } else if (msCount >= 3) {
+                document.getElementById("sb-rank-title").innerText = "🐂 CHIẾN BINH CYBER";
+            }
+        }
+
         function logoutAccount(e) {
             if (e) e.preventDefault();
             fetch('/api/track-activity', {
@@ -556,6 +951,8 @@
             sessionStorage.clear();
             window.location.href = "/login";
         }
+
+        loadSidebarStats();
     </script>
 </body>
 </html>
