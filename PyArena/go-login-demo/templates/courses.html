@@ -3,14 +3,17 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Kho Bài Học Python Công Nghệ Cao - CodeColosseum</title>
+    <title>Kho Bài Học Python (Rắn & Mèo Cyber) - CodeColosseum</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@500;600;700&family=Orbitron:wght@700;800;900&family=Plus+Jakarta+Sans:wght@500;600;700;800&display=swap" rel="stylesheet">
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; }
         body {
-            background-color: #03050c;
+            background-color: #03070e;
+            background-image: 
+                radial-gradient(circle at 12% 18%, rgba(16, 185, 129, 0.12) 0%, transparent 40%),
+                radial-gradient(circle at 88% 82%, rgba(244, 63, 94, 0.12) 0%, transparent 42%);
             color: #f8fafc;
             min-height: 100vh;
             display: flex;
@@ -18,260 +21,420 @@
             overflow-x: hidden;
         }
 
-        /* ==================== SIDEBAR CYBER (ĐÃ BỎ BẢNG XẾP HẠNG & HỒ SƠ) ==================== */
+        /* ==================== SIDEBAR LINH VẬT RẮN & MÈO (VIPER VS NEKO MAX GRAPHICS) ==================== */
         .sidebar {
-            width: 260px;
-            background: linear-gradient(180deg, #060a15 0%, #03050b 100%);
-            border-right: 1px solid rgba(56, 189, 248, 0.16);
-            padding: 26px 18px;
+            width: 292px;
+            background: 
+                radial-gradient(circle at 0% 12%, rgba(16, 185, 129, 0.22) 0%, transparent 45%),
+                radial-gradient(circle at 100% 88%, rgba(244, 63, 94, 0.2) 0%, transparent 48%),
+                linear-gradient(180deg, #06101e 0%, #050a16 55%, #03060f 100%);
+            border-right: 1.5px solid rgba(16, 185, 129, 0.35);
+            padding: 20px 16px;
             display: flex;
             flex-direction: column;
-            gap: 28px;
+            justify-content: space-between;
+            gap: 16px;
             flex-shrink: 0;
             min-height: 100vh;
+            box-shadow: 12px 0 45px rgba(0, 0, 0, 0.85);
+            position: relative;
             z-index: 20;
         }
-        .brand-logo {
-            font-family: 'Orbitron', 'Plus Jakarta Sans', sans-serif;
-            font-size: 19px; font-weight: 900; color: #fff; padding-left: 10px;
-            display: flex; align-items: center; gap: 12px; letter-spacing: 0.5px;
+        /* Thanh ánh sáng雙sắc Rắn Lục Bảo - Mèo Hồng Neon dọc mép phải Sidebar */
+        .sidebar::after {
+            content: "";
+            position: absolute;
+            top: 6%; bottom: 6%; right: -1.5px; width: 2.5px;
+            background: linear-gradient(180deg, transparent, #10b981, #fbbf24, #f43f5e, transparent);
+            box-shadow: 0 0 16px #10b981, 0 0 16px #f43f5e;
         }
-        .menu-list { display: flex; flex-direction: column; gap: 10px; flex: 1; }
+
+        /* KHỐI HUY HIỆU LINH VẬT RẮN & MÈO Ở ĐẦU SIDEBAR */
+        .mascot-brand-box {
+            background: linear-gradient(145deg, rgba(8, 24, 38, 0.95) 0%, rgba(22, 10, 28, 0.95) 100%);
+            border: 1.5px solid rgba(16, 185, 129, 0.45);
+            border-radius: 18px;
+            padding: 14px 12px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 8px;
+            text-decoration: none;
+            position: relative;
+            overflow: hidden;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.7), inset 0 0 25px rgba(16, 185, 129, 0.12);
+        }
+        .mascot-brand-box::before {
+            content: ""; position: absolute; top: 0; left: 10%; right: 10%; height: 2.5px;
+            background: linear-gradient(90deg, #10b981, #fbbf24, #f43f5e);
+        }
+        .mascot- Crest-svg {
+            width: 100%; height: 64px;
+            filter: drop-shadow(0 0 12px rgba(16, 185, 129, 0.45));
+        }
+        .brand-title-text {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 17.5px; font-weight: 900; color: #ffffff; letter-spacing: 0.6px;
+        }
+        .brand-title-text .viper-span { color: #34d399; text-shadow: 0 0 12px rgba(52, 211, 153, 0.6); }
+        .brand-title-text .neko-span { color: #fb7185; text-shadow: 0 0 12px rgba(251, 113, 133, 0.6); }
+        .brand-sub-pill {
+            font-family: 'Fira Code', monospace; font-size: 9.5px; font-weight: 800;
+            color: #fde047; background: rgba(250, 204, 21, 0.12);
+            border: 1px solid rgba(250, 204, 21, 0.4);
+            padding: 2px 10px; border-radius: 999px; letter-spacing: 0.8px;
+        }
+
+        .nav-group-header {
+            font-family: 'Orbitron', monospace; font-size: 10px; font-weight: 800;
+            color: #6ee7b7; letter-spacing: 1.4px; padding: 0 8px;
+            display: flex; justify-content: space-between; align-items: center;
+        }
+
+        /* 4 NÚT MENU 2 TẦNG ĐỒ HỌA CAO */
+        .menu-list { display: flex; flex-direction: column; gap: 10px; }
         .menu-item {
-            display: flex; align-items: center; gap: 13px; padding: 13px 16px; border-radius: 12px;
-            color: #94a3b8; text-decoration: none; font-size: 14.5px; font-weight: 600;
-            transition: 0.25s; border: 1px solid transparent; cursor: pointer;
+            position: relative;
+            display: flex; align-items: center; gap: 13px;
+            padding: 12px 14px; border-radius: 15px;
+            background: rgba(9, 18, 34, 0.82);
+            border: 1.5px solid rgba(30, 58, 95, 0.75);
+            color: #cbd5e1; text-decoration: none;
+            transition: all 0.25s cubic-bezier(0.25, 0.8, 0.25, 1);
+            overflow: hidden; cursor: pointer;
         }
-        .menu-item svg { width: 20px; height: 20px; fill: currentColor; flex-shrink: 0; }
-        .menu-item:hover { color: #38bdf8; background: rgba(56, 189, 248, 0.08); border-color: rgba(56, 189, 248, 0.25); transform: translateX(3px); }
+        .menu-item::before {
+            content: ""; position: absolute; left: 0; top: 18%; bottom: 18%; width: 4px;
+            background: transparent; border-radius: 0 4px 4px 0; transition: 0.25s;
+        }
+        .menu-icon-wrap {
+            width: 40px; height: 40px; border-radius: 11px;
+            background: rgba(16, 185, 129, 0.12);
+            border: 1px solid rgba(16, 185, 129, 0.35);
+            display: flex; align-items: center; justify-content: center;
+            flex-shrink: 0; transition: 0.25s;
+        }
+        .menu-icon-wrap svg { width: 20px; height: 20px; fill: #34d399; transition: 0.25s; }
+        .menu-label-col { display: flex; flex-direction: column; gap: 2px; flex: 1; }
+        .menu-main-title { font-size: 14px; font-weight: 800; color: #f8fafc; }
+        .menu-sub-desc { font-family: 'Fira Code', monospace; font-size: 10.5px; color: #64748b; font-weight: 600; }
+
+        .menu-item:hover {
+            transform: translateX(5px);
+            background: linear-gradient(90deg, rgba(16, 185, 129, 0.18) 0%, rgba(244, 63, 94, 0.12) 100%);
+            border-color: #34d399;
+            box-shadow: 0 6px 20px rgba(16, 185, 129, 0.2);
+        }
+        .menu-item:hover::before { background: #10b981; box-shadow: 0 0 10px #10b981; }
+
         .menu-item.active {
-            background: linear-gradient(135deg, rgba(14, 165, 233, 0.22) 0%, rgba(56, 189, 248, 0.05) 100%);
-            border-color: rgba(56, 189, 248, 0.5); color: #38bdf8; font-weight: 700;
-            box-shadow: 0 0 20px rgba(56, 189, 248, 0.15);
+            background: linear-gradient(90deg, rgba(16, 185, 129, 0.25) 0%, rgba(244, 63, 94, 0.2) 100%);
+            border-color: #34d399;
+            box-shadow: 0 8px 28px rgba(16, 185, 129, 0.28), inset 0 0 18px rgba(16, 185, 129, 0.12);
         }
-        .menu-item.logout-sidebar-btn {
-            margin-top: auto;
-            background: rgba(244, 63, 94, 0.14);
-            border: 1px solid rgba(244, 63, 94, 0.45);
-            color: #fb7185;
-            font-weight: 800;
+        .menu-item.active::before {
+            background: linear-gradient(180deg, #10b981, #f43f5e);
+            box-shadow: 0 0 14px #10b981;
         }
-        .menu-item.logout-sidebar-btn:hover { background: #e11d48; color: #fff; border-color: #e11d48; }
+        .menu-item.active .menu-icon-wrap {
+            background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+            border-color: #a7f3d0;
+            box-shadow: 0 0 16px rgba(16, 185, 129, 0.6);
+        }
+        .menu-item.active .menu-icon-wrap svg { fill: #ffffff; }
+        .menu-item.active .menu-sub-desc { color: #6ee7b7; }
+
         .badge-live {
-            font-size: 10px; background: linear-gradient(135deg, #ef4444 0%, #dc2626 100%);
-            color: #fff; padding: 3px 8px; border-radius: 9999px; font-weight: 800; margin-left: auto;
-            box-shadow: 0 0 10px rgba(239, 68, 68, 0.6);
+            font-family: 'Orbitron', monospace; font-size: 9.5px;
+            background: linear-gradient(135deg, #f43f5e 0%, #e11d48 100%);
+            color: #fff; padding: 3px 8px; border-radius: 9999px; font-weight: 900;
+            box-shadow: 0 0 12px rgba(244, 63, 94, 0.75);
+            animation: livePulse 1.5s infinite;
         }
+        @keyframes livePulse { 0%, 100% { opacity: 0.45; } 50% { opacity: 1; } }
+
+        /* ==================== TRẠM LINH THÚ ĐỒNG HÀNH (LẤP ĐẦY PHẦN DƯỚI SIDEBAR) ==================== */
+        .sidebar-companion-dock {
+            display: flex; flex-direction: column; gap: 12px; margin-top: auto;
+        }
+        .companion-pet-card {
+            background: linear-gradient(155deg, rgba(8, 28, 36, 0.95) 0%, rgba(28, 10, 28, 0.95) 100%);
+            border: 1.5px solid rgba(244, 63, 94, 0.42);
+            border-radius: 18px;
+            padding: 14px;
+            display: flex; flex-direction: column; gap: 10px;
+            box-shadow: 0 12px 30px rgba(0, 0, 0, 0.7), inset 0 0 20px rgba(244, 63, 94, 0.1);
+            position: relative; overflow: hidden;
+        }
+        .pet-top-row { display: flex; align-items: center; gap: 12px; }
+        .pet-avatar-orb {
+            width: 48px; height: 48px; border-radius: 14px;
+            background: radial-gradient(circle, rgba(16, 185, 129, 0.25) 0%, rgba(244, 63, 94, 0.25) 100%);
+            border: 1.5px solid #fbbf24;
+            display: flex; align-items: center; justify-content: center;
+            font-size: 24px; flex-shrink: 0;
+            box-shadow: 0 0 15px rgba(251, 191, 36, 0.35);
+        }
+        .pet-info-col { display: flex; flex-direction: column; gap: 2px; flex: 1; }
+        .pet-stage-name {
+            font-family: 'Orbitron', sans-serif; font-size: 11.5px; font-weight: 900;
+            color: #fbbf24; letter-spacing: 0.4px;
+        }
+        .pet-bond-sub { font-family: 'Fira Code', monospace; font-size: 10.5px; color: #cbd5e1; font-weight: 700; }
+
+        .pet-exp-track {
+            width: 100%; height: 8px; background: #040812; border-radius: 99px;
+            overflow: hidden; border: 1px solid #1e293b;
+        }
+        .pet-exp-fill {
+            height: 100%; width: 20%;
+            background: linear-gradient(90deg, #10b981 0%, #fbbf24 50%, #f43f5e 100%);
+            box-shadow: 0 0 12px rgba(16, 185, 129, 0.7);
+            transition: width 0.4s ease;
+        }
+        .pet-mini-grid {
+            display: grid; grid-template-columns: 1fr 1fr; gap: 8px;
+        }
+        .pet-stat-pill {
+            background: rgba(4, 8, 18, 0.85); border: 1px solid rgba(52, 211, 153, 0.28);
+            border-radius: 9px; padding: 6px 8px; text-align: center;
+        }
+        .pet-stat-pill:last-child { border-color: rgba(251, 113, 133, 0.3); }
+        .pet-stat-val { font-family: 'Orbitron', monospace; font-size: 12px; font-weight: 900; color: #fff; }
+        .pet-stat-lbl { font-size: 9.5px; color: #94a3b8; font-weight: 700; text-transform: uppercase; }
+
+        .viper-pulse-strip {
+            background: rgba(7, 16, 30, 0.92);
+            border: 1px solid rgba(16, 185, 129, 0.32);
+            border-radius: 13px; padding: 10px 14px;
+            display: flex; justify-content: space-between; align-items: center;
+        }
+        .vp-bars { display: flex; align-items: flex-end; gap: 3px; height: 16px; }
+        .vp-b { width: 3.5px; background: #10b981; border-radius: 2px; animation: eqWave 0.9s infinite ease-in-out alternate; }
+        .vp-b:nth-child(2) { height: 95%; animation-delay: 0.2s; background: #f43f5e; }
+        .vp-b:nth-child(3) { height: 60%; animation-delay: 0.4s; background: #fbbf24; }
+        .vp-b:nth-child(4) { height: 100%; animation-delay: 0.1s; }
+        @keyframes eqWave { 0% { transform: scaleY(0.35); } 100% { transform: scaleY(1); } }
+
+        .menu-item.logout-sidebar-btn {
+            background: rgba(244, 63, 94, 0.16);
+            border: 1.5px solid rgba(244, 63, 94, 0.5);
+            color: #fda4af; font-weight: 800; justify-content: center; padding: 10px;
+        }
+        .menu-item.logout-sidebar-btn:hover { background: #e11d48; color: #fff; }
 
         /* ==================== MAIN CONTENT ==================== */
         .main-content {
             flex: 1;
-            padding: 22px 36px 40px 36px;
+            padding: 20px 36px 40px 36px;
             display: flex;
             flex-direction: column;
-            gap: 24px;
+            gap: 22px;
             max-width: 1420px;
             margin: 0 auto;
         }
 
+        /* TOPBAR HUD RẮN & MÈO */
         .top-hud-bar {
             display: flex; justify-content: space-between; align-items: center;
-            background: rgba(8, 14, 28, 0.9); border: 1px solid rgba(56, 189, 248, 0.22);
-            padding: 12px 24px; border-radius: 14px;
+            background: linear-gradient(90deg, rgba(6, 22, 34, 0.95) 0%, rgba(24, 10, 28, 0.95) 100%);
+            border: 1.5px solid rgba(16, 185, 129, 0.35);
+            padding: 12px 24px; border-radius: 16px;
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.65);
+            position: relative;
+        }
+        .top-hud-bar::before {
+            content: ""; position: absolute; left: 0; top: 20%; bottom: 20%; width: 4px;
+            background: linear-gradient(180deg, #10b981, #f43f5e);
+            border-radius: 0 4px 4px 0; box-shadow: 0 0 12px #10b981;
         }
         .hud-status-left {
             font-family: 'Orbitron', sans-serif; font-size: 13px; font-weight: 800;
-            color: #38bdf8; display: flex; align-items: center; gap: 10px; letter-spacing: 0.8px;
+            color: #34d399; display: flex; align-items: center; gap: 10px; letter-spacing: 0.8px;
         }
         .hud-right-user { display: flex; align-items: center; gap: 12px; }
         .user-chip {
             font-family: 'Fira Code', monospace; font-size: 13.5px; font-weight: 700;
-            color: #7dd3fc; background: rgba(14, 165, 233, 0.12);
-            border: 1px solid rgba(56, 189, 248, 0.35); padding: 6px 14px; border-radius: 8px;
+            color: #6ee7b7; background: rgba(16, 185, 129, 0.14);
+            border: 1px solid rgba(52, 211, 153, 0.4); padding: 6px 14px; border-radius: 9px;
         }
         .btn-top-logout {
             background: linear-gradient(135deg, #e11d48 0%, #be123c 100%);
             color: #fff; text-decoration: none; font-size: 13px; font-weight: 800;
-            padding: 7px 14px; border-radius: 8px; cursor: pointer; border: none;
+            padding: 7px 14px; border-radius: 9px; cursor: pointer; border: 1px solid #fda4af;
         }
 
+        /* ==================== HERO BANNER RẮN PYTHON & MÈO NEKO ==================== */
         .course-hero {
             position: relative;
             background: 
-                radial-gradient(circle at 85% 20%, rgba(14, 165, 233, 0.25) 0%, rgba(244, 63, 94, 0.1) 45%, transparent 70%),
-                linear-gradient(135deg, #091328 0%, #050914 100%);
-            border: 1.5px solid rgba(56, 189, 248, 0.35);
-            border-radius: 24px;
-            padding: 30px 36px;
+                radial-gradient(circle at 18% 20%, rgba(16, 185, 129, 0.25) 0%, transparent 45%),
+                radial-gradient(circle at 85% 25%, rgba(244, 63, 94, 0.25) 0%, transparent 48%),
+                linear-gradient(135deg, #061524 0%, #090d1e 50%, #190a1e 100%);
+            border: 1.5px solid rgba(52, 211, 153, 0.42);
+            border-radius: 26px;
+            padding: 28px 34px;
             display: flex;
             justify-content: space-between;
             align-items: center;
             gap: 28px;
             overflow: hidden;
-            box-shadow: 0 20px 55px rgba(0, 0, 0, 0.8), inset 0 1px 0 rgba(255, 255, 255, 0.1);
+            box-shadow: 0 22px 55px rgba(0, 0, 0, 0.85), inset 0 1px 0 rgba(255, 255, 255, 0.12);
         }
         .hero-grid-bg {
             position: absolute; inset: 0;
             background-image: 
-                linear-gradient(rgba(56, 189, 248, 0.06) 1px, transparent 1px),
-                linear-gradient(90deg, rgba(56, 189, 248, 0.06) 1px, transparent 1px);
-            background-size: 36px 36px;
-            pointer-events: none;
+                linear-gradient(rgba(16, 185, 129, 0.06) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(244, 63, 94, 0.06) 1px, transparent 1px);
+            background-size: 36px 36px; pointer-events: none;
         }
         .course-hero-text { position: relative; z-index: 2; flex: 1; }
         .stage-pill {
             display: inline-flex; align-items: center; gap: 8px;
-            background: rgba(245, 158, 11, 0.15); border: 1px solid rgba(245, 158, 11, 0.45);
-            color: #fbbf24; font-family: 'Orbitron', sans-serif; font-size: 11px; font-weight: 800;
-            padding: 5px 14px; border-radius: 9999px; margin-bottom: 12px; letter-spacing: 0.8px;
+            background: linear-gradient(90deg, rgba(16, 185, 129, 0.2), rgba(244, 63, 94, 0.2));
+            border: 1px solid #fbbf24;
+            color: #fde047; font-family: 'Orbitron', sans-serif; font-size: 11px; font-weight: 800;
+            padding: 5px 15px; border-radius: 9999px; margin-bottom: 12px; letter-spacing: 0.8px;
         }
         .course-hero-title {
-            font-size: 28px; font-weight: 900; color: #ffffff; margin-bottom: 8px;
-            background: linear-gradient(90deg, #ffffff 0%, #7dd3fc 60%, #38bdf8 100%);
+            font-family: 'Orbitron', 'Plus Jakarta Sans', sans-serif;
+            font-size: 27px; font-weight: 900; margin-bottom: 8px;
+            background: linear-gradient(90deg, #34d399 0%, #ffffff 48%, #fb7185 100%);
             -webkit-background-clip: text; -webkit-text-fill-color: transparent;
         }
-        .course-hero-desc { color: #94a3b8; font-size: 14px; line-height: 1.6; max-width: 680px; margin-bottom: 18px; }
+        .course-hero-desc { color: #cbd5e1; font-size: 14px; line-height: 1.6; max-width: 680px; margin-bottom: 16px; }
 
         .global-progress-box {
-            background: rgba(4, 8, 19, 0.85);
-            border: 1px solid rgba(56, 189, 248, 0.3);
-            border-radius: 14px;
+            background: rgba(4, 10, 20, 0.88);
+            border: 1.5px solid rgba(52, 211, 153, 0.38);
+            border-radius: 16px;
             padding: 14px 18px;
-            display: flex;
-            flex-direction: column;
-            gap: 8px;
-            max-width: 580px;
+            display: flex; flex-direction: column; gap: 8px;
+            max-width: 600px;
         }
-        .gp-top-row {
-            display: flex; justify-content: space-between; align-items: center;
-            font-size: 12.5px; font-weight: 800;
-        }
-        .gp-rank-badge { color: #facc15; font-family: 'Orbitron', sans-serif; }
-        .gp-count-text { color: #38bdf8; font-family: 'Fira Code', monospace; }
+        .gp-top-row { display: flex; justify-content: space-between; align-items: center; font-size: 12.5px; font-weight: 800; }
+        .gp-rank-badge { color: #fbbf24; font-family: 'Orbitron', sans-serif; }
+        .gp-count-text { color: #34d399; font-family: 'Fira Code', monospace; }
         .gp-bar-track {
-            width: 100%; height: 10px; background: #0f172a; border-radius: 999px; overflow: hidden;
+            width: 100%; height: 10px; background: #070e1c; border-radius: 999px; overflow: hidden;
             border: 1px solid #1e293b;
         }
         .gp-bar-fill {
             height: 100%; width: 0%;
-            background: linear-gradient(90deg, #0ea5e9 0%, #22c55e 50%, #facc15 100%);
-            box-shadow: 0 0 12px rgba(34, 197, 94, 0.7);
+            background: linear-gradient(90deg, #10b981 0%, #fbbf24 50%, #f43f5e 100%);
+            box-shadow: 0 0 14px rgba(16, 185, 129, 0.8);
             transition: width 0.4s cubic-bezier(0.4, 0, 0.2, 1);
         }
 
-        .hero-art-svg {
+        /* ĐỒ HỌA SVG RẮN & MÈO ĐỐI ĐẦU Ở BANNER */
+        .hero-mascot-emblem {
             position: relative; z-index: 2;
-            width: 130px; height: 130px;
-            filter: drop-shadow(0 0 28px rgba(56, 189, 248, 0.55));
+            width: 175px; height: 145px;
+            filter: drop-shadow(0 0 25px rgba(16, 185, 129, 0.45)) drop-shadow(0 0 25px rgba(244, 63, 94, 0.35));
             flex-shrink: 0;
         }
-        .spin-slow { transform-origin: center; animation: spin360 12s infinite linear; }
-        .spin-reverse { transform-origin: center; animation: spinRev 8s infinite linear; }
+        .spin-slow { transform-origin: center; animation: spin360 14s infinite linear; }
+        .spin-reverse { transform-origin: center; animation: spinRev 9s infinite linear; }
         @keyframes spin360 { 100% { transform: rotate(360deg); } }
         @keyframes spinRev { 100% { transform: rotate(-360deg); } }
 
+        /* ==================== LƯỚI 3 BÀI HỌC LINH VẬT RẮN & MÈO ==================== */
         .courses-grid {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 24px;
+            display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px;
         }
 
         .lesson-card {
-            background: linear-gradient(175deg, rgba(13, 23, 46, 0.92) 0%, rgba(6, 10, 22, 0.98) 100%);
-            border: 1.5px solid rgba(56, 189, 248, 0.25);
-            border-radius: 22px;
+            background: linear-gradient(170deg, rgba(7, 24, 34, 0.94) 0%, rgba(5, 10, 20, 0.98) 100%);
+            border: 1.5px solid rgba(16, 185, 129, 0.38);
+            border-radius: 24px;
             padding: 24px;
-            display: flex;
-            flex-direction: column;
-            justify-content: space-between;
-            gap: 18px;
+            display: flex; flex-direction: column; justify-content: space-between; gap: 18px;
             transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
-            position: relative;
-            overflow: hidden;
-            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.7);
+            position: relative; overflow: hidden;
+            box-shadow: 0 18px 45px rgba(0, 0, 0, 0.75);
         }
         .lesson-card::before {
-            content: ""; position: absolute; top: 0; left: 15%; right: 15%; height: 3px;
-            background: #38bdf8; border-radius: 0 0 4px 4px; opacity: 0.6; transition: 0.3s;
+            content: ""; position: absolute; top: 0; left: 10%; right: 10%; height: 3.5px;
+            background: #10b981; box-shadow: 0 0 14px #10b981;
         }
-        .lesson-card.card-theme-2::before { background: #c084fc; }
-        .lesson-card.card-theme-3::before { background: #fb7185; }
+        .lesson-card.card-theme-2 {
+            background: linear-gradient(170deg, rgba(32, 11, 34, 0.94) 0%, rgba(6, 10, 22, 0.98) 100%);
+            border-color: rgba(244, 63, 94, 0.4);
+        }
+        .lesson-card.card-theme-2::before { background: #f43f5e; box-shadow: 0 0 14px #f43f5e; }
 
-        .lesson-card:hover {
-            transform: translateY(-7px);
-            border-color: #38bdf8;
-            box-shadow: 0 20px 45px rgba(14, 165, 233, 0.22);
+        .lesson-card.card-theme-3 {
+            background: linear-gradient(170deg, rgba(28, 20, 10, 0.94) 0%, rgba(6, 10, 22, 0.98) 100%);
+            border-color: rgba(251, 191, 36, 0.42);
         }
-        .lesson-card.card-theme-2:hover { border-color: #c084fc; box-shadow: 0 20px 45px rgba(192, 132, 252, 0.22); }
-        .lesson-card.card-theme-3:hover { border-color: #fb7185; box-shadow: 0 20px 45px rgba(251, 113, 133, 0.22); }
+        .lesson-card.card-theme-3::before { background: linear-gradient(90deg, #10b981, #fbbf24, #f43f5e); box-shadow: 0 0 14px #fbbf24; }
+
+        .lesson-card:hover { transform: translateY(-8px); box-shadow: 0 22px 50px rgba(16, 185, 129, 0.25); }
+        .lesson-card.card-theme-2:hover { box-shadow: 0 22px 50px rgba(244, 63, 94, 0.25); }
+        .lesson-card.card-theme-3:hover { box-shadow: 0 22px 50px rgba(251, 191, 36, 0.25); }
 
         .lesson-graphic-banner {
-            height: 135px;
-            border-radius: 16px;
-            background: radial-gradient(circle at 50% 50%, rgba(14, 165, 233, 0.22) 0%, #050914 85%);
-            border: 1px solid rgba(56, 189, 248, 0.3);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            margin-bottom: 14px;
-            position: relative;
-            overflow: hidden;
+            height: 142px;
+            border-radius: 18px;
+            background: radial-gradient(circle at 50% 50%, rgba(16, 185, 129, 0.28) 0%, #040914 85%);
+            border: 1px solid rgba(52, 211, 153, 0.4);
+            display: flex; align-items: center; justify-content: center;
+            margin-bottom: 14px; position: relative; overflow: hidden;
         }
         .card-theme-2 .lesson-graphic-banner {
-            background: radial-gradient(circle at 50% 50%, rgba(168, 85, 247, 0.24) 0%, #050914 85%);
-            border-color: rgba(192, 132, 252, 0.35);
+            background: radial-gradient(circle at 50% 50%, rgba(244, 63, 94, 0.28) 0%, #050914 85%);
+            border-color: rgba(251, 113, 133, 0.45);
         }
         .card-theme-3 .lesson-graphic-banner {
-            background: radial-gradient(circle at 50% 50%, rgba(244, 63, 94, 0.24) 0%, #050914 85%);
-            border-color: rgba(251, 113, 133, 0.35);
+            background: radial-gradient(circle at 50% 50%, rgba(251, 191, 36, 0.25) 0%, #050914 85%);
+            border-color: rgba(251, 191, 36, 0.45);
         }
 
         .xp-reward-pill {
             position: absolute; top: 10px; left: 10px;
             font-family: 'Orbitron', monospace; font-size: 10.5px; font-weight: 800;
-            background: rgba(250, 204, 21, 0.15); border: 1px solid rgba(250, 204, 21, 0.45);
-            color: #facc15; padding: 3px 9px; border-radius: 6px;
+            background: rgba(250, 204, 21, 0.16); border: 1px solid rgba(250, 204, 21, 0.5);
+            color: #fde047; padding: 3px 10px; border-radius: 6px;
         }
         .map-tag-badge {
             position: absolute; top: 10px; right: 10px;
-            font-family: 'Fira Code', monospace; font-size: 10.5px; font-weight: 700;
-            color: #38bdf8; background: rgba(15, 23, 42, 0.9);
-            border: 1px solid rgba(56, 189, 248, 0.4);
-            padding: 3px 9px; border-radius: 6px;
+            font-family: 'Fira Code', monospace; font-size: 10.5px; font-weight: 800;
+            color: #34d399; background: rgba(4, 12, 24, 0.92);
+            border: 1px solid rgba(52, 211, 153, 0.5);
+            padding: 3px 10px; border-radius: 6px;
         }
 
         .lesson-svg-icon {
-            width: 82px; height: 82px;
-            filter: drop-shadow(0 0 14px rgba(56, 189, 248, 0.5));
+            width: 92px; height: 92px;
+            filter: drop-shadow(0 0 16px rgba(16, 185, 129, 0.55));
             transition: transform 0.3s ease;
         }
-        .lesson-card:hover .lesson-svg-icon { transform: scale(1.1); }
+        .lesson-card:hover .lesson-svg-icon { transform: scale(1.12); }
 
         .lesson-title { font-size: 20px; font-weight: 800; color: #ffffff; margin-bottom: 6px; }
         .lesson-desc { color: #94a3b8; font-size: 13px; line-height: 1.55; margin-bottom: 14px; }
 
         .milestone-checklist {
-            background: rgba(4, 8, 18, 0.8);
-            border: 1px solid #16243e;
-            border-radius: 14px;
-            padding: 12px 14px;
-            display: flex;
-            flex-direction: column;
-            gap: 8px;
-            margin-bottom: 12px;
+            background: rgba(3, 8, 18, 0.85);
+            border: 1px solid rgba(52, 211, 153, 0.25);
+            border-radius: 14px; padding: 12px 14px;
+            display: flex; flex-direction: column; gap: 8px; margin-bottom: 12px;
         }
+        .card-theme-2 .milestone-checklist { border-color: rgba(251, 113, 133, 0.28); }
+        .card-theme-3 .milestone-checklist { border-color: rgba(251, 191, 36, 0.28); }
+
         .ms-header-row {
             display: flex; justify-content: space-between; align-items: center;
-            font-size: 11.5px; font-weight: 800; color: #7dd3fc;
+            font-size: 11.5px; font-weight: 800; color: #34d399;
             font-family: 'Fira Code', monospace;
-            padding-bottom: 6px; border-bottom: 1px dashed #1e2f4d;
+            padding-bottom: 6px; border-bottom: 1px dashed rgba(52, 211, 153, 0.3);
         }
         .ms-mini-item {
             display: flex; align-items: center; gap: 10px;
             font-size: 12.5px; color: #cbd5e1; font-weight: 600;
             cursor: pointer; padding: 5px 6px; border-radius: 8px; transition: 0.2s;
         }
-        .ms-mini-item:hover { background: rgba(56, 189, 248, 0.1); color: #fff; }
+        .ms-mini-item:hover { background: rgba(16, 185, 129, 0.12); color: #fff; }
         .ms-check-circle {
             width: 20px; height: 20px; border-radius: 50%;
             border: 1.5px solid #475569; background: #091020;
@@ -279,168 +442,272 @@
             font-size: 11px; color: transparent; flex-shrink: 0; transition: 0.25s;
         }
         .ms-mini-item.done .ms-check-circle {
-            border-color: #22c55e; background: #22c55e; color: #040711; font-weight: 900;
-            box-shadow: 0 0 10px rgba(34, 197, 94, 0.6);
+            border-color: #10b981; background: #10b981; color: #030711; font-weight: 900;
+            box-shadow: 0 0 10px rgba(16, 185, 129, 0.7);
         }
-        .ms-mini-item.done span { color: #86efac; text-decoration: line-through; opacity: 0.85; }
+        .ms-mini-item.done span { color: #6ee7b7; text-decoration: line-through; opacity: 0.85; }
 
         .card-progress-wrap { display: flex; align-items: center; gap: 10px; }
         .card-progress-track { flex: 1; height: 7px; background: #0f172a; border-radius: 99px; overflow: hidden; }
-        .card-progress-fill { height: 100%; width: 0%; background: linear-gradient(90deg, #38bdf8, #22c55e); transition: width 0.35s ease; }
-        .card-progress-pct { font-family: 'Fira Code', monospace; font-size: 11.5px; font-weight: 800; color: #4ade80; }
+        .card-progress-fill { height: 100%; width: 0%; background: linear-gradient(90deg, #10b981, #fbbf24, #f43f5e); transition: width 0.35s ease; }
+        .card-progress-pct { font-family: 'Fira Code', monospace; font-size: 11.5px; font-weight: 800; color: #34d399; }
 
         .lesson-actions {
             display: grid; grid-template-columns: 1.15fr 0.85fr; gap: 10px;
-            padding-top: 10px; border-top: 1px solid #15223a;
+            padding-top: 10px; border-top: 1px solid rgba(52, 211, 153, 0.2);
         }
         .btn-read-lesson {
-            background: linear-gradient(135deg, #0284c7 0%, #0369a1 100%);
-            border: 1px solid #38bdf8; color: #ffffff;
-            padding: 11px 12px; border-radius: 10px; font-size: 13px; font-weight: 800;
+            background: linear-gradient(135deg, #059669 0%, #047857 100%);
+            border: 1px solid #34d399; color: #ffffff;
+            padding: 11px 12px; border-radius: 11px; font-size: 13px; font-weight: 800;
             cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 6px;
-            box-shadow: 0 4px 14px rgba(2, 132, 199, 0.35); transition: 0.2s;
+            box-shadow: 0 4px 15px rgba(16, 185, 129, 0.35); transition: 0.2s;
         }
         .btn-read-lesson:hover {
             transform: translateY(-2px);
-            background: linear-gradient(135deg, #0ea5e9 0%, #0284c7 100%);
-            box-shadow: 0 6px 20px rgba(56, 189, 248, 0.55);
+            background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+            box-shadow: 0 6px 22px rgba(52, 211, 153, 0.6);
         }
         .btn-fight-map {
-            background: linear-gradient(135deg, #ea580c 0%, #c2410c 100%);
-            color: #ffffff; border: 1px solid #fb923c; padding: 11px 12px; border-radius: 10px;
+            background: linear-gradient(135deg, #e11d48 0%, #be123c 100%);
+            color: #ffffff; border: 1px solid #fda4af; padding: 11px 12px; border-radius: 11px;
             font-size: 13px; font-weight: 800; text-decoration: none;
             display: flex; align-items: center; justify-content: center; gap: 6px;
-            box-shadow: 0 4px 15px rgba(234, 88, 12, 0.4); transition: 0.2s;
+            box-shadow: 0 4px 15px rgba(225, 29, 72, 0.4); transition: 0.2s;
         }
-        .btn-fight-map:hover { transform: translateY(-2px); box-shadow: 0 6px 20px rgba(249, 115, 22, 0.65); }
+        .btn-fight-map:hover { transform: translateY(-2px); box-shadow: 0 6px 22px rgba(244, 63, 94, 0.65); }
 
-        /* MODAL */
+        /* MODAL HỌC TẬP */
         .lesson-modal-overlay {
             position: fixed; inset: 0; background: rgba(2, 5, 13, 0.92);
             backdrop-filter: blur(10px); display: none; align-items: center; justify-content: center;
             z-index: 300; padding: 18px;
         }
         .lesson-modal-card {
-            background: #070d1c; border: 2px solid #38bdf8; border-radius: 24px;
+            background: #060d1a; border: 2px solid #10b981; border-radius: 24px;
             width: 100%; max-width: 1060px; height: 88vh;
             display: flex; flex-direction: column; overflow: hidden;
-            box-shadow: 0 0 60px rgba(14, 165, 233, 0.3);
+            box-shadow: 0 0 65px rgba(16, 185, 129, 0.35);
         }
         .modal-top-bar {
             display: flex; justify-content: space-between; align-items: center;
-            padding: 18px 28px; background: #0b152b; border-bottom: 1.5px solid #1e3256;
+            padding: 18px 28px; background: #091628; border-bottom: 1.5px solid rgba(16, 185, 129, 0.35);
         }
         .modal-lesson-title {
             font-family: 'Orbitron', 'Plus Jakarta Sans', sans-serif;
-            font-size: 18px; font-weight: 800; color: #38bdf8;
+            font-size: 18px; font-weight: 800; color: #34d399;
         }
         .btn-close-modal {
             background: rgba(244, 63, 94, 0.15); border: 1px solid #f43f5e; color: #fb7185;
             width: 34px; height: 34px; border-radius: 8px; font-size: 18px; font-weight: 800; cursor: pointer;
         }
-        .btn-close-modal:hover { background: #e11d48; color: #fff; }
-
         .modal-split-layout { display: grid; grid-template-columns: 290px 1fr; flex: 1; overflow: hidden; }
         .modal-milestone-sidebar {
-            background: #050914; border-right: 1px solid #1a2a47;
+            background: #040812; border-right: 1px solid #152942;
             padding: 20px 16px; display: flex; flex-direction: column; gap: 12px; overflow-y: auto;
         }
         .ms-tab-btn {
-            background: #0b1326; border: 1.5px solid #1c2d4d; border-radius: 14px;
+            background: #091326; border: 1.5px solid #1a2f4c; border-radius: 14px;
             padding: 14px; text-align: left; cursor: pointer; transition: 0.22s;
             display: flex; flex-direction: column; gap: 6px; color: #cbd5e1;
         }
-        .ms-tab-btn:hover { border-color: #38bdf8; }
         .ms-tab-btn.active {
-            background: linear-gradient(135deg, rgba(14, 165, 233, 0.22) 0%, rgba(11, 19, 38, 0.95) 100%);
-            border-color: #38bdf8; box-shadow: 0 0 18px rgba(56, 189, 248, 0.2);
+            background: linear-gradient(135deg, rgba(16, 185, 129, 0.22) 0%, rgba(244, 63, 94, 0.15) 100%);
+            border-color: #34d399; box-shadow: 0 0 18px rgba(16, 185, 129, 0.25);
         }
         .ms-tab-top {
             display: flex; justify-content: space-between; align-items: center;
-            font-family: 'Fira Code', monospace; font-size: 11px; font-weight: 700; color: #38bdf8;
+            font-family: 'Fira Code', monospace; font-size: 11px; font-weight: 700; color: #34d399;
         }
-        .ms-tab-status.completed { color: #4ade80; }
+        .ms-tab-status.completed { color: #fbbf24; }
         .ms-tab-title { font-size: 13.5px; font-weight: 800; color: #ffffff; line-height: 1.35; }
 
         .modal-body-content {
             padding: 26px 32px; overflow-y: auto; display: flex; flex-direction: column; gap: 18px;
             line-height: 1.7; font-size: 14.5px; color: #e2e8f0;
         }
-        .theory-section { background: #0b1428; border: 1px solid #1d3156; border-radius: 14px; padding: 18px 22px; }
-        .theory-section h4 { color: #facc15; font-size: 16px; font-weight: 800; margin-bottom: 10px; }
+        .theory-section { background: #0a1528; border: 1px solid #1b3554; border-radius: 14px; padding: 18px 22px; }
+        .theory-section h4 { color: #fbbf24; font-size: 16px; font-weight: 800; margin-bottom: 10px; }
         .theory-section ul { padding-left: 20px; margin-top: 6px; display: flex; flex-direction: column; gap: 6px; }
         .theory-section code {
-            font-family: 'Fira Code', monospace; background: rgba(56, 189, 248, 0.14);
-            color: #7dd3fc; padding: 2px 6px; border-radius: 5px; font-size: 13px;
+            font-family: 'Fira Code', monospace; background: rgba(16, 185, 129, 0.15);
+            color: #6ee7b7; padding: 2px 6px; border-radius: 5px; font-size: 13px;
         }
         .code-block-sample {
-            background: #03060c; border: 1px solid #1e3256; border-left: 4px solid #38bdf8;
+            background: #03060c; border: 1px solid #1b3554; border-left: 4px solid #10b981;
             border-radius: 10px; padding: 14px 18px; font-family: 'Fira Code', monospace;
-            font-size: 13.5px; color: #7dd3fc; margin-top: 10px; white-space: pre-wrap;
+            font-size: 13.5px; color: #6ee7b7; margin-top: 10px; white-space: pre-wrap;
         }
-
         .checkpoint-quiz-box {
-            background: linear-gradient(135deg, rgba(20, 83, 45, 0.25) 0%, rgba(11, 20, 40, 0.95) 100%);
-            border: 1.5px solid #22c55e; border-radius: 16px; padding: 20px 24px;
+            background: linear-gradient(135deg, rgba(16, 185, 129, 0.2) 0%, rgba(11, 20, 40, 0.95) 100%);
+            border: 1.5px solid #10b981; border-radius: 16px; padding: 20px 24px;
             display: flex; flex-direction: column; gap: 12px;
         }
-        .cp-title { font-size: 15px; font-weight: 800; color: #4ade80; display: flex; align-items: center; gap: 8px; }
+        .cp-title { font-size: 15px; font-weight: 800; color: #34d399; display: flex; align-items: center; gap: 8px; }
         .cp-question { font-size: 14.5px; font-weight: 700; color: #ffffff; }
         .cp-options { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-top: 4px; }
         .cp-opt-btn {
-            background: #070d19; border: 1.5px solid #1e3256; color: #e2e8f0;
+            background: #060c18; border: 1.5px solid #1e3256; color: #e2e8f0;
             padding: 11px 14px; border-radius: 10px; font-family: 'Fira Code', monospace;
             font-size: 13px; font-weight: 700; text-align: left; cursor: pointer; transition: 0.2s;
         }
-        .cp-opt-btn:hover { border-color: #38bdf8; color: #38bdf8; }
-        .cp-opt-btn.correct { background: rgba(34, 197, 94, 0.22); border-color: #22c55e; color: #4ade80; }
-        .cp-opt-btn.wrong { background: rgba(244, 63, 94, 0.2); border-color: #f43f5e; color: #fb7185; }
-
+        .cp-opt-btn:hover { border-color: #34d399; color: #34d399; }
+        .cp-opt-btn.correct { background: rgba(16, 185, 129, 0.25); border-color: #10b981; color: #6ee7b7; }
+        .cp-opt-btn.wrong { background: rgba(244, 63, 94, 0.22); border-color: #f43f5e; color: #fda4af; }
         .btn-complete-milestone {
-            background: linear-gradient(135deg, #22c55e 0%, #16a34a 100%);
+            background: linear-gradient(135deg, #10b981 0%, #059669 100%);
             color: #ffffff; border: none; padding: 13px 22px; border-radius: 12px;
             font-size: 14px; font-weight: 800; cursor: pointer; align-self: flex-start;
-            box-shadow: 0 6px 20px rgba(34, 197, 94, 0.4); transition: 0.2s;
         }
         .modal-bottom-bar {
-            padding: 15px 28px; background: #0b152b; border-top: 1.5px solid #1e3256;
+            padding: 15px 28px; background: #091628; border-top: 1.5px solid rgba(16, 185, 129, 0.35);
             display: flex; justify-content: space-between; align-items: center;
         }
     </style>
 </head>
 <body>
 
+    <!-- ==================== SIDEBAR RẮN & MÈO CYBER (ĐẦY ĐẶN, MÀU SẮC LỤC BẢO & HỒNG NEON) ==================== -->
     <aside class="sidebar">
-        <div class="brand-logo">
-            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#38bdf8" stroke-width="2.5"><path d="M14.5 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7.5L14.5 2z"/><polyline points="14 2 14 8 20 8"/><line x1="9" y1="13" x2="15" y2="13"/><line x1="9" y1="17" x2="13" y2="17"/></svg>
-            CodeColosseum
+        <div style="display:flex; flex-direction:column; gap:14px;">
+            <!-- Khối Huy Hiệu Linh Vật Rắn Python vs Mèo Neko -->
+            <a href="/" class="mascot-brand-box">
+                <svg class="mascot-Crest-svg" viewBox="0 0 220 70" fill="none">
+                    <!-- Rắn Python Lục Bảo bên trái -->
+                    <circle cx="52" cy="35" r="28" fill="rgba(16,185,129,0.16)" stroke="#10b981" stroke-width="2"/>
+                    <path d="M36 50 C32 30, 44 16, 56 20 C68 24, 64 42, 48 44 C56 50, 68 48, 72 38" stroke="#34d399" stroke-width="4.5" stroke-linecap="round"/>
+                    <circle cx="53" cy="24" r="3" fill="#fde047"/>
+                    <path d="M62 22 L70 19 M62 22 L69 25" stroke="#f43f5e" stroke-width="2" stroke-linecap="round"/>
+
+                    <!-- Tia Sét VS ở giữa -->
+                    <path d="M112 10 L102 34 L114 34 L106 60" stroke="#fbbf24" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+
+                    <!-- Mèo Neko Cyber bên phải -->
+                    <circle cx="168" cy="35" r="28" fill="rgba(244,63,94,0.16)" stroke="#f43f5e" stroke-width="2"/>
+                    <polygon points="150,28 154,13 164,22" fill="#fb7185" stroke="#fda4af" stroke-width="1.5"/>
+                    <polygon points="186,28 182,13 172,22" fill="#fb7185" stroke="#fda4af" stroke-width="1.5"/>
+                    <ellipse cx="168" cy="37" rx="18" ry="15" fill="#881337" stroke="#fb7185" stroke-width="2"/>
+                    <circle cx="161" cy="35" r="3" fill="#fde047"/>
+                    <circle cx="175" cy="35" r="3" fill="#00f2fe"/>
+                    <polygon points="168,40 165,44 171,44" fill="#fda4af"/>
+                </svg>
+                <div class="brand-title-text">
+                    <span class="viper-span">Py</span>Colos<span class="neko-span">seum</span>
+                </div>
+                <span class="brand-sub-pill">🐍 VIPER PYTHON × NEKO CYBER 🐱</span>
+            </a>
+
+            <div class="nav-group-header">
+                <span>// TRUNG TÂM HUẤN LUYỆN</span>
+                <span style="color:#fb7185;">v4.0</span>
+            </div>
+
+            <!-- 4 Nút Điều Hướng 2 Tầng -->
+            <nav class="menu-list">
+                <a href="/" class="menu-item">
+                    <div class="menu-icon-wrap">
+                        <svg viewBox="0 0 24 24"><path d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z"/></svg>
+                    </div>
+                    <div class="menu-label-col">
+                        <span class="menu-main-title">Trang chủ</span>
+                        <span class="menu-sub-desc">Sảnh Rắn & Mèo</span>
+                    </div>
+                </a>
+
+                <a href="/courses" class="menu-item active">
+                    <div class="menu-icon-wrap">
+                        <svg viewBox="0 0 24 24"><path d="M4 6H2v14c0 1.1.9 2 2 2h14v-2H4V6zm16-4H8c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2zm0 14H8V4h12v12z"/></svg>
+                    </div>
+                    <div class="menu-label-col">
+                        <span class="menu-main-title">Bài học</span>
+                        <span class="menu-sub-desc">3 Bài • 9 Mốc EXP</span>
+                    </div>
+                </a>
+
+                <a href="/arena" class="menu-item">
+                    <div class="menu-icon-wrap">
+                        <svg viewBox="0 0 24 24"><path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm-5 14H7v-2h7v2zm3-4H7v-2h10v2zm0-4H7V7h10v2z"/></svg>
+                    </div>
+                    <div class="menu-label-col">
+                        <span class="menu-main-title">Thực hành bài tập</span>
+                        <span class="menu-sub-desc">3 Bản đồ giả lập</span>
+                    </div>
+                </a>
+
+                <a href="/arena/speed-duel" class="menu-item">
+                    <div class="menu-icon-wrap">
+                        <svg viewBox="0 0 24 24"><path d="M14.25 2.5a.75.75 0 0 1 .75-.75h4.5a.75.75 0 0 1 .75.75v4.5a.75.75 0 0 1-1.5 0V4.56l-5.22 5.22a.75.75 0 1 1-1.06-1.06l5.22-5.22h-2.69a.75.75 0 0 1-.75-.75zM3.75 11.25a.75.75 0 0 1 .75-.75h4.5a.75.75 0 0 1 0 1.5H5.56l5.22 5.22a.75.75 0 1 1-1.06 1.06L4.5 13.06v2.69a.75.75 0 0 1-1.5 0v-4.5z"/></svg>
+                    </div>
+                    <div class="menu-label-col">
+                        <span class="menu-main-title">Đấu trường</span>
+                        <span class="menu-sub-desc">Đấu hạng 1v1 → 5v5</span>
+                    </div>
+                    <span class="badge-live">LIVE</span>
+                </a>
+
+                {{if eq .Username "admin"}}
+                <a href="/admin" class="menu-item" style="border-color:rgba(244,63,94,0.45);">
+                    <div class="menu-icon-wrap" style="border-color:#fb7185;">
+                        <svg viewBox="0 0 24 24"><path d="M12 1L3 5v6c0 5.55 3.84 10.74 9 12 5.16-1.26 9-6.45 9-12V5l-9-4z"/></svg>
+                    </div>
+                    <div class="menu-label-col">
+                        <span class="menu-main-title" style="color:#fb7185;">Quản Trị Admin</span>
+                        <span class="menu-sub-desc">Giám sát người chơi</span>
+                    </div>
+                </a>
+                {{end}}
+            </nav>
         </div>
-        <nav class="menu-list">
-            <a href="/" class="menu-item">
-                <svg viewBox="0 0 24 24"><path d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z"/></svg>Trang chủ
-            </a>
-            <a href="/courses" class="menu-item active">
-                <svg viewBox="0 0 24 24"><path d="M4 6H2v14c0 1.1.9 2 2 2h14v-2H4V6zm16-4H8c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2zm0 14H8V4h12v12z"/></svg>Bài học
-            </a>
-            <a href="/arena" class="menu-item">
-                <svg viewBox="0 0 24 24"><path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm-5 14H7v-2h7v2zm3-4H7v-2h10v2zm0-4H7V7h10v2z"/></svg>Thực hành bài tập
-            </a>
-            <a href="/arena/speed-duel" class="menu-item">
-                <svg viewBox="0 0 24 24"><path d="M14.25 2.5a.75.75 0 0 1 .75-.75h4.5a.75.75 0 0 1 .75.75v4.5a.75.75 0 0 1-1.5 0V4.56l-5.22 5.22a.75.75 0 1 1-1.06-1.06l5.22-5.22h-2.69a.75.75 0 0 1-.75-.75zM3.75 11.25a.75.75 0 0 1 .75-.75h4.5a.75.75 0 0 1 0 1.5H5.56l5.22 5.22a.75.75 0 1 1-1.06 1.06L4.5 13.06v2.69a.75.75 0 0 1-1.5 0v-4.5z"/></svg>Đấu trường <span class="badge-live">LIVE</span>
-            </a>
-            {{if eq .Username "admin"}}
-            <a href="/admin" class="menu-item" style="color:#f87171;">🛡️ Quản Trị Admin</a>
-            {{end}}
+
+        <!-- TRẠM LINH THÚ RẮN & MÈO LẤP ĐẦY KHOẢNG TRỐNG PHẦN DƯỚI SIDEBAR -->
+        <div class="sidebar-companion-dock">
+            <div class="companion-pet-card">
+                <div class="pet-top-row">
+                    <div class="pet-avatar-orb" id="sb-pet-icons">🐍🐱</div>
+                    <div class="pet-info-col">
+                        <span class="pet-stage-name" id="sb-pet-rank">LINH THÚ SƠ CẤP</span>
+                        <span class="pet-bond-sub" id="sb-pet-exp">Năng lượng: 0 / 900 EXP</span>
+                    </div>
+                </div>
+                <div class="pet-exp-track">
+                    <div class="pet-exp-fill" id="sb-pet-bar"></div>
+                </div>
+                <div class="pet-mini-grid">
+                    <div class="pet-stat-pill">
+                        <div class="pet-stat-val" id="sb-ms-val" style="color:#34d399;">0 / 9</div>
+                        <div class="pet-stat-lbl">🐍 Mốc Rắn Thần</div>
+                    </div>
+                    <div class="pet-stat-pill">
+                        <div class="pet-stat-val" id="sb-hist-val" style="color:#fb7185;">0 Câu</div>
+                        <div class="pet-stat-lbl">🐱 Chiến Tích Mèo</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="viper-pulse-strip">
+                <div style="display:flex; align-items:center; gap:10px;">
+                    <div class="vp-bars">
+                        <div class="vp-b"></div>
+                        <div class="vp-b"></div>
+                        <div class="vp-b"></div>
+                        <div class="vp-b"></div>
+                    </div>
+                    <span style="font-family:'Fira Code',monospace; font-size:11px; font-weight:700; color:#6ee7b7;">VIPER-NEKO CORE</span>
+                </div>
+                <span style="font-family:'Fira Code',monospace; font-size:10.5px; font-weight:800; color:#fbbf24;">● ACTIVE</span>
+            </div>
+
             {{if .Username}}
-            <a href="/logout" onclick="logoutAccount(event)" class="menu-item logout-sidebar-btn">🚪 Đăng xuất</a>
+            <a href="/logout" onclick="logoutAccount(event)" class="menu-item logout-sidebar-btn">🚪 Đăng xuất tài khoản</a>
             {{end}}
-        </nav>
+        </div>
     </aside>
 
+    <!-- ==================== MAIN CONTENT ==================== -->
     <main class="main-content">
         <div class="top-hud-bar">
             <div class="hud-status-left">
-                <span>⚡</span> HỆ THỐNG ĐÀO TẠO CHIẾN BINH PYTHON // CYBER ACADEMY
+                <span>🐍⚡🐱</span> HỌC VIỆN MÃNG XÀ PYTHON & LINH MIÊU CYBER // ACADEMY 4.0
             </div>
             <div class="hud-right-user">
                 <span class="user-chip">👤 {{if .Username}}{{.Username}}{{else}}Chiến Binh{{end}}</span>
@@ -450,18 +717,19 @@
             </div>
         </div>
 
+        <!-- BANNER CHÍNH ĐỒ HỌA RẮN & MÈO ĐỐI ĐẦU -->
         <section class="course-hero">
             <div class="hero-grid-bg"></div>
             <div class="course-hero-text">
-                <div class="stage-pill">⚡ LỘ TRÌNH 3 BÀI HỌC • 9 CỘT MỐC KIẾN THỨC</div>
+                <div class="stage-pill">🐍 LỘ TRÌNH 3 BÀI HỌC • 9 CỘT MỐC LINH THÚ 🐱</div>
                 <h1 class="course-hero-title">3 Bài Học Tương Ứng 3 Map Đấu Trường</h1>
                 <p class="course-hero-desc">
-                    Mỗi bài học được chia thành <strong>3 Cột Mốc Nhỏ (Milestones)</strong> kèm câu hỏi kiểm tra nhanh. Hoàn thành từng cột mốc để tích lũy EXP và làm chủ toàn bộ kiến thức trước khi bước vào 3 Map thực hành!
+                    Mỗi bài học được chia thành <strong>3 Cột Mốc Nhỏ (Milestones)</strong> dưới sự dẫn dắt của <strong>Mãng Xà Python</strong> và <strong>Linh Miêu Neko</strong>. Hoàn thành từng cột mốc để thức tỉnh Linh thú và mở khóa sức mạnh cho 3 Map thực hành!
                 </p>
 
                 <div class="global-progress-box">
                     <div class="gp-top-row">
-                        <span class="gp-rank-badge" id="global-rank-txt">🎖️ CẤP BẬC: TÂN BINH PYTHON (0 EXP)</span>
+                        <span class="gp-rank-badge" id="global-rank-txt">🎖️ CẤP BẬC: TÂN BINH RẮN - MÈO (0 EXP)</span>
                         <span class="gp-count-text" id="global-ms-txt">Đã hoàn thành: 0 / 9 Cột mốc (0%)</span>
                     </div>
                     <div class="gp-bar-track">
@@ -470,42 +738,48 @@
                 </div>
             </div>
 
-            <svg class="hero-art-svg" viewBox="0 0 120 120" fill="none">
-                <circle class="spin-slow" cx="60" cy="60" r="52" stroke="#38bdf8" stroke-width="2" stroke-dasharray="16 10" opacity="0.8"/>
-                <polygon class="spin-reverse" points="60,14 100,37 100,83 60,106 20,83 20,37" stroke="#f43f5e" stroke-width="2" fill="rgba(14, 165, 233, 0.12)"/>
-                <polygon points="60,28 88,44 88,76 60,92 32,76 32,44" fill="url(#heroCore)" stroke="#7dd3fc" stroke-width="2.5"/>
-                <circle cx="60" cy="60" r="11" fill="#facc15"/>
-                <defs>
-                    <linearGradient id="heroCore" x1="0" y1="0" x2="120" y2="120" gradientUnits="userSpaceOnUse">
-                        <stop offset="0%" stop-color="#0284c7"/>
-                        <stop offset="100%" stop-color="#1e1b4b"/>
-                    </linearGradient>
-                </defs>
+            <!-- ĐỒ HỌA SVG RẮN PYTHON LỤC BẢO & MÈO CYBER HỒNG NEON -->
+            <svg class="hero-mascot-emblem" viewBox="0 0 180 150" fill="none">
+                <circle class="spin-slow" cx="90" cy="75" r="66" stroke="#10b981" stroke-width="2" stroke-dasharray="16 10"/>
+                <circle class="spin-reverse" cx="90" cy="75" r="54" stroke="#f43f5e" stroke-width="2" stroke-dasharray="10 8"/>
+                <!-- Nửa trái: Đầu Rắn Python -->
+                <path d="M42 98 C34 62, 52 36, 76 42 C92 46, 86 72, 66 76 C78 88, 92 86, 98 68" stroke="#34d399" stroke-width="6" stroke-linecap="round"/>
+                <circle cx="70" cy="50" r="4" fill="#fde047"/>
+                <!-- Nửa phải: Đầu Mèo Neko Cyber -->
+                <polygon points="104,54 110,30 124,46" fill="#f43f5e" stroke="#fda4af" stroke-width="2"/>
+                <polygon points="146,54 140,30 126,46" fill="#f43f5e" stroke="#fda4af" stroke-width="2"/>
+                <circle cx="125" cy="68" r="22" fill="#881337" stroke="#fb7185" stroke-width="2.5"/>
+                <circle cx="117" cy="65" r="4" fill="#fde047"/>
+                <circle cx="133" cy="65" r="4" fill="#34d399"/>
+                <polygon points="125,72 121,77 129,77" fill="#fda4af"/>
+                <path d="M100 68 L110 70 M140 70 L150 68" stroke="#fde047" stroke-width="2" stroke-linecap="round"/>
             </svg>
         </section>
 
+        <!-- LƯỚI 3 BÀI HỌC ĐỒ HỌA RẮN & MÈO -->
         <section class="courses-grid">
-            <!-- BÀI 1 -->
+            <!-- BÀI 1: ẤN MÃNG XÀ CÚ PHÁP -->
             <div class="lesson-card card-theme-1">
                 <div>
                     <div class="lesson-graphic-banner">
-                        <span class="xp-reward-pill">+300 EXP</span>
+                        <span class="xp-reward-pill">🐍 +300 EXP</span>
                         <span class="map-tag-badge">MAP 1: Cú Pháp</span>
-                        <svg class="lesson-svg-icon" viewBox="0 0 90 90" fill="none">
-                            <circle class="spin-slow" cx="45" cy="45" r="38" stroke="#38bdf8" stroke-width="1.5" stroke-dasharray="10 6"/>
-                            <polygon points="45,12 74,28 74,62 45,78 16,62 16,28" fill="rgba(2,132,199,0.25)" stroke="#38bdf8" stroke-width="2.5"/>
-                            <text x="50%" y="54%" dominant-baseline="middle" text-anchor="middle" fill="#facc15" font-family="Fira Code" font-weight="700" font-size="18">x=10</text>
+                        <svg class="lesson-svg-icon" viewBox="0 0 100 100" fill="none">
+                            <circle class="spin-slow" cx="50" cy="50" r="42" stroke="#10b981" stroke-width="1.8" stroke-dasharray="10 6"/>
+                            <polygon points="50,14 82,32 82,68 50,86 18,68 18,32" fill="rgba(16,185,129,0.2)" stroke="#34d399" stroke-width="2.5"/>
+                            <path d="M30 66 C26 42, 42 26, 56 30 C70 34, 66 54, 48 56" stroke="#34d399" stroke-width="4" stroke-linecap="round"/>
+                            <text x="54%" y="64%" dominant-baseline="middle" text-anchor="middle" fill="#fde047" font-family="Fira Code" font-weight="800" font-size="16">x=10</text>
                         </svg>
                     </div>
 
                     <h3 class="lesson-title">Bài 1: Cú pháp, Biến & Toán tử</h3>
                     <p class="lesson-desc">
-                        Nắm vững biến, 6 quy tắc đặt tên, hằng số, kiểu dữ liệu (`str`, `int`, `float`, `complex`, `bool`), hàm `print()` và 7 nhóm toán tử.
+                        Cùng Mãng Xà Python nắm vững biến, 6 quy tắc đặt tên, hằng số, kiểu dữ liệu (`str`, `int`, `float`, `complex`, `bool`), hàm `print()` và 7 nhóm toán tử.
                     </p>
 
                     <div class="milestone-checklist">
                         <div class="ms-header-row">
-                            <span>🎯 CỘT MỐC BÀI 1</span>
+                            <span>🐍 CỘT MỐC BÀI 1</span>
                             <span id="ms-count-1">0/3 Hoàn thành</span>
                         </div>
                         <div class="ms-mini-item" id="ms-item-1-0" onclick="openLessonModal(1, 0)">
@@ -531,32 +805,34 @@
                 </div>
 
                 <div class="lesson-actions">
-                    <button class="btn-read-lesson" onclick="openLessonModal(1, 0)">⚡ Chinh Phục Bài 1</button>
+                    <button class="btn-read-lesson" onclick="openLessonModal(1, 0)">🐍 Chinh Phục Bài 1</button>
                     <a href="/arena/battle?map=1" class="btn-fight-map">⚔️ Đấu Map 1</a>
                 </div>
             </div>
 
-            <!-- BÀI 2 -->
+            <!-- BÀI 2: MẮT LINH MIÊU VÒNG LẶP -->
             <div class="lesson-card card-theme-2">
                 <div>
                     <div class="lesson-graphic-banner">
-                        <span class="xp-reward-pill">+300 EXP</span>
-                        <span class="map-tag-badge" style="color:#c084fc; border-color:rgba(192,132,252,0.5);">MAP 2: Vòng Lặp</span>
-                        <svg class="lesson-svg-icon" viewBox="0 0 90 90" fill="none">
-                            <circle class="spin-reverse" cx="45" cy="45" r="38" stroke="#c084fc" stroke-width="1.5" stroke-dasharray="12 6"/>
-                            <rect x="18" y="20" width="54" height="50" rx="12" fill="rgba(147,51,234,0.25)" stroke="#c084fc" stroke-width="2.5"/>
-                            <path d="M31 45 L40 36 M31 45 L40 54 M59 45 L50 36 M59 45 L50 54" stroke="#facc15" stroke-width="3" stroke-linecap="round"/>
+                        <span class="xp-reward-pill">🐱 +300 EXP</span>
+                        <span class="map-tag-badge" style="color:#fb7185; border-color:rgba(251,113,133,0.5);">MAP 2: Vòng Lặp</span>
+                        <svg class="lesson-svg-icon" viewBox="0 0 100 100" fill="none">
+                            <circle class="spin-reverse" cx="50" cy="50" r="42" stroke="#f43f5e" stroke-width="1.8" stroke-dasharray="12 6"/>
+                            <polygon points="28,38 34,18 46,30" fill="#fb7185" stroke="#fda4af" stroke-width="2"/>
+                            <polygon points="72,38 66,18 54,30" fill="#fb7185" stroke="#fda4af" stroke-width="2"/>
+                            <rect x="24" y="30" width="52" height="44" rx="16" fill="rgba(225,29,72,0.28)" stroke="#fb7185" stroke-width="2.5"/>
+                            <path d="M36 52 L44 44 M36 52 L44 60 M64 52 L56 44 M64 52 L56 60" stroke="#fde047" stroke-width="3" stroke-linecap="round"/>
                         </svg>
                     </div>
 
                     <h3 class="lesson-title">Bài 2: Luồng điều khiển</h3>
                     <p class="lesson-desc">
-                        Làm chủ cấu trúc rẽ nhánh `if / elif / else`, vòng lặp `for` với `range()`, vòng lặp `while`, `while-else` và lệnh `break`, `continue`.
+                        Cùng Linh Miêu Neko làm chủ phản xạ rẽ nhánh `if / elif / else`, vòng lặp `for` với `range()`, vòng lặp `while`, `while-else` và lệnh `break`, `continue`.
                     </p>
 
                     <div class="milestone-checklist">
-                        <div class="ms-header-row">
-                            <span style="color:#d8b4fe;">🎯 CỘT MỐC BÀI 2</span>
+                        <div class="ms-header-row" style="color:#fda4af; border-color:rgba(251,113,133,0.3);">
+                            <span>🐱 CỘT MỐC BÀI 2</span>
                             <span id="ms-count-2">0/3 Hoàn thành</span>
                         </div>
                         <div class="ms-mini-item" id="ms-item-2-0" onclick="openLessonModal(2, 0)">
@@ -582,32 +858,33 @@
                 </div>
 
                 <div class="lesson-actions">
-                    <button class="btn-read-lesson" onclick="openLessonModal(2, 0)">⚡ Chinh Phục Bài 2</button>
+                    <button class="btn-read-lesson" style="background:linear-gradient(135deg,#e11d48,#be123c); border-color:#fda4af;" onclick="openLessonModal(2, 0)">🐱 Chinh Phục Bài 2</button>
                     <a href="/arena/battle?map=2" class="btn-fight-map">⚔️ Đấu Map 2</a>
                 </div>
             </div>
 
-            <!-- BÀI 3 -->
+            <!-- BÀI 3: SONG THÚ DATA CORE -->
             <div class="lesson-card card-theme-3">
                 <div>
                     <div class="lesson-graphic-banner">
-                        <span class="xp-reward-pill">+300 EXP</span>
-                        <span class="map-tag-badge" style="color:#fb7185; border-color:rgba(251,113,133,0.5);">MAP 3: Data Core</span>
-                        <svg class="lesson-svg-icon" viewBox="0 0 90 90" fill="none">
-                            <circle class="spin-slow" cx="45" cy="45" r="38" stroke="#fb7185" stroke-width="1.5" stroke-dasharray="8 8"/>
-                            <circle cx="45" cy="46" r="24" fill="rgba(225,29,72,0.25)" stroke="#fb7185" stroke-width="2.5"/>
-                            <path d="M45 22 L54 12 M34 46 L56 46 M45 35 L45 57" stroke="#facc15" stroke-width="3" stroke-linecap="round"/>
+                        <span class="xp-reward-pill">🐍🐱 +300 EXP</span>
+                        <span class="map-tag-badge" style="color:#fbbf24; border-color:rgba(251,191,36,0.5);">MAP 3: Data Core</span>
+                        <svg class="lesson-svg-icon" viewBox="0 0 100 100" fill="none">
+                            <circle class="spin-slow" cx="50" cy="50" r="42" stroke="#fbbf24" stroke-width="1.8" stroke-dasharray="8 8"/>
+                            <polygon points="50,16 82,50 50,84 18,50" fill="rgba(251,191,36,0.2)" stroke="#fbbf24" stroke-width="2.5"/>
+                            <circle cx="50" cy="50" r="16" fill="#065f46" stroke="#34d399" stroke-width="2"/>
+                            <path d="M42 50 L58 50 M50 42 L50 58" stroke="#fde047" stroke-width="3" stroke-linecap="round"/>
                         </svg>
                     </div>
 
                     <h3 class="lesson-title">Bài 3: Cấu trúc dữ liệu & Chuỗi</h3>
                     <p class="lesson-desc">
-                        Chinh phục 4 cấu trúc dữ liệu cốt lõi (`List`, `Tuple`, `Set`, `Dictionary`) và bộ phương thức xử lý chuỗi ký tự nâng cao (`String`).
+                        Hợp lực Rắn & Mèo chinh phục 4 cấu trúc dữ liệu cốt lõi (`List`, `Tuple`, `Set`, `Dictionary`) và bộ phương thức xử lý chuỗi ký tự nâng cao (`String`).
                     </p>
 
                     <div class="milestone-checklist">
-                        <div class="ms-header-row">
-                            <span style="color:#fda4af;">🎯 CỘT MỐC BÀI 3</span>
+                        <div class="ms-header-row" style="color:#fde047; border-color:rgba(251,191,36,0.3);">
+                            <span>⚡ CỘT MỐC BÀI 3</span>
                             <span id="ms-count-3">0/3 Hoàn thành</span>
                         </div>
                         <div class="ms-mini-item" id="ms-item-3-0" onclick="openLessonModal(3, 0)">
@@ -633,7 +910,7 @@
                 </div>
 
                 <div class="lesson-actions">
-                    <button class="btn-read-lesson" onclick="openLessonModal(3, 0)">⚡ Chinh Phục Bài 3</button>
+                    <button class="btn-read-lesson" style="background:linear-gradient(135deg,#d97706,#b45309); border-color:#fde047;" onclick="openLessonModal(3, 0)">⚡ Chinh Phục Bài 3</button>
                     <a href="/arena/battle?map=3" class="btn-fight-map">⚔️ Đấu Map 3</a>
                 </div>
             </div>
@@ -668,7 +945,7 @@
     <script>
         const CURRICULUM_DB = {
             1: {
-                title: "📘 BÀI 1: CÚ PHÁP, BIẾN, KIỂU DỮ LIỆU & TOÁN TỬ",
+                title: "🐍 BÀI 1: CÚ PHÁP, BIẾN, KIỂU DỮ LIỆU & TOÁN TỬ",
                 mapUrl: "/arena/battle?map=1",
                 mapBtn: "⚔️ Đấu Map 1 (Diệt Quái Cú Pháp)",
                 milestones: [
@@ -777,7 +1054,7 @@ print(2 ** 3)  # Kết quả: 8</div>
                 ]
             },
             2: {
-                title: "📙 BÀI 2: LUỒNG ĐIỀU KHIỂN – RẼ NHÁNH & VÒNG LẶP",
+                title: "🐱 BÀI 2: LUỒNG ĐIỀU KHIỂN – RẼ NHÁNH & VÒNG LẶP",
                 mapUrl: "/arena/battle?map=2",
                 mapBtn: "⚔️ Đấu Map 2 (Memory Match)",
                 milestones: [
@@ -851,7 +1128,7 @@ else:
                 ]
             },
             3: {
-                title: "📕 BÀI 3: CẤU TRÚC DỮ LIỆU (LIST, TUPLE, SET, DICT) & CHUỖI",
+                title: "🐍🐱 BÀI 3: CẤU TRÚC DỮ LIỆU (LIST, TUPLE, SET, DICT) & CHUỖI",
                 mapUrl: "/arena/battle?map=3",
                 mapBtn: "⚔️ Đấu Map 3 (Gỡ Bom Data Core)",
                 milestones: [
@@ -923,172 +1200,4 @@ print(text.split())  # ['Hello', 'Python']</div>
             const doneMap = getCompletedMap();
             doneMap[msId] = true;
             localStorage.setItem("colosseum_milestones_done", JSON.stringify(doneMap));
-            updateAllProgressUI();
-        }
-
-        function updateAllProgressUI() {
-            const doneMap = getCompletedMap();
-            let totalDone = 0;
-
-            [1, 2, 3].forEach(lessonId => {
-                const msList = CURRICULUM_DB[lessonId].milestones;
-                let lessonDone = 0;
-
-                msList.forEach((m, idx) => {
-                    const rowEl = document.getElementById(`ms-item-${lessonId}-${idx}`);
-                    if (doneMap[m.id]) {
-                        lessonDone++;
-                        totalDone++;
-                        if (rowEl) rowEl.classList.add("done");
-                    } else {
-                        if (rowEl) rowEl.classList.remove("done");
-                    }
-                });
-
-                const pct = Math.round((lessonDone / msList.length) * 100);
-                document.getElementById(`ms-count-${lessonId}`).innerText = `${lessonDone}/3 Hoàn thành`;
-                document.getElementById(`bar-lesson-${lessonId}`).style.width = pct + "%";
-                document.getElementById(`pct-lesson-${lessonId}`).innerText = pct + "%";
-            });
-
-            const globalPct = Math.round((totalDone / 9) * 100);
-            const totalExp = totalDone * 100;
-            let rankName = "TÂN BINH PYTHON";
-            if (totalDone >= 9) rankName = "BẬC THẦY CĂN BẢN PYTHON 🏆";
-            else if (totalDone >= 6) rankName = "CHIẾN BINH CYBER ⚡";
-            else if (totalDone >= 3) rankName = "HỌC GIẢ THUẬT TOÁN 📘";
-
-            document.getElementById("global-rank-txt").innerText = `🎖️ CẤP BẬC: ${rankName} (${totalExp} EXP)`;
-            document.getElementById("global-ms-txt").innerText = `Đã hoàn thành: ${totalDone} / 9 Cột mốc (${globalPct}%)`;
-            document.getElementById("global-bar-fill").style.width = globalPct + "%";
-        }
-
-        function openLessonModal(lessonId, msIdx = 0) {
-            activeLessonId = lessonId;
-            activeMilestoneIdx = msIdx;
-
-            const lesson = CURRICULUM_DB[lessonId];
-            document.getElementById("m-title").innerText = lesson.title;
-            const link = document.getElementById("m-fight-link");
-            link.href = lesson.mapUrl;
-            link.innerText = lesson.mapBtn;
-
-            renderModalTabs();
-            renderModalContent();
-            document.getElementById("lesson-modal").style.display = "flex";
-        }
-
-        function renderModalTabs() {
-            const lesson = CURRICULUM_DB[activeLessonId];
-            const doneMap = getCompletedMap();
-            const sidebar = document.getElementById("m-sidebar-tabs");
-            sidebar.innerHTML = "";
-
-            lesson.milestones.forEach((m, idx) => {
-                const isDone = !!doneMap[m.id];
-                const btn = document.createElement("button");
-                btn.className = `ms-tab-btn ${idx === activeMilestoneIdx ? 'active' : ''}`;
-                btn.onclick = () => {
-                    activeMilestoneIdx = idx;
-                    renderModalTabs();
-                    renderModalContent();
-                };
-                btn.innerHTML = `
-                    <div class="ms-tab-top">
-                        <span>${m.code}</span>
-                        <span class="ms-tab-status ${isDone ? 'completed' : ''}">
-                            ${isDone ? '✓ ĐÃ HOÀN THÀNH' : '+100 EXP'}
-                        </span>
-                    </div>
-                    <div class="ms-tab-title">${m.name}</div>
-                `;
-                sidebar.appendChild(btn);
-            });
-        }
-
-        function renderModalContent() {
-            const lesson = CURRICULUM_DB[activeLessonId];
-            const m = lesson.milestones[activeMilestoneIdx];
-            const doneMap = getCompletedMap();
-            const isDone = !!doneMap[m.id];
-
-            const body = document.getElementById("m-body");
-            body.innerHTML = `
-                ${m.content}
-                <div class="checkpoint-quiz-box">
-                    <div class="cp-title">
-                        <span>🎯</span> THỬ THÁCH MỞ KHÓA ${m.code} (+100 EXP)
-                    </div>
-                    <div class="cp-question">❓ ${m.quiz.q}</div>
-                    <div class="cp-options" id="cp-options-box"></div>
-                    <div id="cp-feedback-msg" style="font-size:13px; font-weight:700;"></div>
-                    <button class="btn-complete-milestone" onclick="completeCurrentMilestone()">
-                        ${isDone ? '✅ Đã Hoàn Thành Cột Mốc Này (Bấm để sang cột mốc tiếp theo →)' : '⚡ Đánh Dấu Hoàn Thành Cột Mốc (+100 EXP)'}
-                    </button>
-                </div>
-            `;
-
-            const optBox = document.getElementById("cp-options-box");
-            m.quiz.options.forEach((optText, i) => {
-                const b = document.createElement("button");
-                b.className = "cp-opt-btn";
-                b.innerText = `${String.fromCharCode(65 + i)}. ${optText}`;
-                b.onclick = () => checkMilestoneQuiz(i, m.quiz.ans, b);
-                optBox.appendChild(b);
-            });
-            body.scrollTop = 0;
-        }
-
-        function checkMilestoneQuiz(chosenIdx, correctIdx, btnEl) {
-            const m = CURRICULUM_DB[activeLessonId].milestones[activeMilestoneIdx];
-            const msgEl = document.getElementById("cp-feedback-msg");
-            document.querySelectorAll(".cp-opt-btn").forEach(b => b.classList.remove("correct", "wrong"));
-
-            if (chosenIdx === correctIdx) {
-                btnEl.classList.add("correct");
-                msgEl.style.color = "#4ade80";
-                msgEl.innerText = "🎉 Chính xác! Hệ thống đã ghi nhận bạn hoàn thành cột mốc này (+100 EXP)!";
-                saveMilestoneDone(m.id, `${m.code}: ${m.name}`);
-                renderModalTabs();
-            } else {
-                btnEl.classList.add("wrong");
-                msgEl.style.color = "#fb7185";
-                msgEl.innerText = "❌ Chưa chính xác, hãy đọc lại lý thuyết phía trên và chọn lại nhé!";
-            }
-        }
-
-        function completeCurrentMilestone() {
-            const lesson = CURRICULUM_DB[activeLessonId];
-            const m = lesson.milestones[activeMilestoneIdx];
-            saveMilestoneDone(m.id, `${m.code}: ${m.name}`);
-
-            if (activeMilestoneIdx < lesson.milestones.length - 1) {
-                activeMilestoneIdx++;
-                renderModalTabs();
-                renderModalContent();
-            } else {
-                renderModalTabs();
-                renderModalContent();
-            }
-        }
-
-        function closeLessonModal() {
-            document.getElementById("lesson-modal").style.display = "none";
-        }
-
-        window.onclick = function(e) {
-            const modal = document.getElementById("lesson-modal");
-            if (e.target === modal) closeLessonModal();
-        };
-
-        function logoutAccount(e) {
-            if (e) e.preventDefault();
-            document.cookie = "session_token=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
-            sessionStorage.clear();
-            window.location.href = "/login";
-        }
-
-        updateAllProgressUI();
-    </script>
-</body>
-</html>
+            updateAllProgressUI
