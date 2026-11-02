@@ -18,32 +18,45 @@
             overflow-x: hidden;
         }
 
-        /* ==================== SIDEBAR CYBER ==================== */
+        /* ==================== SIDEBAR CYBER 4.0 (ĐÃ BỎ BẢNG XẾP HẠNG & HỒ SƠ) ==================== */
         .sidebar {
             width: 260px;
             background: linear-gradient(180deg, #060a15 0%, #03050b 100%);
-            border-right: 1px solid rgba(56, 189, 248, 0.14);
-            padding: 28px 18px;
+            border-right: 1px solid rgba(56, 189, 248, 0.16);
+            padding: 26px 18px;
             display: flex;
             flex-direction: column;
-            gap: 32px;
+            gap: 28px;
             flex-shrink: 0;
             min-height: 100vh;
             z-index: 20;
         }
-        .brand-logo { font-size: 20px; font-weight: 800; color: #fff; padding-left: 10px; display: flex; align-items: center; gap: 12px; }
-        .menu-list { display: flex; flex-direction: column; gap: 10px; }
-        .menu-item {
-            display: flex; align-items: center; gap: 14px; padding: 13px 18px; border-radius: 12px;
-            color: #94a3b8; text-decoration: none; font-size: 14.5px; font-weight: 600; transition: 0.25s; border: 1px solid transparent;
+        .brand-logo {
+            font-family: 'Orbitron', 'Plus Jakarta Sans', sans-serif;
+            font-size: 19px; font-weight: 900; color: #fff; padding-left: 10px;
+            display: flex; align-items: center; gap: 12px; letter-spacing: 0.5px;
         }
-        .menu-item svg { width: 20px; height: 20px; fill: currentColor; }
-        .menu-item:hover { color: #38bdf8; background: rgba(56, 189, 248, 0.08); border-color: rgba(56, 189, 248, 0.25); }
+        .menu-list { display: flex; flex-direction: column; gap: 10px; flex: 1; }
+        .menu-item {
+            display: flex; align-items: center; gap: 13px; padding: 13px 16px; border-radius: 12px;
+            color: #94a3b8; text-decoration: none; font-size: 14.5px; font-weight: 600;
+            transition: 0.25s; border: 1px solid transparent; cursor: pointer;
+        }
+        .menu-item svg { width: 20px; height: 20px; fill: currentColor; flex-shrink: 0; }
+        .menu-item:hover { color: #38bdf8; background: rgba(56, 189, 248, 0.08); border-color: rgba(56, 189, 248, 0.25); transform: translateX(3px); }
         .menu-item.active {
             background: linear-gradient(135deg, rgba(14, 165, 233, 0.22) 0%, rgba(56, 189, 248, 0.05) 100%);
             border-color: rgba(56, 189, 248, 0.5); color: #38bdf8; font-weight: 700;
             box-shadow: 0 0 20px rgba(56, 189, 248, 0.15);
         }
+        .menu-item.logout-sidebar-btn {
+            margin-top: auto;
+            background: rgba(244, 63, 94, 0.14);
+            border: 1px solid rgba(244, 63, 94, 0.45);
+            color: #fb7185;
+            font-weight: 800;
+        }
+        .menu-item.logout-sidebar-btn:hover { background: #e11d48; color: #fff; border-color: #e11d48; }
         .badge-live {
             font-size: 10px; background: linear-gradient(135deg, #ef4444 0%, #dc2626 100%);
             color: #fff; padding: 3px 8px; border-radius: 9999px; font-weight: 800; margin-left: auto;
@@ -55,13 +68,12 @@
             flex: 1; padding: 20px 32px; display: flex; flex-direction: column; gap: 18px; max-height: 100vh; overflow-y: auto;
         }
 
-        /* THANH TOP HUD CÔNG NGHỆ */
         .top-strip {
             display: flex; justify-content: space-between; align-items: center;
             background: linear-gradient(90deg, rgba(10, 18, 36, 0.95) 0%, rgba(6, 11, 24, 0.95) 100%);
             border: 1px solid rgba(56, 189, 248, 0.25);
             padding: 13px 26px; border-radius: 14px;
-            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.6), inset 0 1px 0 rgba(56, 189, 248, 0.2);
+            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.6);
             position: relative;
         }
         .top-strip::before {
@@ -72,7 +84,6 @@
             font-family: 'Orbitron', 'Plus Jakarta Sans', sans-serif;
             font-size: 16px; font-weight: 800; color: #38bdf8;
             display: flex; align-items: center; gap: 10px; letter-spacing: 1px;
-            text-shadow: 0 0 12px rgba(56, 189, 248, 0.4);
         }
         .user-tag {
             font-family: 'Fira Code', monospace; font-size: 13.5px; color: #7dd3fc; font-weight: 700;
@@ -80,12 +91,8 @@
             padding: 6px 16px; border-radius: 8px;
         }
 
-        .battle-grid-layout {
-            display: grid; grid-template-columns: 1fr; gap: 22px; flex: 1;
-        }
-        .battle-grid-layout.in-match-mode {
-            grid-template-columns: 1fr 340px;
-        }
+        .battle-grid-layout { display: grid; grid-template-columns: 1fr; gap: 22px; flex: 1; }
+        .battle-grid-layout.in-match-mode { grid-template-columns: 1fr 340px; }
 
         .question-arena-card {
             background: #070b16;
@@ -101,7 +108,6 @@
             min-height: 580px;
         }
 
-        /* ==================== SẢNH CHỜ HOLOGRAM SCI-FI ==================== */
         .lobby-eq-layer {
             position: absolute; inset: 0;
             background: 
@@ -111,8 +117,6 @@
             padding: 28px 40px 32px 40px; z-index: 100; border-radius: 20px; text-align: center;
             overflow: hidden;
         }
-
-        /* Lưới không gian Cyber Grid ở đáy */
         .cyber-grid-floor {
             position: absolute; inset: 0;
             background-image: 
@@ -122,22 +126,15 @@
             mask-image: radial-gradient(ellipse at 50% 45%, black 25%, transparent 80%);
             pointer-events: none;
         }
-
-        /* Tia quét Laser Scanline chạy dọc màn hình */
         .cyber-scanline {
             position: absolute; left: 0; right: 0; height: 2px;
             background: linear-gradient(90deg, transparent 0%, rgba(56, 189, 248, 0.5) 50%, transparent 100%);
             box-shadow: 0 0 15px #38bdf8;
             animation: scanMove 6s infinite linear;
-            pointer-events: none;
-            opacity: 0.5;
+            pointer-events: none; opacity: 0.5;
         }
-        @keyframes scanMove {
-            0% { top: -5%; }
-            100% { top: 105%; }
-        }
+        @keyframes scanMove { 0% { top: -5%; } 100% { top: 105%; } }
 
-        /* 4 góc ngắm HUD quân sự */
         .hud-corner {
             position: absolute; width: 22px; height: 22px;
             border-color: #38bdf8; border-style: solid; opacity: 0.7; pointer-events: none;
@@ -147,15 +144,11 @@
         .hud-bl { bottom: 16px; left: 16px; border-width: 0 0 2.5px 2.5px; }
         .hud-br { bottom: 16px; right: 16px; border-width: 0 2.5px 2.5px 0; }
 
-        /* Cụm Lõi Năng Lượng & Tiêu Đề */
         .cyber-header-block {
             position: relative; z-index: 2;
             display: flex; flex-direction: column; align-items: center; gap: 8px;
         }
-        .cyber-core-svg {
-            width: 68px; height: 68px;
-            filter: drop-shadow(0 0 18px rgba(56, 189, 248, 0.75));
-        }
+        .cyber-core-svg { width: 68px; height: 68px; filter: drop-shadow(0 0 18px rgba(56, 189, 248, 0.75)); }
         .core-ring-outer { transform-origin: center; animation: spinRight 10s infinite linear; }
         .core-ring-inner { transform-origin: center; animation: spinLeft 6s infinite linear; }
         @keyframes spinRight { 100% { transform: rotate(360deg); } }
@@ -165,7 +158,6 @@
             font-size: 30px; font-weight: 900; letter-spacing: 1.5px;
             background: linear-gradient(90deg, #ffffff 0%, #7dd3fc 50%, #38bdf8 100%);
             -webkit-background-clip: text; -webkit-text-fill-color: transparent;
-            text-shadow: 0 0 30px rgba(56, 189, 248, 0.35);
             text-transform: uppercase;
         }
         .cyber-divider-line {
@@ -174,53 +166,29 @@
             margin-top: 2px;
         }
 
-        /* ==================== 4 THẺ CHẾ ĐỘ HOLOGRAM CÔNG NGHỆ CAO ==================== */
         .modes-grid {
             position: relative; z-index: 2;
             display: grid; grid-template-columns: repeat(4, 1fr); gap: 18px;
             width: 100%; max-width: 980px; margin: 8px 0;
         }
-
         .mode-card {
             background: linear-gradient(165deg, rgba(14, 24, 48, 0.88) 0%, rgba(7, 12, 26, 0.95) 100%);
             border: 1.5px solid rgba(56, 189, 248, 0.25);
-            border-radius: 16px;
-            padding: 22px 16px 18px 16px;
-            cursor: pointer;
-            transition: all 0.28s cubic-bezier(0.25, 0.8, 0.25, 1);
+            border-radius: 16px; padding: 22px 16px 18px 16px;
+            cursor: pointer; transition: all 0.28s cubic-bezier(0.25, 0.8, 0.25, 1);
             display: flex; flex-direction: column; align-items: center; gap: 10px;
             position: relative; overflow: hidden;
-            backdrop-filter: blur(10px);
-            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.6), inset 0 1px 0 rgba(255, 255, 255, 0.08);
         }
-        /* Thanh neon trên đỉnh mỗi thẻ */
-        .mode-card::before {
-            content: ""; position: absolute; top: 0; left: 20%; right: 20%; height: 3px;
-            background: #38bdf8; border-radius: 0 0 4px 4px; opacity: 0.4; transition: 0.3s;
-        }
-        .mode-card:hover {
-            transform: translateY(-6px);
-            border-color: #38bdf8;
-            box-shadow: 0 15px 35px rgba(14, 165, 233, 0.25), inset 0 0 20px rgba(56, 189, 248, 0.1);
-        }
-        .mode-card:hover::before { left: 10%; right: 10%; opacity: 1; box-shadow: 0 0 12px #38bdf8; }
-
-        /* Khi thẻ được chọn (Active) */
+        .mode-card:hover { transform: translateY(-6px); border-color: #38bdf8; }
         .mode-card.active {
             background: linear-gradient(165deg, rgba(45, 12, 34, 0.92) 0%, rgba(12, 16, 34, 0.98) 100%);
-            border-color: #fb7185;
-            transform: translateY(-6px);
-            box-shadow: 0 16px 40px rgba(244, 63, 94, 0.35), inset 0 0 25px rgba(244, 63, 94, 0.18);
-        }
-        .mode-card.active::before {
-            left: 5%; right: 5%; background: #fb7185; opacity: 1; box-shadow: 0 0 15px #fb7185;
+            border-color: #fb7185; transform: translateY(-6px);
+            box-shadow: 0 16px 40px rgba(244, 63, 94, 0.35);
         }
 
-        /* Vòng tròn Hologram chứa Icon SVG + Nhãn 1v1 */
         .holo-emblem-wrap {
             position: relative; width: 78px; height: 78px;
-            display: flex; align-items: center; justify-content: center;
-            margin-bottom: 2px;
+            display: flex; align-items: center; justify-content: center; margin-bottom: 2px;
         }
         .holo-emblem-bg {
             position: absolute; inset: 0; border-radius: 50%;
@@ -232,28 +200,17 @@
             background: radial-gradient(circle, rgba(244, 63, 94, 0.3) 0%, transparent 70%);
             border-color: #fb7185;
         }
-        .mode-svg-art {
-            width: 46px; height: 46px; position: relative; z-index: 2;
-            filter: drop-shadow(0 0 8px rgba(56, 189, 248, 0.6));
-            transition: transform 0.25s ease;
-        }
-        .mode-card:hover .mode-svg-art { transform: scale(1.12); }
-        .mode-card.active .mode-svg-art { filter: drop-shadow(0 0 12px rgba(251, 113, 133, 0.9)); }
-
+        .mode-svg-art { width: 46px; height: 46px; position: relative; z-index: 2; }
         .mode-vs-pill {
             position: absolute; bottom: -4px; z-index: 3;
             font-family: 'Orbitron', monospace; font-size: 11px; font-weight: 900;
             background: #0f172a; color: #38bdf8; border: 1px solid #38bdf8;
-            padding: 1px 8px; border-radius: 6px; letter-spacing: 0.5px;
+            padding: 1px 8px; border-radius: 6px;
         }
-        .mode-card.active .mode-vs-pill {
-            background: #e11d48; color: #ffffff; border-color: #fda4af;
-            box-shadow: 0 0 10px rgba(225, 29, 72, 0.8);
-        }
+        .mode-card.active .mode-vs-pill { background: #e11d48; color: #ffffff; border-color: #fda4af; }
 
-        .mode-name { font-size: 16.5px; font-weight: 800; color: #ffffff; letter-spacing: 0.2px; margin-top: 4px; }
+        .mode-name { font-size: 16.5px; font-weight: 800; color: #ffffff; margin-top: 4px; }
         .mode-sub { font-size: 12px; color: #94a3b8; font-weight: 600; }
-
         .mode-queue-tag {
             font-family: 'Fira Code', monospace; font-size: 11.5px; font-weight: 700;
             color: #7dd3fc; background: rgba(14, 165, 233, 0.12);
@@ -261,17 +218,8 @@
             padding: 5px 12px; border-radius: 9999px; margin-top: 4px;
             display: flex; align-items: center; gap: 6px;
         }
-        .q-dot {
-            width: 7px; height: 7px; border-radius: 50%; background: #38bdf8;
-            box-shadow: 0 0 8px #38bdf8; animation: blinkDot 1.4s infinite;
-        }
-        .mode-card.active .mode-queue-tag {
-            color: #fecdd3; background: rgba(225, 29, 72, 0.2); border-color: rgba(251, 113, 133, 0.5);
-        }
-        .mode-card.active .q-dot { background: #fb7185; box-shadow: 0 0 8px #fb7185; }
-        @keyframes blinkDot { 0%, 100% { opacity: 0.35; } 50% { opacity: 1; } }
+        .q-dot { width: 7px; height: 7px; border-radius: 50%; background: #38bdf8; box-shadow: 0 0 8px #38bdf8; }
 
-        /* ==================== BẢNG ĐIỀU KHIỂN CHIẾN BINH (PILOT CONTROL DECK) ==================== */
         .matchmaking-btn-box {
             position: relative; z-index: 2;
             display: flex; flex-direction: column; align-items: center; gap: 14px;
@@ -279,53 +227,30 @@
             background: rgba(8, 14, 28, 0.85);
             border: 1px solid rgba(56, 189, 248, 0.25);
             padding: 18px 22px; border-radius: 18px;
-            box-shadow: 0 12px 35px rgba(0, 0, 0, 0.7);
         }
-
         .cyber-input-group {
             width: 100%; display: flex; align-items: center;
-            background: #03060e; border: 1.5px solid #1e3256; border-radius: 12px;
-            padding: 4px 14px; transition: 0.25s;
-        }
-        .cyber-input-group:focus-within {
-            border-color: #38bdf8; box-shadow: 0 0 18px rgba(56, 189, 248, 0.25);
+            background: #03060e; border: 1.5px solid #1e3256; border-radius: 12px; padding: 4px 14px;
         }
         .cyber-input-prefix {
             font-family: 'Fira Code', monospace; font-size: 11.5px; font-weight: 700;
             color: #64748b; padding-right: 10px; border-right: 1px solid #1e293b;
-            white-space: nowrap; user-select: none;
         }
         .name-edit-input {
             flex: 1; background: transparent; border: none; color: #38bdf8;
             font-family: 'Fira Code', monospace; font-size: 14.5px; font-weight: 700;
             padding: 9px 12px; outline: none; text-align: center;
         }
-
-        /* Nút Bắt Đầu Ghép Trận Sci-Fi có tia sáng quét */
         .btn-start-queue {
-            position: relative; overflow: hidden;
             width: 100%;
             background: linear-gradient(135deg, #e11d48 0%, #be123c 50%, #9f1239 100%);
             color: #ffffff; border: 1px solid #fda4af;
             padding: 16px 28px; border-radius: 12px;
             font-family: 'Orbitron', 'Plus Jakarta Sans', sans-serif;
             font-size: 16px; font-weight: 900; cursor: pointer; letter-spacing: 1.2px;
-            box-shadow: 0 0 25px rgba(225, 29, 72, 0.55), inset 0 1px 0 rgba(255, 255, 255, 0.3);
-            transition: all 0.25s ease;
-            display: flex; align-items: center; justify-content: center; gap: 10px;
-        }
-        .btn-start-queue::after {
-            content: ""; position: absolute; top: 0; left: -120%; width: 60%; height: 100%;
-            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.35), transparent);
-            transform: skewX(-25deg); animation: shimmerSweep 3.2s infinite;
-        }
-        @keyframes shimmerSweep { 100% { left: 160%; } }
-        .btn-start-queue:hover {
-            transform: translateY(-2px) scale(1.01);
-            box-shadow: 0 0 35px rgba(244, 63, 94, 0.85);
+            box-shadow: 0 0 25px rgba(225, 29, 72, 0.55); transition: 0.25s;
         }
 
-        /* ==================== MÀN HÌNH RADAR QUÉT TÌM ĐỐI THỦ ==================== */
         .searching-match-overlay {
             position: absolute; inset: 0;
             background: radial-gradient(circle at 50% 50%, #0c1938 0%, #040711 85%);
@@ -336,65 +261,45 @@
             position: relative; width: 130px; height: 130px;
             border-radius: 50%; border: 2px solid rgba(56, 189, 248, 0.5);
             background: radial-gradient(circle, rgba(56, 189, 248, 0.15) 0%, transparent 70%);
-            box-shadow: 0 0 30px rgba(56, 189, 248, 0.3);
-            display: flex; align-items: center; justify-content: center;
-            overflow: hidden;
-        }
-        .cyber-radar-box::before {
-            content: ""; position: absolute; inset: 18px;
-            border-radius: 50%; border: 1px dashed rgba(56, 189, 248, 0.4);
+            display: flex; align-items: center; justify-content: center; overflow: hidden;
         }
         .radar-sweep-beam {
             position: absolute; width: 50%; height: 50%; top: 0; left: 50%;
             background: linear-gradient(45deg, rgba(56, 189, 248, 0.65) 0%, transparent 70%);
-            transform-origin: bottom left;
-            animation: spinRight 1.6s infinite linear;
+            transform-origin: bottom left; animation: spinRight 1.6s infinite linear;
         }
-        .queue-timer-text {
-            font-family: 'Orbitron', monospace; font-size: 26px; font-weight: 900;
-            color: #facc15; text-shadow: 0 0 15px rgba(250, 204, 21, 0.6);
-        }
+        .queue-timer-text { font-family: 'Orbitron', monospace; font-size: 26px; font-weight: 900; color: #facc15; }
         .btn-cancel-queue {
             background: rgba(30, 41, 59, 0.8); border: 1.5px solid #475569; color: #f8fafc;
-            padding: 11px 28px; border-radius: 10px; font-weight: 700; cursor: pointer; transition: 0.2s;
+            padding: 11px 28px; border-radius: 10px; font-weight: 700; cursor: pointer;
         }
-        .btn-cancel-queue:hover { border-color: #f87171; color: #f87171; box-shadow: 0 0 15px rgba(248, 113, 113, 0.3); }
 
-        /* ==================== GIAO DIỆN LÀM BÀI 10 CÂU ==================== */
         .timer-progress-wrap { width: 100%; height: 10px; background: #1e293b; border-radius: 5px; overflow: hidden; margin-bottom: 14px; }
         .timer-progress-bar { height: 100%; width: 100%; background: linear-gradient(90deg, #22c55e, #eab308, #ef4444); transition: width 0.08s linear; }
-
         .round-info-bar { display: flex; justify-content: space-between; align-items: center; margin-bottom: 14px; }
         .round-badge { background: rgba(56, 189, 248, 0.15); border: 1px solid #38bdf8; color: #38bdf8; font-family: 'Fira Code', monospace; padding: 5px 14px; border-radius: 8px; font-weight: 700; }
         .your-score-pill { background: rgba(250, 204, 21, 0.15); border: 1px solid #facc15; color: #facc15; font-family: 'Fira Code', monospace; font-size: 14px; font-weight: 800; padding: 5px 14px; border-radius: 8px; }
-
         .question-prompt-text { font-size: 18.5px; font-weight: 800; color: #ffffff; margin-bottom: 12px; line-height: 1.5; }
         .code-display-block { background: #03060d; border: 1px solid #1a253c; border-radius: 12px; padding: 15px 18px; font-family: 'Fira Code', monospace; font-size: 14.5px; color: #38bdf8; margin-bottom: 14px; white-space: pre-wrap; }
         .wait-others-banner { font-size: 13px; font-weight: 700; color: #38bdf8; background: rgba(56, 189, 248, 0.1); border: 1px dashed rgba(56, 189, 248, 0.4); padding: 8px 14px; border-radius: 8px; text-align: center; margin-bottom: 12px; display: none; }
-
         .options-fast-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
         .btn-fast-option {
             background: #0f172a; border: 2px solid #1e293b; color: #f8fafc; padding: 15px 18px; border-radius: 12px;
-            font-family: 'Fira Code', monospace; font-size: 14.5px; font-weight: 700; cursor: pointer; text-align: left; transition: 0.15s;
+            font-family: 'Fira Code', monospace; font-size: 14.5px; font-weight: 700; cursor: pointer; text-align: left;
         }
-        .btn-fast-option:hover:not(:disabled) { border-color: #38bdf8; background: #132038; transform: translateY(-2px); }
         .btn-fast-option.selected-choice { border-color: #facc15 !important; background: rgba(250, 204, 21, 0.15) !important; }
-        .btn-fast-option:disabled { opacity: 0.6; cursor: not-allowed; }
-
         .feedback-pop {
             position: absolute; top: 48%; left: 50%; transform: translate(-50%, -50%);
             font-size: 30px; font-weight: 900; font-family: 'Teko', sans-serif;
-            background: rgba(5, 8, 17, 0.95); border: 2px solid #38bdf8; padding: 12px 28px; border-radius: 14px; display: none; z-index: 50; pointer-events: none;
+            background: rgba(5, 8, 17, 0.95); border: 2px solid #38bdf8; padding: 12px 28px; border-radius: 14px; display: none; z-index: 50;
         }
 
-        /* BẢNG ĐIỂM TRONG TRẬN */
         .leaderboard-column {
             background: #090e1c; border: 2px solid #1e293b; border-radius: 22px;
             padding: 20px; display: none; flex-direction: column; gap: 14px;
         }
         .lb-header { font-size: 14.5px; font-weight: 800; color: #fb7185; display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid #1e293b; padding-bottom: 10px; }
         .players-count-badge { font-size: 11px; background: rgba(56, 189, 248, 0.15); color: #38bdf8; border: 1px solid #38bdf8; padding: 2px 8px; border-radius: 6px; }
-
         .teams-versus-bar {
             display: grid; grid-template-columns: 1fr auto 1fr; align-items: center; gap: 8px;
             background: #050914; border: 1px solid #1e2d4a; border-radius: 12px; padding: 10px 12px; font-family: 'Fira Code', monospace;
@@ -403,7 +308,6 @@
         .team-blue-lbl { font-size: 11px; color: #38bdf8; font-weight: 800; }
         .team-red-lbl { font-size: 11px; color: #fb7185; font-weight: 800; }
         .team-pts-num { font-size: 16px; font-weight: 900; color: #fff; }
-
         .players-scroll-list { display: flex; flex-direction: column; gap: 9px; overflow-y: auto; flex: 1; }
         .player-row-item { background: #0f172a; border: 1.5px solid #1e293b; border-radius: 10px; padding: 10px 12px; display: flex; justify-content: space-between; align-items: center; font-size: 13px; }
         .player-row-item.team-blue { border-left: 4px solid #38bdf8; }
@@ -414,7 +318,6 @@
         .status-waiting { color: #94a3b8; }
         .player-score-text { font-family: 'Fira Code', monospace; color: #facc15; font-weight: 800; font-size: 13.5px; }
 
-        /* MODAL KẾT THÚC */
         .modal-end-wrap { position: fixed; inset: 0; background: rgba(0,0,0,0.88); display: none; align-items: center; justify-content: center; z-index: 200; padding: 20px; }
         .modal-end-card { background: #090e1c; border: 2px solid #fb7185; border-radius: 20px; padding: 28px; width: 100%; max-width: 680px; max-height: 90vh; display: flex; flex-direction: column; gap: 16px; }
         .history-list-box { overflow-y: auto; display: flex; flex-direction: column; gap: 12px; max-height: 48vh; padding-right: 6px; }
@@ -444,12 +347,12 @@
             <a href="/arena/speed-duel" class="menu-item active">
                 <svg viewBox="0 0 24 24"><path d="M14.25 2.5a.75.75 0 0 1 .75-.75h4.5a.75.75 0 0 1 .75.75v4.5a.75.75 0 0 1-1.5 0V4.56l-5.22 5.22a.75.75 0 1 1-1.06-1.06l5.22-5.22h-2.69a.75.75 0 0 1-.75-.75zM3.75 11.25a.75.75 0 0 1 .75-.75h4.5a.75.75 0 0 1 0 1.5H5.56l5.22 5.22a.75.75 0 1 1-1.06 1.06L4.5 13.06v2.69a.75.75 0 0 1-1.5 0v-4.5z"/></svg>Đấu trường <span class="badge-live">LIVE</span>
             </a>
-            <a href="/leaderboard" class="menu-item">
-                <svg viewBox="0 0 24 24"><path d="M19 5h-2.18c.37-.78.58-1.65.58-2.5C17.4 1.13 16.27 0 14.9 0c-1.05 0-1.95.66-2.3 1.6-.2.5-.3 1.05-.3 1.6 0 .55.1 1.1.3 1.6.35.94 1.25 1.6 2.3 1.6 1.37 0 2.5-1.13 2.5-2.5 0-.85-.21-1.72-.58-2.5H19v14h-2.05c-.14-.54-.36-1.05-.66-1.5H19V5zM5 19H3V5h2v14zm14 0H5v2h14v-2z"/></svg>Bảng xếp hạng
-            </a>
-            <a href="/profile" class="menu-item">
-                <svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 3c1.66 0 3 1.34 3 3s-1.34 3-3 3-3-1.34-3-3 1.34-3 3-3zm0 14.2c-2.5 0-4.71-1.28-6-3.22.03-1.99 4-3.08 6-3.08 1.99 0 5.97 1.09 6 3.08-1.29 1.94-3.5 3.22-6 3.22z"/></svg>Hồ sơ
-            </a>
+            {{if eq .Username "admin"}}
+            <a href="/admin" class="menu-item" style="color:#f87171;">🛡️ Quản Trị Admin</a>
+            {{end}}
+            {{if .Username}}
+            <a href="/logout" onclick="logoutAccount(event)" class="menu-item logout-sidebar-btn">🚪 Đăng xuất</a>
+            {{end}}
         </nav>
     </aside>
 
@@ -463,8 +366,6 @@
 
         <div class="battle-grid-layout" id="battle-layout">
             <div class="question-arena-card">
-
-                <!-- SẢNH CHỜ ĐỒ HỌA SCI-FI HOLOGRAM CÔNG NGHỆ CAO -->
                 <div class="lobby-eq-layer" id="wait-layer">
                     <div class="cyber-grid-floor"></div>
                     <div class="cyber-scanline"></div>
@@ -473,7 +374,6 @@
                     <div class="hud-corner hud-bl"></div>
                     <div class="hud-corner hud-br"></div>
 
-                    <!-- Biểu tượng Lõi Năng Lượng Cyber Core & Tiêu đề -->
                     <div class="cyber-header-block">
                         <svg class="cyber-core-svg" viewBox="0 0 100 100" fill="none">
                             <circle class="core-ring-outer" cx="50" cy="50" r="44" stroke="#38bdf8" stroke-width="2" stroke-dasharray="18 10" opacity="0.75"/>
@@ -491,9 +391,7 @@
                         <div class="cyber-divider-line"></div>
                     </div>
 
-                    <!-- 4 THẺ CHẾ ĐỘ ĐỒ HỌA HOLOGRAM VECTOR SVG -->
                     <div class="modes-grid">
-                        <!-- 1V1: SONG KIẾM LASER -->
                         <div class="mode-card active" id="mode-1v1" onclick="selectGameMode('1v1', 2)">
                             <div class="holo-emblem-wrap">
                                 <div class="holo-emblem-bg"></div>
@@ -512,7 +410,6 @@
                             </div>
                         </div>
 
-                        <!-- 2V2: KHIÊN NĂNG LƯỢNG LƯỠNG CỰC -->
                         <div class="mode-card" id="mode-2v2" onclick="selectGameMode('2v2', 4)">
                             <div class="holo-emblem-wrap">
                                 <div class="holo-emblem-bg"></div>
@@ -532,7 +429,6 @@
                             </div>
                         </div>
 
-                        <!-- 3V3: LÕI TAM GIÁC PLASMA -->
                         <div class="mode-card" id="mode-3v3" onclick="selectGameMode('3v3', 6)">
                             <div class="holo-emblem-wrap">
                                 <div class="holo-emblem-bg"></div>
@@ -553,7 +449,6 @@
                             </div>
                         </div>
 
-                        <!-- 5V5: NGÔI SAO ĐẠI CHIẾN LIÊN QUÂN -->
                         <div class="mode-card" id="mode-5v5" onclick="selectGameMode('5v5', 10)">
                             <div class="holo-emblem-wrap">
                                 <div class="holo-emblem-bg"></div>
@@ -572,7 +467,6 @@
                         </div>
                     </div>
 
-                    <!-- BẢNG ĐIỀU KHIỂN CHIẾN BINH (PILOT DECK) -->
                     <div class="matchmaking-btn-box">
                         <div class="cyber-input-group">
                             <span class="cyber-input-prefix">PILOT ID //</span>
@@ -583,7 +477,6 @@
                         </button>
                     </div>
 
-                    <!-- MÀN HÌNH RADAR QUÉT TỌA ĐỘ 360 ĐỘ -->
                     <div class="searching-match-overlay" id="searching-overlay">
                         <div class="cyber-radar-box">
                             <div class="radar-sweep-beam"></div>
@@ -597,7 +490,6 @@
 
                 <div class="feedback-pop" id="feedback-txt">CHÍNH XÁC!</div>
 
-                <!-- GIAO DIỆN TRONG TRẬN ĐẤU (10 CÂU) -->
                 <div>
                     <div class="timer-progress-wrap">
                         <div class="timer-progress-bar" id="time-bar"></div>
@@ -621,7 +513,6 @@
                 </div>
             </div>
 
-            <!-- CỘT PHẢI: CHỈ HIỆN KHI ĐANG TRONG TRẬN ĐẤU -->
             <div class="leaderboard-column" id="match-scoreboard-col">
                 <div class="lb-header">
                     <span id="right-panel-title">⚔️ BẢNG ĐIỂM TRẬN ĐẤU</span>
@@ -1020,6 +911,13 @@
             };
 
             localStorage.setItem("colosseum_unique_history", JSON.stringify(historyMap));
+        }
+
+        function logoutAccount(e) {
+            if (e) e.preventDefault();
+            document.cookie = "session_token=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
+            sessionStorage.clear();
+            window.location.href = "/login";
         }
     </script>
 </body>
