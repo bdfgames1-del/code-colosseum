@@ -3,14 +3,14 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Đấu Trường Kiến Thức Python - CodeColosseum</title>
+    <title>Đấu Trường Kiến Thức Python - CodeQuest</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@500;600;700&family=Orbitron:wght@700;800;900&family=Plus+Jakarta+Sans:wght@500;600;700;800&family=Teko:wght@700&display=swap" rel="stylesheet">
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; }
         body {
-            background-color: #03050c;
+            background-color: #030611;
             color: #f8fafc;
             min-height: 100vh;
             display: flex;
@@ -18,172 +18,475 @@
             overflow-x: hidden;
         }
 
-        /* ==================== SIDEBAR CYBER 4.0 (ĐÃ BỎ BẢNG XẾP HẠNG & HỒ SƠ) ==================== */
+        /* ==================== SIDEBAR COMMAND DECK 4.0 (ĐỒNG BỘ TRANG CHỦ - LOGO CODEQUEST) ==================== */
         .sidebar {
-            width: 260px;
-            background: linear-gradient(180deg, #060a15 0%, #03050b 100%);
-            border-right: 1px solid rgba(56, 189, 248, 0.16);
-            padding: 26px 18px;
+            width: 288px;
+            background: 
+                radial-gradient(circle at 0% 15%, rgba(0, 242, 254, 0.14) 0%, transparent 45%),
+                radial-gradient(circle at 100% 85%, rgba(255, 107, 0, 0.12) 0%, transparent 45%),
+                linear-gradient(180deg, #070d1f 0%, #040814 55%, #03060f 100%);
+            border-right: 1.5px solid rgba(0, 242, 254, 0.25);
+            padding: 20px 16px;
             display: flex;
             flex-direction: column;
-            gap: 28px;
+            justify-content: space-between;
+            gap: 18px;
             flex-shrink: 0;
             min-height: 100vh;
+            box-shadow: 10px 0 40px rgba(0, 0, 0, 0.75);
+            position: relative;
             z-index: 20;
         }
-        .brand-logo {
-            font-family: 'Orbitron', 'Plus Jakarta Sans', sans-serif;
-            font-size: 19px; font-weight: 900; color: #fff; padding-left: 10px;
-            display: flex; align-items: center; gap: 12px; letter-spacing: 0.5px;
+
+        .sidebar::after {
+            content: "";
+            position: absolute;
+            top: 10%;
+            bottom: 10%;
+            right: -1.5px;
+            width: 2px;
+            background: linear-gradient(180deg, transparent, #00f2fe, #ff6b00, transparent);
+            box-shadow: 0 0 12px #00f2fe;
         }
-        .menu-list { display: flex; flex-direction: column; gap: 10px; flex: 1; }
+
+        .brand-showcase-box {
+            background: linear-gradient(145deg, rgba(11, 22, 48, 0.95) 0%, rgba(5, 10, 24, 0.98) 100%);
+            border: 1.5px solid rgba(0, 242, 254, 0.35);
+            border-radius: 16px;
+            padding: 12px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 8px;
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.6), inset 0 0 20px rgba(0, 242, 254, 0.08);
+            text-decoration: none;
+            position: relative;
+            overflow: hidden;
+        }
+        .brand-showcase-box::before {
+            content: "";
+            position: absolute;
+            top: 0; left: 15%; right: 15%; height: 2px;
+            background: linear-gradient(90deg, #00f2fe, #ff6b00);
+        }
+        .brand-banner-img {
+            width: 100%;
+            height: 68px;
+            object-fit: cover;
+            border-radius: 10px;
+            border: 1px solid rgba(255, 255, 255, 0.12);
+            display: block;
+        }
+        .brand-fallback-header {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            width: 100%;
+            padding: 4px 6px;
+        }
+        .brand-text-logo {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 18.5px;
+            font-weight: 900;
+            letter-spacing: 0.5px;
+            color: #ffffff;
+        }
+        .brand-text-logo span {
+            background: linear-gradient(90deg, #00f2fe 0%, #38bdf8 50%, #ff8c00 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        .brand-sub-tag {
+            font-family: 'Fira Code', monospace;
+            font-size: 10px;
+            font-weight: 700;
+            color: #fb923c;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+        }
+
+        .nav-section-label {
+            font-family: 'Orbitron', monospace;
+            font-size: 10.5px;
+            font-weight: 800;
+            color: #64748b;
+            letter-spacing: 1.4px;
+            padding: 0 8px;
+            margin-bottom: -4px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .menu-list {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
         .menu-item {
-            display: flex; align-items: center; gap: 13px; padding: 13px 16px; border-radius: 12px;
-            color: #94a3b8; text-decoration: none; font-size: 14.5px; font-weight: 600;
-            transition: 0.25s; border: 1px solid transparent; cursor: pointer;
+            position: relative;
+            display: flex;
+            align-items: center;
+            gap: 13px;
+            padding: 12px 14px;
+            border-radius: 14px;
+            background: rgba(11, 19, 38, 0.75);
+            border: 1.5px solid rgba(30, 48, 84, 0.8);
+            color: #cbd5e1;
+            text-decoration: none;
+            transition: all 0.25s cubic-bezier(0.25, 0.8, 0.25, 1);
+            overflow: hidden;
         }
-        .menu-item svg { width: 20px; height: 20px; fill: currentColor; flex-shrink: 0; }
-        .menu-item:hover { color: #38bdf8; background: rgba(56, 189, 248, 0.08); border-color: rgba(56, 189, 248, 0.25); transform: translateX(3px); }
+        .menu-item::before {
+            content: "";
+            position: absolute;
+            left: 0; top: 20%; bottom: 20%;
+            width: 3.5px;
+            background: transparent;
+            border-radius: 0 4px 4px 0;
+            transition: 0.25s;
+        }
+        .menu-icon-box {
+            width: 40px;
+            height: 40px;
+            border-radius: 11px;
+            background: rgba(15, 28, 56, 0.9);
+            border: 1px solid rgba(56, 189, 248, 0.25);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+            transition: 0.25s;
+        }
+        .menu-icon-box svg {
+            width: 20px;
+            height: 20px;
+            fill: #38bdf8;
+            transition: 0.25s;
+        }
+        .menu-text-wrap {
+            display: flex;
+            flex-direction: column;
+            gap: 2px;
+            flex: 1;
+        }
+        .menu-main-txt {
+            font-size: 14px;
+            font-weight: 800;
+            color: #f8fafc;
+            letter-spacing: 0.2px;
+        }
+        .menu-sub-txt {
+            font-family: 'Fira Code', monospace;
+            font-size: 10.5px;
+            color: #64748b;
+            font-weight: 600;
+        }
+
+        .menu-item:hover {
+            transform: translateX(4px);
+            background: linear-gradient(90deg, rgba(0, 242, 254, 0.14) 0%, rgba(15, 23, 42, 0.9) 100%);
+            border-color: rgba(0, 242, 254, 0.5);
+            box-shadow: 0 6px 20px rgba(0, 242, 254, 0.15);
+        }
+        .menu-item:hover::before {
+            background: #00f2fe;
+            box-shadow: 0 0 10px #00f2fe;
+        }
         .menu-item.active {
-            background: linear-gradient(135deg, rgba(14, 165, 233, 0.22) 0%, rgba(56, 189, 248, 0.05) 100%);
-            border-color: rgba(56, 189, 248, 0.5); color: #38bdf8; font-weight: 700;
-            box-shadow: 0 0 20px rgba(56, 189, 248, 0.15);
+            background: linear-gradient(90deg, rgba(0, 242, 254, 0.2) 0%, rgba(255, 107, 0, 0.12) 100%);
+            border-color: #00f2fe;
+            box-shadow: 0 8px 25px rgba(0, 242, 254, 0.22), inset 0 0 15px rgba(0, 242, 254, 0.1);
         }
-        .menu-item.logout-sidebar-btn {
+        .menu-item.active::before {
+            background: linear-gradient(180deg, #00f2fe, #ff6b00);
+            box-shadow: 0 0 12px #00f2fe;
+        }
+        .menu-item.active .menu-icon-box {
+            background: linear-gradient(135deg, #0284c7 0%, #0369a1 100%);
+            border-color: #7dd3fc;
+            box-shadow: 0 0 15px rgba(0, 242, 254, 0.5);
+        }
+        .menu-item.active .menu-icon-box svg { fill: #ffffff; }
+        .menu-item.active .menu-sub-txt { color: #7dd3fc; }
+
+        .badge-live {
+            font-family: 'Orbitron', monospace;
+            font-size: 9.5px;
+            background: linear-gradient(135deg, #ff512f 0%, #dd2476 100%);
+            color: #fff;
+            padding: 3px 8px;
+            border-radius: 9999px;
+            font-weight: 900;
+            box-shadow: 0 0 12px rgba(255, 81, 47, 0.7);
+            animation: pulseDot 1.5s infinite;
+        }
+
+        /* WIDGET PHẦN DƯỚI SIDEBAR */
+        .sidebar-bottom-deck {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
             margin-top: auto;
-            background: rgba(244, 63, 94, 0.14);
-            border: 1px solid rgba(244, 63, 94, 0.45);
+        }
+        .warrior-progress-widget {
+            background: linear-gradient(160deg, rgba(13, 24, 50, 0.92) 0%, rgba(8, 13, 28, 0.98) 100%);
+            border: 1.5px solid rgba(255, 107, 0, 0.38);
+            border-radius: 16px;
+            padding: 14px;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.6), inset 0 0 18px rgba(255, 107, 0, 0.08);
+        }
+        .wp-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .wp-rank-title {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 11px;
+            font-weight: 800;
+            color: #fb923c;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+        .wp-exp-pill {
+            font-family: 'Fira Code', monospace;
+            font-size: 11px;
+            font-weight: 800;
+            color: #00f2fe;
+            background: rgba(0, 242, 254, 0.12);
+            border: 1px solid rgba(0, 242, 254, 0.35);
+            padding: 2px 8px;
+            border-radius: 6px;
+        }
+        .wp-bar-bg {
+            width: 100%;
+            height: 8px;
+            background: #050914;
+            border-radius: 99px;
+            overflow: hidden;
+            border: 1px solid #1e293b;
+        }
+        .wp-bar-fill {
+            height: 100%;
+            width: 12%;
+            background: linear-gradient(90deg, #00f2fe 0%, #facc15 50%, #ff6b00 100%);
+            box-shadow: 0 0 10px rgba(0, 242, 254, 0.6);
+            transition: width 0.4s ease;
+        }
+        .wp-sub-stats {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 8px;
+            padding-top: 4px;
+        }
+        .wp-mini-box {
+            background: rgba(4, 8, 18, 0.85);
+            border: 1px solid #1a2946;
+            border-radius: 8px;
+            padding: 6px 8px;
+            text-align: center;
+        }
+        .wp-mini-val {
+            font-family: 'Orbitron', monospace;
+            font-size: 12.5px;
+            font-weight: 800;
+            color: #ffffff;
+        }
+        .wp-mini-lbl {
+            font-size: 9.5px;
+            color: #94a3b8;
+            font-weight: 700;
+            text-transform: uppercase;
+        }
+
+        .cyber-telemetry-card {
+            background: rgba(8, 15, 32, 0.9);
+            border: 1px solid rgba(0, 242, 254, 0.28);
+            border-radius: 14px;
+            padding: 11px 14px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+        .telemetry-left { display: flex; align-items: center; gap: 10px; }
+        .telemetry-bars { display: flex; align-items: flex-end; gap: 3px; height: 18px; }
+        .t-bar {
+            width: 3.5px; background: #00f2fe; border-radius: 2px;
+            animation: eqBounce 1s infinite ease-in-out alternate;
+        }
+        .t-bar:nth-child(1) { height: 45%; animation-delay: 0.1s; }
+        .t-bar:nth-child(2) { height: 95%; animation-delay: 0.3s; background: #ff6b00; }
+        .t-bar:nth-child(3) { height: 65%; animation-delay: 0.2s; }
+        .t-bar:nth-child(4) { height: 100%; animation-delay: 0.4s; background: #facc15; }
+        @keyframes eqBounce { 0% { transform: scaleY(0.35); } 100% { transform: scaleY(1); } }
+
+        .telemetry-txt { font-family: 'Fira Code', monospace; font-size: 11px; font-weight: 700; color: #7dd3fc; }
+        .telemetry-ping { font-family: 'Fira Code', monospace; font-size: 10.5px; font-weight: 800; color: #4ade80; }
+
+        .menu-item.logout-sidebar-btn {
+            background: rgba(244, 63, 94, 0.15);
+            border: 1.5px solid rgba(244, 63, 94, 0.45);
             color: #fb7185;
             font-weight: 800;
+            justify-content: center;
+            padding: 10px;
         }
-        .menu-item.logout-sidebar-btn:hover { background: #e11d48; color: #fff; border-color: #e11d48; }
-        .badge-live {
-            font-size: 10px; background: linear-gradient(135deg, #ef4444 0%, #dc2626 100%);
-            color: #fff; padding: 3px 8px; border-radius: 9999px; font-weight: 800; margin-left: auto;
-            box-shadow: 0 0 10px rgba(239, 68, 68, 0.6);
+        .menu-item.logout-sidebar-btn:hover {
+            background: #e11d48; color: #ffffff; transform: translateY(-2px);
         }
 
         /* ==================== MAIN CONTENT ==================== */
         .arena-main {
-            flex: 1; padding: 20px 32px; display: flex; flex-direction: column; gap: 18px; max-height: 100vh; overflow-y: auto;
+            flex: 1; padding: 20px 36px; display: flex; flex-direction: column; gap: 20px; max-height: 100vh; overflow-y: auto;
         }
 
         .top-strip {
             display: flex; justify-content: space-between; align-items: center;
-            background: linear-gradient(90deg, rgba(10, 18, 36, 0.95) 0%, rgba(6, 11, 24, 0.95) 100%);
-            border: 1px solid rgba(56, 189, 248, 0.25);
-            padding: 13px 26px; border-radius: 14px;
-            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.6);
+            background: linear-gradient(90deg, rgba(10, 20, 42, 0.95) 0%, rgba(18, 12, 28, 0.95) 100%);
+            border: 1.5px solid rgba(0, 242, 254, 0.3);
+            padding: 12px 24px; border-radius: 16px;
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.65);
             position: relative;
         }
         .top-strip::before {
             content: ""; position: absolute; left: 0; top: 20%; bottom: 20%; width: 4px;
-            background: #38bdf8; border-radius: 0 4px 4px 0; box-shadow: 0 0 12px #38bdf8;
+            background: linear-gradient(180deg, #00f2fe, #ff6b00);
+            border-radius: 0 4px 4px 0; box-shadow: 0 0 12px #00f2fe;
         }
         .arena-title-text {
             font-family: 'Orbitron', 'Plus Jakarta Sans', sans-serif;
-            font-size: 16px; font-weight: 800; color: #38bdf8;
+            font-size: 14px; font-weight: 800; color: #00f2fe;
             display: flex; align-items: center; gap: 10px; letter-spacing: 1px;
         }
+        .pulse-dot {
+            width: 9px; height: 9px; border-radius: 50%; background: #22c55e;
+            box-shadow: 0 0 12px #22c55e; animation: pulseDot 1.5s infinite;
+        }
+        @keyframes pulseDot { 0%, 100% { opacity: 0.4; } 50% { opacity: 1; } }
+
         .user-tag {
             font-family: 'Fira Code', monospace; font-size: 13.5px; color: #7dd3fc; font-weight: 700;
-            background: rgba(14, 165, 233, 0.12); border: 1px solid rgba(56, 189, 248, 0.35);
-            padding: 6px 16px; border-radius: 8px;
+            background: rgba(0, 242, 254, 0.12); border: 1px solid rgba(0, 242, 254, 0.4);
+            padding: 7px 16px; border-radius: 9px;
         }
 
         .battle-grid-layout { display: grid; grid-template-columns: 1fr; gap: 22px; flex: 1; }
         .battle-grid-layout.in-match-mode { grid-template-columns: 1fr 340px; }
 
         .question-arena-card {
-            background: #070b16;
-            border: 1.5px solid rgba(56, 189, 248, 0.25);
-            border-radius: 22px;
+            background: #060b18;
+            border: 1.5px solid rgba(0, 242, 254, 0.32);
+            border-radius: 24px;
             padding: 28px;
             display: flex;
             flex-direction: column;
             justify-content: space-between;
-            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.85);
+            box-shadow: 0 25px 65px rgba(0, 0, 0, 0.85);
             position: relative;
             overflow: hidden;
-            min-height: 580px;
+            min-height: 585px;
         }
 
+        /* ==================== SẢNH CHỜ ĐỒNG BỘ MÀU CYAN - TIGER ORANGE ==================== */
         .lobby-eq-layer {
             position: absolute; inset: 0;
             background: 
-                radial-gradient(circle at 50% 12%, rgba(14, 165, 233, 0.22) 0%, rgba(225, 29, 72, 0.08) 38%, transparent 70%),
-                linear-gradient(180deg, #070d1d 0%, #040711 65%, #03050a 100%);
+                radial-gradient(circle at 20% 15%, rgba(0, 242, 254, 0.22) 0%, transparent 45%),
+                radial-gradient(circle at 80% 15%, rgba(255, 107, 0, 0.2) 0%, transparent 45%),
+                linear-gradient(180deg, #081229 0%, #050a18 65%, #030610 100%);
             display: flex; flex-direction: column; align-items: center; justify-content: space-between;
-            padding: 28px 40px 32px 40px; z-index: 100; border-radius: 20px; text-align: center;
+            padding: 28px 40px 32px 40px; z-index: 100; border-radius: 22px; text-align: center;
             overflow: hidden;
         }
         .cyber-grid-floor {
             position: absolute; inset: 0;
             background-image: 
-                linear-gradient(rgba(56, 189, 248, 0.07) 1px, transparent 1px),
-                linear-gradient(90deg, rgba(56, 189, 248, 0.07) 1px, transparent 1px);
-            background-size: 42px 42px;
-            mask-image: radial-gradient(ellipse at 50% 45%, black 25%, transparent 80%);
+                linear-gradient(rgba(0, 242, 254, 0.07) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(255, 107, 0, 0.06) 1px, transparent 1px);
+            background-size: 40px 40px;
+            mask-image: radial-gradient(ellipse at 50% 45%, black 30%, transparent 80%);
             pointer-events: none;
         }
         .cyber-scanline {
             position: absolute; left: 0; right: 0; height: 2px;
-            background: linear-gradient(90deg, transparent 0%, rgba(56, 189, 248, 0.5) 50%, transparent 100%);
-            box-shadow: 0 0 15px #38bdf8;
+            background: linear-gradient(90deg, transparent 0%, #00f2fe 50%, #ff6b00 75%, transparent 100%);
+            box-shadow: 0 0 15px #00f2fe;
             animation: scanMove 6s infinite linear;
-            pointer-events: none; opacity: 0.5;
+            pointer-events: none; opacity: 0.55;
         }
         @keyframes scanMove { 0% { top: -5%; } 100% { top: 105%; } }
 
         .hud-corner {
-            position: absolute; width: 22px; height: 22px;
-            border-color: #38bdf8; border-style: solid; opacity: 0.7; pointer-events: none;
+            position: absolute; width: 24px; height: 24px;
+            border-style: solid; opacity: 0.85; pointer-events: none;
         }
-        .hud-tl { top: 16px; left: 16px; border-width: 2.5px 0 0 2.5px; }
-        .hud-tr { top: 16px; right: 16px; border-width: 2.5px 2.5px 0 0; }
-        .hud-bl { bottom: 16px; left: 16px; border-width: 0 0 2.5px 2.5px; }
-        .hud-br { bottom: 16px; right: 16px; border-width: 0 2.5px 2.5px 0; }
+        .hud-tl { top: 16px; left: 16px; border-color: #00f2fe; border-width: 3px 0 0 3px; }
+        .hud-tr { top: 16px; right: 16px; border-color: #ff6b00; border-width: 3px 3px 0 0; }
+        .hud-bl { bottom: 16px; left: 16px; border-color: #00f2fe; border-width: 0 0 3px 3px; }
+        .hud-br { bottom: 16px; right: 16px; border-color: #ff6b00; border-width: 0 3px 3px 0; }
 
         .cyber-header-block {
             position: relative; z-index: 2;
             display: flex; flex-direction: column; align-items: center; gap: 8px;
         }
-        .cyber-core-svg { width: 68px; height: 68px; filter: drop-shadow(0 0 18px rgba(56, 189, 248, 0.75)); }
+        .cyber-core-svg { width: 72px; height: 72px; filter: drop-shadow(0 0 20px rgba(0, 242, 254, 0.7)); }
         .core-ring-outer { transform-origin: center; animation: spinRight 10s infinite linear; }
         .core-ring-inner { transform-origin: center; animation: spinLeft 6s infinite linear; }
         @keyframes spinRight { 100% { transform: rotate(360deg); } }
         @keyframes spinLeft { 100% { transform: rotate(-360deg); } }
 
         .lobby-eq-title {
+            font-family: 'Orbitron', 'Plus Jakarta Sans', sans-serif;
             font-size: 30px; font-weight: 900; letter-spacing: 1.5px;
-            background: linear-gradient(90deg, #ffffff 0%, #7dd3fc 50%, #38bdf8 100%);
+            background: linear-gradient(90deg, #00f2fe 0%, #ffffff 50%, #ff8c00 100%);
             -webkit-background-clip: text; -webkit-text-fill-color: transparent;
             text-transform: uppercase;
         }
         .cyber-divider-line {
-            width: 240px; height: 2px;
-            background: linear-gradient(90deg, transparent, #38bdf8, #f43f5e, transparent);
+            width: 260px; height: 2.5px;
+            background: linear-gradient(90deg, transparent, #00f2fe, #ff6b00, transparent);
             margin-top: 2px;
         }
 
+        /* 4 THẺ CHẾ ĐỘ ĐỒNG BỘ MÀU TRANG CHỦ */
         .modes-grid {
             position: relative; z-index: 2;
             display: grid; grid-template-columns: repeat(4, 1fr); gap: 18px;
             width: 100%; max-width: 980px; margin: 8px 0;
         }
         .mode-card {
-            background: linear-gradient(165deg, rgba(14, 24, 48, 0.88) 0%, rgba(7, 12, 26, 0.95) 100%);
-            border: 1.5px solid rgba(56, 189, 248, 0.25);
-            border-radius: 16px; padding: 22px 16px 18px 16px;
+            background: linear-gradient(165deg, rgba(12, 24, 52, 0.92) 0%, rgba(6, 11, 26, 0.98) 100%);
+            border: 1.5px solid rgba(0, 242, 254, 0.28);
+            border-radius: 18px; padding: 22px 16px 18px 16px;
             cursor: pointer; transition: all 0.28s cubic-bezier(0.25, 0.8, 0.25, 1);
             display: flex; flex-direction: column; align-items: center; gap: 10px;
             position: relative; overflow: hidden;
+            box-shadow: 0 12px 30px rgba(0, 0, 0, 0.65);
         }
-        .mode-card:hover { transform: translateY(-6px); border-color: #38bdf8; }
+        .mode-card::before {
+            content: ""; position: absolute; top: 0; left: 18%; right: 18%; height: 3px;
+            background: #00f2fe; border-radius: 0 0 4px 4px; opacity: 0.5; transition: 0.3s;
+        }
+        .mode-card:hover {
+            transform: translateY(-6px);
+            border-color: #00f2fe;
+            box-shadow: 0 16px 35px rgba(0, 242, 254, 0.22);
+        }
+        .mode-card:hover::before { left: 8%; right: 8%; opacity: 1; box-shadow: 0 0 12px #00f2fe; }
+
         .mode-card.active {
-            background: linear-gradient(165deg, rgba(45, 12, 34, 0.92) 0%, rgba(12, 16, 34, 0.98) 100%);
-            border-color: #fb7185; transform: translateY(-6px);
-            box-shadow: 0 16px 40px rgba(244, 63, 94, 0.35);
+            background: linear-gradient(165deg, rgba(42, 16, 12, 0.94) 0%, rgba(12, 16, 36, 0.98) 100%);
+            border-color: #ff6b00; transform: translateY(-6px);
+            box-shadow: 0 18px 40px rgba(255, 107, 0, 0.32), inset 0 0 25px rgba(255, 107, 0, 0.14);
+        }
+        .mode-card.active::before {
+            left: 6%; right: 6%; background: linear-gradient(90deg, #00f2fe, #ff6b00);
+            opacity: 1; box-shadow: 0 0 15px #ff6b00;
         }
 
         .holo-emblem-wrap {
@@ -192,41 +495,49 @@
         }
         .holo-emblem-bg {
             position: absolute; inset: 0; border-radius: 50%;
-            background: radial-gradient(circle, rgba(56, 189, 248, 0.2) 0%, transparent 70%);
-            border: 1.5px dashed rgba(56, 189, 248, 0.45);
+            background: radial-gradient(circle, rgba(0, 242, 254, 0.2) 0%, transparent 70%);
+            border: 1.5px dashed rgba(0, 242, 254, 0.45);
             animation: spinRight 14s infinite linear;
         }
         .mode-card.active .holo-emblem-bg {
-            background: radial-gradient(circle, rgba(244, 63, 94, 0.3) 0%, transparent 70%);
-            border-color: #fb7185;
+            background: radial-gradient(circle, rgba(255, 107, 0, 0.3) 0%, transparent 70%);
+            border-color: #ff8c00;
         }
         .mode-svg-art { width: 46px; height: 46px; position: relative; z-index: 2; }
         .mode-vs-pill {
             position: absolute; bottom: -4px; z-index: 3;
             font-family: 'Orbitron', monospace; font-size: 11px; font-weight: 900;
-            background: #0f172a; color: #38bdf8; border: 1px solid #38bdf8;
+            background: #0f172a; color: #00f2fe; border: 1px solid #00f2fe;
             padding: 1px 8px; border-radius: 6px;
         }
-        .mode-card.active .mode-vs-pill { background: #e11d48; color: #ffffff; border-color: #fda4af; }
+        .mode-card.active .mode-vs-pill {
+            background: linear-gradient(135deg, #ff6b00 0%, #e11d48 100%);
+            color: #ffffff; border-color: #fdba74;
+        }
 
         .mode-name { font-size: 16.5px; font-weight: 800; color: #ffffff; margin-top: 4px; }
         .mode-sub { font-size: 12px; color: #94a3b8; font-weight: 600; }
         .mode-queue-tag {
             font-family: 'Fira Code', monospace; font-size: 11.5px; font-weight: 700;
-            color: #7dd3fc; background: rgba(14, 165, 233, 0.12);
-            border: 1px solid rgba(56, 189, 248, 0.3);
+            color: #7dd3fc; background: rgba(0, 242, 254, 0.12);
+            border: 1px solid rgba(0, 242, 254, 0.35);
             padding: 5px 12px; border-radius: 9999px; margin-top: 4px;
             display: flex; align-items: center; gap: 6px;
         }
-        .q-dot { width: 7px; height: 7px; border-radius: 50%; background: #38bdf8; box-shadow: 0 0 8px #38bdf8; }
+        .mode-card.active .mode-queue-tag {
+            color: #fed7aa; background: rgba(255, 107, 0, 0.2); border-color: rgba(255, 140, 0, 0.5);
+        }
+        .q-dot { width: 7px; height: 7px; border-radius: 50%; background: #00f2fe; box-shadow: 0 0 8px #00f2fe; }
+        .mode-card.active .q-dot { background: #ff8c00; box-shadow: 0 0 8px #ff8c00; }
 
         .matchmaking-btn-box {
             position: relative; z-index: 2;
             display: flex; flex-direction: column; align-items: center; gap: 14px;
-            width: 100%; max-width: 500px;
-            background: rgba(8, 14, 28, 0.85);
-            border: 1px solid rgba(56, 189, 248, 0.25);
+            width: 100%; max-width: 520px;
+            background: rgba(7, 13, 29, 0.9);
+            border: 1.5px solid rgba(0, 242, 254, 0.3);
             padding: 18px 22px; border-radius: 18px;
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.7);
         }
         .cyber-input-group {
             width: 100%; display: flex; align-items: center;
@@ -234,21 +545,26 @@
         }
         .cyber-input-prefix {
             font-family: 'Fira Code', monospace; font-size: 11.5px; font-weight: 700;
-            color: #64748b; padding-right: 10px; border-right: 1px solid #1e293b;
+            color: #fb923c; padding-right: 10px; border-right: 1px solid #1e293b;
         }
         .name-edit-input {
-            flex: 1; background: transparent; border: none; color: #38bdf8;
+            flex: 1; background: transparent; border: none; color: #00f2fe;
             font-family: 'Fira Code', monospace; font-size: 14.5px; font-weight: 700;
             padding: 9px 12px; outline: none; text-align: center;
         }
         .btn-start-queue {
             width: 100%;
-            background: linear-gradient(135deg, #e11d48 0%, #be123c 50%, #9f1239 100%);
-            color: #ffffff; border: 1px solid #fda4af;
+            background: linear-gradient(135deg, #ff6b00 0%, #e11d48 100%);
+            color: #ffffff; border: 1px solid #fdba74;
             padding: 16px 28px; border-radius: 12px;
             font-family: 'Orbitron', 'Plus Jakarta Sans', sans-serif;
             font-size: 16px; font-weight: 900; cursor: pointer; letter-spacing: 1.2px;
-            box-shadow: 0 0 25px rgba(225, 29, 72, 0.55); transition: 0.25s;
+            box-shadow: 0 0 28px rgba(255, 107, 0, 0.5); transition: 0.25s;
+        }
+        .btn-start-queue:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 0 38px rgba(255, 107, 0, 0.8);
+            filter: brightness(1.1);
         }
 
         .searching-match-overlay {
@@ -259,13 +575,13 @@
         }
         .cyber-radar-box {
             position: relative; width: 130px; height: 130px;
-            border-radius: 50%; border: 2px solid rgba(56, 189, 248, 0.5);
-            background: radial-gradient(circle, rgba(56, 189, 248, 0.15) 0%, transparent 70%);
+            border-radius: 50%; border: 2px solid rgba(0, 242, 254, 0.5);
+            background: radial-gradient(circle, rgba(0, 242, 254, 0.15) 0%, transparent 70%);
             display: flex; align-items: center; justify-content: center; overflow: hidden;
         }
         .radar-sweep-beam {
             position: absolute; width: 50%; height: 50%; top: 0; left: 50%;
-            background: linear-gradient(45deg, rgba(56, 189, 248, 0.65) 0%, transparent 70%);
+            background: linear-gradient(45deg, rgba(0, 242, 254, 0.65) 0%, transparent 70%);
             transform-origin: bottom left; animation: spinRight 1.6s infinite linear;
         }
         .queue-timer-text { font-family: 'Orbitron', monospace; font-size: 26px; font-weight: 900; color: #facc15; }
@@ -275,13 +591,13 @@
         }
 
         .timer-progress-wrap { width: 100%; height: 10px; background: #1e293b; border-radius: 5px; overflow: hidden; margin-bottom: 14px; }
-        .timer-progress-bar { height: 100%; width: 100%; background: linear-gradient(90deg, #22c55e, #eab308, #ef4444); transition: width 0.08s linear; }
+        .timer-progress-bar { height: 100%; width: 100%; background: linear-gradient(90deg, #00f2fe, #facc15, #ff6b00); transition: width 0.08s linear; }
         .round-info-bar { display: flex; justify-content: space-between; align-items: center; margin-bottom: 14px; }
-        .round-badge { background: rgba(56, 189, 248, 0.15); border: 1px solid #38bdf8; color: #38bdf8; font-family: 'Fira Code', monospace; padding: 5px 14px; border-radius: 8px; font-weight: 700; }
+        .round-badge { background: rgba(0, 242, 254, 0.15); border: 1px solid #00f2fe; color: #00f2fe; font-family: 'Fira Code', monospace; padding: 5px 14px; border-radius: 8px; font-weight: 700; }
         .your-score-pill { background: rgba(250, 204, 21, 0.15); border: 1px solid #facc15; color: #facc15; font-family: 'Fira Code', monospace; font-size: 14px; font-weight: 800; padding: 5px 14px; border-radius: 8px; }
         .question-prompt-text { font-size: 18.5px; font-weight: 800; color: #ffffff; margin-bottom: 12px; line-height: 1.5; }
-        .code-display-block { background: #03060d; border: 1px solid #1a253c; border-radius: 12px; padding: 15px 18px; font-family: 'Fira Code', monospace; font-size: 14.5px; color: #38bdf8; margin-bottom: 14px; white-space: pre-wrap; }
-        .wait-others-banner { font-size: 13px; font-weight: 700; color: #38bdf8; background: rgba(56, 189, 248, 0.1); border: 1px dashed rgba(56, 189, 248, 0.4); padding: 8px 14px; border-radius: 8px; text-align: center; margin-bottom: 12px; display: none; }
+        .code-display-block { background: #03060d; border: 1px solid #1a253c; border-radius: 12px; padding: 15px 18px; font-family: 'Fira Code', monospace; font-size: 14.5px; color: #00f2fe; margin-bottom: 14px; white-space: pre-wrap; }
+        .wait-others-banner { font-size: 13px; font-weight: 700; color: #00f2fe; background: rgba(0, 242, 254, 0.1); border: 1px dashed rgba(0, 242, 254, 0.4); padding: 8px 14px; border-radius: 8px; text-align: center; margin-bottom: 12px; display: none; }
         .options-fast-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
         .btn-fast-option {
             background: #0f172a; border: 2px solid #1e293b; color: #f8fafc; padding: 15px 18px; border-radius: 12px;
@@ -291,26 +607,26 @@
         .feedback-pop {
             position: absolute; top: 48%; left: 50%; transform: translate(-50%, -50%);
             font-size: 30px; font-weight: 900; font-family: 'Teko', sans-serif;
-            background: rgba(5, 8, 17, 0.95); border: 2px solid #38bdf8; padding: 12px 28px; border-radius: 14px; display: none; z-index: 50;
+            background: rgba(5, 8, 17, 0.95); border: 2px solid #00f2fe; padding: 12px 28px; border-radius: 14px; display: none; z-index: 50;
         }
 
         .leaderboard-column {
             background: #090e1c; border: 2px solid #1e293b; border-radius: 22px;
             padding: 20px; display: none; flex-direction: column; gap: 14px;
         }
-        .lb-header { font-size: 14.5px; font-weight: 800; color: #fb7185; display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid #1e293b; padding-bottom: 10px; }
-        .players-count-badge { font-size: 11px; background: rgba(56, 189, 248, 0.15); color: #38bdf8; border: 1px solid #38bdf8; padding: 2px 8px; border-radius: 6px; }
+        .lb-header { font-size: 14.5px; font-weight: 800; color: #fb923c; display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid #1e293b; padding-bottom: 10px; }
+        .players-count-badge { font-size: 11px; background: rgba(0, 242, 254, 0.15); color: #00f2fe; border: 1px solid #00f2fe; padding: 2px 8px; border-radius: 6px; }
         .teams-versus-bar {
             display: grid; grid-template-columns: 1fr auto 1fr; align-items: center; gap: 8px;
             background: #050914; border: 1px solid #1e2d4a; border-radius: 12px; padding: 10px 12px; font-family: 'Fira Code', monospace;
         }
         .team-score-box { text-align: center; }
-        .team-blue-lbl { font-size: 11px; color: #38bdf8; font-weight: 800; }
+        .team-blue-lbl { font-size: 11px; color: #00f2fe; font-weight: 800; }
         .team-red-lbl { font-size: 11px; color: #fb7185; font-weight: 800; }
         .team-pts-num { font-size: 16px; font-weight: 900; color: #fff; }
         .players-scroll-list { display: flex; flex-direction: column; gap: 9px; overflow-y: auto; flex: 1; }
         .player-row-item { background: #0f172a; border: 1.5px solid #1e293b; border-radius: 10px; padding: 10px 12px; display: flex; justify-content: space-between; align-items: center; font-size: 13px; }
-        .player-row-item.team-blue { border-left: 4px solid #38bdf8; }
+        .player-row-item.team-blue { border-left: 4px solid #00f2fe; }
         .player-row-item.team-red { border-left: 4px solid #fb7185; }
         .player-name-text { font-weight: 700; color: #f8fafc; display: flex; flex-direction: column; gap: 2px; }
         .player-status-sub { font-size: 11px; font-weight: 600; }
@@ -319,47 +635,143 @@
         .player-score-text { font-family: 'Fira Code', monospace; color: #facc15; font-weight: 800; font-size: 13.5px; }
 
         .modal-end-wrap { position: fixed; inset: 0; background: rgba(0,0,0,0.88); display: none; align-items: center; justify-content: center; z-index: 200; padding: 20px; }
-        .modal-end-card { background: #090e1c; border: 2px solid #fb7185; border-radius: 20px; padding: 28px; width: 100%; max-width: 680px; max-height: 90vh; display: flex; flex-direction: column; gap: 16px; }
+        .modal-end-card { background: #090e1c; border: 2px solid #ff6b00; border-radius: 20px; padding: 28px; width: 100%; max-width: 680px; max-height: 90vh; display: flex; flex-direction: column; gap: 16px; }
         .history-list-box { overflow-y: auto; display: flex; flex-direction: column; gap: 12px; max-height: 48vh; padding-right: 6px; }
         .history-item { background: #0f172a; border: 1.5px solid #1e293b; border-radius: 12px; padding: 14px; display: flex; flex-direction: column; gap: 6px; }
         .btn-action-row { display: flex; justify-content: center; gap: 12px; margin-top: 8px; }
-        .btn-replay-duel { background: #e11d48; color: #fff; border: none; padding: 11px 24px; border-radius: 10px; font-weight: 800; cursor: pointer; }
-        .btn-back-arena { background: #1e293b; color: #38bdf8; border: 1px solid #38bdf8; padding: 11px 20px; border-radius: 10px; font-weight: 700; text-decoration: none; }
+        .btn-replay-duel { background: linear-gradient(135deg, #ff6b00, #e11d48); color: #fff; border: none; padding: 11px 24px; border-radius: 10px; font-weight: 800; cursor: pointer; }
+        .btn-back-arena { background: #1e293b; color: #00f2fe; border: 1px solid #00f2fe; padding: 11px 20px; border-radius: 10px; font-weight: 700; text-decoration: none; }
     </style>
 </head>
 <body>
 
+    <!-- ==================== SIDEBAR COMMAND DECK 4.0 (ĐỒNG BỘ TRANG CHỦ - LOGO CODEQUEST) ==================== -->
     <aside class="sidebar">
-        <div class="brand-logo">
-            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#38bdf8" stroke-width="2.5"><path d="M14.5 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7.5L14.5 2z"/><polyline points="14 2 14 8 20 8"/><line x1="9" y1="13" x2="15" y2="13"/><line x1="9" y1="17" x2="13" y2="17"/></svg>
-            CodeColosseum
+        <div style="display:flex; flex-direction:column; gap:16px;">
+            <a href="/" class="brand-showcase-box">
+                <img src="/static/logo.jpg" alt="CodeQuest" class="brand-banner-img" onerror="this.style.display='none'">
+                <div class="brand-fallback-header">
+                    <svg width="28" height="28" viewBox="0 0 36 36" fill="none">
+                        <polygon points="18,2 33,10 30,27 18,34 6,27 3,10" fill="rgba(0,242,254,0.18)" stroke="#00f2fe" stroke-width="2.2"/>
+                        <path d="M11 18 L16 13 M11 18 L16 23 M25 18 L20 13 M25 18 L20 23" stroke="#ff6b00" stroke-width="2.5" stroke-linecap="round"/>
+                    </svg>
+                    <div>
+                        <div class="brand-text-logo">Code<span>Quest</span></div>
+                        <div class="brand-sub-tag">⚡ PYTHON ARENA 4.0</div>
+                    </div>
+                </div>
+            </a>
+
+            <div class="nav-section-label">
+                <span>// HỆ THỐNG ĐIỀU HÀNH</span>
+                <span style="color:#00f2fe;">v4.0</span>
+            </div>
+
+            <nav class="menu-list">
+                <a href="/" class="menu-item">
+                    <div class="menu-icon-box">
+                        <svg viewBox="0 0 24 24"><path d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z"/></svg>
+                    </div>
+                    <div class="menu-text-wrap">
+                        <span class="menu-main-txt">Trang chủ</span>
+                        <span class="menu-sub-txt">Trung tâm chỉ huy</span>
+                    </div>
+                </a>
+
+                <a href="/courses" class="menu-item">
+                    <div class="menu-icon-box">
+                        <svg viewBox="0 0 24 24"><path d="M4 6H2v14c0 1.1.9 2 2 2h14v-2H4V6zm16-4H8c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2zm0 14H8V4h12v12z"/></svg>
+                    </div>
+                    <div class="menu-text-wrap">
+                        <span class="menu-main-txt">Bài học</span>
+                        <span class="menu-sub-txt">3 Bài • 9 Mốc EXP</span>
+                    </div>
+                </a>
+
+                <a href="/arena" class="menu-item">
+                    <div class="menu-icon-box">
+                        <svg viewBox="0 0 24 24"><path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm-5 14H7v-2h7v2zm3-4H7v-2h10v2zm0-4H7V7h10v2z"/></svg>
+                    </div>
+                    <div class="menu-text-wrap">
+                        <span class="menu-main-txt">Thực hành bài tập</span>
+                        <span class="menu-sub-txt">3 Bản đồ giả lập 4.0</span>
+                    </div>
+                </a>
+
+                <a href="/arena/speed-duel" class="menu-item active">
+                    <div class="menu-icon-box">
+                        <svg viewBox="0 0 24 24"><path d="M14.25 2.5a.75.75 0 0 1 .75-.75h4.5a.75.75 0 0 1 .75.75v4.5a.75.75 0 0 1-1.5 0V4.56l-5.22 5.22a.75.75 0 1 1-1.06-1.06l5.22-5.22h-2.69a.75.75 0 0 1-.75-.75zM3.75 11.25a.75.75 0 0 1 .75-.75h4.5a.75.75 0 0 1 0 1.5H5.56l5.22 5.22a.75.75 0 1 1-1.06 1.06L4.5 13.06v2.69a.75.75 0 0 1-1.5 0v-4.5z"/></svg>
+                    </div>
+                    <div class="menu-text-wrap">
+                        <span class="menu-main-txt">Đấu trường</span>
+                        <span class="menu-sub-txt">PvP 1v1 • 2v2 • 5v5</span>
+                    </div>
+                    <span class="badge-live">LIVE</span>
+                </a>
+
+                {{if eq .Username "admin"}}
+                <a href="/admin" class="menu-item" style="border-color:rgba(244,63,94,0.45);">
+                    <div class="menu-icon-box" style="border-color:#fb7185;">
+                        <svg viewBox="0 0 24 24"><path d="M12 1L3 5v6c0 5.55 3.84 10.74 9 12 5.16-1.26 9-6.45 9-12V5l-9-4z"/></svg>
+                    </div>
+                    <div class="menu-text-wrap">
+                        <span class="menu-main-txt" style="color:#fb7185;">Quản Trị Admin</span>
+                        <span class="menu-sub-txt">Giám sát hệ thống</span>
+                    </div>
+                </a>
+                {{end}}
+            </nav>
         </div>
-        <nav class="menu-list">
-            <a href="/" class="menu-item">
-                <svg viewBox="0 0 24 24"><path d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z"/></svg>Trang chủ
-            </a>
-            <a href="/courses" class="menu-item">
-                <svg viewBox="0 0 24 24"><path d="M4 6H2v14c0 1.1.9 2 2 2h14v-2H4V6zm16-4H8c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2zm0 14H8V4h12v12z"/></svg>Bài học
-            </a>
-            <a href="/arena" class="menu-item">
-                <svg viewBox="0 0 24 24"><path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm-5 14H7v-2h7v2zm3-4H7v-2h10v2zm0-4H7V7h10v2z"/></svg>Thực hành bài tập
-            </a>
-            <a href="/arena/speed-duel" class="menu-item active">
-                <svg viewBox="0 0 24 24"><path d="M14.25 2.5a.75.75 0 0 1 .75-.75h4.5a.75.75 0 0 1 .75.75v4.5a.75.75 0 0 1-1.5 0V4.56l-5.22 5.22a.75.75 0 1 1-1.06-1.06l5.22-5.22h-2.69a.75.75 0 0 1-.75-.75zM3.75 11.25a.75.75 0 0 1 .75-.75h4.5a.75.75 0 0 1 0 1.5H5.56l5.22 5.22a.75.75 0 1 1-1.06 1.06L4.5 13.06v2.69a.75.75 0 0 1-1.5 0v-4.5z"/></svg>Đấu trường <span class="badge-live">LIVE</span>
-            </a>
-            {{if eq .Username "admin"}}
-            <a href="/admin" class="menu-item" style="color:#f87171;">🛡️ Quản Trị Admin</a>
-            {{end}}
+
+        <!-- WIDGET PHẦN DƯỚI SIDEBAR -->
+        <div class="sidebar-bottom-deck">
+            <div class="warrior-progress-widget">
+                <div class="wp-header">
+                    <span class="wp-rank-title" id="sb-rank-title">🐯 CHIẾN BINH PYTHON</span>
+                    <span class="wp-exp-pill" id="sb-exp-pill">0 EXP</span>
+                </div>
+                <div class="wp-bar-bg">
+                    <div class="wp-bar-fill" id="sb-exp-bar"></div>
+                </div>
+                <div class="wp-sub-stats">
+                    <div class="wp-mini-box">
+                        <div class="wp-mini-val" id="sb-ms-done">0 / 9</div>
+                        <div class="wp-mini-lbl">Cột Mốc Học</div>
+                    </div>
+                    <div class="wp-mini-box">
+                        <div class="wp-mini-val" id="sb-history-done">0 Câu</div>
+                        <div class="wp-mini-lbl">Đã Thực Chiến</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="cyber-telemetry-card">
+                <div class="telemetry-left">
+                    <div class="telemetry-bars">
+                        <div class="t-bar"></div>
+                        <div class="t-bar"></div>
+                        <div class="t-bar"></div>
+                        <div class="t-bar"></div>
+                    </div>
+                    <span class="telemetry-txt">CODEQUEST HUB</span>
+                </div>
+                <span class="telemetry-ping">● ONLINE</span>
+            </div>
+
             {{if .Username}}
-            <a href="/logout" onclick="logoutAccount(event)" class="menu-item logout-sidebar-btn">🚪 Đăng xuất</a>
+            <a href="/logout" onclick="logoutAccount(event)" class="menu-item logout-sidebar-btn">
+                <span>🚪</span> Đăng xuất tài khoản
+            </a>
             {{end}}
-        </nav>
+        </div>
     </aside>
 
+    <!-- ==================== MAIN CONTENT ==================== -->
     <main class="arena-main">
         <div class="top-strip">
             <div class="arena-title-text">
-                <span>⚡</span> ĐẤU TRƯỜNG KIẾN THỨC PYTHON
+                <span class="pulse-dot"></span>
+                <span>CODEQUEST // ĐẤU TRƯỜNG KIẾN THỨC PYTHON 4.0</span>
             </div>
             <div class="user-tag" id="current-user-tag">👤 {{if .Username}}{{.Username}}{{else}}Chiến Binh{{end}}</div>
         </div>
@@ -376,13 +788,13 @@
 
                     <div class="cyber-header-block">
                         <svg class="cyber-core-svg" viewBox="0 0 100 100" fill="none">
-                            <circle class="core-ring-outer" cx="50" cy="50" r="44" stroke="#38bdf8" stroke-width="2" stroke-dasharray="18 10" opacity="0.75"/>
-                            <polygon class="core-ring-inner" points="50,14 82,32 82,68 50,86 18,68 18,32" stroke="#f43f5e" stroke-width="2" fill="rgba(14, 165, 233, 0.1)"/>
+                            <circle class="core-ring-outer" cx="50" cy="50" r="44" stroke="#00f2fe" stroke-width="2.2" stroke-dasharray="18 10" opacity="0.85"/>
+                            <polygon class="core-ring-inner" points="50,14 82,32 82,68 50,86 18,68 18,32" stroke="#ff6b00" stroke-width="2.2" fill="rgba(0, 242, 254, 0.1)"/>
                             <circle cx="50" cy="50" r="18" fill="url(#coreGrad)" stroke="#ffffff" stroke-width="2"/>
                             <path d="M44,46 L50,40 L56,46 M44,54 L50,60 L56,54" stroke="#facc15" stroke-width="2.5" stroke-linecap="round"/>
                             <defs>
                                 <radialGradient id="coreGrad" cx="50%" cy="50%" r="50%">
-                                    <stop offset="0%" stop-color="#38bdf8"/>
+                                    <stop offset="0%" stop-color="#00f2fe"/>
                                     <stop offset="100%" stop-color="#1e3a8a"/>
                                 </radialGradient>
                             </defs>
@@ -391,14 +803,15 @@
                         <div class="cyber-divider-line"></div>
                     </div>
 
+                    <!-- 4 THẺ CHẾ ĐỘ (ĐÃ XÓA CHỮ LIÊN QUÂN Ở 5V5) -->
                     <div class="modes-grid">
                         <div class="mode-card active" id="mode-1v1" onclick="selectGameMode('1v1', 2)">
                             <div class="holo-emblem-wrap">
                                 <div class="holo-emblem-bg"></div>
                                 <svg class="mode-svg-art" viewBox="0 0 64 64" fill="none">
                                     <path d="M14 50 L48 16 M42 14 L50 14 L50 22" stroke="#facc15" stroke-width="3.5" stroke-linecap="round"/>
-                                    <path d="M50 50 L16 16 M22 14 L14 14 L14 22" stroke="#38bdf8" stroke-width="3.5" stroke-linecap="round"/>
-                                    <circle cx="32" cy="32" r="6" fill="#f43f5e" stroke="#fff" stroke-width="1.5"/>
+                                    <path d="M50 50 L16 16 M22 14 L14 14 L14 22" stroke="#00f2fe" stroke-width="3.5" stroke-linecap="round"/>
+                                    <circle cx="32" cy="32" r="6" fill="#ff6b00" stroke="#fff" stroke-width="1.5"/>
                                 </svg>
                                 <span class="mode-vs-pill">1V1</span>
                             </div>
@@ -414,10 +827,10 @@
                             <div class="holo-emblem-wrap">
                                 <div class="holo-emblem-bg"></div>
                                 <svg class="mode-svg-art" viewBox="0 0 64 64" fill="none">
-                                    <polygon points="32,8 54,18 48,44 32,56 16,44 10,18" fill="rgba(56,189,248,0.18)" stroke="#38bdf8" stroke-width="3"/>
+                                    <polygon points="32,8 54,18 48,44 32,56 16,44 10,18" fill="rgba(0,242,254,0.18)" stroke="#00f2fe" stroke-width="3"/>
                                     <path d="M32 14 L32 50" stroke="#facc15" stroke-width="2.5"/>
-                                    <circle cx="23" cy="30" r="4" fill="#38bdf8"/>
-                                    <circle cx="41" cy="30" r="4" fill="#fb7185"/>
+                                    <circle cx="23" cy="30" r="4" fill="#00f2fe"/>
+                                    <circle cx="41" cy="30" r="4" fill="#ff6b00"/>
                                 </svg>
                                 <span class="mode-vs-pill">2V2</span>
                             </div>
@@ -433,9 +846,9 @@
                             <div class="holo-emblem-wrap">
                                 <div class="holo-emblem-bg"></div>
                                 <svg class="mode-svg-art" viewBox="0 0 64 64" fill="none">
-                                    <polygon points="32,10 54,48 10,48" fill="rgba(192,132,252,0.18)" stroke="#c084fc" stroke-width="3"/>
+                                    <polygon points="32,10 54,48 10,48" fill="rgba(255,107,0,0.18)" stroke="#fb923c" stroke-width="3"/>
                                     <circle cx="32" cy="14" r="4.5" fill="#facc15"/>
-                                    <circle cx="14" cy="46" r="4.5" fill="#38bdf8"/>
+                                    <circle cx="14" cy="46" r="4.5" fill="#00f2fe"/>
                                     <circle cx="50" cy="46" r="4.5" fill="#fb7185"/>
                                     <circle cx="32" cy="35" r="5" fill="#fff"/>
                                 </svg>
@@ -454,12 +867,12 @@
                                 <div class="holo-emblem-bg"></div>
                                 <svg class="mode-svg-art" viewBox="0 0 64 64" fill="none">
                                     <polygon points="32,8 39,24 56,26 43,38 47,54 32,46 17,54 21,38 8,26 25,24" fill="rgba(250,204,21,0.2)" stroke="#facc15" stroke-width="2.8"/>
-                                    <circle cx="32" cy="33" r="6" fill="#ef4444" stroke="#fff" stroke-width="1.5"/>
+                                    <circle cx="32" cy="33" r="6" fill="#ff6b00" stroke="#fff" stroke-width="1.5"/>
                                 </svg>
                                 <span class="mode-vs-pill">5V5</span>
                             </div>
                             <div class="mode-name">Đại Chiến</div>
-                            <div class="mode-sub">10 Người (Liên Quân)</div>
+                            <div class="mode-sub">10 Người (Xanh vs Đỏ)</div>
                             <div class="mode-queue-tag">
                                 <span class="q-dot"></span>
                                 <span id="q-count-5v5">Đang chờ: 0/10</span>
@@ -539,10 +952,10 @@
     <!-- MODAL KẾT THÚC 10 CÂU -->
     <div class="modal-end-wrap" id="end-modal">
         <div class="modal-end-card">
-            <h2 id="modal-title" style="font-size: 24px; color: #fb7185; text-align: center;">KẾT QUẢ TRẬN ĐẤU (10 CÂU)</h2>
+            <h2 id="modal-title" style="font-size: 24px; color: #fb923c; text-align: center;">KẾT QUẢ TRẬN ĐẤU (10 CÂU)</h2>
             <p id="modal-msg" style="color: #facc15; font-size: 16px; font-weight: 800; text-align: center;"></p>
 
-            <div style="font-weight: 800; font-size: 14px; color: #38bdf8; border-bottom: 1px solid #1e293b; padding-bottom: 6px;">
+            <div style="font-weight: 800; font-size: 14px; color: #00f2fe; border-bottom: 1px solid #1e293b; padding-bottom: 6px;">
                 📋 LỊCH SỬ 10 CÂU HỎI & RÚT KINH NGHIỆM:
             </div>
 
@@ -583,6 +996,28 @@
         const searchingOverlay = document.getElementById("searching-overlay");
         const nameInput = document.getElementById("fighter-name-input");
         const feedbackTxt = document.getElementById("feedback-txt");
+
+        function loadSidebarStats() {
+            const doneMap = JSON.parse(localStorage.getItem("colosseum_milestones_done") || "{}");
+            const historyMap = JSON.parse(localStorage.getItem("colosseum_unique_history") || "{}");
+
+            const msCount = Object.keys(doneMap).length;
+            const hCount = Object.keys(historyMap).length;
+            const exp = msCount * 100;
+            const pct = Math.max(12, Math.round((msCount / 9) * 100));
+
+            document.getElementById("sb-exp-pill").innerText = `${exp} EXP`;
+            document.getElementById("sb-exp-bar").style.width = `${pct}%`;
+            document.getElementById("sb-ms-done").innerText = `${msCount} / 9`;
+            document.getElementById("sb-history-done").innerText = `${hCount} Câu`;
+
+            if (msCount >= 9) {
+                document.getElementById("sb-rank-title").innerText = "🏆 BẬC THẦY PYTHON";
+            } else if (msCount >= 3) {
+                document.getElementById("sb-rank-title").innerText = "🐂 CHIẾN BINH CYBER";
+            }
+        }
+        loadSidebarStats();
 
         let tabClientID = sessionStorage.getItem("colosseum_tab_cid");
         if (!tabClientID) {
@@ -669,6 +1104,7 @@
             matchScoreboardCol.style.display = "none";
             battleLayout.classList.remove("in-match-mode");
             waitLayer.style.display = "flex";
+            loadSidebarStats();
         }
 
         ws.onmessage = function(event) {
@@ -863,13 +1299,13 @@
                 box.className = "history-item";
                 box.innerHTML = `
                     <div style="display:flex; justify-content:space-between; font-size:12px; font-family:'Fira Code';">
-                        <span style="color:#38bdf8; font-weight:700;">Câu ${item.round} / 10</span>
+                        <span style="color:#00f2fe; font-weight:700;">Câu ${item.round} / 10</span>
                         <span style="color:${item.isCorrect ? '#4ade80' : '#f43f5e'}; font-weight:700;">
                             ${item.isCorrect ? `✓ +${item.scoreGained} PTS (${(item.speedMs / 1000).toFixed(2)}s)` : '✗ +0 PTS'}
                         </span>
                     </div>
                     <div style="font-size:13.5px; font-weight:700; color:#fff;">❓ ${item.question}</div>
-                    ${item.code ? `<div style="font-family:'Fira Code'; font-size:12px; color:#38bdf8; background:#050811; padding:6px 10px; border-radius:6px;">${item.code}</div>` : ''}
+                    ${item.code ? `<div style="font-family:'Fira Code'; font-size:12px; color:#00f2fe; background:#050811; padding:6px 10px; border-radius:6px;">${item.code}</div>` : ''}
                     <div style="font-size:12px; color:#94a3b8;">
                         Bạn chọn: <strong style="color:${item.isCorrect ? '#4ade80' : '#f87171'};">${item.chosen}</strong>
                         ${!item.isCorrect ? ` | Đáp án đúng: <strong style="color:#4ade80;">${item.correctAns}</strong>` : ''}
