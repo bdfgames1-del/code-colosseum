@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>CodeColosseum - Đấu Trường Lập Trình Đối Kháng</title>
+    <title>CodeQuest - Đấu Trường Lập Trình Đối Kháng</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@500;600;700&family=Orbitron:wght@700;800;900&family=Plus+Jakarta+Sans:wght@500;600;700;800&display=swap" rel="stylesheet">
@@ -18,7 +18,7 @@
             overflow-x: hidden;
         }
 
-        /* ==================== SIDEBAR COMMAND DECK 4.0 (LẤP ĐẦY KHOẢNG TRỐNG & ĐỔI MÀU) ==================== */
+        /* ==================== SIDEBAR COMMAND DECK 4.0 (LOGO CODEQUEST) ==================== */
         .sidebar {
             width: 288px;
             background: 
@@ -38,7 +38,6 @@
             z-index: 20;
         }
 
-        /* Thanh viền neon chạy dọc mép phải Sidebar */
         .sidebar::after {
             content: "";
             position: absolute;
@@ -50,7 +49,6 @@
             box-shadow: 0 0 12px #00f2fe;
         }
 
-        /* KHỐI LOGO KIM NGƯU VS MÃNH HỔ Ở ĐẦU SIDEBAR */
         .brand-showcase-box {
             background: linear-gradient(145deg, rgba(11, 22, 48, 0.95) 0%, rgba(5, 10, 24, 0.98) 100%);
             border: 1.5px solid rgba(0, 242, 254, 0.35);
@@ -88,7 +86,7 @@
         }
         .brand-text-logo {
             font-family: 'Orbitron', sans-serif;
-            font-size: 17.5px;
+            font-size: 18.5px;
             font-weight: 900;
             letter-spacing: 0.5px;
             color: #ffffff;
@@ -107,7 +105,6 @@
             text-transform: uppercase;
         }
 
-        /* NHÃN PHÂN KHU ĐIỀU HƯỚNG */
         .nav-section-label {
             font-family: 'Orbitron', monospace;
             font-size: 10.5px;
@@ -121,7 +118,6 @@
             justify-content: space-between;
         }
 
-        /* DANH SÁCH MODULE ĐIỀU HƯỚNG 2 TẦNG */
         .menu-list {
             display: flex;
             flex-direction: column;
@@ -187,7 +183,6 @@
             font-weight: 600;
         }
 
-        /* Hiệu ứng Hover & Active rực rỡ */
         .menu-item:hover {
             transform: translateX(4px);
             background: linear-gradient(90deg, rgba(0, 242, 254, 0.14) 0%, rgba(15, 23, 42, 0.9) 100%);
@@ -227,15 +222,13 @@
             animation: pulseDot 1.5s infinite;
         }
 
-        /* ==================== KHU VỰC LẤP ĐẦY PHẦN DƯỚI SIDEBAR (COMMAND WIDGETS) ==================== */
+        /* WIDGET PHẦN DƯỚI SIDEBAR */
         .sidebar-bottom-deck {
             display: flex;
             flex-direction: column;
             gap: 12px;
             margin-top: auto;
         }
-
-        /* Widget 1: Trạm Tiến Độ Chiến Binh (Bull vs Tiger Mastery) */
         .warrior-progress-widget {
             background: linear-gradient(160deg, rgba(13, 24, 50, 0.92) 0%, rgba(8, 13, 28, 0.98) 100%);
             border: 1.5px solid rgba(255, 107, 0, 0.38);
@@ -245,8 +238,6 @@
             flex-direction: column;
             gap: 10px;
             box-shadow: 0 10px 25px rgba(0, 0, 0, 0.6), inset 0 0 18px rgba(255, 107, 0, 0.08);
-            position: relative;
-            overflow: hidden;
         }
         .wp-header {
             display: flex;
@@ -313,7 +304,6 @@
             text-transform: uppercase;
         }
 
-        /* Widget 2: Lõi Xung Nhịp Đấu Trường */
         .cyber-telemetry-card {
             background: rgba(8, 15, 32, 0.9);
             border: 1px solid rgba(0, 242, 254, 0.28);
@@ -323,21 +313,10 @@
             align-items: center;
             justify-content: space-between;
         }
-        .telemetry-left {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-        }
-        .telemetry-bars {
-            display: flex;
-            align-items: flex-end;
-            gap: 3px;
-            height: 18px;
-        }
+        .telemetry-left { display: flex; align-items: center; gap: 10px; }
+        .telemetry-bars { display: flex; align-items: flex-end; gap: 3px; height: 18px; }
         .t-bar {
-            width: 3.5px;
-            background: #00f2fe;
-            border-radius: 2px;
+            width: 3.5px; background: #00f2fe; border-radius: 2px;
             animation: eqBounce 1s infinite ease-in-out alternate;
         }
         .t-bar:nth-child(1) { height: 45%; animation-delay: 0.1s; }
@@ -346,18 +325,8 @@
         .t-bar:nth-child(4) { height: 100%; animation-delay: 0.4s; background: #facc15; }
         @keyframes eqBounce { 0% { transform: scaleY(0.35); } 100% { transform: scaleY(1); } }
 
-        .telemetry-txt {
-            font-family: 'Fira Code', monospace;
-            font-size: 11px;
-            font-weight: 700;
-            color: #7dd3fc;
-        }
-        .telemetry-ping {
-            font-family: 'Fira Code', monospace;
-            font-size: 10.5px;
-            font-weight: 800;
-            color: #4ade80;
-        }
+        .telemetry-txt { font-family: 'Fira Code', monospace; font-size: 11px; font-weight: 700; color: #7dd3fc; }
+        .telemetry-ping { font-family: 'Fira Code', monospace; font-size: 10.5px; font-weight: 800; color: #4ade80; }
 
         .menu-item.logout-sidebar-btn {
             background: rgba(244, 63, 94, 0.15);
@@ -368,9 +337,7 @@
             padding: 10px;
         }
         .menu-item.logout-sidebar-btn:hover {
-            background: #e11d48;
-            color: #ffffff;
-            transform: translateY(-2px);
+            background: #e11d48; color: #ffffff; transform: translateY(-2px);
         }
 
         /* ==================== MAIN CONTENT ==================== */
@@ -384,7 +351,6 @@
             margin: 0 auto;
         }
 
-        /* TOP HUD BAR */
         .top-bar {
             display: flex; justify-content: space-between; align-items: center;
             background: linear-gradient(90deg, rgba(10, 20, 42, 0.95) 0%, rgba(18, 12, 28, 0.95) 100%);
@@ -439,7 +405,7 @@
             text-decoration: none; box-shadow: 0 4px 18px rgba(0, 242, 254, 0.4); transition: 0.2s;
         }
 
-        /* ==================== HERO BANNER KIM NGƯU CYBER VS MÃNH HỔ LỬA ==================== */
+        /* ==================== HERO BANNER CODEQUEST ==================== */
         .hero-card {
             position: relative;
             background: 
@@ -477,7 +443,6 @@
         .hud-bl { bottom: 16px; left: 16px; border-color: #00f2fe; border-width: 0 0 3px 3px; }
         .hud-br { bottom: 16px; right: 16px; border-color: #ff6b00; border-width: 0 3px 3px 0; }
 
-        /* KHUNG HIỂN THỊ ẢNH LOGO KIM NGƯU VS MÃNH HỔ TRUNG TÂM */
         .hero-logo-banner-wrap {
             position: relative;
             z-index: 2;
@@ -646,20 +611,18 @@
 </head>
 <body>
 
-    <!-- ==================== SIDEBAR COMMAND DECK MỚI (ĐẦY ĐẶN, MÀU SẮC CYAN - TIGER ORANGE) ==================== -->
     <aside class="sidebar">
         <div style="display:flex; flex-direction:column; gap:16px;">
-            <!-- Khối Logo Kim Ngưu vs Mãnh Hổ -->
             <a href="/" class="brand-showcase-box">
-                <img src="/static/logo.jpg" alt="CodeColosseum" class="brand-banner-img" onerror="this.style.display='none'">
+                <img src="/static/logo.jpg" alt="CodeQuest" class="brand-banner-img" onerror="this.style.display='none'">
                 <div class="brand-fallback-header">
                     <svg width="28" height="28" viewBox="0 0 36 36" fill="none">
                         <polygon points="18,2 33,10 30,27 18,34 6,27 3,10" fill="rgba(0,242,254,0.18)" stroke="#00f2fe" stroke-width="2.2"/>
                         <path d="M11 18 L16 13 M11 18 L16 23 M25 18 L20 13 M25 18 L20 23" stroke="#ff6b00" stroke-width="2.5" stroke-linecap="round"/>
                     </svg>
                     <div>
-                        <div class="brand-text-logo">Code<span>Colosseum</span></div>
-                        <div class="brand-sub-tag">⚡ BULL VS TIGER ARENA</div>
+                        <div class="brand-text-logo">Code<span>Quest</span></div>
+                        <div class="brand-sub-tag">⚡ PYTHON ARENA 4.0</div>
                     </div>
                 </div>
             </a>
@@ -669,7 +632,6 @@
                 <span style="color:#00f2fe;">v4.0</span>
             </div>
 
-            <!-- 4 Module Điều Hướng 2 Tầng -->
             <nav class="menu-list">
                 <a href="/" class="menu-item active">
                     <div class="menu-icon-box">
@@ -726,7 +688,6 @@
             </nav>
         </div>
 
-        <!-- KHU VỰC WIDGET LẤP ĐẦY PHẦN DƯỚI SIDEBAR -->
         <div class="sidebar-bottom-deck">
             <div class="warrior-progress-widget">
                 <div class="wp-header">
@@ -756,7 +717,7 @@
                         <div class="t-bar"></div>
                         <div class="t-bar"></div>
                     </div>
-                    <span class="telemetry-txt">ARENA SERVER</span>
+                    <span class="telemetry-txt">CODEQUEST CORE</span>
                 </div>
                 <span class="telemetry-ping">● ONLINE</span>
             </div>
@@ -769,12 +730,11 @@
         </div>
     </aside>
 
-    <!-- ==================== MAIN CONTENT ==================== -->
     <main class="main-container">
         <div class="top-bar">
             <div class="sys-ready">
                 <span class="pulse-dot"></span>
-                <span>CODE COLOSSEUM // BULL VS TIGER MATRIX 4.0</span>
+                <span>CODEQUEST // PYTHON TRAINING & ARENA MATRIX 4.0</span>
             </div>
             <div class="auth-btns">
                 {{if .Username}}
@@ -787,7 +747,6 @@
             </div>
         </div>
 
-        <!-- HERO BANNER TÍCH HỢP LOGO KIM NGƯU VS MÃNH HỔ -->
         <section class="hero-card">
             <div class="cyber-grid-bg"></div>
             <div class="hud-corner hud-tl"></div>
@@ -795,14 +754,13 @@
             <div class="hud-corner hud-bl"></div>
             <div class="hud-corner hud-br"></div>
 
-            <!-- Ảnh Logo Kim Ngưu vs Mãnh Hổ của bạn (Tự động hiện nếu có /static/logo.jpg, kèm huy hiệu SVG dự phòng) -->
             <div class="hero-logo-banner-wrap">
-                <img src="/static/logo.jpg" alt="CodeColosseum Logo" class="hero-custom-logo-img" onerror="this.style.display='none'; document.getElementById('fallback-bull-tiger-svg').style.display='flex';">
+                <img src="/static/logo.jpg" alt="CodeQuest Logo" class="hero-custom-logo-img" onerror="this.style.display='none'; document.getElementById('fallback-bull-tiger-svg').style.display='flex';">
                 <div id="fallback-bull-tiger-svg" style="display:none; align-items:center; gap:18px; padding:12px 26px; background:#060c1d; border-radius:14px;">
                     <span style="font-size:44px; filter:drop-shadow(0 0 14px #00f2fe);">🐂</span>
                     <div style="text-align:center;">
                         <div style="font-family:'Orbitron',sans-serif; font-size:24px; font-weight:900; color:#fff;">
-                            CODE<span style="color:#00f2fe;">COLOSSEUM</span>
+                            CODE<span style="color:#00f2fe;">QUEST</span>
                         </div>
                         <div style="font-family:'Fira Code',monospace; font-size:12px; color:#fb923c; font-weight:700;">&lt;/&gt; CYBER DUEL ARENA &lt;/&gt;</div>
                     </div>
@@ -844,7 +802,6 @@
         </div>
 
         <section class="cards-row">
-            <!-- THẺ 1 -->
             <div class="nav-card">
                 <div>
                     <div class="card-top-row">
@@ -865,7 +822,6 @@
                 <a href="/courses" class="card-action-link">⚡ BẮT ĐẦU HỌC NGAY →</a>
             </div>
 
-            <!-- THẺ 2 -->
             <div class="nav-card map-card-theme">
                 <div>
                     <div class="card-top-row">
@@ -887,7 +843,6 @@
                 <a href="/arena" class="card-action-link">🕹️ LUYỆN TẬP NGAY →</a>
             </div>
 
-            <!-- THẺ 3 -->
             <div class="nav-card duel-card">
                 <div>
                     <div class="card-top-row">
@@ -912,7 +867,6 @@
     </main>
 
     <script>
-        // Tự động đồng bộ tiến độ Cột mốc & Lịch sử lên Widget ở góc dưới Sidebar
         function loadSidebarStats() {
             const doneMap = JSON.parse(localStorage.getItem("colosseum_milestones_done") || "{}");
             const historyMap = JSON.parse(localStorage.getItem("colosseum_unique_history") || "{}");
