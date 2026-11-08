@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Kho Bài Học Python Công Nghệ Cao - CodeColosseum</title>
+    <title>Kho Bài Học Python Công Nghệ Cao - CodeQuest</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@500;600;700&family=Orbitron:wght@700;800;900&family=Plus+Jakarta+Sans:wght@500;600;700;800&display=swap" rel="stylesheet">
@@ -18,7 +18,7 @@
             overflow-x: hidden;
         }
 
-        /* ==================== SIDEBAR COMMAND DECK 4.0 (ĐỒNG BỘ Y HỆT TRANG CHỦ) ==================== */
+        /* ==================== SIDEBAR COMMAND DECK 4.0 (LOGO CODEQUEST) ==================== */
         .sidebar {
             width: 288px;
             background: 
@@ -86,7 +86,7 @@
         }
         .brand-text-logo {
             font-family: 'Orbitron', sans-serif;
-            font-size: 17.5px;
+            font-size: 18.5px;
             font-weight: 900;
             letter-spacing: 0.5px;
             color: #ffffff;
@@ -222,7 +222,6 @@
             animation: pulseDot 1.5s infinite;
         }
 
-        /* WIDGET PHẦN DƯỚI SIDEBAR */
         .sidebar-bottom-deck {
             display: flex;
             flex-direction: column;
@@ -351,7 +350,6 @@
             margin: 0 auto;
         }
 
-        /* TOP HUD BAR ĐỒNG BỘ TRANG CHỦ */
         .top-hud-bar {
             display: flex; justify-content: space-between; align-items: center;
             background: linear-gradient(90deg, rgba(10, 20, 42, 0.95) 0%, rgba(18, 12, 28, 0.95) 100%);
@@ -388,7 +386,6 @@
             box-shadow: 0 4px 14px rgba(225, 29, 72, 0.45);
         }
 
-        /* ==================== HERO BANNER BÀI HỌC (MÀU KIM NGƯU CYAN VS MÃNH HỔ CAM) ==================== */
         .course-hero {
             position: relative;
             background: 
@@ -478,14 +475,12 @@
         @keyframes spin360 { 100% { transform: rotate(360deg); } }
         @keyframes spinRev { 100% { transform: rotate(-360deg); } }
 
-        /* ==================== 3 THẺ BÀI HỌC ĐỒNG BỘ MÀU TRANG CHỦ ==================== */
         .courses-grid {
             display: grid;
             grid-template-columns: repeat(3, 1fr);
             gap: 24px;
         }
 
-        /* Thẻ 1: Xanh Điện Tử (Cyan) */
         .lesson-card {
             background: linear-gradient(165deg, rgba(12, 24, 52, 0.95) 0%, rgba(5, 10, 24, 0.98) 100%);
             border: 1.5px solid rgba(0, 242, 254, 0.32);
@@ -505,7 +500,6 @@
             background: #00f2fe; box-shadow: 0 0 12px #00f2fe;
         }
 
-        /* Thẻ 2: Cam Hổ Lửa (Tiger Orange - giống thẻ giữa trang chủ) */
         .lesson-card.card-theme-2 {
             border-color: rgba(255, 107, 0, 0.38);
             background: linear-gradient(165deg, rgba(38, 18, 10, 0.92) 0%, rgba(7, 10, 22, 0.98) 100%);
@@ -514,7 +508,6 @@
             background: #ff6b00; box-shadow: 0 0 12px #ff6b00;
         }
 
-        /* Thẻ 3: Đỏ Năng Lượng (Crimson Neon - giống thẻ phải trang chủ) */
         .lesson-card.card-theme-3 {
             border-color: rgba(244, 63, 94, 0.42);
             background: linear-gradient(165deg, rgba(42, 11, 28, 0.92) 0%, rgba(7, 10, 22, 0.98) 100%);
@@ -659,7 +652,7 @@
         }
         .btn-fight-map:hover { transform: translateY(-2px); box-shadow: 0 6px 20px rgba(255, 107, 0, 0.65); }
 
-        /* ==================== MODAL HỌC TẬP TƯƠNG TÁC ==================== */
+        /* MODAL */
         .lesson-modal-overlay {
             position: fixed; inset: 0; background: rgba(2, 5, 13, 0.92);
             backdrop-filter: blur(10px); display: none; align-items: center; justify-content: center;
@@ -755,19 +748,18 @@
 </head>
 <body>
 
-    <!-- ==================== SIDEBAR COMMAND DECK 4.0 (GIỐNG HỆT TRANG CHỦ) ==================== -->
     <aside class="sidebar">
         <div style="display:flex; flex-direction:column; gap:16px;">
             <a href="/" class="brand-showcase-box">
-                <img src="/static/logo.jpg" alt="CodeColosseum" class="brand-banner-img" onerror="this.style.display='none'">
+                <img src="/static/logo.jpg" alt="CodeQuest" class="brand-banner-img" onerror="this.style.display='none'">
                 <div class="brand-fallback-header">
                     <svg width="28" height="28" viewBox="0 0 36 36" fill="none">
                         <polygon points="18,2 33,10 30,27 18,34 6,27 3,10" fill="rgba(0,242,254,0.18)" stroke="#00f2fe" stroke-width="2.2"/>
                         <path d="M11 18 L16 13 M11 18 L16 23 M25 18 L20 13 M25 18 L20 23" stroke="#ff6b00" stroke-width="2.5" stroke-linecap="round"/>
                     </svg>
                     <div>
-                        <div class="brand-text-logo">Code<span>Colosseum</span></div>
-                        <div class="brand-sub-tag">⚡ BULL VS TIGER ARENA</div>
+                        <div class="brand-text-logo">Code<span>Quest</span></div>
+                        <div class="brand-sub-tag">⚡ PYTHON ARENA 4.0</div>
                     </div>
                 </div>
             </a>
@@ -833,7 +825,6 @@
             </nav>
         </div>
 
-        <!-- WIDGET PHẦN DƯỚI SIDEBAR -->
         <div class="sidebar-bottom-deck">
             <div class="warrior-progress-widget">
                 <div class="wp-header">
@@ -863,7 +854,7 @@
                         <div class="t-bar"></div>
                         <div class="t-bar"></div>
                     </div>
-                    <span class="telemetry-txt">ACADEMY CORE</span>
+                    <span class="telemetry-txt">CODEQUEST ACADEMY</span>
                 </div>
                 <span class="telemetry-ping">● ONLINE</span>
             </div>
@@ -876,12 +867,11 @@
         </div>
     </aside>
 
-    <!-- ==================== MAIN CONTENT ==================== -->
     <main class="main-content">
         <div class="top-hud-bar">
             <div class="hud-status-left">
                 <span class="pulse-dot"></span>
-                <span>HỆ THỐNG ĐÀO TẠO CHIẾN BINH PYTHON // BULL VS TIGER ACADEMY 4.0</span>
+                <span>CODEQUEST // HỆ THỐNG ĐÀO TẠO CHIẾN BINH PYTHON 4.0</span>
             </div>
             <div class="hud-right-user">
                 <span class="user-chip">👤 {{if .Username}}{{.Username}}{{else}}Chiến Binh{{end}}</span>
@@ -891,7 +881,6 @@
             </div>
         </div>
 
-        <!-- BANNER BÀI HỌC MÀU CYAN - TIGER ORANGE ĐỒNG BỘ TRANG CHỦ -->
         <section class="course-hero">
             <div class="hero-grid-bg"></div>
             <div class="hud-corner hud-tl"></div>
@@ -933,7 +922,6 @@
         </section>
 
         <section class="courses-grid">
-            <!-- BÀI 1 (TÔNG XANH ĐIỆN TỬ KIM NGƯU) -->
             <div class="lesson-card card-theme-1">
                 <div>
                     <div class="lesson-graphic-banner">
@@ -984,7 +972,6 @@
                 </div>
             </div>
 
-            <!-- BÀI 2 (TÔNG CAM MÃNH HỔ LỬA) -->
             <div class="lesson-card card-theme-2">
                 <div>
                     <div class="lesson-graphic-banner">
@@ -1035,7 +1022,6 @@
                 </div>
             </div>
 
-            <!-- BÀI 3 (TÔNG ĐỎ NĂNG LƯỢNG DATA CORE) -->
             <div class="lesson-card card-theme-3">
                 <div>
                     <div class="lesson-graphic-banner">
@@ -1411,7 +1397,6 @@ print(text.split())  # ['Hello', 'Python']</div>
             document.getElementById("global-ms-txt").innerText = `Đã hoàn thành: ${totalDone} / 9 Cột mốc (${globalPct}%)`;
             document.getElementById("global-bar-fill").style.width = globalPct + "%";
 
-            // Đồng bộ Widget ở góc dưới Sidebar
             document.getElementById("sb-exp-pill").innerText = `${totalExp} EXP`;
             document.getElementById("sb-exp-bar").style.width = `${Math.max(12, globalPct)}%`;
             document.getElementById("sb-ms-done").innerText = `${totalDone} / 9`;
